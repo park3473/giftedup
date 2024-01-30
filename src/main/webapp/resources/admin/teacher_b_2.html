@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!--JQuery-UI-->
+    <link rel="stylesheet" href="../css/jquery-ui.css" type="text/css">
+
+    <!--css-->
+    <link rel="stylesheet" href="../css/fontawesome/all.css">
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800|Noto+Sans+KR:100,300,400,500,700,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/admin/header.css">
+    <link rel="stylesheet" href="../css/admin/admin.css">
+    <link rel="stylesheet" href="../css/admin/footer.css">
+    <title>영재키움프로젝트</title>
+</head>
+
+<body>
+    <!--헤더-->
+    <header id="adm_hd">
+        <div id="adm_hd_area">
+            <div id="adm_hd_con">
+                <div class="adm_hd_size nanumgothic">
+
+                    <div class="hd_menu">
+                        <!--관리자 메뉴-->
+                        <div class="adm_menu_area">
+                            <div class="home">
+                                <a href="#">
+                                    <img src="../img/admin/home.png" alt="홈" />
+                                </a>
+                            </div>
+                            <ul class="adm_menu_con">
+                                <li>
+                                    <a href="#">
+                                        <img src="../img/admin/member_icon.png" alt="회원관리" />
+                                    </a>
+                                    <ul class="sub_menu_con">
+                                        <div class="title notosans">
+                                            <span></span>
+                                            <span>회원관리</span>
+                                        </div>
+                                        <li>
+                                            <a href="../admin/member_a_1.html">· 회원목록관리</a>
+                                        </li>
+                                        <li>
+                                            <a href="../admin/member_a_2.html">· 교사 - 학생 매칭관리</a>
+                                        </li>
+                                        <li>
+                                            <a href="../admin/member_a_3.html">· 교사 지역별 그룹관리</a>
+                                        </li>
+                                        <li>
+                                            <a href="../admin/member_a_4.html">· 휴면회원 관리</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <img src="../img/admin/program_icon.png" alt="프로그램관리" />
+                                    </a>
+                                    <ul class="sub_menu_con">
+                                        <div class="title notosans">
+                                            <span></span>
+                                            <span>프로그램 관리</span>
+                                        </div>
+                                        <li class="mr-b-50">
+                                            <a href="../admin/program_b_1.html">· 학생프로그램</a>
+                                            <ul class="sub_menu_ob">
+                                                <li>
+                                                    <a href="../admin/program_b_2.html">- 융합과학 프로젝트</a>
+                                                </li>
+                                                <li>
+                                                    <a href="../admin/program_b_3.html">- 창의융합캠프</a>
+                                                </li>
+                                                <li>
+                                                    <a href="../admin/program_b_4.html">- 멘토링데이</a>
+                                                </li>
+                                                <li>
+                                                    <a href="../admin/program_b_5.html">- 고등자율연구</a>
+                                                </li>
+                                                <li>
+                                                    <a href="../admin/program_b_6.html">- 발명 및 특허교육</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="#">· 교사프로그램관리</a>
+                                            <ul class="sub_menu_ob">
+                                                <li>
+                                                    <a href="../admin/teacher_b_1.html">- 교사연수</a>
+                                                </li>
+                                                <li class="nav_active">
+                                                    <a href="../admin/teacher_b_2.html">- 중앙 컨설팅</a>
+                                                </li>
+                                                <li>
+                                                    <a href="../admin/teacher_b_3.html">- 성과 발표회</a>
+                                                </li>
+                                                <li>
+                                                    <a href="../admin/teacher_b_4.html">- 활동수당 신청관리</a>
+                                                </li>
+                                                <li>
+                                                    <a href="../admin/teacher_b_5.html">- 포트폴리오 모니터링</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <img src="../img/admin/board_icon.png" alt="게시판관리" />
+                                    </a>
+                                    <ul class="sub_menu_con">
+                                        <div class="title notosans">
+                                            <span></span>
+                                            <span>게시판 관리</span>
+                                        </div>
+                                        <li><a href="../admin/board_c_1.html">· 게시판 관리</a></li>
+                                        <li><a href="../admin/board_c_2.html">· 공지사항</a></li>
+                                        <li><a href="../admin/board_c_3.html">· 자유게시판</a></li>
+                                        <li><a href="../admin/board_c_4.html">· 홍보자료관리</a></li>
+                                        <li><a href="../admin/board_c_5.html">· 온라인학습 멘토링</a></li>
+                                        <li><a href="../admin/board_c_6.html">· 배너관리</a></li>
+                                        <li><a href="../admin/board_c_7.html">· 팝업관리</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <img src="../img/admin/stats_icon.png" alt="통계관리" />
+                                    </a>
+                                    <ul class="sub_menu_con">
+                                        <div class="title notosans">
+                                            <span></span>
+                                            <span>통계관리</span>
+                                        </div>
+                                        <li>
+                                            <a href="../admin/stats_d_1.html">· 회원통계관리</a>
+                                            <ul class="sub_menu_ob">
+                                                <li><a href="../admin/stats_d_1.html">- 학생</a></li>
+                                                <li><a href="../admin/stats_d_1_2.html">- 교사</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="../admin/stats_d_2.html">프로그램 참여현황 관리</a></li>
+                                        <li><a href="../admin/stats_d_3.html">전수조사관리</a></li>
+                                        <li><a href="../admin/stats_d_4.html">설문조사관리</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <img src="../img/admin/freshman_icon.png" alt="신입생관리" />
+                                    </a>
+                                    <ul class="sub_menu_con">
+                                        <div class="title notosans">
+                                            <span></span>
+                                            <span>신입생 선발 시스템</span>
+                                        </div>
+                                        <li><a href="../admin/freshman_e_1.html">· 신입생 리스트</a></li>
+                                        <li><a href="../admin/freshman_e_2.html">· 신입생 등록</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <!--관리자 메뉴 end-->
+
+
+                        <!--서브메뉴 및 배너카드-->
+                        <div class="adm_banner_area">
+                            <div class="adm_logo">
+                                <h2>ADMINISTRATOR</h2>
+                            </div>
+                            <div class="adm_banner_con">
+                                <div class="card_area">
+                                    <ul class="card_con">
+                                        <li>
+                                            <span>아이피</span>
+                                            <span>115.91.131.154</span>
+                                        </li>
+                                        <li>
+                                            <span>아이디</span>
+                                            <span>admin</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="phone_area">
+                                    <div class="phone_con">
+                                        <div class="phone_icon">
+                                            <span><img src="../img/admin/phone.png" alt="전화기"></span>
+                                        </div>
+                                        <div class="phone_txt">
+                                            <p>이용불편문의</p>
+                                            <h2>042.935.5421</h2>
+                                        </div>
+                                    </div>
+                                    <p>E-mail : inct@inct.co.kr</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!--서브메뉴 및 배너카드 end-->
+
+                    </div>
+                    <ul class="hd_adm_menu">
+                        <li class="hd_active">
+                            <a href="../admin/member_a_1.html">MAIN</a>
+                        </li>
+                        <li>
+                            <a href="../index.html">HOMEPAGE</a>
+                        </li>
+                        <li>
+                            <a href="#">LOGOUT</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!--헤더 end-->
+
+    <!--본문-->
+    <section id="adm_sc">
+        <div id="adm_sc_area">
+            <div id="adm_sc_con">
+                <div class="adm_sc_size">
+
+                    <!--본문 내용-->
+                    <section class="adm_sc_txt">
+                        <div class="sc_con">
+                            <div class="title">
+                                <span></span>
+                                <span>교사 프로그램 관리</span>
+                            </div>
+
+                            <div class="member_seach_form">
+                                <div class="member_01_wrap mr-0">
+                                    <form>
+                                        <div class="form_01">
+                                            <div class="page">
+                                                <input style="width: 44px; margin-right: 10px" type="text" value="" name="page_number">
+                                                <span>/ 페이지</span>
+                                            </div>
+                                            <div class="page_seach">
+                                                <select>
+                                                    <option>학년도선택</option>
+                                                    <option>2019년도</option>
+                                                    <option>2018년도</option>
+                                                </select>
+                                                <select>
+                                                    <option>프로그램</option>
+                                                    <option>프로그램명 선택</option>
+                                                </select>
+                                                <select>
+                                                    <option>검색조건</option>
+                                                    <option>이름</option>
+                                                    <option>신청자 연락처</option>
+                                                </select>
+                                                <input style="width: 191px;" type="text" value="" name="member_name">
+                                                <button type="submit" value="검색">검색</button>
+                                                <a class="w_btn" href="#">새로고침</a>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="table_wrap">
+                                <div class="title">
+                                    <h2>중앙컨설 신청자 목록</h2>
+                                </div>
+                                <table>
+                                    <tr>
+                                        <th><input type="checkbox" value=""></th>
+                                        <th>프로그램명</th>
+                                        <th>교사</th>
+                                        <th>교사연락처</th>
+                                        <th>학교명</th>
+                                        <th>참석여부</th>
+                                        <th>연수번호</th>
+                                        <th>신청일</th>
+                                    </tr>
+                                    <tr>
+                                        <td class="check"><input type="checkbox" value=""></td>
+                                        <td class="td_01">[대전] 한국정보통신연구원(ETRI) 견학(10/27,토)</td>
+                                        <td class="td_02">홍길동</td>
+                                        <td class="td_03">010-1234-5678</td>
+                                        <td class="td_04">논상초등학교</td>
+                                        <td class="td_05">홍길동</td>
+                                        <td class="td_06">123467</td>
+                                        <td class="td_06">2019-10-15</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="check"><input type="checkbox" value=""></td>
+                                        <td class="td_01">[부산] AR/VR 증강현실 해양 진로 체험 프로그램..</td>
+                                        <td class="td_02">김시내</td>
+                                        <td class="td_03">010-1234-5678</td>
+                                        <td class="td_04">한라초등학교</td>
+                                        <td class="td_05">김시내</td>
+                                        <td class="td_06">123568</td>
+                                        <td class="td_06">2019-10-15</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="check"><input type="checkbox" value=""></td>
+                                        <td class="td_01">[대전] 한국정보통신연구원(ETRI) 견학(10/27,토)</td>
+                                        <td class="td_02">이영희</td>
+                                        <td class="td_03">010-1234-5678</td>
+                                        <td class="td_04">각화초등학교</td>
+                                        <td class="td_05">이영희</td>
+                                        <td class="td_06">451289</td>
+                                        <td class="td_06">2019-10-15</td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                           
+                           
+                            <!--관리자 버튼-->
+                            <div class="adm_btn_wrap">
+                                <ul>
+                                    <li class="modify">
+                                        <a href="../admin/teacher_b_2-1.html">프로그램 등록</a>
+                                    </li>
+                                    <li class="register adm_w_btn">
+                                        <a href="#">수정하기</a>
+                                    </li>
+                                    <li class="delete">
+                                        <a href="#">삭제하기</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!--관리자 버튼 end-->
+
+
+                           
+                           
+                            <!--페이지 넘버-->
+                            <nav class="paging_number">
+                                <ul class="page">
+                                    <li id="first_a">
+                                        <a href="#"><img src="../img/first_arrow.png" alt="맨처음"></a>
+                                    </li>
+                                    <li id="prev_a">
+                                        <a href="#"><img src="../img/prev_arrow.png" alt="뒤로"></a>
+                                    </li>
+                                    <li class="number page_active">
+                                        <a href="#">1</a>
+                                    </li>
+                                    <li class="number">
+                                        <a href="#">2</a>
+                                    </li>
+                                    <li class="number">
+                                        <a href="#">3</a>
+                                    </li>
+                                    <li class="number">
+                                        <a href="#">4</a>
+                                    </li>
+                                    <li class="number page_end">
+                                        <a href="#">5</a>
+                                    </li>
+                                    <li id="next_a">
+                                        <a href="#"><img src="../img/next_arrow.png" alt="다음"></a>
+                                    </li>
+                                    <li id="end_a">
+                                        <a href="#"><img src="../img/end_arrow.png" alt="맨끝"></a>
+                                    </li>
+                                </ul>
+                            </nav>
+                            <!--페이지 넘버 end-->
+
+
+                        </div>
+                    </section>
+                    <!--본문 내용 end-->
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--본문 end-->
+
+    <!--푸터-->
+    <footer>
+
+    </footer>
+    <!--푸터 end-->
+
+
+    <!--  JQuery  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+    <script src="../js/admin/program.js"></script>
+    <script src="../js/admin/admin.js"></script>
+
+</body></html>

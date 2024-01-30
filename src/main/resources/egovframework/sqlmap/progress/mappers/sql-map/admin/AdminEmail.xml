@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="egovframework.kaist.admin.email.service.impl.AdminEmailMapper">
+	 
+	<select id="getListAll" resultType="hashMap" >
+		SELECT /*AdminEmailMapper*/ * FROM TBL_EMAIL order by create_tm desc
+	</select>
+
+	<select id="getView" resultType="egovframework.kaist.admin.email.model.AdminEmailVo" parameterType="String">
+		SELECT /*AdminEmailMapper*/ * FROM TBL_EMAIL order by create_tm desc limit 1
+	</select>
+	
+
+	
+	<insert id="setInsert"	parameterType="egovframework.kaist.admin.email.model.AdminEmailVo">
+		INSERT INTO /*AdminEmailMapper*/ TBL_EMAIL (
+			PROTOCOL,
+			HOST,
+			PORT,
+			FORMUSER,
+			AUTH,
+			ID,
+			PW,
+			USE_KEY,
+			TOEMAIL,
+			CREATE_TM
+		) VALUES (
+			#{PROTOCOL},
+			#{HOST},
+			#{PORT},
+			#{FORMUSER},
+			#{AUTH},
+			#{ID},
+			#{PW},
+			#{USE_KEY},
+			#{TOEMAIL},
+			now()
+		) 
+	</insert>
+
+	<update id="setUpdate"	parameterType="egovframework.kaist.admin.email.model.AdminEmailVo">
+		UPDATE /*AdminEmailMapper*/ TBL_EMAIL SET 
+			PROTOCOL = #{PROTOCOL},
+			HOST = #{HOST},
+			PORT = #{PORT},
+			FORMUSER = #{FORMUSER},
+			AUTH = #{AUTH},
+			ID = #{ID},
+			PW = #{PW},
+			TOEMAIL = #{TOEMAIL},
+			CREATE_TM = now()
+	</update>
+	
+	
+	<delete id="setDelete"	parameterType="egovframework.kaist.admin.email.model.AdminEmailVo">
+		DELETE FROM /*AdminEmailMapper*/
+			TBL_EMAIL
+		WHERE IDX =  #{IDX} 
+	</delete>
+
+    
+</mapper>

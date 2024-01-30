@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="egovframework.kaist.user.program.service.impl.UserProgramMapper">
+	 
+	<select id="getListAll" resultType="hashMap" >
+		SELECT /*UserProgramMapper*/ * FROM TBL_PROGRAM order by CREATE_TM desc
+	</select>
+	<select id="getListGroupByYear" resultType="hashMap" >
+		SELECT /*UserProgramMapper*/ * FROM TBL_PROGRAM GROUP BY YEAR order by YEAR desc
+	</select>
+
+	
+	<select id="getList" resultType="hashMap" parameterType="egovframework.kaist.user.program.model.UserProgramVo">
+		SELECT /*UserProgramMapper*/ *
+		 <![CDATA[
+		,(START_TM < now()) AS START_TM_STEP
+		,(END_TM > now()) AS END_TM_STEP
+		 ]]>
+	
+		 FROM TBL_PROGRAM
+			WHERE 1=1 
+			<if test="YEAR != ''">
+		    	AND YEAR = #{YEAR}
+		    </if>
+		    <if test="MEMBER_ID != ''">
+		    	AND MEMBER_ID = #{MEMBER_ID}
+		    </if>
+		   	<if test="TYPE != ''">
+		    	AND TYPE = #{TYPE}
+		    </if>
+		    
+			order by UPDATE_TM desc
+			
+			LIMIT ${LIMIT} OFFSET ${OFFSET}
+	</select>
+	
+	
+		
+	<select id="getListCnt" resultType="int" parameterType="egovframework.kaist.user.program.model.UserProgramVo">
+	SELECT /*UserProgramMapper*/ count(*) FROM TBL_PROGRAM
+			WHERE 1=1 
+			<if test="YEAR != ''">
+		    	AND YEAR = #{YEAR}
+		    </if>
+		    <if test="MEMBER_ID != ''">
+		    	AND MEMBER_ID = #{MEMBER_ID}
+		    </if>
+		   	<if test="TYPE != ''">
+		    	AND TYPE = #{TYPE}
+		    </if>
+	</select>
+
+	<select id="getView" resultType="egovframework.kaist.user.program.model.UserProgramVo" parameterType="String">
+		SELECT /*UserProgramMapper*/ *
+		 <![CDATA[
+		,(START_TM < now()) AS START_TM_STEP
+		,(END_TM > now()) AS END_TM_STEP
+		 ]]>
+		 
+		,(SELECT count(*) FROM TBL_PROGRAM_APPLY WHERE PROGRAM_IDX = #{value}) AS APPLY_CNT
+		 
+		 FROM TBL_PROGRAM where IDX = #{value};
+	</select>
+
+	<insert id="setInsert"	parameterType="egovframework.kaist.user.program.model.UserProgramVo">
+		INSERT INTO /*UserProgramMapper*/ TBL_PROGRAM (
+			IDX, 
+			TYPE, 
+			YEAR, 
+			NAME, 
+			START_TM, 
+			END_TM, 
+			VIDEO, 
+			FILES, 
+			WORKBOOK, 
+			MEMO, 
+			SCHOOL_YEAR, 
+			SELECTION, 
+			EXPERIENCE_START_TM, 
+			EXPERIENCE_END_TM, 
+			SCHOOL_CNT, 
+			SCHOOL_MONEY, 
+			BANK_NAME, 
+			BUS_STATION, 
+			CREATE_TM, 
+			UPDATE_TM 
+
+	
+		) VALUES (
+			0, 
+			#{TYPE}, 
+			#{YEAR}, 
+			#{NAME}, 
+			#{START_TM}, 
+			#{END_TM}, 
+			#{VIDEO}, 
+			#{FILES}, 
+			#{WORKBOOK}, 
+			#{MEMO}, 
+			#{SCHOOL_YEAR}, 
+			#{SELECTION}, 
+			#{EXPERIENCE_START_TM}, 
+			#{EXPERIENCE_END_TM}, 
+			#{SCHOOL_CNT}, 
+			#{SCHOOL_MONEY}, 
+			#{BANK_NAME}, 
+			#{BUS_STATION}, 
+			#{CREATE_TM}, 
+			#{UPDATE_TM} 
+
+		) 
+	</insert>
+
+	<update id="setUpdate"	parameterType="egovframework.kaist.user.program.model.UserProgramVo">
+		UPDATE /*UserProgramMapper*/ TBL_PROGRAM SET 
+			TYPE= #{TYPE}, 
+			YEAR= #{YEAR}, 
+			NAME= #{NAME}, 
+			START_TM= #{START_TM}, 
+			END_TM= #{END_TM}, 
+			VIDEO= #{VIDEO}, 
+			FILES= #{FILES}, 
+			WORKBOOK= #{WORKBOOK}, 
+			MEMO= #{MEMO}, 
+			SCHOOL_YEAR= #{SCHOOL_YEAR}, 
+			SELECTION= #{SELECTION}, 
+			EXPERIENCE_START_TM= #{EXPERIENCE_START_TM}, 
+			EXPERIENCE_END_TM= #{EXPERIENCE_END_TM}, 
+			SCHOOL_CNT= #{SCHOOL_CNT}, 
+			SCHOOL_MONEY= #{SCHOOL_MONEY}, 
+			BANK_NAME= #{BANK_NAME}, 
+			BUS_STATION= #{BUS_STATION}, 
+			UPDATE_TM= now() 
+
+		WHERE
+			IDX = #{IDX} 
+	</update>
+	
+	
+	<delete id="setDelete"	parameterType="egovframework.kaist.user.program.model.UserProgramVo">
+		DELETE FROM /*UserProgramMapper*/
+			TBL_PROGRAM
+		WHERE IDX =  #{IDX} 
+	</delete>
+
+	<select id="getView2" resultType="egovframework.kaist.user.program.model.UserProgramVo" parameterType="String">
+		SELECT /*UserProgramMapper*/ * FROM TBL_PROGRAM where IDX = #{value};
+	</select>
+    
+</mapper>

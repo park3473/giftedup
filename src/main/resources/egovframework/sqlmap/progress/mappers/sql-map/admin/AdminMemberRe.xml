@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="egovframework.kaist.admin.member_re.service.impl.AdminMemberReMapper">
+	 
+	<select id="getListAll" resultType="hashMap" >
+		SELECT * 
+		FROM TBL_MEMBER_RE 
+		order by CREATE_TM desc
+	</select>
+	
+	<select id="getPassListAll" resultType="hashMap" >
+		SELECT * 
+		FROM TBL_MEMBER_RE
+		WHERE RESULT = 'pass' 
+		order by CREATE_TM desc
+	</select>
+	
+	<!-- DCMNT ALL list GET -->
+	<select id="getDcmntAllList" resultType="egovframework.kaist.admin.member_re.model.AdminDcmntVo">
+		SELECT * 
+		FROM TBL_DCMNT 
+		GROUP BY DCMNT_TYPE
+	</select>
+	
+	<!-- DCMNT List Get -->
+	<select id="getDcmnt" resultType="egovframework.kaist.admin.member_re.model.AdminDcmntVo" parameterType="egovframework.kaist.admin.member_re.model.AdminMemberReVo">
+		SELECT * FROM TBL_DCMNT
+		WHERE DCMNT_TYPE = #{ELIGIBILITY}
+	</select>
+	<!-- DCMNT FILE List -->
+	<select id="getDcmntFileList" resultType="String" parameterType="egovframework.kaist.admin.member_re.model.AdminMemberReVo">
+		SELECT NAME FROM TBL_MEMBER_RE_FILE
+		WHERE MEMBER_NAME = #{NAME} AND BIRTH = #{BIRTH}
+	</select>
+	
+	<select id="getListPass" resultType="hashMap" >
+		SELECT * FROM TBL_MEMBER_RE  WHERE result = "pass" order by CREATE_TM desc
+	</select>
+	
+	<select id="getList" resultType="hashMap" parameterType="egovframework.kaist.admin.member_re.model.AdminMemberReVo">
+		SELECT * ,
+		(SELECT COUNT(*) FROM TBL_MEMBER_RE_FILE FILE JOIN TBL_MEMBER_RE MEMBER ON MEMBER.NAME = FILE.MEMBER_NAME AND MEMBER.BIRTH = FILE.BIRTH WHERE MEMBER.IDX = MEMBER1.IDX  ) AS DCMNT_CNT ,
+		(SELECT COUNT(*) FROM TBL_DCMNT WHERE DCMNT_TYPE = MEMBER1.ELIGIBILITY) AS DCMNT_TOTAL_CNT
+		FROM TBL_MEMBER_RE MEMBER1
+		WHERE 1=1 
+		<if test="SEARCH_TEXT == ''">
+		AND !(TYPE = 1 AND LEVEL = 8)
+		</if>
+<!-- 		SELECT * -->
+<!-- 		FROM TBL_MEMBER_RE JOIN TBL_DCMNT ON TBL_MEMBER_RE.IDX = TBL_DCMNT.MEMBER_IDX  -->
+<!-- 		WHERE 1=1 -->
+	     	
+		<if test="RESULT != ''">
+	    	AND RESULT = #{RESULT}
+	    </if>
+	    <if test="RESULT == ''">
+	    	AND RESULT = 'check'
+	    </if>
+	    
+	    <if test="ADDRESS_LOCAL != ''">
+	    	AND ADDRESS_LOCAL = #{ADDRESS_LOCAL}
+	    </if>
+
+	    <if test="SCHOOL_TYPE != ''">
+	    	AND SCHOOL_TYPE = #{SCHOOL_TYPE}
+	    </if>
+	    
+	    <if test="SCHOOL_YEAR != ''">
+	    	AND SCHOOL_YEAR = #{SCHOOL_YEAR}
+	    </if>
+	    
+	    <if test="FILE_TYPE != ''">
+	    	AND FILE_TYPE = ${FILE_TYPE}
+	    </if> 
+	    
+	     <if test="SEARCH_TEXT != ''">
+		     <if test="SEARCH_TYPE == 'ALL'">
+		    	AND (
+		    		NAME LIKE '%${SEARCH_TEXT}%' 
+		    		OR  SEX LIKE '%${SEARCH_TEXT}%'
+		    		OR  SCHOOL_NAME LIKE '%${SEARCH_TEXT}%'
+		    		OR  SCHOOL_YEAR LIKE '%${SEARCH_TEXT}%'
+		    		OR  ELIGIBILITY LIKE '%${SEARCH_TEXT}%'
+		    		OR  PHONE LIKE '%${SEARCH_TEXT}%'
+		    		) 
+		    </if>
+		    <if test="SEARCH_TYPE != 'ALL'">
+	    		 AND ${SEARCH_TYPE} LIKE '%${SEARCH_TEXT}%'
+	    	</if>
+	    	
+	    </if>
+	    
+	     <if test="LO_TYPE == 'TRUE'">
+	    	AND ADDRESS_LOCAL IN 
+		    <foreach collection="LO_LIST" item="local" open="(" close=")" separator=",">
+		    	#{local}
+		    </foreach>
+	    </if>
+	    <if test="UP != ''">
+	    	<if test="UP == 'SCHOOL_YEAR'">
+	    		order by ABS(${UP}) asc
+	    	</if>
+	    	<if test="UP != 'SCHOOL_YEAR'">
+	    		order by ${UP} asc
+	    	</if>
+	    </if>
+	    <if test="DOWN != ''">
+	    	<if test="DOWN == 'SCHOOL_YEAR'">
+	    		order by ABS(${DOWN}) desc
+	    	</if>
+	    	<if test="DOWN != 'SCHOOL_YEAR'">
+	    		order by ${DOWN} desc
+	    	</if>
+	    </if>
+	    <if test="DOWN == '' and UP == ''">
+	    	order by CREATE_TM desc
+	    </if>
+		LIMIT ${LIMIT} OFFSET ${OFFSET}
+	</select>
+		
+	<select id="getListCnt" resultType="int" parameterType="egovframework.kaist.admin.member_re.model.AdminMemberReVo">
+		SELECT count(*) FROM TBL_MEMBER_RE
+		WHERE 1=1 
+		<if test="SEARCH_TEXT == ''">
+		AND !(TYPE = 1 AND LEVEL = 8)
+		</if>
+		<if test="RESULT != ''">
+	    	AND RESULT = #{RESULT}
+	    </if>
+	    <if test="RESULT == ''">
+	    	AND RESULT = 'check'
+	    </if>
+	    
+	    <if test="ADDRESS_LOCAL != ''">
+	    	AND ADDRESS_LOCAL = #{ADDRESS_LOCAL}
+	    </if>
+
+	    <if test="SCHOOL_TYPE != ''">
+	    	AND SCHOOL_TYPE = #{SCHOOL_TYPE}
+	    </if>
+	    
+	    <if test="SCHOOL_YEAR != ''">
+	    	AND SCHOOL_YEAR = #{SCHOOL_YEAR}
+	    </if>
+	    
+	    <if test="FILE_TYPE != ''">
+	    	AND FILE_TYPE = ${FILE_TYPE}
+	    </if> 
+	    
+	     <if test="SEARCH_TEXT != ''">
+		     <if test="SEARCH_TYPE == 'ALL'">
+		    	AND (
+		    		NAME LIKE '%${SEARCH_TEXT}%' 
+		    		OR  SEX LIKE '%${SEARCH_TEXT}%'
+		    		OR  SCHOOL_NAME LIKE '%${SEARCH_TEXT}%'
+		    		OR  SCHOOL_YEAR LIKE '%${SEARCH_TEXT}%'
+		    		OR  ELIGIBILITY LIKE '%${SEARCH_TEXT}%'
+		    		OR  PHONE LIKE '%${SEARCH_TEXT}%'
+		    		) 
+		    </if>
+		    <if test="SEARCH_TYPE != 'ALL'">
+	    		 AND ${SEARCH_TYPE} LIKE '%${SEARCH_TEXT}%'
+	    	</if>
+	    </if>
+	    <if test="LO_TYPE == 'TRUE'">
+	    	AND ADDRESS_LOCAL IN 
+		    <foreach collection="LO_LIST" item="local" open="(" close=")" separator=",">
+		    	#{local}
+		    </foreach>
+	    </if>
+	</select>
+	
+	<!-- 접수자 정보 GET -->
+	<select id="getMemberReView" resultType="egovframework.kaist.admin.member_re.model.AdminMemberReVo" parameterType="egovframework.kaist.admin.member_re.model.AdminMemberReVo">
+		SELECT * 
+		FROM TBL_MEMBER_RE 
+		WHERE TYPE = #{TYPE} 
+		AND NAME = #{NAME}
+		AND BIRTH = #{BIRTH}
+	</select>
+	
+	<!-- 유형1 접수자 관련 정보 GET -->
+	<select id="getMatchingMemberReView" resultType="egovframework.kaist.admin.member_re.model.AdminMemberReVo" parameterType="egovframework.kaist.admin.member_re.model.AdminMemberReVo">
+		SELECT * 
+		FROM TBL_MEMBER_RE 
+		WHERE MATCHING = #{MATCHING}
+		AND LEVEL = #{LEVEL}
+	</select>
+	
+	<select id="getMemberReMatchingIdxView" resultType="string" parameterType="egovframework.kaist.admin.member_re.model.AdminMemberReVo" >
+		SELECT IDX
+		FROM TBL_MEMBER_RE
+		WHERE MATCHING = #{MATCHING}
+		AND LEVEL = #{LEVEL}
+	</select>
+	
+	<!-- 지원 관련 파일 등록명 변경 -->
+	<update id="setMemberReFileNameChange" parameterType="egovframework.kaist.admin.member_re.model.AdminDcmntFileVo">
+		UPDATE TBL_MEMBER_RE_FILE
+		SET MEMBER_NAME = #{MEMBER_NAME}
+		WHERE MEMBER_IDX = #{MEMBER_IDX}
+	</update>
+	
+	<!-- 지원서 정보 수정 -->
+	<update id="setMemberReUpdate" parameterType="egovframework.kaist.admin.member_re.model.AdminMemberReVo">
+		UPDATE TBL_MEMBER_RE 
+		SET 
+			NAME= #{NAME}, 
+			SEX= #{SEX}, 
+			SCHOOL_TYPE= #{SCHOOL_TYPE},
+			SCHOOL_NAME= #{SCHOOL_NAME}, 
+			SCHOOL_YEAR= #{SCHOOL_YEAR},
+			SCHOOL_GROUP= #{SCHOOL_GROUP},
+			
+			BIRTH= #{BIRTH}, 
+			ZIPCODE= #{ZIPCODE}, 
+			ADDRESS= #{ADDRESS}, 
+			ADDRESS_DETAIL= #{ADDRESS_DETAIL}, 
+			EXP_DATA = #{EXP_DATA},
+			EXP_TYPE = #{EXP_TYPE},
+			PHONE= #{PHONE},
+			EMAIL= #{EMAIL}, 
+
+			ELIGIBILITY= #{ELIGIBILITY},
+			SELF_INTR= #{SELF_INTR}
+			
+		WHERE
+			IDX= #{IDX} 
+	</update>
+	
+	<!-- 지원서 정보 삭제 - 유형 1 -->
+	<delete id="setMemberReDeleteMatching" parameterType="egovframework.kaist.admin.member_re.model.AdminMemberReVo">
+		DELETE FROM TBL_MEMBER_RE WHERE TYPE = #{TYPE} AND MATCHING = #{MATCHING}
+	</delete>
+	
+	<!-- 지원서 정보 삭제 - 유형 2 , 3 -->
+	<delete id="setMemberReDeleteView" parameterType="egovframework.kaist.admin.member_re.model.AdminMemberReVo">
+		DELETE FROM TBL_MEMBER_RE WHERE TYPE = #{TYPE} AND IDX = #{IDX}
+	</delete>
+	
+	<!-- 서류확인 -->
+	<update id="setDcmntUpdate" parameterType="egovframework.kaist.admin.member_re.model.AdminMemberReVo">
+		UPDATE TBL_MEMBER_RE 
+		SET
+			DCMNT_CHECK= #{DCMNT_CHECK},
+		WHERE
+			IDX = #{IDX} 
+	</update>
+	
+	<!-- 서류 수정 -->
+	<update id="setDcmntCheck" parameterType="egovframework.kaist.admin.dcmnt.model.DcmntVo">
+		UPDATE TBL_MEMBER_RE
+		SET DCMNT_CHECK =#{DCMNT_CHECK}
+		WHERE IDX =#{MEMBER_IDX}
+	</update>
+	
+	<!-- 서류 목록 삭제 -->
+	<delete id="setMemberReDeleteFileIdx" parameterType="string">
+		DELETE 
+		FROM TBL_MEMBER_RE_FILE 
+		WHERE MEMBER_IDX = #{value}
+	</delete>
+	
+	<!-- 신입생 지원 설정 확인(수) -->
+	<select id="getConfigCount" resultType="int" parameterType="egovframework.kaist.admin.MemberConfigVo">
+		SELECT COUNT(*)
+		FROM TBL_MEMBER_CONFIG
+		WHERE YEAR = #{YEAR}
+		AND TITLE = '신입생선발'
+	</select>
+	
+	<!-- 신입생 지원 설정 정보 가져오기 -->
+	<select id="getConfig" resultType="egovframework.kaist.admin.MemberConfigVo" parameterType="egovframework.kaist.admin.MemberConfigVo">
+		SELECT *
+		FROM TBL_MEMBER_CONFIG
+		WHERE YEAR = #{YEAR}
+		AND TYPE = #{TYPE}
+	</select>
+	
+	<!-- 신입생 지원 설정 입력 -->
+	<insert id="setMemberReConfig" parameterType="egovframework.kaist.admin.MemberConfigVo">
+		INSERT INTO TBL_MEMBER_CONFIG (TITLE , TYPE , STATUS , YEAR , START_TM , END_TM , MEMO)
+		VALUES(#{TITLE} , #{TYPE} , 'TRUE' , #{YEAR} , #{START_TM} , #{END_TM} , #{MEMO})
+	</insert>
+	
+	<!-- 신입생 지원 설정 중단 -->
+	<update id="setConfigStat" parameterType="egovframework.kaist.admin.MemberConfigVo">
+		UPDATE TBL_MEMBER_CONFIG SET STATUS = #{STATUS}
+		WHERE TITLE = #{TITLE} AND YEAR = #{YEAR}
+	</update>
+	
+	<!-- 신입생 지원 설정 수정 -->
+	<update id="setConfigUpdate" parameterType="egovframework.kaist.admin.MemberConfigVo">
+		UPDATE TBL_MEMBER_CONFIG SET START_TM = #{START_TM} , END_TM = #{END_TM}
+		WHERE TITLE = #{TITLE} AND YEAR = #{YEAR} AND TYPE = #{TYPE}
+	</update>
+	
+	<!-- 신입생 지원 설정 삭제 -->
+	<delete id="DelConfig" parameterType="egovframework.kaist.admin.MemberConfigVo">
+		DELETE FROM TBL_MEMBER_CONFIG
+		WHERE YEAR = #{YEAR} AND (TYPE = 1 OR TYPE = 2)
+	</delete>
+
+	<!-- 지원자 합격 -->
+	<update id="setMemberRePass" parameterType="egovframework.kaist.admin.member_re.model.AdminMemberReVo">
+		UPDATE TBL_MEMBER_RE
+		SET RESULT = 'pass'
+		WHERE IDX = #{IDX}
+	</update>
+	
+	<!-- 지원자 합격 -->
+	<update id="setMemberRePassDown" parameterType="egovframework.kaist.admin.member_re.model.AdminMemberReVo">
+		UPDATE TBL_MEMBER_RE
+		SET RESULT = 'check'
+		WHERE IDX = #{IDX}
+	</update>
+	
+	<!-- 신입생 선발 모듈 - 신규 회원 아이디 발급 -->
+	<update id="setMemberReNewMemberId" parameterType="egovframework.kaist.admin.member_re.model.AdminMemberReVo">
+		UPDATE TBL_MEMBER_RE
+		SET MEMBER_ID = #{MEMBER_ID} , PASSWORD = #{PASSWORD}
+		WHERE IDX = #{IDX}
+	</update>
+	
+	<!-- 신입생 선발 모듈 - 합격자 매칭 리스트 가져오기 -->
+	<select id="getMatchingAllList" resultType="hashMap">
+		SELECT * FROM TBL_MEMBER_RE 
+		WHERE result = 'pass' 
+		AND MATCHING IS not null 
+		ORDER BY MATCHING , LEVEL DESC
+	</select>
+	
+	<!-- 신입생 선발 모듈 - 신규 회원 아이디 발급 -->
+	<update id="setMemberReNewMemberIdDis" parameterType="egovframework.kaist.admin.member_re.model.AdminMemberReVo">
+		UPDATE TBL_MEMBER_RE
+		SET MEMBER_ID = #{MEMBER_ID} , PASSWORD = #{PASSWORD}
+		WHERE NAME LIKE '${NAME}%'
+		AND BIRTH = #{BIRTH}
+	</update>
+	
+	<!-- 매칭 등록 유형 1 분들 매칭 프로그램 -->
+	<insert id="setMatching" parameterType="egovframework.kaist.admin.matching.model.AdminMatchingVo">
+		INSERT INTO TBL_MATCHING (MEMBER_ID , PROFESSOR_MEMBER_ID , SUPPORT_GROUP , YEAR , SCHOOL_NAME , SCHOOL_GROUP ,CREATE_TM , UPDATE_TM)
+		VALUES (#{MEMBER_ID} , #{PROFESSOR_MEMBER_ID} , #{SUPPORT_GROUP} , #{YEAR} , #{SCHOOL_NAME} , #{SCHOOL_GROUP} , now() , now())
+	</insert>
+	
+	<!-- 신입생 선발 서류 링크 확인 -->
+	<select id="getFileLinkCheck" parameterType="egovframework.kaist.admin.member_re.model.AdminDcmntFileVo" resultType="String">
+		SELECT LINK FROM TBL_MEMBER_RE_FILE
+		WHERE MEMBER_NAME = #{MEMBER_NAME} AND BIRTH = #{BIRTH} AND NAME = #{NAME}
+	</select>
+	
+	<!-- 신입생 선발 엑셀 멘토 찾기 -->
+	<select id="getMatchingMentoViewCnt" parameterType="egovframework.kaist.admin.member_re.model.AdminMemberReVo" resultType="int">
+		SELECT COUNT(*) FROM TBL_MEMBER_RE
+		WHERE 1=1
+		AND TYPE = #{TYPE}
+		AND LEVEL = '8'
+		AND MATCHING = #{MATCHING}
+	</select>
+	
+	<!-- 신입생 선발 엑셀 멘토 찾기 -->
+	<select id="getMatchingMentoView" parameterType="egovframework.kaist.admin.member_re.model.AdminMemberReVo" resultType="egovframework.kaist.admin.member_re.model.AdminMemberReVo">
+		SELECT * FROM TBL_MEMBER_RE
+		WHERE 1=1
+		AND TYPE = #{TYPE}
+		AND LEVEL = '8'
+		AND MATCHING = #{MATCHING}
+	</select>
+	
+</mapper>

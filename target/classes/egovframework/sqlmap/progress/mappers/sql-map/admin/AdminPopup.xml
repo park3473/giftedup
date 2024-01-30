@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="egovframework.kaist.admin.popup.service.impl.AdminPopupMapper">
+	 
+	<select id="getListAll" resultType="hashMap" >
+		SELECT /*AdminBannerMapper*/ * FROM TBL_POPUP order by CREATE_TM desc
+	</select>
+
+	
+	<select id="getList" resultType="hashMap" parameterType="egovframework.kaist.admin.popup.model.AdminPopupVo">
+		SELECT /*AdminBannerMapper*/ * FROM TBL_POPUP
+		WHERE 1=1 
+	    
+		order by UPDATE_TM desc
+		
+		LIMIT ${LIMIT} OFFSET ${OFFSET}
+	</select>
+	
+	<select id="getListStartEndTM" resultType="hashMap" parameterType="egovframework.kaist.admin.popup.model.AdminPopupVo">
+		SELECT /*AdminBannerMapper*/ * FROM TBL_POPUP
+		WHERE 1=1 
+		 <![CDATA[AND  now() > date_format(START_TM, '%Y-%m-%d 00:00:00')  AND   now() < date_format(END_TM, '%Y-%m-%d 23:59:59') ]]>
+		AND USEKEY = 1
+		order by UPDATE_TM desc
+	</select>
+	
+		
+	<select id="getListCnt" resultType="int" parameterType="egovframework.kaist.admin.popup.model.AdminPopupVo">
+		SELECT /*AdminBannerMapper*/ count(*) FROM TBL_POPUP
+		WHERE 1=1 
+
+	</select>
+
+	<select id="getView" resultType="egovframework.kaist.admin.popup.model.AdminPopupVo" parameterType="String">
+		SELECT /*AdminBannerMapper*/ * FROM TBL_POPUP where IDX = #{value};
+	</select>
+
+	<insert id="setInsert"	parameterType="egovframework.kaist.admin.popup.model.AdminPopupVo">
+		INSERT INTO /*AdminBannerMapper*/ TBL_POPUP (
+			IDX, 
+			START_TM, 
+			END_TM, 
+			USEKEY, 
+			TYPE, 
+			FILES,
+			WIDTH, 
+			HEIGHT, 
+			POINT_X, 
+			POINT_Y, 
+			LINKS,
+			LINKS_TYPE,  
+			TITLE, 
+			CONTENT, 
+			CREATE_TM, 
+			UPDATE_TM 
+		) VALUES (
+			#{IDX}, 
+			#{START_TM}, 
+			#{END_TM}, 
+			#{USEKEY}, 
+			#{TYPE}, 
+			#{FILES},
+			#{WIDTH}, 
+			#{HEIGHT}, 
+			#{POINT_X}, 
+			#{POINT_Y}, 
+			#{LINKS},
+			#{LINKS_TYPE},  
+			#{TITLE}, 
+			#{CONTENT}, 
+			now(), 
+			now() 
+		) 
+	</insert>
+
+	<update id="setUpdate"	parameterType="egovframework.kaist.admin.popup.model.AdminPopupVo">
+		UPDATE /*AdminBannerMapper*/ TBL_POPUP SET 
+			START_TM= #{START_TM}, 
+			END_TM= #{END_TM}, 
+			USEKEY= #{USEKEY}, 
+			TYPE= #{TYPE}, 
+			WIDTH= #{WIDTH}, 
+			HEIGHT= #{HEIGHT}, 
+			
+			<if test="FILES != ''"> 
+			FILES= #{FILES}, 
+			</if>
+			
+			POINT_X= #{POINT_X}, 
+			POINT_Y= #{POINT_Y}, 
+			LINKS= #{LINKS},
+			LINKS_TYPE= #{LINKS_TYPE},  
+			TITLE= #{TITLE}, 
+			CONTENT= #{CONTENT}, 
+			UPDATE_TM= now() 
+		WHERE
+			IDX = #{IDX} 
+	</update>
+	
+	
+	<delete id="setDelete"	parameterType="egovframework.kaist.admin.popup.model.AdminPopupVo">
+		DELETE FROM /*AdminBannerMapper*/
+			TBL_POPUP
+		WHERE IDX =  #{IDX} 
+	</delete>
+
+    
+</mapper>

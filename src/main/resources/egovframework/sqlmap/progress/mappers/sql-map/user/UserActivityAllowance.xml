@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="egovframework.kaist.user.activity_allowance.service.impl.UserActivityAllowanceMapper">
+	 
+	<select id="getListAll" resultType="hashMap" >
+		SELECT /*UserActivityAllowanceMapper*/ * FROM TBL_ACTIVITY_ALLOWANCE order by CREATE_TM desc
+	</select>
+
+	
+	<select id="getList" resultType="hashMap" parameterType="egovframework.kaist.user.activity_allowance.model.UserActivityAllowanceVo">
+		SELECT /*UserActivityAllowanceMapper*/ * FROM TBL_ACTIVITY_ALLOWANCE
+		WHERE 1=1 
+		<if test="MEMBER_ID != ''">
+	    	AND MEMBER_ID = #{MEMBER_ID}
+	    </if>
+	    
+		order by UPDATE_TM desc
+		
+		LIMIT ${LIMIT} OFFSET ${OFFSET}
+	</select>
+	
+	
+		
+	<select id="getListCnt" resultType="int" parameterType="egovframework.kaist.user.activity_allowance.model.UserActivityAllowanceVo">
+		SELECT /*UserActivityAllowanceMapper*/ count(*) FROM TBL_ACTIVITY_ALLOWANCE
+		WHERE 1=1 
+		<if test="MEMBER_ID != ''">
+	    	AND "MEMBER_ID" = #{MEMBER_ID}
+	    </if>
+	</select>
+
+	<select id="getView" resultType="egovframework.kaist.user.activity_allowance.model.UserActivityAllowanceVo" parameterType="String">
+		SELECT /*UserActivityAllowanceMapper*/ * FROM TBL_ACTIVITY_ALLOWANCE where MEMBER_ID = #{value};
+	</select>
+
+	<insert id="setInsert"	parameterType="egovframework.kaist.user.activity_allowance.model.UserActivityAllowanceVo">
+		INSERT INTO /*UserActivityAllowanceMapper*/ TBL_ACTIVITY_ALLOWANCE (
+			IDX, 
+			MEMBER_ID, 
+			MEMBER_NUMBER, 
+			BANK_NAME, 
+			BANK_NUMBER, 
+			BANK_ACCOUNT, 
+			FILES, 
+			STATUS, 
+			CREATE_TM, 
+			UPDATE_TM ,
+			MEMBER_NAME,
+			PHONE,
+			SCHOOL_NAME,
+			SEX
+		) VALUES (
+			0, 
+			#{MEMBER_ID}, 
+			#{MEMBER_NUMBER}, 
+			#{BANK_NAME}, 
+			#{BANK_NUMBER}, 
+			#{BANK_ACCOUNT}, 
+			#{FILES}, 
+			0, 
+			now(), 
+			now() ,
+			#{MEMBER_NAME},
+			#{PHONE},
+			#{SCHOOL_NAME},
+			#{SEX} 
+		) 
+	</insert>
+
+	<update id="setUpdate"	parameterType="egovframework.kaist.user.activity_allowance.model.UserActivityAllowanceVo">
+		UPDATE /*UserActivityAllowanceMapper*/ TBL_ACTIVITY_ALLOWANCE SET 
+			MEMBER_ID= #{MEMBER_ID}, 
+			MEMBER_NUMBER= #{MEMBER_NUMBER}, 
+			BANK_NAME= #{BANK_NAME}, 
+			BANK_NUMBER= #{BANK_NUMBER}, 
+			BANK_ACCOUNT= #{BANK_ACCOUNT}, 
+			<if test="FILES != ''">
+			FILES= #{FILES},
+			</if>
+			STATUS= #{STATUS}, 
+			CREATE_TM= now(), 
+			UPDATE_TM= now(),
+			PHONE=#{PHONE},
+			SCHOOL_NAME=#{SCHOOL_NAME},
+			SEX=#{SEX}
+		WHERE
+			IDX = #{IDX} 
+	</update>
+	
+	
+	<delete id="setDelete"	parameterType="egovframework.kaist.user.activity_allowance.model.UserActivityAllowanceVo">
+		DELETE FROM /*UserActivityAllowanceMapper*/
+			TBL_ACTIVITY_ALLOWANCE
+		WHERE IDX =  #{IDX} 
+	</delete>
+
+    	<update id="setUpdateTypeToText"	parameterType="egovframework.kaist.user.activity_allowance.model.UserActivityAllowanceVo">
+		UPDATE /*UserMemberMapper*/ TBL_ACTIVITY_ALLOWANCE SET 
+			${SEARCH_TYPE} = #{SEARCH_TEXT},
+			UPDATE_TM = now()
+		WHERE
+			IDX = #{IDX} 
+	</update>
+</mapper>

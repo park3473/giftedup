@@ -1,0 +1,2283 @@
+/*찾아가는 영재교육 프로그램*/
+#new_sub_con .program_wrap {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: table;
+}
+
+#new_sub_con .program {
+    width: -webkit-calc((100% - 100px) / 2);
+    width: calc((100% - 100px) / 2);
+    float: left;
+}
+
+#new_sub_con .program:first-of-type {
+    margin-right: 100px;
+}
+
+#new_sub_con .program .title {
+    width: 100%;
+    display: table;
+    margin-bottom: 1.5rem;
+}
+
+#new_sub_con .program .title > span {
+    margin-right: .5rem;
+    display: block;
+    width: 5px;
+    float: left;
+}
+
+#new_sub_con .program .title > span > img {
+    vertical-align: middle;
+}
+
+#new_sub_con .program .title > p {
+    display: inline-block;
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 0;
+    color: #000;
+    width: -webkit-calc((100% - 10px) - 5px);
+    width: calc((100% - 10px) - 5px);
+    float: left;
+    text-align: justify;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+#new_sub_con .program .txt {
+    text-align: justify;
+    width: 100%;
+    position: relative;
+    display: table;
+    margin-bottom: 20px;
+}
+
+#new_sub_con .program .txt:last-of-type {
+    margin-bottom: 0;
+}
+
+#new_sub_con .program .txt > li {
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+#new_sub_con .program .txt > li:last-of-type {
+    margin-bottom: 0;
+}
+
+#new_sub_con .program .txt > li > p {
+    display: table;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #009dc4;
+    width: 80px;
+    margin-bottom: 0;
+    font-weight: 400;
+    float: left;
+}
+
+#new_sub_con .program .txt > .pro_list > p {
+    width: 220px;
+    color: #009DC3;
+    font-weight: 400;
+}
+
+#new_sub_con .program .txt > .pro_list_02 > p {
+    width: 100%;
+    margin-bottom: 3px;
+}
+
+#new_sub_con .program .txt > .pro_list_03 > p {
+    width: auto;
+    margin-right: 1rem;
+}
+
+#new_sub_con .program .txt > .pro_list > span {
+    width: -webkit-calc(100% - 220px);
+    width: calc(100% - 220px);
+}
+
+#new_sub_con .program .txt > .pro_list_02 > span {
+    width: 100%;
+}
+
+#new_sub_con .program .txt > li > p > span {
+    display: inline-block;
+    margin-right: .5rem;
+}
+
+#new_sub_con .program .txt > li > p > span img {
+    padding-bottom: 3px;
+}
+
+#new_sub_con .program .txt > li > span {
+    width: -webkit-calc(100% - 100px);
+    width: calc(100% - 100px);
+    float: left;
+    display: block;
+    color: #5c5c5c;
+    font-size: 1rem;
+    font-weight: normal;
+    padding-left: 7px;
+    font-weight: 300;
+    word-break: keep-all;
+}
+
+#new_sub_con .program .mentor_txt > li > p {
+    width: 100px;
+    margin-bottom: .5rem;
+}
+
+#new_sub_con .program .mentor_txt > li > span {
+    width: -webkit-calc(100% - 101px);
+    width: calc(100% - 101px);
+}
+
+#new_sub_con .program .mentor_txt .sub_txt {
+    width: -webkit-calc(100% - 101px) !important;
+    width: calc(100% - 101px) !important;
+}
+
+#new_sub_con .program .txt .txt_ex {
+    width: 100%;
+    margin-left: auto;
+    text-align: justify;
+    color: #e37305;
+}
+
+#new_sub_con .program .txt .txt_ex > p {
+    display: block;
+    float: left;
+    width: 70px;
+    font-size: 1rem;
+    margin-bottom: 0;
+    font-weight: 400;
+}
+
+#new_sub_con .program .txt .txt_ex > span {
+    display: block;
+    float: left;
+    width: -webkit-calc(100% - 71px);
+    width: calc(100% - 71px);
+    font-size: 1rem;
+    padding-left: 7px;
+    font-weight: 300;
+}
+
+#new_sub_con .program .others {
+    width: 100%;
+    display: table;
+    background-color: #a8d2dd;
+    padding: 30px 24px;
+}
+
+#new_sub_con .program .others > li {
+    margin-bottom: .6rem;
+    display: table;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: normal;
+}
+
+#new_sub_con .program .others > li:last-of-type {
+    margin-bottom: 0;
+}
+
+#new_sub_con .program .others > li > span {
+    width: 13px;
+    height: 13px;
+    background-color: #769ea9;
+    display: block;
+    margin-right: .5rem;
+    margin-top: .4rem;
+    float: left;
+}
+
+#new_sub_con .program .others > li > p {
+    float: left;
+    width: -webkit-calc(100% - 21px);
+    width: calc(100% - 21px);
+    margin-bottom: 0;
+}
+
+#new_sub_con .program .txt .sub_txt {
+    width: -webkit-calc(100% - 71px);
+    width: calc(100% - 71px);
+    margin-left: auto;
+    display: table;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    clear: both;
+}
+
+#new_sub_con .program .txt .sub_txt > li {
+    overflow: hidden;
+    color: #769ea9;
+    font-weight: 300;
+}
+
+#new_sub_con .program .txt .sub_txt > li > span {
+    width: 13px;
+    height: 13px;
+    background-color: #769ea9;
+    display: inline-block;
+    margin-right: .5rem;
+}
+
+/*찾아가는 영재교육 프로그램 end*/
+
+
+
+
+@media all and (max-width: 1201px) {
+    #new_sub_con .program {
+        width: -webkit-calc((100% - 51px) / 2);
+        width: calc((100% - 51px) / 2);
+    }
+
+    #new_sub_con .program:first-of-type {
+        margin-right: 50px;
+    }
+}
+
+@media all and (max-width: 1025px) {
+    #new_sub_con .program {
+        width: 100%;
+        margin-bottom: 2rem;
+    }
+
+    #new_sub_con .program:last-of-type {
+        margin-bottom: 0;
+    }
+}
+
+@media all and (max-width: 801px) {
+    #new_sub_con .program .txt > li > p {
+        float: none;
+    }
+
+    #new_sub_con .program .txt > li > span {
+        width: 100% !important;
+    }
+
+    #new_sub_con .program .txt .txt_ex > span {
+        width: 100%;
+        padding-left: 0;
+    }
+}
+
+
+
+
+/*진로상담*/
+#new_sub_con .sub_page_wrap {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+#new_sub_con .sub_page {
+    width: 100%;
+    position: relative;
+}
+
+#new_sub_con .sub_page:first-of-type {
+    margin-bottom: 50px;
+}
+
+#new_sub_con .sub_page .title {
+    width: 100%;
+    display: table;
+    margin-bottom: 1.5rem;
+}
+
+#new_sub_con .sub_page .title > span {
+    margin-right: .5rem;
+    display: block;
+    width: 5px;
+    float: left;
+}
+
+#new_sub_con .sub_page .title > p {
+    display: inline-block;
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 0;
+    color: #000;
+    width: -webkit-calc((100% - 10px) - 5px);
+    width: calc((100% - 10px) - 5px);
+    float: left;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+
+
+/*테이블*/
+#new_sub_con .sub_page .txt {
+    width: 100%;
+    border: 1px solid #dedede;
+    margin-bottom: 25px;
+    table-layout: auto;
+    position: relative;
+}
+
+#new_sub_con .sub_page .board_txt {
+    table-layout: fixed;
+}
+
+#new_sub_con .program .txt > li > .span_wd {
+    width: 100%;
+}
+
+#new_sub_con .sub_page .txt th {
+    text-align: center !important;
+    background-color: #e6ecf8;
+    border-right: 1px solid #dedede;
+    padding: 13px 0;
+    color: #243558;
+    font-size: 1rem;
+    font-weight: 400;
+    border-bottom: 1px solid #dedede;
+}
+
+#new_sub_con .sub_page .txt td {
+    text-align: center;
+    padding: 15px 10px;
+    border-right: 1px solid #dedede;
+    border-bottom: 1px solid #dedede;
+    color: #5c5c5c;
+    font-weight: 300;
+    word-break: break-all;
+    font-size: 0.95rem;
+    line-height: 20px;
+}
+
+#new_sub_con .sub_page .txt td .file_btn_con {
+    margin-bottom: .5rem;
+}
+
+#new_sub_con .sub_page .txt td .file_btn_con:last-of-type {
+    margin-bottom: 0;
+}
+
+#new_sub_con .sub_page .txt td .view_icon {
+    display: none;
+}
+
+#new_sub_con .sub_page .txt td i {
+    color: #009dc4;
+}
+
+#new_sub_con .sub_page .learning_con tr:last-of-type td {
+    border-bottom: 0;
+}
+
+#new_sub_con .sub_page .learning_con tr:last-of-type td > .view_icon {
+    display: none;
+}
+
+#new_sub_con .sub_page .select_table td {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+#new_sub_con .sub_page .project_txt td {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+#new_sub_con .sub_page .txt td label {
+    margin-bottom: 0;
+    margin-right: 1rem;
+}
+
+#new_sub_con .sub_page .txt td label:last-of-type {
+    margin-right: 0;
+}
+
+#new_sub_con .sub_page .txt .td_title {
+    text-align: left;
+    word-spacing: normal;
+    text-overflow: ellipsis;
+    padding-left: 15px;
+    padding-right: 15px;
+    overflow: hidden;
+}
+
+#new_sub_con .sub_page .txt .td_read {
+    word-spacing: normal;
+    text-overflow: ellipsis;
+}
+
+#new_sub_con .sub_page .txt .td_title_h {
+    display: table-cell;
+}
+
+#new_sub_con .sub_page .txt .td_view {
+    display: none;
+}
+
+#new_sub_con .sub_page .txt td > a {
+    color: #5c5c5c;
+    white-space: nowrap;
+    width: auto;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: .3rem;
+    vertical-align: middle;
+}
+
+#new_sub_con .sub_page .txt td .pro_file_btn {
+    padding: 5px 10px;
+    background-color: rgb(240, 240, 240);
+    color: #555;
+    display: inline-block;
+}
+
+#new_sub_con .sub_page .txt td > span {
+    vertical-align: middle;
+    margin-right: .3rem;
+}
+
+#new_sub_con .sub_page .txt td > span > img {
+    vertical-align: top;
+}
+
+#new_sub_con .sub_page .txt td > .notice {
+    display: block;
+    padding: 7px 10px;
+    background-color: #009dc4;
+    color: #fff;
+    border-radius: .3rem;
+}
+
+#new_sub_con .sub_page .txt td > span:last-of-type {
+    margin-right: 0;
+}
+
+#new_sub_con .sub_page .txt td > p {
+    margin-bottom: 0;
+}
+
+#new_sub_con .sub_page .txt td > p > span > img {
+    padding-bottom: 3px;
+}
+
+#new_sub_con .sub_page .txt td .file_name {
+    vertical-align: middle;
+    margin-right: 1rem;
+}
+
+#new_sub_con .sub_page .txt td .file_btn {
+    background-color: #ddd;
+    padding: 5px 15px;
+    font-weight: 400;
+}
+
+#new_sub_con .sub_page .txt td > .icon-box {
+    margin-right: .3rem;
+    vertical-align: middle;
+    display: none;
+}
+
+#new_sub_con .sub_page .txt td > .icon-box:last-of-type {
+    margin-right: 0;
+}
+
+#new_sub_con .sub_page .txt td > a:hover {
+    text-decoration: underline;
+}
+
+#new_sub_con .sub_page .txt .txt_title {
+    text-align: left;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    padding: 25px 20px;
+}
+
+#new_sub_con .sub_page .txt .pic {
+    width: 200px;
+    margin: 0 auto;
+    display: block;
+}
+
+#new_sub_con .sub_page .txt .pic img {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+}
+
+.info_wrap {
+    margin-bottom: 100px;
+}
+
+.info_wrap > .title {
+    padding: 15px 25px;
+    background-color: #d9dfec;
+}
+
+.info_wrap > .title > h2 {
+    color: #009dc4;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0;
+}
+
+.info_table td {
+    text-align: left !important;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+}
+
+.info_table td .pic {
+    margin: 0 !important;
+}
+
+.select_tree::after {
+    content: '';
+    position: absolute;
+    background-image: url(../img/sub/tree.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 270px;
+    height: 299px;
+    display: table;
+    top: -299px;
+    left: 25%;
+    z-index: 500;
+}
+
+#new_sub_con .sub_page .student_list .request_label {
+    display: none;
+}
+
+#new_sub_con .sub_page .picboard .td_area {
+    display: none;
+}
+
+@media all and (max-width: 801px) {
+    .info_wrap .table_scroll {
+        overflow-x: scroll;
+        overflow-y: hidden;
+        width: 1px;
+        min-width: 100%;
+    }
+
+    .info_wrap .table_scroll table {
+        table-layout: auto !important;
+        width: 1200px !important;
+    }
+
+    .info_wrap > .title {
+        padding: 15px 10px
+    }
+}
+
+
+/*테이블 end*/
+
+#new_sub_con .sub_page .txt .number {
+    width: 8%;
+}
+
+#new_sub_con .sub_page .txt .check {
+    width: 4%;
+}
+
+#new_sub_con .sub_page .txt .txt_title {
+    width: 50%;
+}
+
+#new_sub_con .sub_page .txt .views {
+    width: 8%;
+}
+
+#new_sub_con .sub_page .txt .writer {
+    width: 14%;
+}
+
+#new_sub_con .sub_page .txt .date {
+    width: 17%;
+}
+
+#new_sub_con .sub_page .txt .pic_mentor {
+    width: 100%;
+    height: 80px;
+}
+
+#new_sub_con .sub_page .txt .pic_mentor > img {
+    width: auto;
+    max-width: 100%;
+    height: 100%;
+}
+
+/*진로상담 end*/
+
+
+
+/*융합과학프로젝트*/
+
+#new_sub_con .sub_page .project_txt .apply > a {
+    padding: 5px 15px;
+    display: block;
+    background-color: #f8f0cd;
+    border: 1px solid #e2dab6;
+}
+
+#new_sub_con .sub_page .project_txt .vote_end > a {
+    padding: 5px 15px;
+    display: block;
+    background-color: #dedede;
+    border: 1px solid #dedede;
+}
+
+#new_sub_con .sub_page .project_txt .data > a {
+    padding: 5px 15px;
+    display: inline-block;
+    background-color: #f4f4f4;
+    border: 1px solid #dedede;
+    margin-right: 20px;
+}
+
+#new_sub_con .sub_page .project_txt .data > a:last-of-type {
+    margin-right: 0;
+}
+
+/*융합과학프로젝트 end*/
+
+
+
+
+/*융합과학프로젝트 신청하기*/
+#new_sub_con .sub_page .txt .sortation {
+    width: 20%;
+}
+
+#new_sub_con .sub_page .txt .pro_txt {
+    text-align: left !important;
+    padding: 20px 15px;
+}
+
+.student_list .parents label {
+    margin-right: 1rem;
+}
+
+.student_list .parents label:last-of-type {
+    margin-right: 0;
+}
+
+/*융합과학프로젝트 신청하기 end*/
+
+
+
+
+
+
+/*융합과학프로젝트 신청완료*/
+.student_list .pro_cancel > a {
+    padding: 10px 25px;
+    border: 1px solid #dedede;
+    background-color: #f4f4f4;
+}
+
+/*융합과학프로젝트 신청완료 end*/
+
+
+
+
+
+
+/*온라인학습*/
+#new_sub_con .sub_tab {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 50px;
+    display: table;
+    border-bottom: 1px solid #dedede;
+}
+
+#new_sub_con .sub_tab > ul {
+    display: table;
+    margin: 0;
+}
+
+#new_sub_con .sub_tab > ul > li {
+    float: left;
+    background-color: #f4f4f4;
+    border: 1px solid #dedede;
+    border-right: 0;
+    border-bottom: 0;
+}
+
+#new_sub_con .sub_tab > ul > li:last-of-type {
+    border-right: 1px solid #dedede;
+}
+
+#new_sub_con .sub_tab > ul > li > a {
+    display: block;
+    color: #414141;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    font-size: 1rem;
+    font-weight: 300;
+    padding: 20px 40px;
+}
+
+#new_sub_con .sub_tab > ul > .tab_active {
+    background-color: #fff;
+}
+
+#new_sub_con .sub_tab > ul > .tab_active > a {
+    font-weight: 500;
+}
+
+#new_sub_con .sub_page_con {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+#new_sub_con .sub_learning {
+    width: -webkit-calc((100% - 30px) - 205px);
+    width: calc((100% - 30px) - 205px);
+    margin-right: 30px;
+    float: left;
+}
+
+#new_sub_con .sub_ranking {
+    width: 205px;
+    float: left;
+    padding-top: 52px;
+}
+
+#new_sub_con .sub_ranking .ranking_con {
+    border: 1px solid #dae0ec;
+    margin-bottom: 30px;
+}
+
+#new_sub_con .sub_ranking .ranking_con .title {
+    padding: 15px 20px;
+    background-color: #e6ecf8;
+    margin-bottom: 0;
+    display: block;
+    overflow: hidden;
+}
+
+
+#new_sub_con .sub_ranking .ranking_con .title > p {
+    font-size: 1rem;
+    color: #243558;
+    font-weight: 400;
+}
+
+#new_sub_con .sub_ranking .ranking_con .list {
+    width: 100%;
+    padding: 20px;
+}
+
+#new_sub_con .sub_ranking .ranking_con .list > li {
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+#new_sub_con .sub_ranking .ranking_con .list > li:last-of-type {
+    margin-bottom: 0;
+}
+
+#new_sub_con .sub_ranking .ranking_con .list > li > .number {
+    width: 19px;
+    height: 19px;
+    background-color: #bbb;
+    position: relative;
+    text-align: center;
+    line-height: 19px;
+    color: #fff;
+    display: inline-block;
+    font-size: 0.85rem;
+    font-weight: 300;
+    margin-right: 1rem;
+    float: left;
+}
+
+#new_sub_con .sub_ranking .ranking_con .list > li > .number_one {
+    background-color: #e1ce80;
+}
+
+#new_sub_con .sub_ranking .ranking_con .list > li > .number_two {
+    background-color: #009dc4;
+}
+
+#new_sub_con .sub_ranking .ranking_con .list > li > .name {
+    display: inline-block;
+    float: left;
+    font-size: 0.85rem;
+    line-height: 19px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    color: #5c5c5c;
+}
+
+#new_sub_con .sub_ranking .ranking_con .list > li > .name > a {
+    color: #5c5c5c;
+}
+
+#new_sub_con .sub_ranking .ranking_con .list > li > .icon {
+    display: inline-block;
+    float: right;
+    line-height: 19px;
+    padding-right: 10px;
+    font-size: 0.7rem;
+    text-align: left;
+}
+
+#new_sub_con .sub_ranking .ranking_con .list > li > .icon > img {
+    margin-right: .2rem;
+}
+
+#new_sub_con .sub_ranking .ranking_con .list > li > .number::after {
+    content: '';
+    background-image: url(../img/ranking_icon_bg.png);
+    background-repeat: no-repeat;
+    -webkit-background-size: contain;
+    background-size: contain;
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    top: 1px;
+    left: 1px;
+}
+
+#new_sub_con .sub_ranking .comments_con .name {
+    width: -webkit-calc(100% - 70px);
+    width: calc(100% - 70px);
+}
+
+#new_sub_con .sub_ranking .popular_con .name {
+    width: -webkit-calc(100% - 40px);
+    width: calc(100% - 40px);
+}
+
+/*온라인학습 end*/
+
+
+
+
+/*체험 진로탐색 프로그램*/
+.program_con {
+    margin-bottom: 70px;
+}
+
+.program_con:last-of-type {
+    margin-bottom: 0;
+}
+
+.program_wrap .career_txt p {
+    color: #009dc4;
+}
+
+#new_sub_con .program .career_txt > li > .rectangle {
+    width: 13px;
+    height: 13px;
+    background-color: #769ea9;
+    display: inline-block;
+    margin-right: .5rem;
+    vertical-align: top;
+    margin-top: 6px;
+}
+
+#new_sub_con .program .career_txt > li > span {
+    display: inline-block !important;
+    float: left;
+    padding-left: 0;
+}
+
+#new_sub_con .program .career_txt > li > span b {
+    font-weight: 500;
+}
+
+/*체험 진로탐색 프로그램 end*/
+
+
+
+
+
+/*또래 멘토링*/
+.mentor_con {
+    width: 100% !important;
+    margin-right: 0;
+    margin-bottom: 50px;
+}
+
+.mentor_sub_txt {
+    width: 100%;
+    display: table;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    clear: both;
+}
+
+#new_sub_con .program .mentor_txt .sub_txt {
+    width: -webkit-calc(100% - 71px);
+    width: calc(100% - 71px);
+    margin-left: auto;
+    display: table;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    clear: both;
+    display: table;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    clear: both;
+}
+
+.mentor_sub_txt > li {
+    overflow: hidden;
+    color: #769ea9;
+    font-weight: 300;
+    margin-bottom: 30px;
+}
+
+.mentor_sub_txt > li:last-of-type {
+    margin-bottom: 0;
+}
+
+.mentor_sub_txt > li > span {
+    width: 13px;
+    height: 13px;
+    background-color: #769ea9;
+    display: inline-block;
+    margin-right: .5rem;
+}
+
+.table_wrap > .title {
+    padding: 15px 25px;
+    background-color: #d9dfec;
+    margin-bottom: 0 !important;
+}
+
+.table_wrap > .title > h2 {
+    color: #009dc4;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0;
+}
+
+.table_wrap > .title > h2 > span {
+    color: #5c5c5c;
+    font-weight: 300;
+}
+
+.intro_ob {
+    margin-bottom: .5rem !important;
+    font-weight: 600 !important;
+    display: table !important;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content !important;
+}
+
+/*또래 멘토링 end*/
+
+
+/*창의융합캠프*/
+.intro_box > p {
+    width: 100% !important;
+    color: #5c5c5c !important;
+    font-weight: 300 !important;
+}
+
+/*창의융합캠프 end*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*소개 정리 css*/
+#new_sub_con .intro_con {
+    width: 1px;
+    min-width: 100%;
+    overflow: hidden;
+    margin-bottom: 50px;
+}
+
+#new_sub_con .intro_con .txt_con_box {
+    padding: 15px;
+    background-color: #f7f7f7;
+    text-align: justify;
+    overflow: hidden;
+    margin-bottom: 5rem;
+}
+
+#new_sub_con .intro_con .txt_con_box > p {
+    color: #5c5c5c;
+    display: inline-block !important;
+    float: left;
+    width: auto;
+    padding-left: 0;
+    font-weight: 300;
+}
+
+#new_sub_con .intro_con .txt_con_box > p b {
+    font-weight: 500;
+}
+
+#new_sub_con .intro_con:last-of-type {
+    margin-bottom: 0;
+}
+
+#new_sub_con .intro_con p {
+    margin-bottom: 0;
+}
+
+#new_sub_con .intro_txt {
+    margin-bottom: 1rem;
+}
+
+#new_sub_con .intro_txt > li {
+    overflow: hidden;
+    margin-bottom: .5rem;
+}
+
+#new_sub_con .intro_txt > li > p {
+    color: #009dc4;
+    display: inline-block;
+    margin-right: .3rem;
+    font-weight: 400;
+}
+
+#new_sub_con .intro_txt > li > span {
+    font-weight: 300;
+    color: #5c5c5c;
+}
+
+#new_sub_con .intro_txt > .title {
+    margin-bottom: .5rem;
+}
+
+#new_sub_con .intro_txt > .title > span {
+    color: #009dc4;
+    margin-right: .5rem;
+    display: inline-block;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    font-size: 1.2rem;
+}
+
+#new_sub_con .intro_txt > .title > p {
+    font-size: 1.2rem;
+    display: inline-block;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+}
+
+#new_sub_con .intro_sub_txt {
+    width: 100%;
+    clear: both;
+    padding-top: 5px;
+    padding-left: 1rem;
+}
+
+#new_sub_con .intro_sub_txt > li {
+    margin-bottom: .5rem;
+    overflow: hidden;
+    color: #769ea9;
+    font-weight: 300;
+}
+
+#new_sub_con .intro_sub_txt > li > span {
+    width: 13px;
+    height: 13px;
+    background-color: #769ea9;
+    display: inline-block;
+    margin-right: .5rem;
+    vertical-align: top;
+    margin-top: 6px;
+}
+
+#new_sub_con .intro_sub_ob {
+    padding-left: 1rem;
+}
+
+#new_sub_con .intro_sub_ob > li {
+    color: #5c5c5c;
+}
+
+/*소개 정리 css end*/
+
+
+
+/*글쓰기*/
+.input_title {
+    width: -webkit-calc(100% - 25%);
+    width: calc(100% - 25%);
+}
+
+.info_table .content {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    font-weight: 400;
+}
+
+.info_table .content table {
+    border: 1px solid #dedede;
+    width: auto;
+    table-layout: auto;
+}
+
+/*글쓰기 end*/
+
+
+
+
+/*설문조사 view*/
+.member_register_wrap {
+    width: 100%;
+    height: auto;
+    position: relative;
+    background-color: #fff;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.member_input_wrap {
+    width: 100%;
+    padding: 20px 0;
+}
+
+.member_input_wrap .title > h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #5c5c5c;
+}
+
+.stats_box {
+    margin-top: 17px;
+    padding: 30px;
+    background: #f4f4f4;
+    border: 1px solid #dedede;
+}
+
+.stats_box_wrap {
+    margin-bottom: 28px;
+}
+
+.starts_view_title > span {
+    vertical-align: middle;
+    display: inline-block;
+    margin-right: .5rem;
+    font-size: 1.2rem;
+}
+
+.starts_view_title .span_b {
+    font-weight: 600;
+}
+
+.stats_box_wrap > h6 {
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+.stats_box_q {
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+    font-weight: 400;
+}
+
+.stats_box_a {
+    font-size: 0.9rem;
+    font-weight: 300;
+    overflow: hidden;
+}
+
+.stats_box_a > li {
+    display: inline-block;
+    width: 100%;
+    margin-bottom: .5rem;
+    float: left;
+    padding-left: 25px;
+}
+
+.stats_box_a > li > span {
+    margin-left: .5rem;
+    font-weight: 400;
+}
+
+.stats_box_a > li > input {
+    margin-right: .5rem;
+}
+
+.stats_qs {
+    margin-bottom: 40px;
+}
+
+.stats_box > div:last-child {
+    margin-bottom: 0;
+}
+
+.stats_box_wrap > h6 > span {
+    margin-right: 10px;
+}
+
+.stats_btn_area > div > a,
+.stats_btn_area > ul > li {
+    width: 110px !important;
+}
+
+/*설문조사 view end*/
+
+
+
+/*마이페이지*/
+/*포트폴리오*/
+
+.my_th {
+    width: 15%;
+}
+
+.my_td {
+    width: 35%;
+}
+
+
+.member_seach_form {
+    width: 100%;
+    display: table;
+    border: 1px solid #dedede;
+    background-color: #fff;
+    padding: 25px;
+    margin-bottom: 30px;
+}
+
+.member_01_wrap {
+    border: 1px solid #dedede;
+    background-color: #fff;
+    padding: 15px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.member_01_wrap .page {
+    margin-right: 30px;
+    display: inline-block;
+}
+
+.member_01_wrap input {
+    height: 35px;
+    line-height: 35px;
+    font-size: 0.75rem;
+    color: #464646;
+    border: 1px solid #dedede;
+    vertical-align: middle;
+    padding-left: 10px;
+}
+
+.member_01_wrap select {
+    width: 134px;
+    height: 35px;
+    border: 1px solid #dedede;
+    line-height: 35px;
+    font-size: 0.9rem;
+    color: #464646;
+    padding-left: 10px;
+    vertical-align: middle;
+    font-weight: 300;
+}
+
+.member_01_wrap button {
+    padding: 0 25px;
+    background-color: #d5d5d5;
+    border: 1px solid #c4c4c4;
+    vertical-align: middle;
+    height: 35px;
+    line-height: 35px;
+    color: #464646;
+    font-size: 0.9rem;
+    font-weight: 300;
+}
+
+.member_01_wrap .page > span {
+    font-size: 0.9rem;
+    font-weight: 300;
+    vertical-align: middle;
+}
+
+.member_01_wrap .page_seach {
+    display: inline-block;
+}
+
+.member_01_wrap .page_seach select {
+    margin-right: 9px;
+}
+
+.member_01_wrap .page_seach input {
+    margin-right: 9px;
+}
+
+.member_01_wrap .page_seach button {
+    margin-right: 9px;
+}
+
+.member_01_wrap .page_seach > a {
+    margin-right: .5rem;
+}
+
+.member_01_wrap .page_seach > a > img {
+    vertical-align: middle;
+}
+
+.member_02_wrap {
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.w_btn {
+    font-size: 0.9rem;
+    font-weight: 300;
+    height: 35px;
+    line-height: 35px;
+    padding: 0 25px;
+    background-color: #fff;
+    border: 1px solid #d4d4d4;
+    vertical-align: middle;
+    display: inline-block;
+    color: #464646;
+}
+
+.td_list_btn {
+    background-color: #fff;
+    border: 1px solid #d4d4d4;
+    color: #464646;
+    text-align: center;
+    padding: 10px 15px;
+    line-height: normal;
+    font-size: 0.9rem;
+    font-weight: 300;
+    margin: 0 auto;
+
+}
+
+.td_list_btn:hover {
+    background-color: #009dc4;
+    text-decoration: none !important;
+    color: #fff !important;
+}
+
+#new_sub_con .sub_page .student_stat_box {
+    margin-bottom: 20px !important;
+    position: relative;
+    margin-top: 70px !important;
+    background-color: #fff;
+    border: 1px solid #dedede;
+}
+
+.stat_box > h2 {
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: #009dc4;
+}
+
+.port_stat_con {
+    width: 100%;
+    height: auto;
+    position: relative;
+    margin-top: 10px;
+}
+
+.port_stat_con > h2 {
+    font-size: 1rem;
+    line-height: 1.2rem;
+    float: left;
+    position: relative;
+    margin-right: 10px;
+    margin-bottom: 0;
+}
+
+.port_stat_con > p {
+    font-size: 1rem;
+    line-height: 1.2rem;
+    font-weight: 300;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.port_stat_con > p > span {
+    font-weight: 500;
+    color: #9a3e74;
+    font-size: 1.15rem;
+}
+
+.port_stat_con .port_bars_box {
+    display: block;
+    float: left;
+    width: auto;
+    height: auto;
+}
+
+.port_stat_con .port_bars_box .port_bars {
+    width: 440px;
+    height: 20px;
+    background-color: #ccc;
+    border: 1px solid #b5b5b5;
+    float: left;
+    margin-right: 10px;
+    overflow: hidden;
+    margin-top: 12px;
+}
+
+.port_stat_con .port_bars_box .port_bars .gauge_bar {
+    width: 0;
+    height: 20px;
+    background-color: #243558;
+    text-align: left;
+    line-height: 26px;
+    position: relative;
+    overflow: hidden;
+}
+
+.port_stat_con .port_bars_box .port_bars .gauge_bar::before {
+    content: '';
+    background-image: url(../img/gauge_bar_line.png);
+    width: 440px;
+    height: 20px;
+    overflow: hidden;
+    background-position: center;
+    background-repeat: no-repeat;
+    -webkit-background-size: contain;
+    background-size: contain;
+    position: absolute;
+    left: 0;
+    z-index: 99;
+    top: 0;
+}
+
+
+.port_stat_con .port_bars_box .port_icon {
+    float: left;
+    width: 45px;
+    overflow: hidden;
+    text-align: center;
+    margin-right: 10px;
+}
+
+.port_stat_con .port_bars_box .port_icon img {
+    width: auto;
+    max-width: 100%;
+}
+
+.port_stat_con .port_bars_box .port_icon > p {
+    font-size: 0.8rem;
+    margin-bottom: 0;
+}
+
+.port_btn {
+    width: 74px;
+    background-color: #243558;
+    border: 0;
+    color: #e1ce80;
+    text-align: center;
+    padding: 5px 15px;
+    line-height: normal;
+    font-size: 0.9rem;
+    font-weight: 300;
+    margin: 0 auto;
+    letter-spacing: -.5px;
+}
+
+.port_btn_02 {
+    width: 74px;
+    background-color: #e1ce80;
+    border: 0;
+    color: #243558;
+    text-align: center;
+    padding: 5px 15px;
+    line-height: normal;
+    font-size: 0.9rem;
+    font-weight: 300;
+    margin: 0 auto;
+    letter-spacing: -.5px;
+}
+
+#new_sub_con .sub_page .student_stat_box .stat_img_box {
+    position: absolute;
+    bottom: 0;
+    right: 83px;
+    width: 55%;
+}
+
+#new_sub_con .sub_page .student_stat_box .stat_img_box > img {
+    width: auto;
+    max-width: 100%;
+}
+
+.m_table {
+    display: none;
+}
+
+@media all and (max-width: 1025px) {
+    #new_sub_con .sub_page .student_stat_box .stat_img_box {
+        right: 0;
+    }
+}
+
+@media all and (max-width: 676px) {
+    .port_stat_con .port_bars_box .port_bars {
+        width: 340px;
+    }
+}
+
+@media all and (max-width: 801px) {
+    #new_sub_con .sub_page .student_stat_box .stat_img_box {
+        display: none;
+    }
+
+    #new_sub_con .sub_page .student_stat_box {
+        margin-top: 0 !important;
+    }
+
+    .pc_table {
+        display: none;
+    }
+
+    .m_table {
+        display: block;
+    }
+}
+
+@media all and (max-width: 481px) {
+    .port_stat_con .port_bars_box .port_bars {
+        width: 210px;
+    }
+}
+
+@media all and (max-width: 376px) {
+    .port_stat_con .port_bars_box .port_bars {
+        width: 160px;
+    }
+}
+
+/*포트폴리오 end*/
+/*마이페이지 end*/
+
+
+
+
+
+
+/*엑셀일괄등록_모달창*/
+.modal_bg {
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: none;
+}
+
+.modal_wrap {
+    width: 800px;
+    height: auto;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    z-index: 99999;
+    background-color: #fff;
+    padding: 25px;
+    border: 1px solid #dedede;
+    display: none;
+}
+
+.modal_wrap .modal_con {
+    border: 1px solid #dedede;
+    margin-bottom: 20px;
+}
+
+.classA_modal_con {
+    border: 0 !important;
+    text-align: center;
+}
+
+.modal_con .excel_modal_txt {
+    padding: 20px 14px;
+    border-bottom: 1px solid #dedede;
+}
+
+.modal_con .excel_modal_txt > li {
+    overflow: hidden;
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.modal_con .excel_modal_txt > li .i-circle {
+    width: 5px;
+    height: 5px;
+    vertical-align: middle;
+    background-color: #2475b1;
+    border-radius: 5rem;
+    display: inline-block;
+}
+
+.modal_con .excel_modal_txt > li .modal_txt {
+    font-size: 0.9rem;
+    font-weight: 400;
+    vertical-align: baseline;
+}
+
+.modal_con .excel_modal_form {}
+
+.modal_con .excel_modal_form > li {
+    padding: 15px;
+    border-bottom: 1px solid #dedede;
+}
+
+.modal_con .excel_modal_form .modal_t {
+    width: 13%;
+    display: inline-block;
+    font-size: 0.9rem;
+    vertical-align: middle;
+    letter-spacing: -1px;
+}
+
+.modal_con .excel_modal_form button {
+    background-color: #f4f4f4;
+    margin-right: 10px;
+}
+
+.modal_con .excel_modal_form > li > a {
+    margin-right: .5rem;
+}
+
+.modal_con .excel_modal_form > li > a > img {
+    vertical-align: middle;
+}
+
+.modal_con .excel_modal_form > li > input {
+    margin-right: .5rem;
+}
+
+.modal_con .excel_modal_form > li > textarea {
+    vertical-align: top;
+    border: 1px solid #dedede;
+    width: -webkit-calc(100% - 15%);
+    width: calc(100% - 15%);
+    height: 85px;
+}
+
+.modal_con .excel_modal_form .relate_b {
+    margin-right: 10px !important;
+}
+
+.modal_btn_wrap {
+    width: 100%;
+}
+
+.modal_btn_con {
+    display: table;
+    margin: 0 auto;
+}
+
+.modal_btn_con > a {
+    display: inline-block;
+    width: 80px;
+    height: 35px;
+    text-align: center;
+    line-height: 34px;
+}
+
+.modal_btn_con > a:first-of-type {
+    background-color: #a4a4a4;
+    border: 1px solid #646464;
+    color: #fff;
+    font-size: 0.9rem;
+    margin-right: .5rem;
+}
+
+.modal_btn_con > a:last-of-type {
+    border: 1px solid #d4d4d4;
+    color: #464646;
+    font-size: 0.9rem;
+    background-color: #fff;
+}
+
+/*엑셀일괄등록_모달창 end*/
+
+
+@media all and (max-width: 1025px) {
+    #new_sub_con .sub_page .txt .number {
+        width: 11%;
+    }
+
+    #new_sub_con .sub_page .txt .txt_title {
+        width: 40%
+    }
+
+    #new_sub_con .sub_page .txt td {
+        padding: 20px 15px;
+    }
+
+    #new_sub_con .sub_page .project_txt .data > a {
+        width: 100%;
+        font-size: 0.8rem;
+        padding: 10px 5px;
+        margin-right: 10px;
+        letter-spacing: -1px;
+    }
+
+    #new_sub_con .sub_page .project_txt .apply > a {
+        padding: 10px 5px;
+        font-size: 0.8rem;
+        margin-right: 0;
+    }
+
+    #new_sub_con .program .txt > li > span {
+        width: 100%;
+        padding-left: 0;
+    }
+
+    #new_sub_con .sub_learning {
+        width: 100%;
+        margin-right: 0;
+    }
+
+    #new_sub_con .sub_ranking {
+        display: none;
+    }
+
+
+
+    .select_tree::after {
+        display: none;
+    }
+}
+
+
+@media all and (max-width: 801px) {
+    #new_sub_con .sub_page .txt {
+        table-layout: fixed;
+    }
+
+    #new_sub_con .sub_page {
+        overflow-x: scroll;
+        overflow-y: hidden;
+        width: 1px;
+        min-width: 100%;
+    }
+
+    #new_sub_con .sub_page .select_table {
+        table-layout: auto;
+        width: 1000px;
+    }
+
+    #new_sub_con .sub_page .freeboard .check {
+        padding: 0 20px;
+    }
+
+    #new_sub_con .sub_page .freeboard tr .number,
+    #new_sub_con .sub_page .picboard tr .number {
+        display: none;
+    }
+
+    #new_sub_con .sub_page .freeboard .td_view {
+        display: inline-block;
+        margin-right: .3rem;
+    }
+
+    #new_sub_con .sub_page .freeboard tr .txt_title {
+        display: block;
+        width: 100%;
+        padding: 5px 20px 0px 10px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    #new_sub_con .sub_page .freeboard {
+        width: 100%;
+    }
+
+    #new_sub_con .sub_page .freeboard tr .txt_title > a {
+        font-weight: 500;
+    }
+
+    #new_sub_con .sub_page .freeboard .td_04 {
+        display: inline-block;
+        padding: 0 0px 0px 20px;
+        margin-bottom: 5px;
+        font-weight: 300;
+        font-size: 0.8rem;
+        border-right: 1px solid #5c5c5c;
+    }
+
+    #new_sub_con .sub_page .freeboard .views,
+    #new_sub_con .sub_page .freeboard .writer,
+    #new_sub_con .sub_page .freeboard .data {
+        display: inline-block;
+        padding: 0 10px 0px 10px;
+        margin-bottom: 5px;
+        font-weight: 300;
+        font-size: 0.8rem;
+        border-right: 1px solid #dedede;
+    }
+
+    #new_sub_con .sub_page .freeboard .data {
+        border: 0;
+    }
+
+    #new_sub_con .sub_page .freeboard td {
+        padding: 10px 20px;
+        padding-bottom: 0;
+    }
+
+    #new_sub_con .sub_page .project_txt td > br {
+        display: none;
+    }
+
+    #new_sub_con .sub_page .project_txt .td_num {
+        display: inline-block;
+        float: left;
+        width: 10%;
+        line-height: 120px;
+        padding: 0;
+    }
+
+    #new_sub_con .sub_page .project_txt .td_tit {
+        display: inline-block;
+        float: left;
+        width: -webkit-calc(100% - 10%);
+        width: calc(100% - 10%);
+        text-align: left;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        padding: 5px 10px;
+    }
+
+    #new_sub_con .sub_page .project_txt .td_data_01 {
+        display: inline-block;
+        float: left;
+        padding: 5px 10px;
+        position: relative;
+        font-size: .95rem;
+        letter-spacing: -.5px;
+        text-align: left;
+    }
+
+    #new_sub_con .sub_page .project_txt .td_data_00 {
+        width: -webkit-calc(100% - 10%);
+        width: calc(100% - 10%);
+        text-align: left;
+    }
+
+    #new_sub_con .sub_page .project_txt .td_data_00::after {
+        content: none !important;
+    }
+
+    #new_sub_con .sub_page .project_txt .td_data_01::after {
+        content: '';
+        position: absolute;
+        width: 1px;
+        height: 15px;
+        background-color: #dedede;
+        top: 50%;
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        -o-transform: translateY(-50%);
+        transform: translateY(-50%);
+        right: 0;
+    }
+
+    #new_sub_con .sub_page .project_txt .td_data_02 {
+        display: inline-block;
+        float: left;
+        padding: 5px 10px;
+        font-size: .95rem;
+        letter-spacing: -.5px;
+    }
+
+    #new_sub_con .sub_page .project_txt .td_aply {
+        display: block;
+        float: left;
+        width: -webkit-calc((100% - 10%) / 2);
+        width: calc((100% - 10%) / 2);
+        padding: 5px;
+        padding-left: 10px;
+    }
+
+    #new_sub_con .sub_page .project_txt .td_data_03 {
+        display: block;
+        float: left;
+        width: -webkit-calc((100% - 10%) / 2);
+        width: calc((100% - 10%) / 2);
+        padding: 5px;
+        padding-bottom: 0;
+    }
+
+
+
+
+    #new_sub_con .sub_page .student_list .number,
+    #new_sub_con .sub_page .student_list .parents_tel {
+        display: none;
+    }
+
+    #new_sub_con .sub_page .student_list td {
+        display: block;
+        padding: 15px 20px;
+        padding-bottom: 0;
+        text-align: center;
+    }
+
+    #new_sub_con .sub_page .student_list td:last-of-type {
+        padding-bottom: 15px;
+    }
+
+    #new_sub_con .sub_page .student_list td:last-of-type > a {
+        display: inline-block;
+    }
+
+    #new_sub_con .sub_page .student_list .request_label {
+        display: inline-block;
+        margin-right: .5rem;
+    }
+
+
+
+
+    #new_sub_con .sub_page .info_table th {
+        font-size: 0.85rem;
+    }
+
+    #new_sub_con .sub_page .info_table td {
+        font-size: 0.8rem;
+    }
+
+
+
+
+    #new_sub_con .board_seach {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    #new_sub_con .board_seach input {
+        width: -webkit-calc(100% - 198px);
+        width: calc(100% - 198px);
+        margin-right: 0;
+    }
+
+    #new_sub_con .sub_tab > ul {
+        width: 100%;
+    }
+
+    #new_sub_con .sub_tab > ul > li {
+        width: -webkit-calc(100% / 4);
+        width: calc(100% / 4);
+        text-align: center;
+    }
+
+    #new_sub_con .sub_tab > ul > li > a {
+        padding: 10px;
+        font-size: 0.85rem;
+    }
+
+
+
+    #new_sub_con .sub_page .picboard .picture {
+        width: 70px;
+    }
+
+    #new_sub_con .sub_page .picboard .writer {
+        padding: 10px 0 0 10px;
+        font-size: 0.8rem;
+        display: block;
+        margin-right: .5rem;
+        text-align: left;
+    }
+
+    #new_sub_con .sub_page .picboard .txt_title {
+        display: block;
+        padding: 5px 0 0 10px;
+        font-size: 0.9rem;
+    }
+
+    #new_sub_con .sub_page .picboard .txt_title > a {
+        font-weight: 500;
+    }
+
+    #new_sub_con .sub_page .picboard .area {
+        clear: both;
+        display: block;
+        padding: 5px 0 10px 10px;
+        text-align: left;
+        font-size: 0.8rem;
+    }
+
+    #new_sub_con .sub_page .picboard .td_area {
+        display: inline-block;
+        margin-right: .3rem;
+    }
+
+    #new_sub_con .sub_page .learning_con {
+        border: 0;
+    }
+
+    #new_sub_con .sub_page .learning_con tr {
+        border-top: 1px solid #dedede;
+        border-bottom: 1px solid #dedede;
+    }
+
+    #new_sub_con .sub_page .learning_con th {
+        display: none;
+    }
+
+    #new_sub_con .sub_page .learning_con td {
+        border: none;
+    }
+
+    #new_sub_con .sub_page .txt .td_check {
+        width: 10%;
+        height: auto;
+        display: inline-block;
+        float: left;
+        border-right: 1px solid #dedede;
+        padding: 20px 0;
+    }
+
+    #new_sub_con .sub_page .txt .td_number {
+        width: 15%;
+        height: auto;
+        display: inline-block;
+        float: left;
+        text-align: center;
+        border-right: 1px solid #dedede;
+        padding: 20px 0;
+        line-height: 80px;
+        display: none;
+    }
+
+    #new_sub_con .sub_page .txt .td_check_h,
+    #new_sub_con .sub_page .txt .td_number_h {
+        line-height: 80px;
+    }
+
+    #new_sub_con .sub_page .txt .td_pic {
+        width: 30%;
+        height: auto;
+        display: inline-block;
+        float: left;
+        text-align: center;
+        border-right: 1px solid #dedede;
+        padding: 20px 0;
+    }
+
+
+    #new_sub_con .sub_page .txt .td_title {
+        width: -webkit-calc(100% - 10%);
+        width: calc(100% - 10%);
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: -moz-box;
+        display: flex;
+        float: left;
+        padding: 5px 15px;
+    }
+
+    #new_sub_con .sub_page .txt .td_notice_title {
+        width: 100%;
+        font-weight: 400;
+    }
+
+    #new_sub_con .sub_page .txt td .view_icon {
+        display: inline-block;
+        margin-right: .5rem !important;
+        vertical-align: text-top;
+    }
+
+    #new_sub_con .sub_page .txt .td_title_h {
+        width: -webkit-calc(100% - 40%);
+        width: calc(100% - 40%);
+        line-height: 60px;
+    }
+
+    #new_sub_con .sub_page .txt .td_read {
+        display: block;
+        float: left;
+        padding: 5px 15px;
+        font-size: .8rem;
+        position: relative;
+    }
+
+    #new_sub_con .sub_page .txt .td_name {
+        display: block;
+        float: left;
+        padding: 5px 15px;
+        font-size: .8rem;
+        position: relative;
+    }
+
+    #new_sub_con .sub_page .txt .td_name_h,
+    #new_sub_con .sub_page .txt .td_data_h {
+        line-height: 40px;
+    }
+
+    #new_sub_con .sub_page .txt .td_name::after {
+        content: '';
+        width: 1px;
+        height: 12px;
+        position: absolute;
+        top: 50%;
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        -o-transform: translateY(-50%);
+        transform: translateY(-50%);
+        right: 0;
+        background-color: #dedede;
+    }
+
+    #new_sub_con .sub_page .txt .td_read::after {
+        content: '';
+        width: 1px;
+        height: 12px;
+        position: absolute;
+        top: 50%;
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        -o-transform: translateY(-50%);
+        transform: translateY(-50%);
+        right: 0;
+        background-color: #dedede;
+    }
+
+    #new_sub_con .sub_page .txt .td_data {
+        display: block;
+        float: left;
+        padding: 5px 15px;
+        font-size: .8rem;
+    }
+
+    #new_sub_con .sub_page .learning_con tr:last-of-type td > .view_icon {
+        display: inline-block;
+        margin-right: .5rem;
+        vertical-align: text-top;
+    }
+
+    #new_sub_con .intro_sub_txt {
+        padding-left: 0;
+    }
+
+    #new_sub_con .intro_sub_ob {
+        padding-left: 0;
+    }
+
+    #new_sub_con .sub_page .txt .pic {
+        width: 100%;
+    }
+
+    .member_01_wrap .page {
+        margin-bottom: .5rem;
+    }
+
+    .member_01_wrap .page_seach #SEARCH_TEXT {
+        width: 100% !important;
+        margin-bottom: .5rem;
+    }
+
+    .member_01_wrap .page_seach select {
+        width: -webkit-calc((100% - 13px) / 2);
+        width: calc((100% - 13px) / 2);
+        margin-bottom: .5rem;
+    }
+
+    .member_01_wrap .page_seach select:last-of-type {
+        margin-right: 0;
+    }
+
+    #new_sub_con .sub_page .student_list tr {
+        padding: 5px;
+        display: block;
+    }
+}
+
+
+@media screen and (max-width: 571px) {
+
+    #new_sub_con .sub_page .project_txt .td_data_01,
+    #new_sub_con .sub_page .project_txt .td_data_02 {
+        font-size: 0.75rem;
+    }
+}
+
+@media screen and (max-width: 340px) {
+
+    #new_sub_con .sub_page .project_txt .td_data_01,
+    #new_sub_con .sub_page .project_txt .td_data_02 {
+        font-size: 0.7rem;
+    }
+}
+
+
+/*신입생선발시스템 - 2021.01.05*/
+#new_sub_con .memre_wrap {
+    margin-bottom: 40px;
+}
+
+#new_sub_con .program .txt > li > .memre_down {
+    margin-bottom: 10px;
+}
+
+#new_sub_con .program .txt > li > .memre_down:last-of-type {
+    margin-bottom: 0;
+}
+
+#new_sub_con .program .txt.memre_txt_01 {
+    margin-bottom: 10px;
+}
+
+#new_sub_con .memre_table td > i {
+    font-size: 1.4rem;
+    color: #000b8c !important;
+}
+
+#new_sub_con .memre_table td > i.color_b {
+    color: #b3b3b3 !important;
+}
+
+/*신입생선발시스템 end*/
+
+.comm_school_year_ul .active{
+	background-color : skyblue;
+}

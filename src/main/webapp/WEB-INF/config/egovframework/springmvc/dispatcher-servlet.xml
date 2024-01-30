@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+                http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+                http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+                http://www.springframework.org/schema/task  
+				http://www.springframework.org/schema/task/spring-task-4.0.xsd"
+		>
+
+	<context:component-scan
+		base-package="egovframework" use-default-filters="false">
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Service" />
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Repository" />
+	</context:component-scan>
+
+	<mvc:resources mapping="/resources/**"
+		location="/resources/" />
+
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/master/**" />
+			<mvc:mapping path="/admin/**" />
+			<mvc:exclude-mapping path="/resources/**" />
+			<beans:bean id="LoginInterceptor"
+				class="egovframework.kaist.admin.Interceptor.LoginInterceptor"></beans:bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/master/**" />
+			<mvc:mapping path="/admin/**" />
+			<mvc:mapping path="/openapi/**" />
+			<mvc:exclude-mapping path="/resources/**" />
+			<beans:bean id="AcceptLogInterceptor"
+				class="egovframework.kaist.admin.Interceptor.AcceptLogInterceptor"></beans:bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/user/**" />
+			<mvc:mapping path="/user/notices_data/5/**" />
+			<mvc:exclude-mapping path="/resources/**" />
+			<mvc:exclude-mapping path="/user/subpage/**" />
+			<beans:bean id="LoginInterceptor2"
+				class="egovframework.kaist.user.Interceptor.LoginInterceptor"></beans:bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/user/**" />
+			<mvc:exclude-mapping path="/resources/**" />
+			<beans:bean id="AcceptLogInterceptor2"
+				class="egovframework.kaist.user.Interceptor.AcceptLogInterceptor"></beans:bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
+	<context:component-scan base-package="egovframework.kaist.admin.crontab"/>
+    <task:scheduler id="myScheduler" pool-size="10"/>
+    <task:annotation-driven scheduler="myScheduler"/>
+
+
+<!-- webBindingInitializer 이란?
+	자주쓰는 커스텀 형 변화의 경우 매번쓸때마다 하지않고 한번 선언으로 계속쓰도록 함 
+	EgovBindingInitializer는  "yyyy-MM-dd"형태의 데이터를 커스텀하기 위한 바인딩이 설정되었음  -->
+	<bean
+		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+		<property name="webBindingInitializer">
+			<bean
+				class="egovframework.kaist.cmmn.web.EgovBindingInitializer" />
+		</property>
+	</bean>
+
+<!-- localeChangeInterceptor 다국어 적용에 대한 bean 설정
+	다국어 처리를 위헤 messages_en.properties, messages_ko.properties 등의 파일을 만들고 안에 기입함  -->
+	<bean
+		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
+		<property name="interceptors">
+			<list>
+				<ref bean="localeChangeInterceptor" />
+			</list>
+		</property>
+	</bean>
+
+<!-- localeResolver는 다국어 처리방법을 선택 
+	AceeptHeaderLocaleResolver, SessionLocaleResolver, CookieLocaleResolver의 3가지 처리방법이 있는데
+	여기서는 SessionLocaleResolver을 사용함 이것은 request가 가지고 있는 세션으로부터 로케일정보를 가저옴 -->
+	<bean id="localeResolver"
+		class="org.springframework.web.servlet.i18n.SessionLocaleResolver" />
+
+	<bean id="localeChangeInterceptor"
+		class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+		<property name="paramName" value="language" />
+	</bean>
+
+	<!-- 쿠키를 이용한 Locale 이용시 <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver"/> -->
+
+
+<!-- SimpleMappingExceptionResolver는 예외를 처리하기 위함, 이것을 사용함으로 컨트롤러나 인터셉터에 산재한 예외 처리에 관련된 
+	설정을 한곳으로 집중할 수있게 함 
+	예외가 발생했을 때 지정된 예외가 아닌 예외일때 기본적으로 포워딩해주는 페이지는 defaultErrorView의 value 경로에 있는 파일임 
+	현 프로젝트상에서는 데이터 접속 실패, 트렌젝선 실패, EgovBizException시 ,접속거부시 error 페이지가 뜨도록 되어있음  -->
+	<bean
+		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="defaultErrorView" value="cmmn/egovError" />
+		<property name="exceptionMappings">
+			<props>
+				<prop key="org.springframework.dao.DataAccessException">cmmn/dataAccessFailure</prop>
+				<prop
+					key="org.springframework.transaction.TransactionException">cmmn/transactionFailure</prop>
+				<prop
+					key="egovframework.rte.fdl.cmmn.exception.EgovBizException">cmmn/egovError</prop>
+				<prop key="org.springframework.security.AccessDeniedException">cmmn/egovError</prop>
+			</props>
+		</property>
+	</bean>
+
+
+<!-- UrlBasedViewResolver는 뷰리졸버의 구현체로 특별한 맵핑정보없이 뷰이름을 url로 사용하며 view 이름과 실재 view자원과 이름이 같을때 사용할수 있음
+	사용자에게 보여줄 뷰를 생성할때 prefix와 suffix를 지정해줌 
+	만약 컨트롤러에서 넘겨준 modelandview 값이 index라면 위의 정의에 따라 뷰리졸버는 /WEB-INF/jsp/index.jsp 파일을 찾음 
+	
+	이외에도 빈네임, 컨텐츠네고시에이팅, 프리마커, 인터넷리소스,재스퍼리포츠, 타일스, 리소스번들, 벨로시티레이아웃,벨로시티, 엑스엠엘, 엑스싯 뷰리졸버 등이 있음  -->
+	<bean
+		class="org.springframework.web.servlet.view.UrlBasedViewResolver"
+		p:order="1"
+		p:viewClass="org.springframework.web.servlet.view.JstlView"
+		p:prefix="/WEB-INF/jsp/" p:suffix=".jsp" />
+
+
+	<!-- For Pagination Tag -->
+	<!-- <bean id="imageRenderer" class="egovframework.example.cmmn.web.EgovImgPaginationRenderer"/> 
+		<bean id="paginationManager" class="egovframework.rte.ptl.mvc.tags.ui.pagination.DefaultPaginationManager"> 
+		<property name="rendererType"> <map> <entry key="image" value-ref="imageRenderer"/> 
+		</map> </property> </bean> -->
+	<!-- /For Pagination Tag -->
+
+<!-- 	별도의 모델이나 컨트롤러 없이 url요청시 뷰로만 연결해주는 경우 컨트롤러 필요없이 
+	아래 태그를 사용하면 url과 view를 매핑 해 줄 수 있음
+	/cmmn/validator.do을 치게 되면 cmmn/validator 파일을 찾게 될 것임   -->
+	<mvc:view-controller path="/cmmn/validator.do"
+		view-name="cmmn/validator" />
+</beans>

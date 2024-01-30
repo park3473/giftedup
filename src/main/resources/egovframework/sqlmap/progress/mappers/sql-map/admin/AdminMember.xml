@@ -1,0 +1,660 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="egovframework.kaist.admin.member.service.impl.AdminMemberMapper">
+	 
+	<select id="getListAll" resultType="hashMap" >
+		SELECT /*AdminMemberMapper*/ * FROM TBL_MEMBER order by CREATE_TM desc
+	</select>
+	<select id="getAdviserALL" resultType="hashMap" >
+		SELECT /*AdminMemberMapper*/ * FROM TBL_MEMBER WHERE TYPE = '2' order by CREATE_TM desc
+	</select>
+	<select id="getListGroupBySchoolName" resultType="hashMap" >
+		SELECT /*AdminMemberMapper*/ * FROM TBL_MEMBER GROUP BY SCHOOL_NAME ORDER BY SCHOOL_NAME desc
+	</select>
+	<select id="getListMemberIdIn" resultType="hashMap" parameterType="String">
+		SELECT /*AdminMemberMapper*/ * FROM TBL_MEMBER WHERE MEMBER_ID IN (${value});
+	</select>
+
+	<select id="getListPortfolio" resultType="hashMap" parameterType="egovframework.kaist.admin.portfolio.model.AdminPortfolioVo">
+		SELECT /*AdminMemberMapper*/ *
+			, IFNULL((SELECT COUNT(*) FROM TBL_PORTFOLIO WHERE TBL_PORTFOLIO.MEMBER_ID = TBL_MEMBER.MEMBER_ID<if test="YEAR !=''">AND YEAR = #{YEAR}</if>), 0) AS PORTFOLIO_CNT
+			, (SELECT COUNT(*) FROM TBL_PORTFOLIO WHERE TBL_PORTFOLIO.MEMBER_ID = TBL_MEMBER.MEMBER_ID<if test="YEAR !=''">AND YEAR = #{YEAR}</if>) AS PORTFOLIO_CNT
+			, IFNULL((SELECT AVG(STFT) FROM TBL_PORTFOLIO WHERE TBL_PORTFOLIO.MEMBER_ID = TBL_MEMBER.MEMBER_ID<if test="YEAR !=''">AND YEAR = #{YEAR}</if>), 0) AS AVG_STFT
+			, IFNULL((SELECT COUNT(*) FROM TBL_PORTFOLIO WHERE MEMBER_ID = TBL_MEMBER.MEMBER_ID AND COURSE = 1<if test="YEAR !=''">AND YEAR = #{YEAR}</if>), 0) AS COURSE_CNT_1
+			, IFNULL((SELECT COUNT(*) FROM TBL_PORTFOLIO WHERE MEMBER_ID = TBL_MEMBER.MEMBER_ID AND COURSE = 2<if test="YEAR !=''">AND YEAR = #{YEAR}</if>), 0) AS COURSE_CNT_2
+			, IFNULL((SELECT COUNT(*) FROM TBL_PORTFOLIO WHERE MEMBER_ID = TBL_MEMBER.MEMBER_ID AND COURSE = 3<if test="YEAR !=''">AND YEAR = #{YEAR}</if>), 0) AS COURSE_CNT_3
+			, IFNULL((SELECT COUNT(*) FROM TBL_PORTFOLIO WHERE MEMBER_ID = TBL_MEMBER.MEMBER_ID AND COURSE = 4<if test="YEAR !=''">AND YEAR = #{YEAR}</if>), 0) AS COURSE_CNT_4
+			, IFNULL((SELECT COUNT(*) FROM TBL_PORTFOLIO WHERE MEMBER_ID = TBL_MEMBER.MEMBER_ID<if test="YEAR !=''">AND YEAR = #{YEAR}</if>), 0) AS COURSE_CNT_5
+			, IFNULL((SELECT SUM(RTICIPATION_TM) FROM TBL_PORTFOLIO WHERE MEMBER_ID = TBL_MEMBER.MEMBER_ID AND COURSE = 1<if test="YEAR !=''">AND YEAR = #{YEAR}</if>), 0) AS COURSE_1
+			, IFNULL((SELECT SUM(RTICIPATION_TM) FROM TBL_PORTFOLIO WHERE MEMBER_ID = TBL_MEMBER.MEMBER_ID AND COURSE = 2<if test="YEAR !=''">AND YEAR = #{YEAR}</if>), 0) AS COURSE_2
+			, IFNULL((SELECT SUM(RTICIPATION_TM) FROM TBL_PORTFOLIO WHERE MEMBER_ID = TBL_MEMBER.MEMBER_ID AND COURSE = 3<if test="YEAR !=''">AND YEAR = #{YEAR}</if>), 0) AS COURSE_3
+			, IFNULL((SELECT SUM(RTICIPATION_TM) FROM TBL_PORTFOLIO WHERE MEMBER_ID = TBL_MEMBER.MEMBER_ID AND COURSE = 4<if test="YEAR !=''">AND YEAR = #{YEAR}</if>), 0) AS COURSE_4
+			, IFNULL((SELECT SUM(RTICIPATION_TM) FROM TBL_PORTFOLIO WHERE MEMBER_ID = TBL_MEMBER.MEMBER_ID<if test="YEAR !=''">AND YEAR = #{YEAR}</if>), 0) AS COURSE_5
+		 FROM TBL_MEMBER
+		WHERE 1=1 
+		
+		<if test="DORMANCY != ''">
+	    	AND DORMANCY = #{DORMANCY}
+	    	
+	    	<if test="START_TM != ''">
+	 		<![CDATA[
+	    	AND DORMANCY_TM >=  date_format(#{START_TM}, '%Y-%m-%d 00:00:00')
+	    	AND DORMANCY_TM <=  date_format(#{END_TM}, '%Y-%m-%d 23:59:59')
+	    	]]>
+	     	</if>
+	    
+	    </if>
+	    
+	    <if test="LEVEL != ''">
+	    	AND LEVEL = #{LEVEL}
+	    </if>
+	    
+	    <if test="TYPE != ''">
+	    	AND TYPE = #{TYPE}
+	    </if>
+
+	    <if test="SCHOOL_YEAR != ''">
+	    	AND SCHOOL_YEAR = #{SCHOOL_YEAR}
+	    </if>
+	    
+	     <if test="SEARCH_TEXT != ''">
+		     <if test="SEARCH_TYPE == 'ALL'">
+		    	AND (
+		    		NAME LIKE '%${SEARCH_TEXT}%' 
+		    		OR  MEMBER_ID LIKE '%${SEARCH_TEXT}%'
+		    		OR  SCHOOL_NAME LIKE '%${SEARCH_TEXT}%'
+		    		OR  PHONE LIKE '%${SEARCH_TEXT}%'
+		    		OR  SCHOOL_YEAR LIKE '%${SEARCH_TEXT}%'
+		    		) 
+		    </if>
+		    <if test="SEARCH_TYPE != 'ALL'">
+	    		 AND ${SEARCH_TYPE} LIKE '%${SEARCH_TEXT}%'
+	    	</if>
+	    	
+	    </if>
+	    <if test="EXP_DATA != ''">
+	    	AND EXP_DATA LIKE '%${EXP_DATA}%'
+	    </if>
+		ORDER BY CREATE_TM desc
+		LIMIT ${LIMIT} OFFSET ${OFFSET}
+
+	</select>
+	
+	
+	<select id="getListPortfolioMemberIdIn" resultType="hashMap" parameterType="String">
+		SELECT /*AdminMemberMapper*/ *
+			, IFNULL((SELECT COUNT(*) FROM TBL_PORTFOLIO WHERE TBL_PORTFOLIO.MEMBER_ID = TBL_MEMBER.MEMBER_ID), 0) AS PORTFOLIO_CNT
+			, (SELECT COUNT(*) FROM TBL_PORTFOLIO WHERE TBL_PORTFOLIO.MEMBER_ID = TBL_MEMBER.MEMBER_ID) AS PORTFOLIO_CNT
+			, IFNULL((SELECT AVG(STFT) FROM TBL_PORTFOLIO WHERE TBL_PORTFOLIO.MEMBER_ID = TBL_MEMBER.MEMBER_ID), 0) AS AVG_STFT
+			, IFNULL((SELECT COUNT(*) FROM TBL_PORTFOLIO WHERE MEMBER_ID = TBL_MEMBER.MEMBER_ID AND COURSE = 1), 0) AS COURSE_CNT_1
+			, IFNULL((SELECT COUNT(*) FROM TBL_PORTFOLIO WHERE MEMBER_ID = TBL_MEMBER.MEMBER_ID AND COURSE = 2), 0) AS COURSE_CNT_2
+			, IFNULL((SELECT COUNT(*) FROM TBL_PORTFOLIO WHERE MEMBER_ID = TBL_MEMBER.MEMBER_ID AND COURSE = 3), 0) AS COURSE_CNT_3
+			, IFNULL((SELECT COUNT(*) FROM TBL_PORTFOLIO WHERE MEMBER_ID = TBL_MEMBER.MEMBER_ID AND COURSE = 4), 0) AS COURSE_CNT_4
+			, IFNULL((SELECT COUNT(*) FROM TBL_PORTFOLIO WHERE MEMBER_ID = TBL_MEMBER.MEMBER_ID), 0) AS COURSE_CNT_5
+			, IFNULL((SELECT SUM(RTICIPATION_TM) FROM TBL_PORTFOLIO WHERE MEMBER_ID = TBL_MEMBER.MEMBER_ID AND COURSE = 1), 0) AS COURSE_1
+			, IFNULL((SELECT SUM(RTICIPATION_TM) FROM TBL_PORTFOLIO WHERE MEMBER_ID = TBL_MEMBER.MEMBER_ID AND COURSE = 2), 0) AS COURSE_2
+			, IFNULL((SELECT SUM(RTICIPATION_TM) FROM TBL_PORTFOLIO WHERE MEMBER_ID = TBL_MEMBER.MEMBER_ID AND COURSE = 3), 0) AS COURSE_3
+			, IFNULL((SELECT SUM(RTICIPATION_TM) FROM TBL_PORTFOLIO WHERE MEMBER_ID = TBL_MEMBER.MEMBER_ID AND COURSE = 4), 0) AS COURSE_4
+			, IFNULL((SELECT SUM(RTICIPATION_TM) FROM TBL_PORTFOLIO WHERE MEMBER_ID = TBL_MEMBER.MEMBER_ID), 0) AS COURSE_5
+		FROM TBL_MEMBER
+		WHERE MEMBER_ID IN (${value})
+		
+	</select>
+	
+
+	<select id="getListPortfolioCnt" resultType="int" parameterType="egovframework.kaist.admin.member.model.AdminMemberVo">
+		SELECT /*AdminMemberMapper*/ count(*) FROM TBL_MEMBER
+		WHERE 1=1 
+
+		<if test="DORMANCY != ''">
+	    	AND DORMANCY = #{DORMANCY}
+	    	<if test="START_TM != ''">
+	 		<![CDATA[
+	    	AND DORMANCY_TM >=  date_format(#{START_TM}, '%Y-%m-%d 00:00:00')
+	    	AND DORMANCY_TM <=  date_format(#{END_TM}, '%Y-%m-%d 23:59:59')
+	    	]]>
+	     	</if>
+	    </if>
+	    <if test="LEVEL != ''">
+	    	AND LEVEL = #{LEVEL}
+	    </if>
+	    
+	    <if test="TYPE != ''">
+	    	AND TYPE = #{TYPE}
+	    </if>
+
+	    <if test="SCHOOL_YEAR != ''">
+	    	AND SCHOOL_YEAR = #{SCHOOL_YEAR}
+	    </if>	    
+		<if test="SEARCH_TEXT != ''">
+		     <if test="SEARCH_TYPE == 'ALL'">
+		    	AND (
+		    		NAME LIKE '%${SEARCH_TEXT}%' 
+		    		OR  MEMBER_ID LIKE '%${SEARCH_TEXT}%'
+		    		OR  SCHOOL_NAME LIKE '%${SEARCH_TEXT}%'
+		    		OR  PHONE LIKE '%${SEARCH_TEXT}%'
+		    		OR  SCHOOL_YEAR LIKE '%${SEARCH_TEXT}%'
+		    		) 
+		    </if>
+		    <if test="SEARCH_TYPE != 'ALL'">
+	    		 AND ${SEARCH_TYPE} LIKE '%${SEARCH_TEXT}%'
+	    	</if>
+	    </if>
+	    
+	</select>
+	
+	
+	
+	<select id="getList" resultType="hashMap" parameterType="egovframework.kaist.admin.member.model.AdminMemberVo">
+		SELECT /*AdminMemberMapper*/ * FROM TBL_MEMBER
+		WHERE 1=1 
+
+		
+		<if test="DORMANCY != ''">
+	    	AND DORMANCY = #{DORMANCY}
+	    	
+	    	<if test="START_TM != ''">
+	 		<![CDATA[
+	    	AND DORMANCY_TM >=  date_format(#{START_TM}, '%Y-%m-%d 00:00:00')
+	    	AND DORMANCY_TM <=  date_format(#{END_TM}, '%Y-%m-%d 23:59:59')
+	    	]]>
+	     	</if>
+	    
+	    </if>
+	    
+	    <if test="LEVEL != ''">
+	    	AND LEVEL = #{LEVEL}
+	    </if>
+	    
+	    <if test="TYPE != ''">
+	    	AND TYPE = #{TYPE}
+	    </if>
+
+	    <if test="SCHOOL_YEAR != ''">
+	    	AND SCHOOL_YEAR = #{SCHOOL_YEAR}
+	    </if>
+	    
+	     <if test="SEARCH_TEXT != ''">
+		     <if test="SEARCH_TYPE == 'ALL'">
+		    	AND (
+		    		NAME LIKE '%${SEARCH_TEXT}%' 
+		    		OR  MEMBER_ID LIKE '%${SEARCH_TEXT}%'
+		    		OR  SCHOOL_NAME LIKE '%${SEARCH_TEXT}%'
+		    		OR  PHONE LIKE '%${SEARCH_TEXT}%'
+		    		OR  SCHOOL_YEAR LIKE '%${SEARCH_TEXT}%'
+		    		) 
+		    </if>
+		    <if test="SEARCH_TYPE != 'ALL'">
+	    		 AND ${SEARCH_TYPE} LIKE '%${SEARCH_TEXT}%'
+	    	</if>
+	    	
+	    </if>
+	    <if test="EXP_DATA != ''">
+	    	AND EXP_DATA LIKE '%${EXP_DATA}%'
+	    </if>
+	    <if test="COMM_DATA != ''">
+	    	AND COMM_DATA = #{COMM_DATA}
+	    </if>
+	    <if test="COMM_TYPE != ''">
+	    	AND COMM_TYPE = #{COMM_TYPE}
+	    </if>
+	    <if test="LO_TYPE == 'TRUE'">
+	    	AND ADDRESS_LOCAL IN 
+		    <foreach collection="LO_LIST" item="local" open="(" close=")" separator=",">
+		    	#{local}
+		    </foreach>
+	    </if>
+	    
+		ORDER BY CREATE_TM desc
+		LIMIT ${LIMIT} OFFSET ${OFFSET}
+	</select>
+	
+	
+		
+	<select id="getListCnt" resultType="int" parameterType="egovframework.kaist.admin.member.model.AdminMemberVo">
+		SELECT /*AdminMemberMapper*/ count(*) FROM TBL_MEMBER
+		WHERE 1=1 
+
+		<if test="DORMANCY != ''">
+	    	AND DORMANCY = #{DORMANCY}
+	    	<if test="START_TM != ''">
+	 		<![CDATA[
+	    	AND DORMANCY_TM >=  date_format(#{START_TM}, '%Y-%m-%d 00:00:00')
+	    	AND DORMANCY_TM <=  date_format(#{END_TM}, '%Y-%m-%d 23:59:59')
+	    	]]>
+	     	</if>
+	    </if>
+	    <if test="LEVEL != ''">
+	    	AND LEVEL = #{LEVEL}
+	    </if>
+	    
+	    <if test="TYPE != ''">
+	    	AND TYPE = #{TYPE}
+	    </if>
+
+	    <if test="SCHOOL_YEAR != ''">
+	    	AND SCHOOL_YEAR = #{SCHOOL_YEAR}
+	    </if>	    
+		<if test="SEARCH_TEXT != ''">
+		     <if test="SEARCH_TYPE == 'ALL'">
+		    	AND (
+		    		NAME LIKE '%${SEARCH_TEXT}%' 
+		    		OR  MEMBER_ID LIKE '%${SEARCH_TEXT}%'
+		    		OR  SCHOOL_NAME LIKE '%${SEARCH_TEXT}%'
+		    		OR  PHONE LIKE '%${SEARCH_TEXT}%'
+		    		OR  SCHOOL_YEAR LIKE '%${SEARCH_TEXT}%'
+		    		) 
+		    </if>
+		    <if test="SEARCH_TYPE != 'ALL'">
+	    		 AND ${SEARCH_TYPE} LIKE '%${SEARCH_TEXT}%'
+	    	</if>
+	    </if>
+	    <if test="EXP_DATA != ''">
+	    	AND EXP_DATA LIKE '%${EXP_DATA}%'
+	    </if>
+	    <if test="COMM_TYPE != ''">
+	    	AND COMM_TYPE = #{COMM_TYPE}
+	    </if>
+	    
+	    <if test="LO_TYPE == 'TRUE'">
+	    	AND ADDRESS_LOCAL IN 
+		    <foreach collection="LO_LIST" item="bno" open="(" close=")" separator=",">
+		    	#{bno}
+		    </foreach>
+	    </if>
+	    
+	</select>
+	
+	
+	
+
+	<select id="getView" resultType="egovframework.kaist.admin.member.model.AdminMemberVo" parameterType="String">
+		SELECT /*AdminMemberMapper*/ * FROM TBL_MEMBER where MEMBER_ID = #{value}
+	</select>
+	
+	
+	
+	<insert id="setInsert"	parameterType="egovframework.kaist.admin.member.model.AdminMemberVo">
+		INSERT INTO /*AdminMemberMapper*/ TBL_MEMBER (
+			MEMBER_ID,
+			PASSWORD,
+			NAME,
+			PHONE,
+			EMAIL,
+			LEVEL,
+			JOIN_TM,
+			CREATE_TM,
+			TYPE,
+			TYPE_SUB,
+			NAME_ENG,
+			NAME_HANJA,
+			IMAGE,
+			ADDRESS_LOCAL,
+			SCHOOL_NAME,
+			SCHOOL_TYPE,
+			SCHOOL_YEAR,
+			SCHOOL_GROUP,
+			BIRTH,
+			SEX,
+			SCHOOL_ZIPCODE,
+			SCHOOL_ADDRESS,
+			SCHOOL_ADDRESS_DETAIL,
+			SUPPORT_AREA,
+			ZIPCODE,
+			ADDRESS,
+			ADDRESS_DETAIL,
+			PARENTS_NAME,
+			PARENTS_RELATION,
+			PARENTS_PHONE,
+			PARENTS_PHONE2,
+			INFO_AGREEMENT,
+			DORMANCY_TM,
+			LOGIN_TM,
+			UPDATE_TM,
+			STATUS,
+			SCHOOL_NUMBER,
+			SCHOOL_JIGGEUB,
+			TEL,
+			AREA_NUMBER,
+			SCHOOL_MAJOR,
+			ELIGIBILITY,
+			EXP,
+			EXP_TYPE,
+			EXP_DATA
+			
+		) VALUES (
+			#{MEMBER_ID},
+			#{PASSWORD},
+			#{NAME},
+			#{PHONE},
+			#{EMAIL},
+			#{LEVEL},
+			now(),
+			now(),
+			#{TYPE},
+			#{TYPE_SUB},
+			#{NAME_ENG},
+			#{NAME_HANJA},
+			#{IMAGE},
+			#{ADDRESS_LOCAL},
+			#{SCHOOL_NAME},
+			#{SCHOOL_TYPE},
+			#{SCHOOL_YEAR},
+			#{SCHOOL_GROUP},
+			#{BIRTH},
+			#{SEX},
+			#{SCHOOL_ZIPCODE},
+			#{SCHOOL_ADDRESS},
+			#{SCHOOL_ADDRESS_DETAIL},
+			#{SUPPORT_AREA},
+			#{ZIPCODE},
+			#{ADDRESS},
+			#{ADDRESS_DETAIL},
+			#{PARENTS_NAME},
+			#{PARENTS_RELATION},
+			#{PARENTS_PHONE},
+			#{PARENTS_PHONE2},
+			#{INFO_AGREEMENT},
+			null,
+			null,
+			now(),
+			#{STATUS},
+			#{SCHOOL_NUMBER},
+			#{SCHOOL_JIGGEUB},
+		
+			#{TEL},
+			#{AREA_NUMBER},
+			#{SCHOOL_MAJOR},
+			#{ELIGIBILITY},
+			#{EXP},
+			#{EXP_TYPE},
+			#{EXP_DATA}
+		) 
+	</insert>
+	
+	<update id="setUpdate"	parameterType="egovframework.kaist.admin.member.model.AdminMemberVo">
+		UPDATE /*AdminMemberMapper*/ TBL_MEMBER SET 
+			
+			<if test="PASSWORD != ''">
+				PASSWORD = #{PASSWORD},
+	    	</if>
+	    	PHONE = #{PHONE},
+			EMAIL = #{EMAIL},
+			LEVEL = #{LEVEL},
+			
+			TYPE_SUB = #{TYPE_SUB},
+			NAME = #{NAME},
+			NAME_ENG = #{NAME_ENG},
+			NAME_HANJA = #{NAME_HANJA},
+			<if test="IMAGE != ''">
+	    	IMAGE = #{IMAGE},
+	    	</if>
+			ADDRESS_LOCAL = #{ADDRESS_LOCAL},
+			SCHOOL_NAME = #{SCHOOL_NAME},
+			SCHOOL_TYPE = #{SCHOOL_TYPE},
+			SCHOOL_YEAR = #{SCHOOL_YEAR},
+			SCHOOL_GROUP = #{SCHOOL_GROUP},
+			BIRTH = #{BIRTH},
+			SEX = #{SEX},
+			SCHOOL_ZIPCODE = #{SCHOOL_ZIPCODE},
+			SCHOOL_ADDRESS = #{SCHOOL_ADDRESS},
+			SCHOOL_ADDRESS_DETAIL = #{SCHOOL_ADDRESS_DETAIL},
+			SUPPORT_AREA = #{SUPPORT_AREA},
+			ZIPCODE = #{ZIPCODE},
+			ADDRESS = #{ADDRESS},
+			ADDRESS_DETAIL = #{ADDRESS_DETAIL},
+			PARENTS_NAME = #{PARENTS_NAME},
+			PARENTS_RELATION = #{PARENTS_RELATION},
+			PARENTS_PHONE = #{PARENTS_PHONE},
+			PARENTS_PHONE2 = #{PARENTS_PHONE2},
+			INFO_AGREEMENT = #{INFO_AGREEMENT},
+			STATUS = #{STATUS},
+			SCHOOL_NUMBER = #{SCHOOL_NUMBER},
+			SCHOOL_JIGGEUB = #{SCHOOL_JIGGEUB},
+			TEL = #{TEL},
+			AREA_NUMBER = #{AREA_NUMBER},
+			UPDATE_TM = now(),
+			SCHOOL_MAJOR = #{SCHOOL_MAJOR},
+			ELIGIBILITY = #{ELIGIBILITY},
+			EXP = #{EXP},
+			EXP_TYPE = #{EXP_TYPE},
+			EXP_DATA = #{EXP_DATA}
+		WHERE
+			MEMBER_ID = #{MEMBER_ID} 
+	</update>
+	
+	<update id="setDORMANCY"	parameterType="egovframework.kaist.admin.member.model.AdminMemberVo">
+		UPDATE /*AdminMemberMapper*/ TBL_MEMBER SET 
+			DORMANCY = '1',
+			DORMANCY_TM = now()
+		WHERE
+	 <![CDATA[		MEMBER_ID IN (SELECT MEMBER_ID FROM TBL_MEMBER WHERE DORMANCY = 0 AND LOGIN_TM < DATE_SUB(now(), INTERVAL 1 YEAR) )   ]]>
+	</update>
+	
+	
+	
+	<delete id="setDelete"	parameterType="egovframework.kaist.admin.member.model.AdminMemberVo">
+		DELETE FROM /*AdminMemberMapper*/
+			TBL_MEMBER
+		WHERE MEMBER_ID =  #{MEMBER_ID} 
+	</delete>
+
+
+	<update id="setUpdateTypeToText"	parameterType="egovframework.kaist.admin.member.model.AdminMemberVo">
+		UPDATE /*AdminMemberMapper*/ TBL_MEMBER SET 
+			${SEARCH_TYPE} = #{SEARCH_TEXT},
+			<if test="SEARCH_TYPE == 'DORMANCY'">
+	    		DORMANCY_TM = now(),
+	   		</if>
+			
+			 <if test="SEARCH_TYPE == 'INFO_AGREEMENT'">
+	    		<if test="SEARCH_TEXT == 1">
+	    			INFO_AGREEMENT_TM = now(),
+	    		</if>	
+	    		<if test="SEARCH_TEXT == 0">
+	    			INFO_AGREEMENT_TM = null,
+	    		</if>
+	   		 </if> 
+			
+			
+			UPDATE_TM = now()
+		WHERE
+			MEMBER_ID = #{MEMBER_ID} 
+
+			
+	</update>
+	
+	<update id="setUpdateShoolNumber">
+		UPDATE /*AdminMemberMapper*/
+			TBL_MEMBER A INNER JOIN (
+			SELECT @num:=@num+1 as num, MEMBER_ID, SCHOOL_NUMBER  FROM (select @num:= (SELECT IFNULL(MAX(SCHOOL_NUMBER), DATE_FORMAT(NOW(), '%Y0000')) FROM TBL_MEMBER WHERE SCHOOL_NUMBER >  DATE_FORMAT(NOW(), '%Y0000'))) a, TBL_MEMBER WHERE (SCHOOL_NUMBER = '' OR SCHOOL_NUMBER IS NULL) AND TYPE = '1') B
+			ON A.MEMBER_ID = B.MEMBER_ID
+			SET A.SCHOOL_NUMBER=B.num
+	</update>
+	<update id="setInfo_AgreementUpdate">
+		UPDATE /*AdminMemberMapper*/
+		TBL_MEMBER SET 
+			INFO_AGREEMENT = 0,
+		    INFO_AGREEMENT_TM = null
+	</update>
+
+	<select id="getCheckView" parameterType="egovframework.kaist.admin.member.model.AdminMemberVo" resultType="egovframework.kaist.admin.member.model.AdminMemberVo">
+		SELECT * 
+		FROM TBL_MEMBER
+		WHERE NAME = #{NAME} AND PHONE = #{PHONE} ORDER BY CREATE_TM DESC LIMIT 1
+	</select>
+
+	<insert id="setInsert2021" parameterType="egovframework.kaist.admin.member.model.AdminMemberVo">
+		INSERT INTO /*AdminMemberMapper*/ TBL_MEMBER_21 (
+			MEMBER_ID,
+			PASSWORD,
+			NAME,
+			PHONE,
+			EMAIL,
+			LEVEL,
+			JOIN_TM,
+			CREATE_TM,
+			TYPE,
+			TYPE_SUB,
+			NAME_ENG,
+			NAME_HANJA,
+			IMAGE,
+			ADDRESS_LOCAL,
+			SCHOOL_NAME,
+			SCHOOL_TYPE,
+			SCHOOL_YEAR,
+			SCHOOL_GROUP,
+			BIRTH,
+			SEX,
+			SCHOOL_ZIPCODE,
+			SCHOOL_ADDRESS,
+			SCHOOL_ADDRESS_DETAIL,
+			SUPPORT_AREA,
+			ZIPCODE,
+			ADDRESS,
+			ADDRESS_DETAIL,
+			PARENTS_NAME,
+			PARENTS_RELATION,
+			PARENTS_PHONE,
+			PARENTS_PHONE2,
+			INFO_AGREEMENT,
+			DORMANCY_TM,
+			LOGIN_TM,
+			UPDATE_TM,
+			STATUS,
+			SCHOOL_NUMBER,
+			SCHOOL_JIGGEUB,
+			TEL,
+			AREA_NUMBER,
+			SCHOOL_MAJOR,
+			ELIGIBILITY,
+			EXP,
+			EXP_TYPE,
+			EXP_DATA,
+			TEST
+			
+		) VALUES (
+			#{MEMBER_ID},
+			#{PASSWORD},
+			#{NAME},
+			#{PHONE},
+			#{EMAIL},
+			#{LEVEL},
+			now(),
+			now(),
+			#{TYPE},
+			#{TYPE_SUB},
+			#{NAME_ENG},
+			#{NAME_HANJA},
+			#{IMAGE},
+			#{ADDRESS_LOCAL},
+			#{SCHOOL_NAME},
+			#{SCHOOL_TYPE},
+			#{SCHOOL_YEAR},
+			#{SCHOOL_GROUP},
+			#{BIRTH},
+			#{SEX},
+			#{SCHOOL_ZIPCODE},
+			#{SCHOOL_ADDRESS},
+			#{SCHOOL_ADDRESS_DETAIL},
+			#{SUPPORT_AREA},
+			#{ZIPCODE},
+			#{ADDRESS},
+			#{ADDRESS_DETAIL},
+			#{PARENTS_NAME},
+			#{PARENTS_RELATION},
+			#{PARENTS_PHONE},
+			#{PARENTS_PHONE2},
+			#{INFO_AGREEMENT},
+			null,
+			null,
+			now(),
+			#{STATUS},
+			#{SCHOOL_NUMBER},
+			#{SCHOOL_JIGGEUB},
+		
+			#{TEL},
+			#{AREA_NUMBER},
+			#{SCHOOL_MAJOR},
+			#{ELIGIBILITY},
+			#{EXP},
+			#{EXP_TYPE},
+			#{EXP_DATA},
+			#{TEST}
+		)
+		
+	</insert>
+
+
+<select id="getListNameOrder" resultType="hashMap" parameterType="egovframework.kaist.admin.member.model.AdminMemberVo">
+		SELECT /*AdminMemberMapper*/ * FROM TBL_MEMBER
+		WHERE 1=1 
+
+		
+		<if test="DORMANCY != ''">
+	    	AND DORMANCY = #{DORMANCY}
+	    	
+	    	<if test="START_TM != ''">
+	 		<![CDATA[
+	    	AND DORMANCY_TM >=  date_format(#{START_TM}, '%Y-%m-%d 00:00:00')
+	    	AND DORMANCY_TM <=  date_format(#{END_TM}, '%Y-%m-%d 23:59:59')
+	    	]]>
+	     	</if>
+	    
+	    </if>
+	    
+	    <if test="LEVEL != ''">
+	    	AND LEVEL = #{LEVEL}
+	    </if>
+	    
+	    <if test="TYPE != ''">
+	    	AND TYPE = #{TYPE}
+	    </if>
+
+	    <if test="SCHOOL_YEAR != ''">
+	    	AND SCHOOL_YEAR = #{SCHOOL_YEAR}
+	    </if>
+	    
+	     <if test="SEARCH_TEXT != ''">
+		     <if test="SEARCH_TYPE == 'ALL'">
+		    	AND (
+		    		NAME LIKE '%${SEARCH_TEXT}%' 
+		    		OR  MEMBER_ID LIKE '%${SEARCH_TEXT}%'
+		    		OR  SCHOOL_NAME LIKE '%${SEARCH_TEXT}%'
+		    		OR  PHONE LIKE '%${SEARCH_TEXT}%'
+		    		OR  SCHOOL_YEAR LIKE '%${SEARCH_TEXT}%'
+		    		) 
+		    </if>
+		    <if test="SEARCH_TYPE != 'ALL'">
+	    		 AND ${SEARCH_TYPE} LIKE '%${SEARCH_TEXT}%'
+	    	</if>
+	    	
+	    </if>
+	    
+	    
+		ORDER BY NAME asc
+		LIMIT ${LIMIT} OFFSET ${OFFSET}
+	</select>
+
+	<select id="getMatchingList" resultType="egovframework.kaist.admin.member.model.AdminMemberVo" parameterType="egovframework.kaist.admin.member.model.AdminMemberVo">
+		SELECT /*AdminMemberMapper*/ MEMBER_ID , NAME , ADDRESS_LOCAL , SCHOOL_NAME , SEX  FROM TBL_MEMBER
+		WHERE 1=1
+		<if test="LEVEL != ''"> 
+			AND LEVEL = '8'
+		</if>
+	    <if test="TYPE != ''">
+	    	AND TYPE = #{TYPE}
+	    </if>
+	    <if test="EXP_DATA != ''">
+	    	AND EXP_DATA LIKE '%${EXP_DATA}%'
+	    </if>
+	    AND EXP_DATA != ''
+	    ORDER BY NAME
+	</select>
+
+
+
+</mapper>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="egovframework.kaist.user.buseo.service.impl.UserBuseoMapper">
+	 
+	<select id="getListAll" resultType="hashMap" >
+		SELECT /*UserBuseoMapper*/ * FROM TBL_BUSEO order by idx desc
+	</select>
+
+	<select id="getView" resultType="egovframework.kaist.user.buseo.model.UserBuseoVo" parameterType="String">
+		SELECT /*UserBuseoMapper*/ * FROM TBL_BUSEO where IDX = #{value};
+	</select>
+	
+	
+	<insert id="setInsert"	parameterType="egovframework.kaist.user.buseo.model.UserBuseoVo">
+		INSERT INTO /*UserBuseoMapper*/ TBL_BUSEO (
+			IDX,
+			PARENT_IDX,
+			NAME,
+			CREATE_TM
+		) VALUES (
+			0,
+			#{PARENT_IDX},
+			#{NAME},
+			now()
+		) 
+	</insert>
+
+	<update id="setUpdate"	parameterType="egovframework.kaist.user.buseo.model.UserBuseoVo">
+		UPDATE /*UserBuseoMapper*/ TBL_BUSEO SET 
+			
+			<if test="PARENT_IDX != ''">
+	     		 PARENT_IDX = #{PARENT_IDX},
+	    	</if>
+
+			NAME = #{NAME}
+		WHERE
+			IDX = #{IDX} 
+	</update>
+	
+	
+	<delete id="setDelete"	parameterType="egovframework.kaist.user.buseo.model.UserBuseoVo">
+		DELETE FROM /*UserBuseoMapper*/
+			TBL_BUSEO
+		WHERE IDX =  #{IDX} 
+	</delete>
+
+    
+	<insert id="setInsertToUpdate"	parameterType="egovframework.kaist.user.buseo.model.UserBuseoVo">
+		INSERT INTO /*UserMemberMapper*/ TBL_BUSEO (
+			IDX,
+			PARENT_IDX,
+			NAME,
+			CREATE_TM,
+			UPDATE_TM
+		) VALUES (
+			#{IDX},
+			#{PARENT_IDX},
+			#{NAME},
+			now(),
+			now()) 
+		ON DUPLICATE KEY UPDATE
+			PARENT_IDX= #{PARENT_IDX},
+			NAME = #{NAME},
+			UPDATE_TM = now()
+	</insert>
+</mapper>

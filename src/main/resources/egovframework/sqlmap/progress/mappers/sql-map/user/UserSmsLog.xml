@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="egovframework.kaist.user.sms_log.service.impl.UserSmsLogMapper">
+	 
+	<select id="getListAll" resultType="hashMap" >
+		SELECT /*UserSmsLogMapper*/ * FROM TBL_SMS_LOG order by CREATE_TM desc
+	</select>
+
+	
+	<select id="getList" resultType="hashMap" parameterType="egovframework.kaist.user.sms_log.model.UserSmsLogVo">
+		SELECT /*UserSmsLogMapper*/ * FROM TBL_SMS_LOG
+		WHERE 1=1 
+		<if test="MEMBER_ID != ''">
+	    	AND MEMBER_ID = #{MEMBER_ID}
+	    </if>
+	    
+		order by UPDATE_TM desc
+		
+		LIMIT ${LIMIT} OFFSET ${OFFSET}
+	</select>
+	
+	
+		
+	<select id="getListCnt" resultType="int" parameterType="egovframework.kaist.user.sms_log.model.UserSmsLogVo">
+		SELECT /*UserSmsLogMapper*/ count(*) FROM TBL_SMS_LOG
+		WHERE 1=1 
+		<if test="MEMBER_ID != ''">
+	    	AND "MEMBER_ID" = #{MEMBER_ID}
+	    </if>
+	</select>
+
+	<select id="getView" resultType="egovframework.kaist.user.sms_log.model.UserSmsLogVo" parameterType="String">
+		SELECT /*UserSmsLogMapper*/ * FROM TBL_SMS_LOG where MEMBER_ID = #{value};
+	</select>
+
+	<insert id="setInsert"	parameterType="egovframework.kaist.user.sms_log.model.UserSmsLogVo">
+		INSERT INTO /*UserSmsLogMapper*/ TBL_SMS_LOG (
+			IDX,
+			PHONE,
+			MESSAGE,
+			STATUS,
+			CREATE_TM,
+			DELETE_TM,
+			RESERVATION_TM,
+			RESERVATION,
+			MEMBER_ID
+	
+		) VALUES (
+			0,
+			#{PHONE},
+			#{MESSAGE},
+			0,
+			now(),
+			null,
+			<choose>
+			<when test="RESERVATION_TM != ''">
+			#{RESERVATION_TM},
+			</when>
+			<otherwise>
+			now(),
+			</otherwise>
+			</choose>
+			#{RESERVATION},
+			#{MEMBER_ID}
+		) 
+	</insert>
+
+	<update id="setUpdate"	parameterType="egovframework.kaist.user.sms_log.model.UserSmsLogVo">
+		UPDATE /*UserSmsLogMapper*/ TBL_SmsLog SET 
+			MESSAGE = #{MESSAGE}
+		WHERE
+			IDX = #{IDX} 
+	</update>
+	
+	
+	<delete id="setDelete"	parameterType="egovframework.kaist.user.sms_log.model.UserSmsLogVo">
+		DELETE FROM /*UserSmsLogMapper*/
+			TBL_SMS_LOG
+		WHERE IDX =  #{IDX} 
+	</delete>
+	
+	<select id="getViewLast" parameterType="egovframework.kaist.user.sms_log.model.UserSmsLogVo" resultType="egovframework.kaist.user.sms_log.model.UserSmsLogVo">
+		SELECT /*UserSmsLogMapper*/ * FROM TBL_SMS_LOG where MEMBER_ID = #{value} 
+		order by create_tm desc
+		limit 1;
+	</select>
+
+    
+</mapper>

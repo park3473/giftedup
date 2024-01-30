@@ -1,0 +1,406 @@
+@font-face {
+    font-family: 'MaruBuri-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/MaruBuri-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/*로그인 페이지*/
+#new_sub_con .login_wrap {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: table;
+}
+
+#new_sub_con .login_wrap {
+    width: -webkit-calc((100% - 100px) / 2);
+    width: calc((100% - 100px) / 2);
+    float: left;
+}
+
+#new_sub_con .phone_login_wrap {
+    width: -webkit-calc((100% - 100px) / 2);
+    width: calc((100% - 100px) / 2);
+    float: left;
+}
+
+#new_sub_con .login_wrap {
+    margin-right: 100px;
+}
+
+#new_sub_con .login_wrap .title,
+#new_sub_con .phone_login_wrap .title {
+    width: 100%;
+    display: table;
+    margin-bottom: 1rem;
+}
+
+#new_sub_con .login_wrap .title > span,
+#new_sub_con .phone_login_wrap .title > span {
+    margin-right: .5rem;
+    display: block;
+    width: 5px;
+    float: left;
+}
+
+#new_sub_con .login_wrap .title > p,
+#new_sub_con .phone_login_wrap .title > p {
+    display: inline-block;
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 0;
+    color: #000;
+    width: -webkit-calc((100% - 10px) - 5px);
+    width: calc((100% - 10px) - 5px);
+    float: left;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+#new_sub_con .login_wrap > p {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: #5c5c5c;
+}
+
+#new_sub_con .login_wrap .login_form {
+    width: 100%;
+    background-color: #f4f4f4;
+    border: 1px solid #dedede;
+    padding: 46px 44px;
+    overflow: hidden;
+}
+
+#new_sub_con .login_wrap .login_form .check_box {
+    width: auto;
+    float: right;
+    overflow: hidden;
+    position: relative;
+}
+
+#new_sub_con .login_wrap .login_form .check_box .check_ob {
+    float: left;
+    margin-right: 10px;
+}
+
+#new_sub_con .login_wrap .login_form .check_box .check_ob:last-of-type {
+    margin-right: 0;
+}
+
+#new_sub_con .login_wrap .login_form .check_box .check_ob > input {
+    vertical-align: middle;
+    margin-bottom: 3px;
+}
+
+#new_sub_con .login_form form {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    clear: both;
+}
+
+#new_sub_con .login_form .form_con {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+#new_sub_con .login_form .login_input_wrap {
+    margin-bottom: 1rem;
+}
+
+#new_sub_con .login_form .form_size {
+    width: 70%;
+    margin-right: 40px;
+    float: left;
+}
+
+#new_sub_con .login_form .form_size .input_ob {
+    width: 100%;
+    height: 44px;
+}
+
+#new_sub_con .login_form .form_size .input_ob > span {
+    width: 71px;
+    text-align: left;
+    font-size: 0.95rem;
+    color: #5c5c5c;
+    padding-right: 10px;
+    line-height: 44px;
+    display: table;
+    float: left;
+    font-weight: 300;
+}
+
+#new_sub_con .login_form .form_size .input_ob > input {
+    float: left;
+    width: -webkit-calc(100% - 71px);
+    width: calc(100% - 71px);
+    height: 100%;
+    padding-left: 10px;
+    font-size: 0.95rem;
+    border: 0;
+    border-top: 1px solid #dedede;
+    border-right: 1px solid #dedede;
+    border-left: 1px solid #dedede;
+}
+
+#new_sub_con .login_form .form_size .input_ob > input::-webkit-input-placeholder {
+    font-size: 0.9rem;
+    color: #ccc;
+    font-weight: 100;
+}
+
+#new_sub_con .login_form .form_size .input_ob > input::-moz-placeholder {
+    font-size: 0.9rem;
+    color: #ccc;
+    font-weight: 100;
+}
+
+#new_sub_con .login_form .form_size .input_ob > input:-ms-input-placeholder {
+    font-size: 0.9rem;
+    color: #ccc;
+    font-weight: 100;
+}
+
+#new_sub_con .login_form .form_size .input_ob > input::placeholder {
+    font-size: 0.9rem;
+    color: #ccc;
+    font-weight: 100;
+}
+
+#new_sub_con .login_form .form_size .input_ob > input::-webkit-input-placeholder {
+    font-size: 0.9rem;
+    color: #ccc;
+    font-weight: 100;
+}
+
+#new_sub_con .login_form .form_size .input_ob > input::-ms-input-placeholder {
+    font-size: 0.9rem;
+    color: #ccc;
+    font-weight: 100;
+}
+
+
+
+#new_sub_con .login_form .form_size .input_ob:last-of-type > input {
+    border-bottom: 1px solid #dedede;
+}
+
+#new_sub_con .login_form .form_btn {
+    width: -webkit-calc((100% - 40px) - 70%);
+    width: calc((100% - 40px) - 70%);
+    float: left;
+}
+
+#new_sub_con .login_form .login_input_wrap .form_btn > button {
+    width: 100%;
+    height: 88px;
+    border: 0;
+    background-color: #009dc4;
+    color: #fff;
+    font-size: 0.95rem;
+    font-weight: 400;
+}
+
+#new_sub_con .login_form .password_find_wrap .form_size > p {
+    text-align: left;
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: #5c5c5c;
+    line-height: 25px;
+    margin-bottom: 0;
+}
+
+#new_sub_con .login_form .password_find_wrap .form_btn > button {
+    width: 100%;
+    height: 45px;
+    border: 0;
+    background-color: #e1ce80;
+    color: #fff;
+    font-size: 0.95rem;
+    font-weight: 400;
+}
+
+#new_sub_con .phone_login_wrap {}
+
+#new_sub_con .phone_login_wrap > p {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: #5c5c5c;
+}
+
+#new_sub_con .phone_login_wrap .login_form {
+    width: 100%;
+    background-color: #f4f4f4;
+    border: 1px solid #dedede;
+    padding: 46px 44px;
+    overflow: hidden;
+}
+
+#new_sub_con .login_btn #number_btn {
+    width: 100%;
+    height: 40px;
+    border: 0;
+    background-color: #e1ce80;
+    color: #fff;
+    font-size: 0.95rem;
+    font-weight: 400;
+    margin-bottom: 5px;
+}
+
+
+@media all and (max-width:1025px) {
+    #new_sub_con .login_wrap {
+        width: 100%;
+    }
+
+    #new_sub_con .phone_login_wrap {
+        width: 100%;
+    }
+
+    #new_sub_con .phone_login_wrap {
+        padding-top: 44px;
+    }
+}
+
+@media all and (max-width:571px) {
+
+    #new_sub_con .login_wrap .login_form,
+    #new_sub_con .phone_login_wrap .login_form {
+        padding: 20px 15px;
+    }
+
+    #new_sub_con .login_form .form_size {
+        width: 100%;
+    }
+
+    #new_sub_con .login_form .form_btn {
+        width: 100%;
+        margin-top: 1rem;
+    }
+
+    #new_sub_con .login_form .form_btn_m {
+        margin-top: 0;
+    }
+
+    #new_sub_con .login_form .form_size {
+        margin-right: 0;
+    }
+
+    #new_sub_con .login_form .login_input_wrap .form_btn > button {
+        height: 50px;
+    }
+
+    #new_sub_con .login_form .password_find_wrap .form_size > p {
+        text-align: left;
+    }
+}
+
+
+/*합격모달*/
+.pass_modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 99999;
+    display: none;
+}
+
+.pass_modal h2,
+.pass_modal p{
+    font-family: 'MaruBuri-Regular';
+}
+
+.pass_modal .pass_modal_size {
+    width: 90%;
+    max-width: 900px;
+    height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.pass_modal .pass_modal_size .pass_bg {
+    width: 100%;
+    height: auto;
+    position: relative;
+}
+
+.pass_modal .pass_modal_size .pass_bg > img {
+    width: auto;
+    max-width: 100%;
+    vertical-align: middle;
+}
+
+.pass_modal .pass_modal_size .pass_close {
+    position: absolute;
+    top: 40px;
+    right: 65px;
+    z-index: 999;
+}
+
+.pass_modal .pass_modal_size .pass_close > a {
+    display: block;
+    font-size: 2rem;
+    color: #000;
+}
+
+.pass_modal .pass_modal_size .pass_contents {
+    position: absolute;
+    top: 63px;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    transform: translateX(-50%);
+    width: 100%;
+}
+
+.pass_modal .pass_modal_size .pass_contents .pass_name {
+    width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.pass_modal .pass_modal_size .pass_contents .pass_name > h2 {
+    font-size: 2.375rem;
+    color: #000;
+}
+
+.pass_modal .pass_modal_size .pass_contents .pass_txt {
+    width: 100%;
+    height: auto;
+    position: relative;
+}
+
+.pass_modal .pass_modal_size .pass_contents .pass_txt > p {
+    font-size: 1.313rem;
+    line-height: 40px;
+}
+
+.pass_modal .pass_modal_size .pass_contents .pass_txt .pass_stemp {
+    position: absolute;
+    top: 45px;
+    right: 220px;
+    width: 55px;
+    height: 55px;
+}
+
+.pass_modal .pass_modal_size .pass_contents .pass_txt .pass_stemp > img {
+    width: auto;
+    max-width: 100%;
+    vertical-align: middle;
+}
+
+/*합격모달 end*/
+
+

@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!--JQuery-UI-->
+    <link rel="stylesheet" href="css/jquery-ui.css" type="text/css">
+
+    <!--css-->
+    <link rel="stylesheet" href="css/fontawesome/all.css">
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800|Noto+Sans+KR:100,300,400,500,700,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/admin/header.css">
+    <link rel="stylesheet" href="../css/admin/admin.css">
+    <link rel="stylesheet" href="../css/admin/admin_5.css">
+    <link rel="stylesheet" href="../css/admin/footer.css">
+    <title>영재키움프로젝트</title>
+</head>
+
+<body>
+    <!--헤더-->
+    <header id="adm_hd">
+        <div id="adm_hd_area">
+            <div id="adm_hd_con">
+                <div class="adm_hd_size nanumgothic">
+
+                    <div class="hd_menu">
+                        <!--관리자 메뉴-->
+                        <div class="adm_menu_area">
+                            <div class="home">
+                                <a href="#">
+                                    <img src="../img/admin/home.png" alt="홈" />
+                                </a>
+                            </div>
+                            <ul class="adm_menu_con">
+                                <li>
+                                    <a href="#">
+                                        <img src="../img/admin/member_icon.png" alt="회원관리" />
+                                    </a>
+                                    <ul class="sub_menu_con">
+                                        <div class="title notosans">
+                                            <span></span>
+                                            <span>회원관리</span>
+                                        </div>
+                                        <li>
+                                            <a href="../admin/member_a_1.html">· 회원목록관리</a>
+                                        </li>
+                                        <li>
+                                            <a href="../admin/member_a_2.html">· 교사 - 학생 매칭관리</a>
+                                        </li>
+                                        <li>
+                                            <a href="../admin/member_a_3.html">· 교사 지역별 그룹관리</a>
+                                        </li>
+                                        <li>
+                                            <a href="../admin/member_a_4.html">· 휴면회원 관리</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <img src="../img/admin/program_icon.png" alt="프로그램관리" />
+                                    </a>
+                                    <ul class="sub_menu_con">
+                                        <div class="title notosans">
+                                            <span></span>
+                                            <span>프로그램 관리</span>
+                                        </div>
+                                        <li class="mr-b-50">
+                                            <a href="../admin/program_b_1.html">· 학생프로그램</a>
+                                            <ul class="sub_menu_ob">
+                                                <li>
+                                                    <a href="../admin/program_b_2.html">- 융합과학 프로젝트</a>
+                                                </li>
+                                                <li>
+                                                    <a href="../admin/program_b_3.html">- 창의융합캠프</a>
+                                                </li>
+                                                <li>
+                                                    <a href="../admin/program_b_4.html">- 멘토링데이</a>
+                                                </li>
+                                                <li>
+                                                    <a href="../admin/program_b_5.html">- 고등자율연구</a>
+                                                </li>
+                                                <li>
+                                                    <a href="../admin/program_b_6.html">- 발명 및 특허교육</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="#">· 교사프로그램관리</a>
+                                            <ul class="sub_menu_ob">
+                                                <li>
+                                                    <a href="../admin/teacher_b_1.html">- 교사연수</a>
+                                                </li>
+                                                <li>
+                                                    <a href="../admin/teacher_b_2.html">- 중앙 컨설팅</a>
+                                                </li>
+                                                <li>
+                                                    <a href="../admin/teacher_b_3.html">- 성과 발표회</a>
+                                                </li>
+                                                <li>
+                                                    <a href="../admin/teacher_b_4.html">- 활동수당 신청관리</a>
+                                                </li>
+                                                <li>
+                                                    <a href="../admin/teacher_b_5.html">- 포트폴리오 모니터링</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <img src="../img/admin/board_icon.png" alt="게시판관리" />
+                                    </a>
+                                    <ul class="sub_menu_con">
+                                        <div class="title notosans">
+                                            <span></span>
+                                            <span>게시판 관리</span>
+                                        </div>
+                                        <li><a href="../admin/board_c_1.html">· 게시판 관리</a></li>
+                                        <li><a href="../admin/board_c_2.html">· 공지사항</a></li>
+                                        <li><a href="../admin/board_c_3.html">· 자유게시판</a></li>
+                                        <li><a href="../admin/board_c_4.html">· 홍보자료관리</a></li>
+                                        <li><a href="../admin/board_c_5.html">· 온라인학습 멘토링</a></li>
+                                        <li><a href="../admin/board_c_6.html">· 배너관리</a></li>
+                                        <li><a href="../admin/board_c_7.html">· 팝업관리</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <img src="../img/admin/stats_icon.png" alt="통계관리" />
+                                    </a>
+                                    <ul class="sub_menu_con">
+                                        <div class="title notosans">
+                                            <span></span>
+                                            <span>통계관리</span>
+                                        </div>
+                                        <li>
+                                            <a href="../admin/stats_d_1.html">· 회원통계관리</a>
+                                            <ul class="sub_menu_ob">
+                                                <li><a href="../admin/stats_d_1.html">- 학생</a></li>
+                                                <li><a href="../admin/stats_d_1_2.html">- 교사</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="../admin/stats_d_2.html">프로그램 참여현황 관리</a></li>
+                                        <li><a href="../admin/stats_d_3.html">전수조사관리</a></li>
+                                        <li class="nav_active"><a href="../admin/stats_d_4.html">설문조사관리</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <img src="../img/admin/freshman_icon.png" alt="신입생관리" />
+                                    </a>
+                                    <ul class="sub_menu_con">
+                                        <div class="title notosans">
+                                            <span></span>
+                                            <span>신입생 선발 시스템</span>
+                                        </div>
+                                        <li><a href="../admin/freshman_e_1.html">· 신입생 리스트</a></li>
+                                        <li><a href="../admin/freshman_e_2.html">· 신입생 등록</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <!--관리자 메뉴 end-->
+
+
+                        <!--서브메뉴 및 배너카드-->
+                        <div class="adm_banner_area">
+                            <div class="adm_logo">
+                                <h2>ADMINISTRATOR</h2>
+                            </div>
+                            <div class="adm_banner_con">
+                                <div class="card_area">
+                                    <ul class="card_con">
+                                        <li>
+                                            <span>아이피</span>
+                                            <span>115.91.131.154</span>
+                                        </li>
+                                        <li>
+                                            <span>아이디</span>
+                                            <span>admin</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="phone_area">
+                                    <div class="phone_con">
+                                        <div class="phone_icon">
+                                            <span><img src="../img/admin/phone.png" alt="전화기"></span>
+                                        </div>
+                                        <div class="phone_txt">
+                                            <p>이용불편문의</p>
+                                            <h2>042.935.5421</h2>
+                                        </div>
+                                    </div>
+                                    <p>E-mail : inct@inct.co.kr</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!--서브메뉴 및 배너카드 end-->
+
+                    </div>
+                    <ul class="hd_adm_menu">
+                        <li class="hd_active">
+                            <a href="../admin/member_a_1.html">MAIN</a>
+                        </li>
+                        <li>
+                            <a href="../index.html">HOMEPAGE</a>
+                        </li>
+                        <li>
+                            <a href="#">LOGOUT</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!--헤더 end-->
+    <!--본문 내용-->
+    <section class="adm_sc_txt">
+        <div class="sc_con">
+            <div class="title">
+                <span></span>
+                <span>설문조사 등록</span>
+            </div>
+
+            <div class="member_register_wrap">
+                <form>
+                    <div class="member_input_wrap">
+                        <ul class="member_input">
+                            <li>
+                                <span class="list_t">분류</span>
+                                <input type="radio" name="group" checked>
+                                <label>전체</label>
+                                <input type="radio" name="group">
+                                <label>학생</label>
+                                <input type="radio" name="group">
+                                <label>교사</label>
+                            </li>
+                            <li>
+                                <span class="list_t">제목</span>
+                                <input class="input_size7" type="text">
+                            </li>
+                            <li>
+                                <span class="list_t">간략설명</span>
+                                <input class="input_size7" type="text">
+                            </li>
+                            <li>
+                                <span class="list_t">시작시간</span>
+                                <input class="input_size mr" type="text">
+                                <select class="input_size1 mr">
+                                    <option>00시</option>
+                                    <option>01시</option>
+                                    <option>02시</option>
+                                    <option>03시</option>
+                                    <option>04시</option>
+                                    <option>05시</option>
+                                    <option>06시</option>
+                                    <option>07시</option>
+                                    <option>08시</option>
+                                    <option>09시</option>
+                                    <option>10시</option>
+                                    <option>11시</option>
+                                    <option>12시</option>
+                                    <option>13시</option>
+                                    <option>14시</option>
+                                    <option>15시</option>
+                                    <option>16시</option>
+                                    <option>17시</option>
+                                    <option>18시</option>
+                                    <option>19시</option>
+                                    <option>20시</option>
+                                    <option>21시</option>
+                                    <option>22시</option>
+                                    <option>23시</option>
+                                </select>
+                                <a class="mr-3" href="#"><img src="../img/admin/calendar.png" alt="달력" /></a>
+                                <span class="list_t_g">시작시간을 엽력하세요</span>
+                            </li>
+                            <li>
+                                <span class="list_t">종료시간</span>
+                                <input class="input_size mr" type="text">
+                                <select class="input_size1 mr">
+                                    <option>00시</option>
+                                    <option>01시</option>
+                                    <option>02시</option>
+                                    <option>03시</option>
+                                    <option>04시</option>
+                                    <option>05시</option>
+                                    <option>06시</option>
+                                    <option>07시</option>
+                                    <option>08시</option>
+                                    <option>09시</option>
+                                    <option>10시</option>
+                                    <option>11시</option>
+                                    <option>12시</option>
+                                    <option>13시</option>
+                                    <option>14시</option>
+                                    <option>15시</option>
+                                    <option>16시</option>
+                                    <option>17시</option>
+                                    <option>18시</option>
+                                    <option>19시</option>
+                                    <option>20시</option>
+                                    <option>21시</option>
+                                    <option>22시</option>
+                                    <option>23시</option>
+                                </select>
+                                <a class="mr-3" href="#"><img src="../img/admin/calendar.png" alt="달력" /></a>
+                                <span class="list_t_g">종료시간을 엽력하세요</span>
+                            </li>
+                            <li>
+                                <span class="list_t">진행여부</span>
+                                <input type="radio" name="type" checked>
+                                <label>이미지배너</label>
+                                <input type="radio" name="type">
+                                <label>플래시배너</label>
+                            </li>
+                            <li>
+                                <span class="list_t">항목
+                                    <div class="accordion_plus">
+                                        <a href="#"><img src="../img/admin/accordion_plus.png" alt="아코디언 플러스버튼"></a>
+                                    </div>
+                                </span>
+                                <input class="input_size7" type="text" placeholder="큰제목 입력"><br>
+                                <span class="list_t">
+                                </span>
+                                <input class="input_size7" type="text" placeholder="작은제목 입력"><span class="sm_title_btn">
+                                    <a href="#"><img src="../img/admin/accordion_plus.png" alt="아코디언 플러스버튼"></a>
+                                </span><br>
+                                <div class="mg-7">
+                                    <span class="list_t">
+                                    </span>
+                                    <select class="input_size mr">
+                                        <option>Text</option>
+                                        <option>Chekbox</option>
+                                        <option>Radio</option>
+                                    </select>
+                                    <input class="input_size7" type="text" placeholder="체크박스 및 라디오버튼을 사용할 경우 “내용1”, ”내용2” 과 같은 식으로 입력하세요">
+                                </div>
+                                <div class="mg-7" style="display:none;">
+                                    <span class="list_t">
+                                    </span>
+                                    <select class="input_size mr">
+                                        <option>Text</option>
+                                        <option selected>Chekbox</option>
+                                        <option>Radio</option>
+                                    </select>
+                                    <input type="checkbox" name="type">
+                                    <input class="input_size" type="text">
+                                    <input type="checkbox" name="type">
+                                    <input class="input_size" type="text">
+                                    <input type="checkbox" name="type">
+                                    <input class="input_size" type="text">
+                                    <input type="checkbox" name="type">
+                                    <input class="input_size" type="text">
+                                    <input type="checkbox" name="type">
+                                    <input class="input_size" type="text">
+                                </div>
+                                <div class="mg-7" style="display:none;">
+                                    <span class="list_t">
+                                    </span>
+                                    <select class="input_size mr">
+                                        <option>Text</option>
+                                        <option>Chekbox</option>
+                                        <option selected>Radio</option>
+                                    </select>
+                                    <input type="radio" name="type">
+                                    <input class="input_size" type="text">
+                                    <input type="radio" name="type">
+                                    <input class="input_size" type="text">
+                                    <input type="radio" name="type">
+                                    <input class="input_size" type="text">
+                                    <input type="radio" name="type">
+                                    <input class="input_size" type="text">
+                                    <input type="radio" name="type">
+                                    <input class="input_size" type="text">
+                                </div>
+                            </li>
+                            <li>
+                                <span class="list_t">팝업창 크기</span>
+                                <span>가로크기</span>
+                                <input class="input_size" type="text">
+                                <span style="margin-right:50px;">px</span>
+                                <span>세로크기</span>
+                                <input class="input_size" type="text">
+                                <span>px</span>
+                            </li>
+                            <li>
+                                <span class="list_t">팝업창 위치</span>
+                                <span>위쪽여백</span>
+                                <input class="input_size" type="text" >
+                                <span style="margin-right:50px;">px</span>
+                                <span>왼쪽여백</span>
+                                <input class="input_size" type="text">
+                                <span>px</span>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <!--저장하기 버튼-->
+            <div class="register_btn_area">
+                <div class="register_btn_con starts_insert_btn">
+                    <a class="storage" href="#">등록하기</a>
+                </div>
+            </div>
+            <!--저장하기 버튼 end-->
+        </div>
+    </section>
+    <!--본문 내용 end-->
+
+    <!--본문 end-->
+
+    <!--푸터-->
+    <footer>
+
+    </footer>
+    <!--푸터 end-->
+
+
+    <!--  JQuery  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+    <script src="../js/admin/starts.js"></script>
+    <script src="../js/admin/admin.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {
+            'packages': ['corechart']
+        });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+
+            var data = google.visualization.arrayToDataTable([
+                ['Task', 'Hours per Day'],
+                ['담당자', 11],
+                ['일반회원', 2],
+                ['정회원', 2],
+                ['준회원', 2],
+                ['최고관리자', 7],
+                ['관리자', 2]
+            ]);
+
+            var options = {
+                //          title: 'My Daily Activities'
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+            chart.draw(data, options);
+        }
+
+    </script>
+</body>
+
+</html>

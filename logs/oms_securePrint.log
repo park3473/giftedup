@@ -1,0 +1,216 @@
+2020-11월-23 11:19:27 오전 [main] DEBUG log4jdbc.debug - log4jdbc-logj2 properties initialization...
+2020-11월-23 11:19:27 오전 [main] DEBUG log4jdbc.debug - Using logger: null
+2020-11월-23 11:19:27 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.debug.stack.prefix is not defined
+2020-11월-23 11:19:27 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.sqltiming.warn.threshold is not defined
+2020-11월-23 11:19:27 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.sqltiming.error.threshold is not defined
+2020-11월-23 11:19:27 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.booleanastruefalse is not defined (using default value false)
+2020-11월-23 11:19:27 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.maxlinelength is not defined (using default of 90)
+2020-11월-23 11:19:27 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.fulldebugstacktrace is not defined (using default value false)
+2020-11월-23 11:19:27 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.statement.warn is not defined (using default value false)
+2020-11월-23 11:19:27 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.select is not defined (using default value true)
+2020-11월-23 11:19:27 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.insert is not defined (using default value true)
+2020-11월-23 11:19:27 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.update is not defined (using default value true)
+2020-11월-23 11:19:27 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.delete is not defined (using default value true)
+2020-11월-23 11:19:27 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.create is not defined (using default value true)
+2020-11월-23 11:19:27 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.addsemicolon is not defined (using default value false)
+2020-11월-23 11:19:27 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.auto.load.popular.drivers is not defined (using default value true)
+2020-11월-23 11:19:27 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.drivers is not defined
+2020-11월-23 11:19:27 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.trim.sql is not defined (using default value true)
+2020-11월-23 11:19:27 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.trim.sql.extrablanklines is not defined (using default value true)
+2020-11월-23 11:19:27 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.suppress.generated.keys.exception is not defined (using default value false)
+2020-11월-23 11:19:27 오전 [main] DEBUG log4jdbc.debug - log4jdbc-logj2 properties initialization done.
+2020-11월-23 11:19:27 오전 [main] DEBUG log4jdbc.debug - DriverSpy intialization...
+2020-11월-23 11:19:27 오전 [main] DEBUG log4jdbc.debug -   FOUND DRIVER com.mysql.jdbc.Driver
+2020-11월-23 11:19:27 오전 [main] DEBUG log4jdbc.debug - DriverSpy intialization done.
+2020-11월-23 11:21:29 오전 [main] DEBUG log4jdbc.debug - log4jdbc-logj2 properties initialization...
+2020-11월-23 11:21:29 오전 [main] DEBUG log4jdbc.debug - Using logger: null
+2020-11월-23 11:21:29 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.debug.stack.prefix is not defined
+2020-11월-23 11:21:29 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.sqltiming.warn.threshold is not defined
+2020-11월-23 11:21:29 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.sqltiming.error.threshold is not defined
+2020-11월-23 11:21:29 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.booleanastruefalse is not defined (using default value false)
+2020-11월-23 11:21:29 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.maxlinelength is not defined (using default of 90)
+2020-11월-23 11:21:29 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.fulldebugstacktrace is not defined (using default value false)
+2020-11월-23 11:21:29 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.statement.warn is not defined (using default value false)
+2020-11월-23 11:21:29 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.select is not defined (using default value true)
+2020-11월-23 11:21:29 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.insert is not defined (using default value true)
+2020-11월-23 11:21:29 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.update is not defined (using default value true)
+2020-11월-23 11:21:29 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.delete is not defined (using default value true)
+2020-11월-23 11:21:29 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.create is not defined (using default value true)
+2020-11월-23 11:21:29 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.addsemicolon is not defined (using default value false)
+2020-11월-23 11:21:29 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.auto.load.popular.drivers is not defined (using default value true)
+2020-11월-23 11:21:29 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.drivers is not defined
+2020-11월-23 11:21:29 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.trim.sql is not defined (using default value true)
+2020-11월-23 11:21:29 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.trim.sql.extrablanklines is not defined (using default value true)
+2020-11월-23 11:21:29 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.suppress.generated.keys.exception is not defined (using default value false)
+2020-11월-23 11:21:29 오전 [main] DEBUG log4jdbc.debug - log4jdbc-logj2 properties initialization done.
+2020-11월-23 11:21:29 오전 [main] DEBUG log4jdbc.debug - DriverSpy intialization...
+2020-11월-23 11:21:29 오전 [main] DEBUG log4jdbc.debug -   FOUND DRIVER com.mysql.jdbc.Driver
+2020-11월-23 11:21:29 오전 [main] DEBUG log4jdbc.debug - DriverSpy intialization done.
+2020-11월-23 11:21:46 오전 [main] DEBUG log4jdbc.debug - log4jdbc-logj2 properties initialization...
+2020-11월-23 11:21:46 오전 [main] DEBUG log4jdbc.debug - Using logger: null
+2020-11월-23 11:21:46 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.debug.stack.prefix is not defined
+2020-11월-23 11:21:46 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.sqltiming.warn.threshold is not defined
+2020-11월-23 11:21:46 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.sqltiming.error.threshold is not defined
+2020-11월-23 11:21:46 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.booleanastruefalse is not defined (using default value false)
+2020-11월-23 11:21:46 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.maxlinelength is not defined (using default of 90)
+2020-11월-23 11:21:46 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.fulldebugstacktrace is not defined (using default value false)
+2020-11월-23 11:21:46 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.statement.warn is not defined (using default value false)
+2020-11월-23 11:21:46 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.select is not defined (using default value true)
+2020-11월-23 11:21:46 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.insert is not defined (using default value true)
+2020-11월-23 11:21:46 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.update is not defined (using default value true)
+2020-11월-23 11:21:46 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.delete is not defined (using default value true)
+2020-11월-23 11:21:46 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.create is not defined (using default value true)
+2020-11월-23 11:21:46 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.addsemicolon is not defined (using default value false)
+2020-11월-23 11:21:46 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.auto.load.popular.drivers is not defined (using default value true)
+2020-11월-23 11:21:46 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.drivers is not defined
+2020-11월-23 11:21:46 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.trim.sql is not defined (using default value true)
+2020-11월-23 11:21:46 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.trim.sql.extrablanklines is not defined (using default value true)
+2020-11월-23 11:21:46 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.suppress.generated.keys.exception is not defined (using default value false)
+2020-11월-23 11:21:46 오전 [main] DEBUG log4jdbc.debug - log4jdbc-logj2 properties initialization done.
+2020-11월-23 11:21:46 오전 [main] DEBUG log4jdbc.debug - DriverSpy intialization...
+2020-11월-23 11:21:46 오전 [main] DEBUG log4jdbc.debug -   FOUND DRIVER com.mysql.jdbc.Driver
+2020-11월-23 11:21:46 오전 [main] DEBUG log4jdbc.debug - DriverSpy intialization done.
+2020-11월-23 11:23:28 오전 [main] DEBUG log4jdbc.debug - log4jdbc-logj2 properties initialization...
+2020-11월-23 11:23:28 오전 [main] DEBUG log4jdbc.debug - Using logger: null
+2020-11월-23 11:23:28 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.debug.stack.prefix is not defined
+2020-11월-23 11:23:28 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.sqltiming.warn.threshold is not defined
+2020-11월-23 11:23:28 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.sqltiming.error.threshold is not defined
+2020-11월-23 11:23:28 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.booleanastruefalse is not defined (using default value false)
+2020-11월-23 11:23:28 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.maxlinelength is not defined (using default of 90)
+2020-11월-23 11:23:28 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.fulldebugstacktrace is not defined (using default value false)
+2020-11월-23 11:23:28 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.statement.warn is not defined (using default value false)
+2020-11월-23 11:23:28 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.select is not defined (using default value true)
+2020-11월-23 11:23:28 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.insert is not defined (using default value true)
+2020-11월-23 11:23:28 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.update is not defined (using default value true)
+2020-11월-23 11:23:28 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.delete is not defined (using default value true)
+2020-11월-23 11:23:28 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.create is not defined (using default value true)
+2020-11월-23 11:23:28 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.addsemicolon is not defined (using default value false)
+2020-11월-23 11:23:28 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.auto.load.popular.drivers is not defined (using default value true)
+2020-11월-23 11:23:28 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.drivers is not defined
+2020-11월-23 11:23:28 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.trim.sql is not defined (using default value true)
+2020-11월-23 11:23:28 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.trim.sql.extrablanklines is not defined (using default value true)
+2020-11월-23 11:23:28 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.suppress.generated.keys.exception is not defined (using default value false)
+2020-11월-23 11:23:28 오전 [main] DEBUG log4jdbc.debug - log4jdbc-logj2 properties initialization done.
+2020-11월-23 11:23:28 오전 [main] DEBUG log4jdbc.debug - DriverSpy intialization...
+2020-11월-23 11:23:28 오전 [main] DEBUG log4jdbc.debug -   FOUND DRIVER com.mysql.jdbc.Driver
+2020-11월-23 11:23:28 오전 [main] DEBUG log4jdbc.debug - DriverSpy intialization done.
+2020-11월-23 11:25:16 오전 [main] DEBUG log4jdbc.debug - log4jdbc-logj2 properties initialization...
+2020-11월-23 11:25:16 오전 [main] DEBUG log4jdbc.debug - Using logger: null
+2020-11월-23 11:25:16 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.debug.stack.prefix is not defined
+2020-11월-23 11:25:16 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.sqltiming.warn.threshold is not defined
+2020-11월-23 11:25:16 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.sqltiming.error.threshold is not defined
+2020-11월-23 11:25:16 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.booleanastruefalse is not defined (using default value false)
+2020-11월-23 11:25:16 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.maxlinelength is not defined (using default of 90)
+2020-11월-23 11:25:16 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.fulldebugstacktrace is not defined (using default value false)
+2020-11월-23 11:25:16 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.statement.warn is not defined (using default value false)
+2020-11월-23 11:25:16 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.select is not defined (using default value true)
+2020-11월-23 11:25:16 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.insert is not defined (using default value true)
+2020-11월-23 11:25:16 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.update is not defined (using default value true)
+2020-11월-23 11:25:16 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.delete is not defined (using default value true)
+2020-11월-23 11:25:16 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.create is not defined (using default value true)
+2020-11월-23 11:25:16 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.addsemicolon is not defined (using default value false)
+2020-11월-23 11:25:16 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.auto.load.popular.drivers is not defined (using default value true)
+2020-11월-23 11:25:16 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.drivers is not defined
+2020-11월-23 11:25:16 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.trim.sql is not defined (using default value true)
+2020-11월-23 11:25:16 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.trim.sql.extrablanklines is not defined (using default value true)
+2020-11월-23 11:25:16 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.suppress.generated.keys.exception is not defined (using default value false)
+2020-11월-23 11:25:16 오전 [main] DEBUG log4jdbc.debug - log4jdbc-logj2 properties initialization done.
+2020-11월-23 11:25:16 오전 [main] DEBUG log4jdbc.debug - DriverSpy intialization...
+2020-11월-23 11:25:16 오전 [main] DEBUG log4jdbc.debug -   FOUND DRIVER com.mysql.jdbc.Driver
+2020-11월-23 11:25:16 오전 [main] DEBUG log4jdbc.debug - DriverSpy intialization done.
+2020-11월-23 11:25:31 오전 [main] DEBUG log4jdbc.debug - log4jdbc-logj2 properties initialization...
+2020-11월-23 11:25:31 오전 [main] DEBUG log4jdbc.debug - Using logger: null
+2020-11월-23 11:25:31 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.debug.stack.prefix is not defined
+2020-11월-23 11:25:31 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.sqltiming.warn.threshold is not defined
+2020-11월-23 11:25:31 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.sqltiming.error.threshold is not defined
+2020-11월-23 11:25:31 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.booleanastruefalse is not defined (using default value false)
+2020-11월-23 11:25:31 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.maxlinelength is not defined (using default of 90)
+2020-11월-23 11:25:31 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.fulldebugstacktrace is not defined (using default value false)
+2020-11월-23 11:25:31 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.statement.warn is not defined (using default value false)
+2020-11월-23 11:25:31 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.select is not defined (using default value true)
+2020-11월-23 11:25:31 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.insert is not defined (using default value true)
+2020-11월-23 11:25:31 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.update is not defined (using default value true)
+2020-11월-23 11:25:31 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.delete is not defined (using default value true)
+2020-11월-23 11:25:31 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.create is not defined (using default value true)
+2020-11월-23 11:25:31 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.addsemicolon is not defined (using default value false)
+2020-11월-23 11:25:31 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.auto.load.popular.drivers is not defined (using default value true)
+2020-11월-23 11:25:31 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.drivers is not defined
+2020-11월-23 11:25:31 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.trim.sql is not defined (using default value true)
+2020-11월-23 11:25:31 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.trim.sql.extrablanklines is not defined (using default value true)
+2020-11월-23 11:25:31 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.suppress.generated.keys.exception is not defined (using default value false)
+2020-11월-23 11:25:31 오전 [main] DEBUG log4jdbc.debug - log4jdbc-logj2 properties initialization done.
+2020-11월-23 11:25:31 오전 [main] DEBUG log4jdbc.debug - DriverSpy intialization...
+2020-11월-23 11:25:31 오전 [main] DEBUG log4jdbc.debug -   FOUND DRIVER com.mysql.jdbc.Driver
+2020-11월-23 11:25:31 오전 [main] DEBUG log4jdbc.debug - DriverSpy intialization done.
+2020-11월-23 11:26:12 오전 [main] DEBUG log4jdbc.debug - log4jdbc-logj2 properties initialization...
+2020-11월-23 11:26:12 오전 [main] DEBUG log4jdbc.debug - Using logger: null
+2020-11월-23 11:26:12 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.debug.stack.prefix is not defined
+2020-11월-23 11:26:12 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.sqltiming.warn.threshold is not defined
+2020-11월-23 11:26:12 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.sqltiming.error.threshold is not defined
+2020-11월-23 11:26:12 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.booleanastruefalse is not defined (using default value false)
+2020-11월-23 11:26:12 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.maxlinelength is not defined (using default of 90)
+2020-11월-23 11:26:12 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.fulldebugstacktrace is not defined (using default value false)
+2020-11월-23 11:26:12 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.statement.warn is not defined (using default value false)
+2020-11월-23 11:26:12 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.select is not defined (using default value true)
+2020-11월-23 11:26:12 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.insert is not defined (using default value true)
+2020-11월-23 11:26:12 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.update is not defined (using default value true)
+2020-11월-23 11:26:12 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.delete is not defined (using default value true)
+2020-11월-23 11:26:12 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.create is not defined (using default value true)
+2020-11월-23 11:26:12 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.addsemicolon is not defined (using default value false)
+2020-11월-23 11:26:12 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.auto.load.popular.drivers is not defined (using default value true)
+2020-11월-23 11:26:12 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.drivers is not defined
+2020-11월-23 11:26:12 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.trim.sql is not defined (using default value true)
+2020-11월-23 11:26:12 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.trim.sql.extrablanklines is not defined (using default value true)
+2020-11월-23 11:26:12 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.suppress.generated.keys.exception is not defined (using default value false)
+2020-11월-23 11:26:12 오전 [main] DEBUG log4jdbc.debug - log4jdbc-logj2 properties initialization done.
+2020-11월-23 11:26:12 오전 [main] DEBUG log4jdbc.debug - DriverSpy intialization...
+2020-11월-23 11:26:12 오전 [main] DEBUG log4jdbc.debug -   FOUND DRIVER com.mysql.jdbc.Driver
+2020-11월-23 11:26:12 오전 [main] DEBUG log4jdbc.debug - DriverSpy intialization done.
+2020-11월-25 09:44:36 오전 [main] DEBUG log4jdbc.debug - log4jdbc-logj2 properties initialization...
+2020-11월-25 09:44:36 오전 [main] DEBUG log4jdbc.debug - Using logger: null
+2020-11월-25 09:44:36 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.debug.stack.prefix is not defined
+2020-11월-25 09:44:36 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.sqltiming.warn.threshold is not defined
+2020-11월-25 09:44:36 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.sqltiming.error.threshold is not defined
+2020-11월-25 09:44:36 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.booleanastruefalse is not defined (using default value false)
+2020-11월-25 09:44:36 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.maxlinelength is not defined (using default of 90)
+2020-11월-25 09:44:36 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.fulldebugstacktrace is not defined (using default value false)
+2020-11월-25 09:44:36 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.statement.warn is not defined (using default value false)
+2020-11월-25 09:44:36 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.select is not defined (using default value true)
+2020-11월-25 09:44:36 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.insert is not defined (using default value true)
+2020-11월-25 09:44:36 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.update is not defined (using default value true)
+2020-11월-25 09:44:36 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.delete is not defined (using default value true)
+2020-11월-25 09:44:36 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.create is not defined (using default value true)
+2020-11월-25 09:44:36 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.addsemicolon is not defined (using default value false)
+2020-11월-25 09:44:36 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.auto.load.popular.drivers is not defined (using default value true)
+2020-11월-25 09:44:36 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.drivers is not defined
+2020-11월-25 09:44:36 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.trim.sql is not defined (using default value true)
+2020-11월-25 09:44:36 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.trim.sql.extrablanklines is not defined (using default value true)
+2020-11월-25 09:44:36 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.suppress.generated.keys.exception is not defined (using default value false)
+2020-11월-25 09:44:36 오전 [main] DEBUG log4jdbc.debug - log4jdbc-logj2 properties initialization done.
+2020-11월-25 09:44:36 오전 [main] DEBUG log4jdbc.debug - DriverSpy intialization...
+2020-11월-25 09:44:36 오전 [main] DEBUG log4jdbc.debug -   FOUND DRIVER com.mysql.jdbc.Driver
+2020-11월-25 09:44:36 오전 [main] DEBUG log4jdbc.debug - DriverSpy intialization done.
+2020-11월-25 09:45:10 오전 [main] DEBUG log4jdbc.debug - log4jdbc-logj2 properties initialization...
+2020-11월-25 09:45:10 오전 [main] DEBUG log4jdbc.debug - Using logger: null
+2020-11월-25 09:45:10 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.debug.stack.prefix is not defined
+2020-11월-25 09:45:10 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.sqltiming.warn.threshold is not defined
+2020-11월-25 09:45:10 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.sqltiming.error.threshold is not defined
+2020-11월-25 09:45:10 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.booleanastruefalse is not defined (using default value false)
+2020-11월-25 09:45:10 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.maxlinelength is not defined (using default of 90)
+2020-11월-25 09:45:10 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.fulldebugstacktrace is not defined (using default value false)
+2020-11월-25 09:45:10 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.statement.warn is not defined (using default value false)
+2020-11월-25 09:45:10 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.select is not defined (using default value true)
+2020-11월-25 09:45:10 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.insert is not defined (using default value true)
+2020-11월-25 09:45:10 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.update is not defined (using default value true)
+2020-11월-25 09:45:10 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.delete is not defined (using default value true)
+2020-11월-25 09:45:10 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.create is not defined (using default value true)
+2020-11월-25 09:45:10 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.addsemicolon is not defined (using default value false)
+2020-11월-25 09:45:10 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.auto.load.popular.drivers is not defined (using default value true)
+2020-11월-25 09:45:10 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.drivers is not defined
+2020-11월-25 09:45:10 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.trim.sql is not defined (using default value true)
+2020-11월-25 09:45:10 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.trim.sql.extrablanklines is not defined (using default value true)
+2020-11월-25 09:45:10 오전 [main] DEBUG log4jdbc.debug - x log4jdbc.suppress.generated.keys.exception is not defined (using default value false)
+2020-11월-25 09:45:10 오전 [main] DEBUG log4jdbc.debug - log4jdbc-logj2 properties initialization done.
+2020-11월-25 09:45:10 오전 [main] DEBUG log4jdbc.debug - DriverSpy intialization...
+2020-11월-25 09:45:10 오전 [main] DEBUG log4jdbc.debug -   FOUND DRIVER com.mysql.jdbc.Driver
+2020-11월-25 09:45:10 오전 [main] DEBUG log4jdbc.debug - DriverSpy intialization done.

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="egovframework.kaist.admin.survey.service.impl.AdminSurveyMapper">
+	 
+	<select id="getListAll" resultType="hashMap" >
+		SELECT /*AdminSurveyMapper*/ * FROM TBL_SURVEY order by CREATE_TM desc
+	</select>
+
+	
+	<select id="getList" resultType="hashMap" parameterType="egovframework.kaist.admin.survey.model.AdminSurveyVo">
+		SELECT /*AdminSurveyMapper*/ *
+		
+		,(SELECT COUNT(DISTINCT(MEMBER_ID)) FROM TBL_SURVEY_ANSWER WHERE SURVEY_IDX = TBL_SURVEY.IDX) AS ANSWER_CNT		
+		 <![CDATA[
+		,(START_TM < now()) AS START_TM_STEP
+		,(END_TM > now()) AS END_TM_STEP
+		 ]]>
+		
+		 FROM TBL_SURVEY
+		WHERE 1=1 
+	    
+		order by UPDATE_TM desc
+		
+		LIMIT ${LIMIT} OFFSET ${OFFSET}
+	</select>
+		
+	<select id="getListCnt" resultType="int" parameterType="egovframework.kaist.admin.survey.model.AdminSurveyVo">
+		SELECT /*AdminSurveyMapper*/ count(*) FROM TBL_SURVEY
+		WHERE 1=1 
+
+	</select>
+
+	<select id="getView" resultType="egovframework.kaist.admin.survey.model.AdminSurveyVo" parameterType="String">
+		SELECT /*AdminSurveyMapper*/ *
+		, (SELECT COUNT(*) FROM (SELECT COUNT(*) FROM TBL_SURVEY_ANSWER WHERE SURVEY_IDX = #{value} GROUP BY MEMBER_ID) AS A) AS SURVEY_CNT
+		FROM TBL_SURVEY where IDX = #{value};
+	</select>
+
+	<insert id="setInsert"	parameterType="egovframework.kaist.admin.survey.model.AdminSurveyVo">
+		INSERT INTO /*AdminSurveyMapper*/ TBL_SURVEY (
+			IDX, 
+			MEMBER_ID, 
+			TITLE, 
+			END_TM, 
+			CREATE_TM, 
+			USE_KEY, 
+			READ_CNT, 
+			CONTENT, 
+			START_TM, 
+			TYPE, 
+			WIDTH, 
+			HEIGHT, 
+			POINT_X, 
+			POINT_Y,
+			CODE,
+			TYPE_SUB,
+			UPDATE_TM 
+	
+		) VALUES (
+			#{IDX}, 
+			#{MEMBER_ID}, 
+			#{TITLE}, 
+			#{END_TM}, 
+			now(), 
+			#{USE_KEY}, 
+			#{READ_CNT}, 
+			#{CONTENT}, 
+			#{START_TM}, 
+			#{TYPE}, 
+			#{WIDTH}, 
+			#{HEIGHT}, 
+			#{POINT_X}, 
+			#{POINT_Y},
+			#{CODE},
+			#{TYPE_SUB},
+			now()
+
+		) 
+	</insert>
+
+	<update id="setUpdate"	parameterType="egovframework.kaist.admin.survey.model.AdminSurveyVo">
+		UPDATE /*AdminSurveyMapper*/ TBL_SURVEY SET 
+			MEMBER_ID= #{MEMBER_ID}, 
+			TITLE= #{TITLE}, 
+			END_TM= #{END_TM}, 
+			CREATE_TM= #{CREATE_TM}, 
+			USE_KEY= #{USE_KEY}, 
+			READ_CNT= #{READ_CNT}, 
+			CONTENT= #{CONTENT}, 
+			START_TM= #{START_TM}, 
+			TYPE= #{TYPE}, 
+			WIDTH= #{WIDTH}, 
+			HEIGHT= #{HEIGHT}, 
+			POINT_X= #{POINT_X}, 
+			POINT_Y= #{POINT_Y} ,
+			TYPE_SUB=${TYPE_SUB},
+ 			UPDATE_TM= now() 
+		WHERE
+			IDX = #{IDX} 
+	</update>
+	
+	
+	<delete id="setDelete"	parameterType="egovframework.kaist.admin.survey.model.AdminSurveyVo">
+		DELETE FROM /*AdminSurveyMapper*/
+			TBL_SURVEY
+		WHERE IDX =  #{IDX} 
+	</delete>
+
+    
+</mapper>

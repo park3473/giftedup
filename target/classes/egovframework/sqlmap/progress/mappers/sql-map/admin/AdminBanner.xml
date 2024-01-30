@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="egovframework.kaist.admin.banner.service.impl.AdminBannerMapper">
+	 
+	<select id="getListAll" resultType="hashMap" >
+		SELECT /*AdminBannerMapper*/ * FROM TBL_BANNER order by CREATE_TM desc
+	</select>
+
+	
+	<select id="getList" resultType="hashMap" parameterType="egovframework.kaist.admin.banner.model.AdminBannerVo">
+		SELECT /*AdminBannerMapper*/ * FROM TBL_BANNER
+		WHERE 1=1 
+		
+	    
+		order by UPDATE_TM desc
+		
+		LIMIT ${LIMIT} OFFSET ${OFFSET}
+	</select>
+		
+	<select id="getListCnt" resultType="int" parameterType="egovframework.kaist.admin.banner.model.AdminBannerVo">
+		SELECT /*AdminBannerMapper*/ count(*) FROM TBL_BANNER
+		WHERE 1=1 
+
+	</select>
+
+	<select id="getListStartEndTM" resultType="hashMap" parameterType="egovframework.kaist.admin.banner.model.AdminBannerVo">
+		SELECT /*AdminBannerMapper*/ * FROM TBL_BANNER
+		WHERE 1=1 
+		 <![CDATA[AND  now() > date_format(START_TM, '%Y-%m-%d 00:00:00')  AND   now() < date_format(END_TM, '%Y-%m-%d 23:59:59') ]]>
+		AND USEKEY = '1'
+		order by UPDATE_TM desc
+	</select>
+
+
+
+	<select id="getView" resultType="egovframework.kaist.admin.banner.model.AdminBannerVo" parameterType="String">
+		SELECT /*AdminBannerMapper*/ * FROM TBL_BANNER where IDX = #{value};
+	</select>
+
+	<insert id="setInsert"	parameterType="egovframework.kaist.admin.banner.model.AdminBannerVo">
+		INSERT INTO /*AdminBannerMapper*/ TBL_BANNER (
+		  IDX
+		  ,IMAGE
+		  ,LINK
+		  ,WIDTH
+		  ,HEIGHT
+		  ,CREATE_TM
+		  ,TURN
+		  ,NAME
+		  ,TYPE
+		  ,START_TM
+		  ,UPDATE_TM
+		  ,USEKEY
+		  ,END_TM
+		  ,LINK_TYPE
+		  ,FILES
+		  ,MEMBER_ID
+		) VALUES (
+			0,
+			#{IMAGE},
+			#{LINK}, 
+			#{WIDTH}, 
+			#{HEIGHT}, 
+			now(), 
+			#{TURN}, 
+			#{NAME}, 
+			#{TYPE}, 
+			#{START_TM}, 
+			now(), 
+			#{USEKEY}, 
+			#{END_TM}, 
+			#{LINK_TYPE}, 
+			#{FILES}, 
+			#{MEMBER_ID}  
+		) 
+	</insert>
+
+	<update id="setUpdate"	parameterType="egovframework.kaist.admin.banner.model.AdminBannerVo">
+		UPDATE /*AdminBannerMapper*/ TBL_BANNER SET 
+			<if test="IMAGE != ''">
+			IMAGE= #{IMAGE},
+			 </if>
+			LINK= #{LINK}, 
+			TYPE= #{TYPE},
+			WIDTH= #{WIDTH}, 
+			HEIGHT= #{HEIGHT}, 
+			TURN= #{TURN}, 
+			NAME= #{NAME}, 
+			TYPE= #{TYPE}, 
+			START_TM= #{START_TM}, 
+			UPDATE_TM= now(), 
+			USEKEY= #{USEKEY}, 
+			END_TM= #{END_TM}, 
+			IMAGE= #{IMAGE}, 
+			LINK_TYPE= #{LINK_TYPE},
+			<if test="FILES != ''"> 
+			FILES= #{FILES}, 
+			</if>
+			MEMBER_ID= #{MEMBER_ID}
+		WHERE
+			IDX = #{IDX} 
+	</update>
+	
+	
+	<delete id="setDelete"	parameterType="egovframework.kaist.admin.banner.model.AdminBannerVo">
+		DELETE FROM /*AdminBannerMapper*/
+			TBL_BANNER
+		WHERE IDX =  #{IDX} 
+	</delete>
+
+    
+</mapper>

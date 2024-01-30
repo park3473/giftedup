@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="egovframework.kaist.user.accept_log.service.impl.UserAcceptLogMapper">
+	 
+	<select id="getListAll" resultType="hashMap" >
+		SELECT /*UserAcceptLogMapper*/ * FROM "TBL_ACCEPT_LOG" order by idx desc
+	</select>
+
+	<select id="getList" resultType="hashMap" parameterType="egovframework.kaist.user.accept_log.model.UserAcceptLogVo">
+		SELECT /*UserAcceptLogMapper*/ * FROM "TBL_ACCEPT_LOG"
+		WHERE 1=1 
+		<if test="MEMBER_ID != ''">
+	    	AND "MEMBER_ID" = #{MEMBER_ID}
+	    </if>
+		<if test="START_TM != ''">
+	    	AND DATE_FORMAT("CREATE_TM", "%Y-%m-%d") >= #{START_TM}
+	    </if>
+	    <if test="END_TM != ''">
+		    <![CDATA[
+			  AND DATE_FORMAT("CREATE_TM", "%Y-%m-%d") <= #{END_TM}
+		    ]]>
+	    </if>
+		order by idx desc
+	</select>
+		
+
+	<select id="getView" resultType="egovframework.kaist.user.accept_log.model.UserAcceptLogVo" parameterType="String">
+		SELECT /*UserAcceptLogMapper*/ * FROM "TBL_ACCEPT_LOG" where IDX = #{value};
+	</select>
+	
+	<insert id="setInsert"	parameterType="egovframework.kaist.user.accept_log.model.UserAcceptLogVo">
+		INSERT INTO /*UserAcceptLogMapper*/ TBL_ACCEPT_LOG (
+			MEMBER_ID,
+			DEVICE,
+			URL,
+			METHOD,
+			PARAMETER,
+			CREATE_TM,
+			IP
+		) VALUES (
+			
+			#{MEMBER_ID},
+			#{DEVICE},
+			#{URL},
+			#{METHOD},
+			#{PARAMETER},
+			now(),
+			#{IP}
+		) 
+	</insert>
+
+	<update id="setUpdate"	parameterType="egovframework.kaist.user.accept_log.model.UserAcceptLogVo">
+		UPDATE /*UserAcceptLogMapper*/ "TBL_ACCEPT_LOG" SET 
+			"MEMBER_ID" = #{MEMBER_ID},
+			"DEVICE" = #{DEVICE},
+			"URL" = #{URL},
+			"METHOD" = #{METHOD},
+			"PARAMETER" = #{PARAMETER},
+			"IP" = #{IP},
+			"CREATE_TM" = now()
+		WHERE
+			"IDX" = #{IDX} 
+	</update>
+	
+	
+	<delete id="setDelete"	parameterType="egovframework.kaist.user.accept_log.model.UserAcceptLogVo">
+		DELETE FROM /*UserAcceptLogMapper*/
+			"TBL_ACCEPT_LOG"
+		WHERE "IDX" =  #{IDX} 
+	</delete>
+
+    
+</mapper>

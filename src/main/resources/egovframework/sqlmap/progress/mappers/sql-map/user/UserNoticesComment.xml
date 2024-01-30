@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="egovframework.kaist.user.notices_comment.service.impl.UserNoticesCommentMapper">
+	 
+	<select id="getListAll" resultType="hashMap" >
+		SELECT /*UserNoticesCommentMapper*/ * FROM TBL_NOTICES_COMMENT order by CREATE_TM desc
+	</select>
+
+	<select id="getBeforeMonthRank" resultType="hashMap" parameterType="String" >
+		 SELECT /*UserNoticesCommentMapper*/  MEMBER_ID, count(*) as CNT
+		 FROM TBL_NOTICES_COMMENT where NOTICES_IDX =  #{value}
+		 AND date_format(create_tm, '%Y-%m') = date_format(date_add(now(), interval -1 month), '%Y-%m')
+		 group by member_id order by cnt desc limit 10
+	</select>
+	
+	<select id="getMonthRank" resultType="hashMap" parameterType="String" >
+		 SELECT /*UserNoticesCommentMapper*/  
+		 MEMBER_ID
+		 , count(*) as CNT
+		 , (SELECT NAME FROM TBL_MEMBER WHERE MEMBER_ID = TBL_NOTICES_COMMENT.MEMBER_ID) AS NAME
+		 FROM TBL_NOTICES_COMMENT where NOTICES_IDX = #{value}
+		 AND date_format(create_tm, '%Y-%m') = date_format(now(), '%Y-%m')
+		 group by member_id order by cnt desc limit 10
+	</select>
+		
+	
+
+	
+	<select id="getList" resultType="hashMap" parameterType="egovframework.kaist.user.notices_comment.model.UserNoticesCommentVo">
+		SELECT /*UserNoticesCommentMapper*/ 
+		*
+		, IFNULL((SELECT NAME FROM TBL_MEMBER WHERE MEMBER_ID = TBL_NOTICES_COMMENT.MEMBER_ID), "") AS NAME
+		 FROM TBL_NOTICES_COMMENT
+		WHERE 1=1 
+
+	   	<if test="NOTICES_IDX != ''">
+	    	AND NOTICES_IDX = #{NOTICES_IDX}
+	    </if>
+	   	<if test="NOTICES_DATA_IDX != ''">
+	    	AND NOTICES_DATA_IDX = #{NOTICES_DATA_IDX}
+	    </if>	    
+	  	<if test="SEARCH_TEXT != ''">
+		     <if test="SEARCH_TYPE == 'ALL'">
+		    	AND (
+	    		    MEMBER_ID LIKE '%${SEARCH_TEXT}%'
+		    		OR  CONTENT LIKE '%${SEARCH_TEXT}%'
+		    		OR  TITLE LIKE '%${SEARCH_TEXT}%'
+		    		) 
+		    </if>
+		    <if test="SEARCH_TYPE != 'ALL'">
+	    		 AND ${SEARCH_TYPE} LIKE '%${SEARCH_TEXT}%'
+	    	</if>
+	    </if>
+	    
+		ORDER BY CREATE_TM DESC
+		
+		LIMIT ${LIMIT} OFFSET ${OFFSET}
+	</select>
+	
+		
+	<select id="getListCnt" resultType="int" parameterType="egovframework.kaist.user.notices_comment.model.UserNoticesCommentVo">
+		SELECT /*UserNoticesCommentMapper*/ count(*) FROM TBL_NOTICES_COMMENT
+		WHERE 1=1 
+	   	<if test="NOTICES_IDX != ''">
+	    	AND NOTICES_IDX = #{NOTICES_IDX}
+	    </if>
+	   	<if test="NOTICES_DATA_IDX != ''">
+	    	AND NOTICES_DATA_IDX = #{NOTICES_DATA_IDX}
+	    </if>		    
+	    
+	  	<if test="SEARCH_TEXT != ''">
+		    <if test="SEARCH_TYPE == 'ALL'">
+		    	AND (
+		    		MEMBER_ID LIKE '%${SEARCH_TEXT}%'
+		    		OR  CONTENT LIKE '%${SEARCH_TEXT}%'
+		    		OR  TITLE LIKE '%${SEARCH_TEXT}%'
+		    		) 
+		    </if>
+		    <if test="SEARCH_TYPE != 'ALL'">
+	    		 AND ${SEARCH_TYPE} LIKE '%${SEARCH_TEXT}%'
+	    	</if>
+	    </if>
+
+	</select>
+
+	<select id="getView" resultType="egovframework.kaist.user.notices_comment.model.UserNoticesCommentVo" parameterType="String">
+		SELECT /*UserNoticesCommentMapper*/ *, IFNULL((SELECT NAME FROM TBL_MEMBER WHERE MEMBER_ID = TBL_NOTICES_COMMENT.MEMBER_ID), "") AS MEMBER_NAME FROM TBL_NOTICES_COMMENT where IDX = #{value};
+	</select>
+
+	<insert id="setInsert"	parameterType="egovframework.kaist.user.notices_comment.model.UserNoticesCommentVo">
+		INSERT INTO /*UserNoticesCommentMapper*/ TBL_NOTICES_COMMENT (
+			IDX, 
+			MEMBER_ID, 
+			NOTICES_IDX, 
+			NOTICES_DATA_IDX, 
+			COMMENT, 
+			NAME, 
+			CREATE_TM, 
+			PASSWORD,
+			SECRET_WRITING
+		) VALUES (
+			0, 
+			#{MEMBER_ID}, 
+			#{NOTICES_IDX}, 
+			#{NOTICES_DATA_IDX}, 
+			#{COMMENT}, 
+			#{NAME}, 
+			now(),
+			#{PASSWORD},
+			#{SECRET_WRITING}
+		) 
+	</insert>
+
+	<update id="setUpdate"	parameterType="egovframework.kaist.user.notices_comment.model.UserNoticesCommentVo">
+		UPDATE /*UserNoticesCommentMapper*/ TBL_NOTICES_COMMENT SET 
+			MEMBER_ID= #{MEMBER_ID}, 
+			NOTICES_IDX= #{NOTICES_IDX}, 
+			NOTICES_DATA_IDX= #{NOTICES_DATA_IDX}, 
+			COMMENT= #{COMMENT}, 
+			NAME= #{NAME}, 
+			UPDATE_TM= now()
+		WHERE
+			IDX = #{IDX} 
+	</update>
+	
+	
+	<delete id="setDelete"	parameterType="egovframework.kaist.user.notices_comment.model.UserNoticesCommentVo">
+		DELETE FROM /*UserNoticesCommentMapper*/
+			TBL_NOTICES_COMMENT
+		WHERE IDX =  #{IDX} 
+	</delete>
+
+    
+</mapper>

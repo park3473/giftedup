@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="egovframework.kaist.admin.stats.service.impl.AdminStatsMapper">
+	 
+	<select id="getListADDRESS_LOCAL" resultType="hashMap" parameterType="String">
+		SELECT ADDRESS_LOCAL, CNT, ((CNT/TOTAL_CNT)*100) AS PER   FROM (
+		SELECT /*AdminAcceptLogMapper*/  ADDRESS_LOCAL
+		, COUNT(*) AS CNT
+		, (SELECT COUNT(*) FROM TBL_MEMBER WHERE TYPE =  #{value}) AS TOTAL_CNT FROM TBL_MEMBER WHERE TYPE =  #{value} GROUP BY ADDRESS_LOCAL) AS A
+		
+	</select>
+	
+	<select id="getListSEX" resultType="hashMap" parameterType="String">
+		SELECT SEX, CNT, ((CNT/TOTAL_CNT)*100) AS PER  FROM (
+		SELECT /*AdminAcceptLogMapper*/  SEX
+		, COUNT(*) AS CNT
+		, (SELECT COUNT(*) FROM TBL_MEMBER WHERE TYPE =  #{value}) AS TOTAL_CNT FROM TBL_MEMBER WHERE TYPE =  #{value} GROUP BY SEX) AS A
+		
+		 
+	</select>
+	
+	<select id="getListSCHOOL_TYPE" resultType="hashMap" parameterType="String">
+	SELECT SCHOOL_TYPE, CNT, ((CNT/TOTAL_CNT)*100) AS PER  FROM (
+		SELECT /*AdminAcceptLogMapper*/  SCHOOL_TYPE
+		, COUNT(*) AS CNT
+		, (SELECT COUNT(*) FROM TBL_MEMBER WHERE TYPE = #{value}) AS TOTAL_CNT FROM TBL_MEMBER WHERE TYPE =  #{value} GROUP BY SCHOOL_TYPE) AS A
+		
+		
+	</select>
+	<select id="getListSCHOOL_GROUP" resultType="hashMap" parameterType="String">
+	SELECT SCHOOL_YEAR, CNT, ((CNT/TOTAL_CNT)*100) AS PER  FROM (
+		SELECT /*AdminAcceptLogMapper*/  SCHOOL_YEAR
+		, COUNT(*) AS CNT
+		, (SELECT COUNT(*) FROM TBL_MEMBER WHERE TYPE = #{value}) AS TOTAL_CNT FROM TBL_MEMBER WHERE TYPE =  #{value} GROUP BY SCHOOL_YEAR) AS A
+		
+		
+	</select>
+    
+</mapper>

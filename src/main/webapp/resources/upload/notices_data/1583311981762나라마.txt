@@ -1,0 +1,37 @@
+■ 공고문
+  - https://ccei.creativekorea.or.kr/daejeon/service/program_view.do?no=4222&rnum=3&sMenuType=00040001&mainGo=Y
+
+■ MES
+
+■ 라즈베리 파이에 키오스크 에 MES
+
+■ 창업과제 아이템 
+ -  IOT 다중 센서의 데이터를 수집하여 모니터링 가능한 스마트 팩토리 솔루션 개발
+
+■ 창업과제 예시 사이트
+  - http://server.e-pools.com:7171/kieps/admin/member/login.do;jsessionid=F86099A31E2A729617878A9CA7026B64
+  - 아이디 패스워드 1234/1234
+  - 인터넷에 MES, ERP, 스마트팩토리 검색
+
+■ 기술보증기금 대출(1억원)
+https://www.kibo.or.kr:444/src/guarantee/kba320.asp
+
+■ 대전테크노파크(사무실)
+  - IT전용벤처타운(https://www.djtp.or.kr/sub0302)
+  - 대전정보문화진흥원에 1인 사무실로 등록 후 별도사무실 운영?
+    (http://www.dicia.or.kr/sub.do?menuIdx=MENU_000000000000056&contentSubMode=view&nttIdx=NTT_0000000000020461)
+
+■ 창업지원기반조성사업(5천만원)
+  - file:///C:/Users/speci/Downloads/4.pdf
+
+■ 스마트공장 보급확산사업
+  - https://www.djtp.or.kr/sub0204/view/id/57
+
+■ 창업성장기술개발사업
+  - https://www.smtech.go.kr/front/ifg/no/notice02_intro.do
+
+■ 사업공고
+  - 창업지원기반조성사업(https://www.djtp.or.kr/sub010101/view/page/2/id/6197#u)
+  - 스마트공장 보급/확산사업공고(https://www.djtp.or.kr/sub010101/view/page/1/id/6189#u)
+  - 2020년도 창업성장기술개발사업(https://www.smtech.go.kr/front/ifg/no/notice02_detail.do?buclYy=2020&ancmId=S00891&buclCd=S205D&dtlAncmSn=1&schdSe=MO5005&aplySn=1&searchCondition=&searchKeyword=&pageIndex=1)
+  

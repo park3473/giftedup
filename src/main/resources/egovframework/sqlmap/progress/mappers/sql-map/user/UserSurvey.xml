@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="egovframework.kaist.user.survey.service.impl.UserSurveyMapper">
+	 
+	<select id="getListAll" resultType="hashMap" >
+		SELECT /*UserSurveyMapper*/ * FROM TBL_SURVEY order by CREATE_TM desc
+	</select>
+
+	
+	<select id="getList" resultType="hashMap" parameterType="egovframework.kaist.user.survey.model.UserSurveyVo">
+		SELECT /*UserSurveyMapper*/ *, 
+			<![CDATA[
+			(now() > START_TM) AS START_STATUS, 
+			(now() < END_TM) AS END_STATUS
+			]]>
+		 FROM TBL_SURVEY
+		WHERE 1=1 
+	    <if test="TYPE_SUB != ''">
+	    	AND (TYPE_SUB = #{TYPE_SUB} OR TYPE_SUB = '0')
+	    </if> 
+		<if test="SEARCH_TEXT != ''">
+		     <if test="SEARCH_TYPE == 'ALL'">
+		    	AND (
+		    		TITLE LIKE '%${SEARCH_TEXT}%' 
+		    		OR  CONTENT LIKE '%${SEARCH_TEXT}%'
+		    		) 
+		    </if>
+		    <if test="SEARCH_TYPE != 'ALL'">
+	    		 AND ${SEARCH_TYPE} LIKE '%${SEARCH_TEXT}%'
+	    	</if>
+	    	
+	    </if>	    
+		order by UPDATE_TM desc
+		
+		LIMIT ${LIMIT} OFFSET ${OFFSET}
+	</select>
+		
+	<select id="getListCnt" resultType="int" parameterType="egovframework.kaist.user.survey.model.UserSurveyVo">
+		SELECT /*UserSurveyMapper*/ count(*) FROM TBL_SURVEY
+		WHERE 1=1 
+	    <if test="TYPE_SUB != ''">
+	    	AND (TYPE_SUB = #{TYPE_SUB} OR TYPE_SUB = '0')
+	    </if> 
+		<if test="SEARCH_TEXT != ''">
+		     <if test="SEARCH_TYPE == 'ALL'">
+		    	AND (
+		    		TITLE LIKE '%${SEARCH_TEXT}%' 
+		    		OR  CONTENT LIKE '%${SEARCH_TEXT}%'
+		    		) 
+		    </if>
+		    <if test="SEARCH_TYPE != 'ALL'">
+	    		 AND ${SEARCH_TYPE} LIKE '%${SEARCH_TEXT}%'
+	    	</if>
+	    	
+	    </if>	    
+	</select>
+
+	<select id="getView" resultType="egovframework.kaist.user.survey.model.UserSurveyVo" parameterType="String">
+		SELECT /*UserSurveyMapper*/ *
+		, (SELECT COUNT(*) FROM (SELECT COUNT(*) FROM TBL_SURVEY_ANSWER WHERE SURVEY_IDX = #{value} GROUP BY MEMBER_ID) AS A) AS SURVEY_CNT
+		FROM 
+			TBL_SURVEY where IDX = #{value};
+	</select>
+
+	<insert id="setInsert"	parameterType="egovframework.kaist.user.survey.model.UserSurveyVo">
+		INSERT INTO /*UserSurveyMapper*/ TBL_SURVEY (
+			IDX, 
+			MEMBER_ID, 
+			TITLE, 
+			END_TM, 
+			CREATE_TM, 
+			USE_KEY, 
+			READ_CNT, 
+			CONTENT, 
+			START_TM, 
+			TYPE, 
+			WIDTH, 
+			HEIGHT, 
+			POINT_X, 
+			POINT_Y,
+			CODE,
+			UPDATE_TM 
+	
+		) VALUES (
+			#{IDX}, 
+			#{MEMBER_ID}, 
+			#{TITLE}, 
+			#{END_TM}, 
+			now(), 
+			#{USE_KEY}, 
+			#{READ_CNT}, 
+			#{CONTENT}, 
+			#{START_TM}, 
+			#{TYPE}, 
+			#{WIDTH}, 
+			#{HEIGHT}, 
+			#{POINT_X}, 
+			#{POINT_Y},
+			#{CODE},
+			now()
+
+		) 
+	</insert>
+
+	<update id="setUpdate"	parameterType="egovframework.kaist.user.survey.model.UserSurveyVo">
+		UPDATE /*UserSurveyMapper*/ TBL_SURVEY SET 
+			MEMBER_ID= #{MEMBER_ID}, 
+			TITLE= #{TITLE}, 
+			END_TM= #{END_TM}, 
+			CREATE_TM= #{CREATE_TM}, 
+			USE_KEY= #{USE_KEY}, 
+			READ_CNT= #{READ_CNT}, 
+			CONTENT= #{CONTENT}, 
+			START_TM= #{START_TM}, 
+			TYPE= #{TYPE}, 
+			WIDTH= #{WIDTH}, 
+			HEIGHT= #{HEIGHT}, 
+			POINT_X= #{POINT_X}, 
+			POINT_Y= #{POINT_Y} ,
+ 			UPDATE_TM= now() 
+		WHERE
+			IDX = #{IDX} 
+	</update>
+	
+	
+	<delete id="setDelete"	parameterType="egovframework.kaist.user.survey.model.UserSurveyVo">
+		DELETE FROM /*UserSurveyMapper*/
+			TBL_SURVEY
+		WHERE IDX =  #{IDX} 
+	</delete>
+
+    
+</mapper>

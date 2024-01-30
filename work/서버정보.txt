@@ -1,0 +1,7 @@
+ssh 立加 :   inct / inct0000 / 8322 
+db 立加 
+  db : alcohol
+  user : alcohol
+  passwd :  alcohol00  
+  ip/port : 112.216.75.58 / 8332
+web service :  http://112.216.75.58:18380/

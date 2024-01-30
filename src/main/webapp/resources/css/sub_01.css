@@ -1,0 +1,600 @@
+/*프로젝트 기본방향*/
+#new_sub_con .vision_goal {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 50px;
+}
+
+#new_sub_con .vision_goal .vision,
+#new_sub_con .vision_goal .goal {
+    width: calc((100% - 100px) / 2);
+    float: left;
+}
+
+#new_sub_con .vision_goal .vision {
+    margin-right: 100px;
+}
+
+#new_sub_con .vision_goal .vision .title,
+#new_sub_con .vision_goal .goal .title {
+    width: 100%;
+}
+
+#new_sub_con .vision_goal .vision .title > span,
+#new_sub_con .vision_goal .goal .title > span {
+    margin-right: .5rem;
+}
+
+#new_sub_con .vision_goal .vision .title > span > img,
+#new_sub_con .vision_goal .goal .title > span > img {
+    vertical-align: sub;
+}
+
+#new_sub_con .vision_goal .vision .title > p,
+#new_sub_con .vision_goal .goal .title > p {
+    display: inline-block;
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    color: #000;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+#new_sub_con .vision_goal .vision .txt > p,
+#new_sub_con .vision_goal .goal .txt > p {
+    font-size: 1rem;
+    color: #5c5c5c;
+}
+
+
+#new_sub_con .list_oper {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+#new_sub_con .list_oper .oper_01,
+#new_sub_con .list_oper .oper_02,
+#new_sub_con .list_oper .oper_03,
+#new_sub_con .list_oper .oper_04 {
+    width: calc((100% - 100px) / 2);
+    float: left;
+    margin-bottom: 2rem;
+}
+
+#new_sub_con .list_oper .oper_01,
+#new_sub_con .list_oper .oper_03 {
+    margin-right: 100px;
+}
+
+#new_sub_con .list_oper .oper_01 .title,
+#new_sub_con .list_oper .oper_02 .title,
+#new_sub_con .list_oper .oper_03 .title,
+#new_sub_con .list_oper .oper_04 .title {
+    width: 100%;
+    overflow: hidden;
+}
+
+#new_sub_con .list_oper .oper_01 .title > span,
+#new_sub_con .list_oper .oper_02 .title > span,
+#new_sub_con .list_oper .oper_03 .title > span,
+#new_sub_con .list_oper .oper_04 .title > span {
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    margin-right: .5rem;
+    text-align: center;
+    color: #fff;
+    line-height: 30px;
+    position: relative;
+    vertical-align: middle;
+    margin-bottom: 3px;
+}
+
+#new_sub_con .list_oper .oper_01 .title > span {
+    background-color: #0c8fc5;
+}
+
+#new_sub_con .list_oper .oper_02 .title > span {
+    background-color: #13a883;
+}
+
+#new_sub_con .list_oper .oper_03 .title > span {
+    background-color: #7cb73c;
+}
+
+#new_sub_con .list_oper .oper_04 .title > span {
+    background-color: #dd8e39;
+}
+
+#new_sub_con .list_oper .oper_01 .title > span::after,
+#new_sub_con .list_oper .oper_02 .title > span::after,
+#new_sub_con .list_oper .oper_03 .title > span::after,
+#new_sub_con .list_oper .oper_04 .title > span::after {
+    content: '';
+    position: absolute;
+    width: 30px;
+    height: 5px;
+    left: 0;
+}
+
+#new_sub_con .list_oper .oper_01 .title > span::after {
+    background-color: #243558;
+}
+
+#new_sub_con .list_oper .oper_02 .title > span::after {
+    background-color: #13886b;
+}
+
+#new_sub_con .list_oper .oper_03 .title > span::after {
+    background-color: #a9e369;
+}
+
+#new_sub_con .list_oper .oper_04 .title > span::after {
+    background-color: #f9b266;
+}
+
+#new_sub_con .list_oper .oper_01 .title > p,
+#new_sub_con .list_oper .oper_02 .title > p,
+#new_sub_con .list_oper .oper_03 .title > p,
+#new_sub_con .list_oper .oper_04 .title > p {
+    display: inline-block;
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    color: #000;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+#new_sub_con .list_oper .oper_01 .txt,
+#new_sub_con .list_oper .oper_02 .txt,
+#new_sub_con .list_oper .oper_03 .txt,
+#new_sub_con .list_oper .oper_04 .txt {
+    position: relative;
+    overflow: hidden;
+    width:100%;
+    display:block;
+    padding:15px;
+}
+
+#new_sub_con .list_oper .oper_01 .txt::after,
+#new_sub_con .list_oper .oper_02 .txt::after,
+#new_sub_con .list_oper .oper_03 .txt::after,
+#new_sub_con .list_oper .oper_04 .txt::after {
+    content: '';
+    width: 131px;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: absolute;
+    top: 0;
+    right: 0;
+    opacity: 0.5;
+    z-index: 100;
+}
+
+#new_sub_con .list_oper .oper_01 .txt::after {
+    background-image: url(../img/banner_icon_01_.png);
+}
+
+#new_sub_con .list_oper .oper_02 .txt::after {
+    background-image: url(../img/banner_icon_02_.png);
+}
+
+#new_sub_con .list_oper .oper_03 .txt::after {
+    background-image: url(../img/banner_icon_03_.png);
+}
+
+#new_sub_con .list_oper .oper_04 .txt::after {
+    background-image: url(../img/banner_icon_04_.png);
+}
+
+#new_sub_con .list_oper .oper_01 .txt > li,
+#new_sub_con .list_oper .oper_02 .txt > li,
+#new_sub_con .list_oper .oper_03 .txt > li,
+#new_sub_con .list_oper .oper_04 .txt > li {
+    font-size: 1rem;
+    color: #5c5c5c;
+    margin-bottom: .5rem;
+    font-weight: 400;
+    position: relative;
+    z-index: 101;
+}
+
+#new_sub_con .list_oper .oper_01 .txt > li:last-of-type,
+#new_sub_con .list_oper .oper_02 .txt > li:last-of-type,
+#new_sub_con .list_oper .oper_03 .txt > li:last-of-type,
+#new_sub_con .list_oper .oper_04 .txt > li:last-of-type {
+    margin-bottom: 0;
+}
+
+/*프로젝트 기본방향 end*/
+
+@media screen and (max-width: 801px) {
+
+    #new_sub_con .vision_goal .vision,
+    #new_sub_con .vision_goal .goal {
+        width: calc((100% - 50px) / 2);
+    }
+
+    #new_sub_con .vision_goal .vision {
+        margin-right: 50px;
+    }
+
+    #new_sub_con .list_oper .oper_01,
+    #new_sub_con .list_oper .oper_02,
+    #new_sub_con .list_oper .oper_03,
+    #new_sub_con .list_oper .oper_04 {
+        width: calc((100% - 50px) / 2);
+    }
+
+    #new_sub_con .list_oper .oper_01,
+    #new_sub_con .list_oper .oper_03 {
+        margin-right: 50px;
+    }
+}
+
+@media screen and (max-width: 601px) {
+
+    #new_sub_con .vision_goal .vision,
+    #new_sub_con .vision_goal .goal {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+
+    #new_sub_con .vision_goal .goal {
+        margin-bottom: 0;
+    }
+
+    #new_sub_con .list_oper .oper_01,
+    #new_sub_con .list_oper .oper_02,
+    #new_sub_con .list_oper .oper_03,
+    #new_sub_con .list_oper .oper_04 {
+        width: 100%;
+        margin-right: 0;
+    }
+
+    #new_sub_con .list_oper .oper_01 .txt::after,
+    #new_sub_con .list_oper .oper_02 .txt::after,
+    #new_sub_con .list_oper .oper_03 .txt::after,
+    #new_sub_con .list_oper .oper_04 .txt::after {
+        width: 35%;
+    }
+}
+
+
+@media screen and (max-width: 571px) {
+    #new_sub_hd .main_menu,
+    #new_sub_hd .sub_menu {
+        width: 100%;
+    }
+    
+    #new_sub_con .list_oper .oper_01 .txt > li,
+    #new_sub_con .list_oper .oper_02 .txt > li,
+    #new_sub_con .list_oper .oper_03 .txt > li,
+    #new_sub_con .list_oper .oper_04 .txt > li {
+        font-size: 0.9rem;
+    }
+
+    #new_sub_con .vision_goal .vision .txt > p,
+    #new_sub_con .vision_goal .goal .txt > p {
+        font-size: 0.9rem;
+    }
+}
+
+
+
+/*주요 프로그램*/
+#new_sub_con .vision_goal .goal .txt > p > span {
+    color: #ff7200;
+}
+
+#new_sub_con .program_table {
+    margin-bottom: 30px;
+}
+
+#new_sub_con .program_table .program_area {
+    width: 100%;
+}
+
+#new_sub_con .student_teacher .part_student,
+#new_sub_con .student_teacher .mentor_teacher {
+    width: calc((100% - 100px) /2);
+    float: left;
+}
+
+#new_sub_con .student_teacher .part_student {
+    margin-right: 100px;
+}
+
+#new_sub_con .program_table .program_area .title,
+#new_sub_con .student_teacher .part_student .title,
+#new_sub_con .student_teacher .mentor_teacher .title {
+    width: 100%;
+}
+
+#new_sub_con .program_table .program_area .title > span,
+#new_sub_con .student_teacher .part_student .title > span,
+#new_sub_con .student_teacher .mentor_teacher .title > span {
+    margin-right: .5rem;
+}
+
+#new_sub_con .program_table .program_area .title > span > img,
+#new_sub_con .student_teacher .part_student .title > span > img,
+#new_sub_con .student_teacher .mentor_teacher .title > span > img {
+    vertical-align: sub;
+}
+
+#new_sub_con .program_table .program_area .title > p,
+#new_sub_con .student_teacher .part_student .title > p,
+#new_sub_con .student_teacher .mentor_teacher .title > p {
+    display: inline-block;
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    color: #000;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+#new_sub_con .program_area table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #dedede;
+    table-layout: auto;
+}
+
+#new_sub_con .program_area .table_mobile {
+    display: none;
+}
+
+#new_sub_con .program_area table th {
+    text-align: center;
+    background-color: rgba(215, 225, 244, 0.6);
+    padding: 15px 0;
+    color: #243558;
+    font-size: 1rem;
+    font-weight: 600;
+    border-right: 1px solid #e3e3e3;
+    white-space: nowrap;
+}
+
+#new_sub_con .program_area table th:last-of-type {
+    border-right: 0;
+}
+
+#new_sub_con .program_area table td {
+    padding: 25px 0;
+    background-color: #fff;
+    border-right: 1px solid #e3e3e3;
+    border-bottom: 1px solid #e5e5e5;
+    font-size: 1rem;
+    font-weight: 300;
+}
+
+#new_sub_con .program_area table .select,
+#new_sub_con .program_area table .number {
+    text-align: center;
+}
+
+#new_sub_con .program_area table .number {
+    background-color: #f6f6f6;
+    color: #ff7e00;
+}
+
+#new_sub_con .program_area table .txt {
+    padding-left: 15px;
+    padding-right: 15px;
+    vertical-align: top;
+}
+
+#new_sub_con .student_teacher .part_student .txt > p,
+#new_sub_con .student_teacher .mentor_teacher .txt > p {
+    font-size: 1rem;
+    color: #5c5c5c;
+}
+
+#new_sub_con .student_teacher .part_student .txt > ul,
+#new_sub_con .student_teacher .mentor_teacher .txt > ul {
+    background-color: #f5f1df;
+    border: 1px solid #dedede;
+    padding: 30px 20px;
+    margin-bottom: 1rem;
+}
+
+#new_sub_con .student_teacher .mentor_teacher .txt > ul {
+    background-color: #e6f3f6;
+}
+
+#new_sub_con .student_teacher .part_student .txt > ul > li,
+#new_sub_con .student_teacher .mentor_teacher .txt > ul > li {
+    margin-bottom: .2rem;
+    font-size: 1rem;
+    color: #5c5c5c;
+}
+
+#new_sub_con .student_teacher .part_student .txt > ul > li:last-of-type,
+#new_sub_con .student_teacher .mentor_teacher .txt > ul > li:last-of-type {
+    margin-bottom: 0;
+}
+
+/*주요 프로그램 end*/
+
+@media screen and (max-width: 601px) {
+ 
+    #new_sub_con .program_area .table_mobile th{
+        border-bottom: 1px solid #e5e5e5;
+        border-right: 1px solid #e5e5e5 !important;
+        font-size: 0.9rem;
+        white-space: nowrap;
+        padding: 0 15px;
+    }
+    
+    #new_sub_con .program_area .table_mobile .th_02{
+        background-color: #f8f8f8;
+    }
+    
+    #new_sub_con .student_teacher .part_student, #new_sub_con .student_teacher .mentor_teacher{
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 50px;
+    }
+}
+
+
+
+
+
+
+
+/*사업추진체계*/
+#new_sub_con .group_01 {
+    width: 100%;
+}
+
+#new_sub_con .group_02 {
+    width: 100%;
+}
+
+#new_sub_con .group_01 .group_img {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#new_sub_con .group_02 .group_img {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+#new_sub_con .group_01 .group_img > img,
+#new_sub_con .group_02 .group_img > img {
+    width: 90%;
+}
+
+/*사업추진체계 end*/
+
+
+/*FAQ*/
+#new_sub_con .faq_wrap {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+#new_sub_con .faq_wrap .q_area {
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+#new_sub_con .faq_wrap .q_area:last-of-type {
+    margin-bottom: 0;
+}
+
+#new_sub_con .faq_wrap .q_area .title {
+    width: 100%;
+}
+
+#new_sub_con .faq_wrap .q_area .title > span {
+    margin-right: .5rem;
+}
+
+#new_sub_con .faq_wrap .q_area .title > span > img {
+    vertical-align: sub;
+}
+
+#new_sub_con .faq_wrap .q_area .title > p {
+    display: inline-block;
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin-bottom: 10px;
+    color: #000;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+#new_sub_con .faq_wrap .q_area .txt {
+    padding-left: 20px;
+    vertical-align: top;text-align: justify;
+}
+
+#new_sub_con .faq_wrap .q_area .txt > p {
+    font-size: 1rem;
+    color: #999;
+    letter-spacing: 1px;
+    font-weight: 400;
+    text-align: justify;
+}
+
+
+/*FAQ end*/
+
+
+
+
+/*오시는길 지도*/
+#new_sub_con .map {
+    margin-bottom: 50px;
+}
+
+#new_sub_con .map_txt {
+    width: 100%;
+    position: relative;
+}
+
+#new_sub_con .map_txt .title {
+    width: 100%;
+    overflow: hidden;
+}
+
+#new_sub_con .map_txt .title > span {
+    margin-right: .5rem;
+}
+
+#new_sub_con .map_txt .title > span > img {
+    vertical-align: sub;
+}
+
+#new_sub_con .map_txt .title > p {
+    display: inline-block;
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    color: #000;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+#new_sub_con .map_txt .txt {
+    padding-left: 20px;
+    vertical-align: top;
+}
+
+#new_sub_con .map_txt .txt > p {
+    font-size: 1rem;
+    color: #5c5c5c;
+}
+
+/*오시는길 지도 end*/
+
+
+@media all and (max-width: 801px){
+	#new_sub_con .group_01 .group_img > img,
+	#new_sub_con .group_02 .group_img > img{
+		width:100%;
+	}
+	
+	#new_sub_con .faq_wrap .q_area .txt{
+		padding:0;
+	}
+	
+	#new_sub_con .list_oper .oper_01 .title > p,
+	#new_sub_con .list_oper .oper_02 .title > p,
+	#new_sub_con .list_oper .oper_03 .title > p,
+	#new_sub_con .list_oper .oper_04 .title > p {
+	    font-size: 1rem;
+	}
+}
