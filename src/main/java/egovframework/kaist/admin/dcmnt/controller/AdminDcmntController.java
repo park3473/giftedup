@@ -24,5 +24,5 @@ public class AdminDcmntController {
 	AdminDcmntService adminDcmntService;
 	
 
-	//만들려다가 안쓰는 곳ddd. dsadsaasddsadsadas...
+	//만들려다가 안쓰는 ...
 }
