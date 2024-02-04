@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="egovframework.kaist.user.survey_select.service.impl.UserSurveySelectMapper">
+	 
+	<select id="getListAll" resultType="hashMap" >
+		SELECT /*UserSurveyQuestionMapper*/ * FROM TBL_SURVEY_SELECT order by CREATE_TM desc
+	</select>
+
+	
+	<select id="getList" resultType="hashMap" parameterType="egovframework.kaist.user.survey_select.model.UserSurveySelectVo">
+		SELECT /*UserSurveyQuestionMapper*/ * FROM TBL_SURVEY_SELECT
+		WHERE 1=1 
+	    
+	   	<if test="SURVEY_QUESTION_IDX != ''">
+	    	AND SURVEY_QUESTION_IDX = #{SURVEY_QUESTION_IDX}
+	    </if>
+	   	<if test="SURVEY_QUESLIONNAIRE_IDX != ''">
+	    	AND SURVEY_QUESLIONNAIRE_IDX = #{SURVEY_QUESLIONNAIRE_IDX}
+	    </if>
+	    <if test="SURVEY_IDX != ''">
+	    	AND SURVEY_IDX = #{SURVEY_IDX}
+	    </if>
+	    
+		order by CREATE_TM asc
+		
+		LIMIT ${LIMIT} OFFSET ${OFFSET}
+	</select>
+	
+	
+		
+	<select id="getListCnt" resultType="int" parameterType="egovframework.kaist.user.survey_select.model.UserSurveySelectVo">
+		SELECT /*UserSurveyQuestionMapper*/ count(*) FROM TBL_SURVEY_SELECT
+		WHERE 1=1 
+	   	<if test="SURVEY_QUESTION_IDX != ''">
+	    	AND SURVEY_QUESTION_IDX = #{SURVEY_QUESTION_IDX}
+	    </if>
+	   	<if test="SURVEY_QUESLIONNAIRE_IDX != ''">
+	    	AND SURVEY_QUESLIONNAIRE_IDX = #{SURVEY_QUESLIONNAIRE_IDX}
+	    </if>	
+	     <if test="SURVEY_IDX != ''">
+	    	AND SURVEY_IDX = #{SURVEY_IDX}
+	    </if>    
+	</select>
+
+	<select id="getView" resultType="egovframework.kaist.user.survey_select.model.UserSurveySelectVo" parameterType="String">
+		SELECT /*UserSurveyQuestionMapper*/ * FROM TBL_SURVEY_SELECT where IDX = #{value};
+	</select>
+	
+	<insert id="setInsert"	parameterType="egovframework.kaist.user.survey_select.model.UserSurveySelectVo">
+		INSERT INTO /*UserSurveyQuestionMapper*/ TBL_SURVEY_SELECT (
+			SURVEY_IDX, 
+			SURVEY_QUESTION_IDX, 
+			SELECT_ITEM, 
+			SURVEY_QUESLIONNAIRE_IDX,
+			CREATE_TM 
+		) VALUES (
+			#{SURVEY_IDX}, 
+			#{SURVEY_QUESTION_IDX}, 
+			#{SELECT_ITEM}, 
+			#{SURVEY_QUESLIONNAIRE_IDX},
+			now() 
+		) 
+	</insert>
+
+	<update id="setUpdate"	parameterType="egovframework.kaist.user.survey_select.model.UserSurveySelectVo">
+		UPDATE /*UserSurveyQuestionMapper*/ TBL_SURVEY_SELECT SET 
+			SELECT_ITEM= #{SELECT_ITEM} 
+		WHERE
+			IDX = #{IDX} 
+	</update>
+	
+	
+	<delete id="setDelete"	parameterType="egovframework.kaist.user.survey_select.model.UserSurveySelectVo">
+		DELETE FROM /*UserSurveyQuestionMapper*/
+			TBL_SURVEY_SELECT
+		WHERE IDX =  #{IDX} 
+	</delete>
+	
+	
+
+    
+</mapper>

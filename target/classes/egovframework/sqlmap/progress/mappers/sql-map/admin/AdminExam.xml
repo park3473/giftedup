@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egovframework.sample.admin.exam.service.impl.AdminExamMapper">
+	<select id="getAllList" resultType="hashMap"  parameterType="AdminExamVo">
+		SELECT * FROM TBL_EXAM
+		WHERE 1=1
+		<if test="SEARCH_TEXT != ''">
+		    <if test="SEARCH_TYPE != 'ALL'">
+	    		 AND ${SEARCH_TYPE} LIKE '%${SEARCH_TEXT}%'
+	    	</if>
+	    </if>
+	    <if test="UP != ''">
+	    	order by ${UP} asc
+	    </if>
+	    <if test="DOWN != ''">
+	    	order by ${DOWN} desc
+	    </if>
+	    <if test="DOWN == '' and UP == ''">
+	    	order by CREATE_TM desc
+	    </if>
+	    LIMIT ${LIMIT} OFFSET ${OFFSET}
+	</select>
+	
+	<select id="getAllListCnt" resultType="int" parameterType="AdminExamVo">
+		SELECT COUNT(*) FROM TBL_EXAM
+		WHERE 1=1
+		<if test="SEARCH_TEXT != ''">
+		    <if test="SEARCH_TYPE != 'ALL'">
+	    		 AND ${SEARCH_TYPE} LIKE '%${SEARCH_TEXT}%'
+	    	</if>
+	    </if> 
+	</select>
+	
+	<insert id="setAdminExamDataInsert" parameterType="AdminExamVo">
+		INSERT INTO TBL_EXAM (NAME , CATEGORY , L_CATEGORY , M_CATEGORY , TYPE , POINT , CONTENT , GREET ,  IMAGE , COMENT ,  CREATE_TM , UPDATE_TM)
+		VALUES(#{name} , #{category} , #{l_category} , #{m_category} , 0 , #{point} , #{content} , #{greet} , #{image} , #{coment} , now() , now())
+	</insert>
+	
+	<update id="setAdminExamDataUpdate" parameterType="AdminExamVo">
+		UPDATE TBL_EXAM SET
+		<if test="name != ''">
+			NAME = #{name},
+		</if>
+		<if test="l_category != ''">
+		L_CATEGORY = #{l_category},
+		</if>
+		<if test="m_category != ''">
+		M_CATEGORY = #{m_category},
+		</if>
+		<if test="type != ''">
+		TYPE = #{type},
+		</if>
+		<if test="greet != ''">
+		GREET = #{greet},
+		</if>
+		<if test="content != ''">
+		CONTENT = #{content},
+		</if>
+		<if test="image != ''">
+		IMAGE = #{image},
+		</if>
+		<if test="coment != ''">
+			COMENT = #{coment},
+		</if>
+		<if test="start_tm != ''">
+		START_TM = #{start_tm},
+		</if>
+		<if test="end_tm != ''">
+		END_TM = #{end_tm},
+		</if>
+		UPDATE_TM = now()
+		
+		WHERE IDX = #{idx}
+	</update>
+	
+	<delete id="setAdminExamDataDelete" parameterType="AdminExamVo">
+		DELETE FROM TBL_EXAM WHERE IDX = #{idx}
+	</delete>
+	
+	<select id="getExamView" parameterType="AdminExamVo" resultType="AdminExamVo">
+		SELECT * FROM TBL_EXAM
+		WHERE IDX = #{idx}
+	</select>
+	
+	<select id="getExamCategoryList" parameterType="AdminExamVo" resultType="hashMap">
+		<if test="l_category != ''">
+			SELECT L_CATEGORY FROM TBL_EXAM
+			ORDER BY L_CATEGORY
+		</if>
+		<if test="m_category != ''">
+			SELECT M_CATEGORY FROM TBL_EXAM
+			ORDER BY M_CATEGORY
+		</if>
+	</select>
+	
+	<!-- question_list 부분 -->
+	<select id="getQuestionList" parameterType="AdminQuestionListVo" resultType="hashMap">
+		SELECT LIST.* , Q.NAME , Q.TYPE , Q.CONTENT , Q.OBJECTIVES , Q.SELECT_TYPE , Q.SELECT_VAL , Q.SOLUTION FROM TBL_QUESTION_LIST LIST JOIN TBL_QUESTION Q ON LIST.QUESTION_IDX = Q.IDX
+		WHERE EXAM_IDX = #{exam_idx}
+		ORDER BY SEQ
+	</select>
+	
+	<insert id="setAdminExamQuestionListInsert" parameterType="AdminQuestionListVo">
+		INSERT INTO TBL_QUESTION_LIST (EXAM_IDX , SEQ , QUESTION_IDX , CREATE_TM , UPDATE_TM)
+		VALUES (#{exam_idx} , #{seq} , #{question_idx} , now() , now())
+	</insert>
+	
+	<update id="setAdminExamQuestionListUpdate" parameterType="AdminQuestionListVo">
+		UPDATE TBL_QUESTION_LIST SET
+		<if test="question_idx != ''">
+			QUESTION_IDX = #{question_idx},
+		</if>
+		UPDATE_TM = now()
+		WHERE IDX = #{idx}
+	</update>
+	
+	<delete id="setAdminExamQuestionListDelete" parameterType="AdminQuestionListVo">
+		DELETE FROM TBL_QUESTION_LIST
+		WHERE IDX = #{idx}
+	</delete>
+	
+	<select id="getStatusQuestionList" parameterType="AdminExamVo" resultType="hashMap">
+		SELECT Q.*, COUNT(S.idx) AS select_count , GROUP_CONCAT(S.content ORDER BY S.seq SEPARATOR '#') AS Choices,
+		    GROUP_CONCAT(S.image ORDER BY S.seq SEPARATOR '#') AS ChoicesImage
+		FROM TBL_QUESTION Q
+		JOIN TBL_QUESTION_LIST L ON Q.idx = L.question_idx 
+		LEFT JOIN TBL_SELECT S ON Q.idx = S.question_idx
+		WHERE L.exam_idx = #{idx}
+		GROUP BY Q.idx
+		ORDER BY L.SEQ
+	</select>
+	
+	<select id="getExamResultMemberAll" parameterType="AdminExamVo" resultType="hashMap">
+	SELECT 
+    er.* , m.address_local , m.age , m.job , m.sex
+	FROM 
+	    TBL_EXAM_RESULT er
+	JOIN 
+	    TBL_EXAM e ON er.exam_idx = e.idx
+	JOIN 
+	    TBL_MEMBER m ON er.member_id = m.member_id
+	WHERE 
+	    e.idx = #{idx}
+	</select>
+
+
+</mapper>

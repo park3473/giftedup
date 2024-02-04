@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egovframework.sample.user.exam.service.impl.UserExamMapper">
+	<select id="getAllList" resultType="hashMap"  parameterType="UserExamVo">
+		SELECT * FROM TBL_EXAM
+		WHERE 1=1
+		AND TYPE = "1"
+		<if test="SEARCH_TEXT != ''">
+		    <if test="SEARCH_TYPE != 'ALL'">
+	    		 AND ${SEARCH_TYPE} LIKE '%${SEARCH_TEXT}%'
+	    	</if>
+	    </if>
+	    <if test="UP != ''">
+	    	order by ${UP} asc
+	    </if>
+	    <if test="DOWN != ''">
+	    	order by ${DOWN} desc
+	    </if>
+	    <if test="DOWN == '' and UP == ''">
+	    	order by END_TM desc
+	    </if>
+	    LIMIT ${LIMIT} OFFSET ${OFFSET}
+	</select>
+	
+	<select id="getAllListCnt" resultType="int" parameterType="UserExamVo">
+		SELECT COUNT(*) FROM TBL_EXAM
+		WHERE 1=1
+		<if test="SEARCH_TEXT != ''">
+		    <if test="SEARCH_TYPE != 'ALL'">
+	    		 AND ${SEARCH_TYPE} LIKE '%${SEARCH_TEXT}%'
+	    	</if>
+	    </if> 
+	</select>
+	
+	<select id="getExamView" parameterType="UserExamVo" resultType="UserExamVo">
+		SELECT * FROM TBL_EXAM
+		WHERE IDX = #{idx}
+	</select>
+	
+	<select id="getExamCategoryList" parameterType="UserExamVo" resultType="hashMap">
+		<if test="l_category != ''">
+			SELECT L_CATEGORY FROM TBL_EXAM
+			ORDER BY L_CATEGORY
+		</if>
+		<if test="m_category != ''">
+			SELECT M_CATEGORY FROM TBL_EXAM
+			ORDER BY M_CATEGORY
+		</if>
+	</select>
+	
+	<!-- question_list 부분 -->
+	<select id="getQuestionList" parameterType="UserExamVo" resultType="hashMap">
+		SELECT 
+		    q.*,
+		    GROUP_CONCAT(s.content ORDER BY s.seq SEPARATOR '#') AS Choices,
+		    GROUP_CONCAT(s.image ORDER BY s.seq SEPARATOR '#') AS ChoicesImage
+		FROM 
+		    TBL_QUESTION_LIST ql
+		JOIN 
+		    TBL_QUESTION q ON ql.question_idx = q.idx
+		JOIN 
+		    TBL_SELECT s ON q.idx = s.question_idx
+		WHERE 
+		    ql.exam_idx = #{idx}
+		GROUP BY 
+		    q.idx
+		ORDER BY 
+		    ql.seq;
+	</select>
+	<insert id="setExamResultData" parameterType="UserExamResultVo">
+		INSERT INTO TBL_EXAM_RESULT (EXAM_IDX , MEMBER_ID , NAME , SELECT_LIST , COMPLETE , COMPLETE_TM , CREATE_TM , UPDATE_TM)
+		VALUES(#{exam_idx} , #{member_id} , #{name} , #{select_list} , #{complete} , now() , now() , now())
+	</insert>
+	
+	<select id="getResultListView" parameterType="UserExamResultVo" resultType="hashMap">
+		SELECT R.* , E.point , E.l_category , E.m_category , E.name , E.category  FROM TBL_EXAM_RESULT R JOIN TBL_EXAM E ON R.exam_idx = E.idx WHERE R.member_id = #{member_id}
+	</select>
+	
+	<select id="getExamResultView"  parameterType="UserExamResultVo" resultType="UserExamResultVo">
+		SELECT * FROM TBL_EXAM_RESULT WHERE member_id = #{member_id} and idx = #{idx}
+	</select>
+
+	<select id="getExamResultMemberAll"  parameterType="UserExamResultVo" resultType="hashMap">
+	SELECT 
+    er.* , m.address_local , m.age , m.job , m.sex
+	FROM 
+	    TBL_EXAM_RESULT er
+	JOIN 
+	    TBL_EXAM e ON er.exam_idx = e.idx
+	JOIN 
+	    TBL_MEMBER m ON er.member_id = m.member_id
+	WHERE 
+	    e.idx = #{exam_idx}
+	</select>
+
+	<select id="getIndexList" resultType="hashMap">
+		SELECT  * FROM TBL_EXAM LIMIT 4
+	</select>
+
+
+</mapper>

@@ -1,9 +1,8 @@
 package egovframework.kaist.admin;
 
 public class SearchVo  {
-
 	
-
+	int LIMIT;
 	int PAGE;
 	int OFFSET;
 	int ITEM_COUNT = 10;
@@ -337,6 +336,14 @@ public class SearchVo  {
 
 	public void setItempagenext(boolean itempagenext) {
 		this.itempagenext = itempagenext;
+	}
+
+	public int getLIMIT() {
+		return LIMIT;
+	}
+
+	public void setLIMIT(int lIMIT) {
+		LIMIT = lIMIT;
 	}
 
 	

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="egovframework.kaist.admin.local_group.service.impl.AdminLocalGroupMapper">
+	 
+	<select id="getListAll" resultType="hashMap" >
+		SELECT /*AdminLocalGroupMapper*/ * FROM TBL_LOCAL_GROUP order by CREATE_TM desc
+	</select>
+
+	
+	<select id="getList" resultType="hashMap" parameterType="egovframework.kaist.admin.local_group.model.AdminLocalGroupVo">
+		SELECT /*AdminLocalGroupMapper*/ 
+			
+			TBL_MEMBER.MEMBER_ID
+			,TBL_MEMBER.PASSWORD
+			,TBL_MEMBER.NAME
+			,TBL_MEMBER.PHONE
+			,TBL_MEMBER.EMAIL
+			,TBL_MEMBER.LEVEL
+			,TBL_MEMBER.JOIN_TM
+			,TBL_MEMBER.CREATE_TM
+			,TBL_MEMBER.TYPE
+			,TBL_MEMBER.TYPE_SUB
+			,TBL_MEMBER.NAME_ENG
+			,TBL_MEMBER.NAME_HANJA
+			,TBL_MEMBER.IMAGE
+			,TBL_MEMBER.ADDRESS_LOCAL
+			,TBL_MEMBER.SCHOOL_NAME
+			,TBL_MEMBER.SCHOOL_TYPE
+			,TBL_MEMBER.SCHOOL_YEAR
+			,TBL_MEMBER.SCHOOL_GROUP
+			,TBL_MEMBER.BIRTH
+			,TBL_MEMBER.SEX
+			,TBL_MEMBER.SCHOOL_ZIPCODE
+			,TBL_MEMBER.SCHOOL_ADDRESS
+			,TBL_MEMBER.SCHOOL_ADDRESS_DETAIL
+			,TBL_MEMBER.SUPPORT_AREA
+			,TBL_MEMBER.ZIPCODE
+			,TBL_MEMBER.ADDRESS
+			,TBL_MEMBER.ADDRESS_DETAIL
+			,TBL_MEMBER.PARENTS_NAME
+			,TBL_MEMBER.PARENTS_RELATION
+			,TBL_MEMBER.PARENTS_PHONE
+			,TBL_MEMBER.PARENTS_PHONE2
+			,TBL_MEMBER.INFO_AGREEMENT
+			,TBL_MEMBER.DORMANCY_TM
+			,TBL_MEMBER.LOGIN_TM
+			,TBL_MEMBER.UPDATE_TM
+			,TBL_MEMBER.STATUS
+			,TBL_MEMBER.SCHOOL_NUMBER
+			,TBL_MEMBER.SCHOOL_JIGGEUB
+			,TBL_MEMBER.TEL
+			,TBL_MEMBER.DORMANCY
+			,TBL_LOCAL_GROUP.MEMBER_ID AS LOCAL_GROUP_IDX
+			,TBL_LOCAL_GROUP. LOCATION
+		FROM TBL_LOCAL_GROUP, TBL_MEMBER
+		WHERE 1=1 
+		
+		AND TBL_LOCAL_GROUP.MEMBER_ID = TBL_MEMBER.MEMBER_ID
+	    AND TBL_MEMBER.TYPE = '2'
+	    <if test="LOCATION != ''">
+	    	AND TBL_LOCAL_GROUP.LOCATION = #{LOCATION}
+	    </if>
+	    
+		order by UPDATE_TM desc
+		
+		LIMIT ${LIMIT} OFFSET ${OFFSET}
+	</select>
+		
+	<select id="getListCnt" resultType="int" parameterType="egovframework.kaist.admin.local_group.model.AdminLocalGroupVo">
+		SELECT /*ADMINLOCALGROUPMAPPER*/ COUNT(*)
+		FROM TBL_LOCAL_GROUP, TBL_MEMBER
+		WHERE 1=1 
+		 AND TBL_MEMBER.TYPE = '2'
+		AND TBL_LOCAL_GROUP.MEMBER_ID = TBL_MEMBER.MEMBER_ID
+			
+		<if test="LOCATION != ''">
+	    	AND TBL_LOCAL_GROUP.LOCATION = #{LOCATION}
+	    </if>
+	</select>
+
+	<select id="getView" resultType="egovframework.kaist.admin.local_group.model.AdminLocalGroupVo" parameterType="String">
+		SELECT /*AdminLocalGroupMapper*/ * FROM TBL_LOCAL_GROUP where MEMBER_ID = #{value} 
+	</select>
+
+	<insert id="setInsert"	parameterType="egovframework.kaist.admin.local_group.model.AdminLocalGroupVo">
+		INSERT INTO /*AdminLocalGroupMapper*/ TBL_LOCAL_GROUP (
+		  	 
+			MEMBER_ID, 
+			CREATE_TM, 
+			UPDATE_TM, 
+			LOCATION 
+		) VALUES (
+
+			#{MEMBER_ID}, 
+			now(), 
+			now(), 
+			#{LOCATION} 
+  
+		) 
+	</insert>
+
+	<update id="setUpdate"	parameterType="egovframework.kaist.admin.local_group.model.AdminLocalGroupVo">
+		UPDATE /*AdminLocalGroupMapper*/ TBL_LOCAL_GROUP SET 
+			UPDATE_TM= now(), 
+			LOCATION= #{LOCATION} 
+		WHERE
+			MEMBER_ID = #{MEMBER_ID} 
+	</update>
+	
+	
+	<delete id="setDelete"	parameterType="egovframework.kaist.admin.local_group.model.AdminLocalGroupVo">
+		DELETE FROM /*AdminLocalGroupMapper*/
+			TBL_LOCAL_GROUP
+		WHERE MEMBER_ID =  #{MEMBER_ID} 
+	</delete>
+
+    
+</mapper>
