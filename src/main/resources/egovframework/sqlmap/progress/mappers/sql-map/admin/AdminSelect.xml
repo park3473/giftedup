@@ -2,14 +2,14 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="egovframework.sample.admin.select.service.impl.AdminSelectMapper">
-	<select id="getSelectAllList" resultType="hashMap" parameterType="AdminSelectVo"> 
+<mapper namespace="egovframework.kaist.admin.select.service.impl.AdminSelectMapper">
+	<select id="getSelectAllList" resultType="hashMap" parameterType="egovframework.kaist.admin.select.model.AdminSelectVo"> 
 		SELECT * FROM TBL_SELECT
 		WHERE QUESTION_IDX = #{question_idx}
 		ORDER BY SEQ
 	</select>
 	
-	<select id="getSelectView" parameterType="AdminSelectVo" resultType="AdminSelectVo">
+	<select id="getSelectView" parameterType="egovframework.kaist.admin.select.model.AdminSelectVo" resultType="egovframework.kaist.admin.select.model.AdminSelectVo">
 		SELECT * FROM TBL_SELECT
 		WHERE IDX = #{idx}
 	</select>
@@ -20,12 +20,12 @@
 		ORDER BY SEQ
 	</select>
 	
-	<insert id="setSelectInsert" parameterType="AdminSelectVo">
+	<insert id="setSelectInsert" parameterType="egovframework.kaist.admin.select.model.AdminSelectVo">
 		INSERT INTO TBL_SELECT (SEQ , QUESTION_IDX , CONTENT , IMAGE , CREATE_TM , UPDATE_TM)
 		VALUES (#{seq} , #{question_idx} , #{content} , #{image} , now() , now())
 	</insert>
 	
-	<update id="setSelectUpdate" parameterType="AdminSelectVo">
+	<update id="setSelectUpdate" parameterType="egovframework.kaist.admin.select.model.AdminSelectVo">
 		UPDATE TBL_SELECT SET
 		<if test="question_idx != ''">
 			QUESTION_IDX = #{question_idx},
@@ -40,7 +40,7 @@
 		WHERE IDX = #{idx}
 	</update>
 	
-	<delete id="setSelectAllDelete" parameterType="AdminSelectVo">
+	<delete id="setSelectAllDelete" parameterType="egovframework.kaist.admin.select.model.AdminSelectVo">
 		DELETE FROM TBL_SELECT
 		WHERE QUESTION_IDX = #{question_idx}
 	</delete>

@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="egovframework.sample.user.exam.service.impl.UserExamMapper">
-	<select id="getAllList" resultType="hashMap"  parameterType="UserExamVo">
+<mapper namespace="egovframework.kaist.user.exam.service.impl.UserExamMapper">
+	<select id="getAllList" resultType="hashMap"  parameterType="egovframework.kaist.user.exam.model.UserExamVo">
 		SELECT * FROM TBL_EXAM
 		WHERE 1=1
 		AND TYPE = "1"
@@ -24,7 +24,7 @@
 	    LIMIT ${LIMIT} OFFSET ${OFFSET}
 	</select>
 	
-	<select id="getAllListCnt" resultType="int" parameterType="UserExamVo">
+	<select id="getAllListCnt" resultType="int" parameterType="egovframework.kaist.user.exam.model.UserExamVo">
 		SELECT COUNT(*) FROM TBL_EXAM
 		WHERE 1=1
 		<if test="SEARCH_TEXT != ''">
@@ -34,12 +34,12 @@
 	    </if> 
 	</select>
 	
-	<select id="getExamView" parameterType="UserExamVo" resultType="UserExamVo">
+	<select id="getExamView" parameterType="egovframework.kaist.user.exam.model.UserExamVo" resultType="egovframework.kaist.user.exam.model.UserExamVo">
 		SELECT * FROM TBL_EXAM
 		WHERE IDX = #{idx}
 	</select>
 	
-	<select id="getExamCategoryList" parameterType="UserExamVo" resultType="hashMap">
+	<select id="getExamCategoryList" parameterType="egovframework.kaist.user.exam.model.UserExamVo" resultType="hashMap">
 		<if test="l_category != ''">
 			SELECT L_CATEGORY FROM TBL_EXAM
 			ORDER BY L_CATEGORY
@@ -51,7 +51,7 @@
 	</select>
 	
 	<!-- question_list 부분 -->
-	<select id="getQuestionList" parameterType="UserExamVo" resultType="hashMap">
+	<select id="getQuestionList" parameterType="egovframework.kaist.user.exam.model.UserExamVo" resultType="hashMap">
 		SELECT 
 		    q.*,
 		    GROUP_CONCAT(s.content ORDER BY s.seq SEPARATOR '#') AS Choices,
@@ -69,20 +69,20 @@
 		ORDER BY 
 		    ql.seq;
 	</select>
-	<insert id="setExamResultData" parameterType="UserExamResultVo">
+	<insert id="setExamResultData" parameterType="egovframework.kaist.user.exam.model.UserExamResultVo">
 		INSERT INTO TBL_EXAM_RESULT (EXAM_IDX , MEMBER_ID , NAME , SELECT_LIST , COMPLETE , COMPLETE_TM , CREATE_TM , UPDATE_TM)
 		VALUES(#{exam_idx} , #{member_id} , #{name} , #{select_list} , #{complete} , now() , now() , now())
 	</insert>
 	
-	<select id="getResultListView" parameterType="UserExamResultVo" resultType="hashMap">
+	<select id="getResultListView" parameterType="egovframework.kaist.user.exam.model.UserExamResultVo" resultType="hashMap">
 		SELECT R.* , E.point , E.l_category , E.m_category , E.name , E.category  FROM TBL_EXAM_RESULT R JOIN TBL_EXAM E ON R.exam_idx = E.idx WHERE R.member_id = #{member_id}
 	</select>
 	
-	<select id="getExamResultView"  parameterType="UserExamResultVo" resultType="UserExamResultVo">
+	<select id="getExamResultView"  parameterType="egovframework.kaist.user.exam.model.UserExamResultVo" resultType="egovframework.kaist.user.exam.model.UserExamResultVo" >
 		SELECT * FROM TBL_EXAM_RESULT WHERE member_id = #{member_id} and idx = #{idx}
 	</select>
 
-	<select id="getExamResultMemberAll"  parameterType="UserExamResultVo" resultType="hashMap">
+	<select id="getExamResultMemberAll"  parameterType="egovframework.kaist.user.exam.model.UserExamResultVo" resultType="hashMap">
 	SELECT 
     er.* , m.address_local , m.age , m.job , m.sex
 	FROM 

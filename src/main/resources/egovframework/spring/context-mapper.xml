@@ -11,7 +11,6 @@
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="mapperLocations" value="classpath:/egovframework/sqlmap/progress/mappers/sql-map/**/**/*.xml" />
-		<!-- <property name="configLocation" value="classpath:/egovframework/sqlmap/progress/mappers/config/Alias.xml" /> -->
 	</bean>
 
 
