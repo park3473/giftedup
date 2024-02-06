@@ -31,7 +31,7 @@ public class AdminExamController {
 	@RequestMapping(value="/admin/exam/list.do" , method = RequestMethod.GET)
 	public ModelAndView AdminExamListGet(@ModelAttribute("AdminExamVo")AdminExamVo AdminExamVo , HttpServletRequest request , HttpServletResponse response) {
 		
-		System.out.println("PAGE : " + AdminExamVo.getPAGE());
+		System.out.println("PAGE!!dsadsa : " + AdminExamVo.getPAGE());
 		System.out.println("ITEM_COUNT : " + AdminExamVo.getITEM_COUNT());
 		
 		String PAGE = request.getParameter("PAGE") != null ? request
@@ -52,6 +52,8 @@ public class AdminExamController {
 		model = adminExamService.getAllList(AdminExamVo);
 		
 		model.put("before", AdminExamVo);
+		
+		System.out.println("???D?");
 		
 		return new ModelAndView("admin/exam/list" , "model" , model);
 		

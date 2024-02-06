@@ -230,6 +230,8 @@ public class AdminMemberController {
 	public ModelAndView list(@ModelAttribute("AdminMemberVo") AdminMemberVo adminMemberVo,
 			HttpServletRequest request, HttpServletResponse response) {
 
+		System.out.println("zzzzzzdsadsasaddas");
+		
 		String PAGE = request.getParameter("PAGE") != null ? request
 				.getParameter("PAGE") : "0";
 		String ITEM_COUNT = request.getParameter("ITEM_COUNT") != null ? request

@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
@@ -12,29 +14,33 @@ import com.system.util.PageVO;
 
 import egovframework.kaist.admin.exam.model.AdminExamVo;
 import egovframework.kaist.admin.exam.service.AdminExamService;
+import egovframework.kaist.admin.member.service.impl.AdminMemberMapper;
+import egovframework.kaist.admin.member.service.impl.AdminMemberServiceImpl;
 import egovframework.kaist.admin.question.model.AdminQuestionListVo;
 import egovframework.kaist.user.exam.service.impl.UserExamMapper;
 import egovframework.kaist.user.question.service.impl.UserQuestionMapper;
 
-@Service
+@Service("adminExamService")
 @Transactional
 public class AdminExamServiceImpl implements AdminExamService {
 
 	@Resource(name="adminExamMapper")
-	private AdminExamMapper adminExamMapper;
+	AdminExamMapper adminExamMapper;
 
+	protected Log log = LogFactory.getLog(AdminExamServiceImpl.class);
+	
 	@Override
 	public ModelMap getAllList(AdminExamVo adminExamVo) {
 		
 		ModelMap modelMap = new ModelMap();
 		
-		List<?> list = adminExamMapper.getAllList(adminExamVo);
+		List<?> list = adminExamMapper.getExamAllList(adminExamVo);
 		
 		System.out.println("size : " + list.size());
 		
 		int itemtotalcount = adminExamMapper.getAllListCnt(adminExamVo);
 		int itemcount  = adminExamVo.getITEM_COUNT();
-		int itempage = adminExamVo.getITEM_PAGE();
+		int itempage = adminExamVo.getPAGE();
 		
 		PageVO pageVo = new PageVO(itemcount, itemtotalcount, itempage);
 		

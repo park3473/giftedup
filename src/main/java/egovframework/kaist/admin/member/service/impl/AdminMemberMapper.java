@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import egovframework.kaist.admin.exam.model.AdminExamVo;
 import egovframework.kaist.admin.member.model.AdminMemberVo;
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
 
@@ -53,5 +54,7 @@ public interface AdminMemberMapper {
 	public List<?> getListNameOrder(AdminMemberVo adminMemberVo);
 
 	public List<?> getMatchingList(AdminMemberVo adminMemberVo);
+
+	public List<?> getAllList(AdminExamVo adminExamVo);
 	
 }

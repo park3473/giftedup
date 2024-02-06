@@ -2,39 +2,39 @@ package egovframework.kaist.admin.exam.service.impl;
 
 import java.util.List;
 
-import egovframework.rte.psl.dataaccess.mapper.Mapper;
 import egovframework.kaist.admin.exam.model.AdminExamVo;
 import egovframework.kaist.admin.question.model.AdminQuestionListVo;
+import egovframework.rte.psl.dataaccess.mapper.Mapper;
 
 @Mapper("adminExamMapper")
 public interface AdminExamMapper {
 
-	public List<?> getAllList(AdminExamVo adminExamVo);
+	List<?> getAllList(AdminExamVo adminExamVo);
 
-	public int getAllListCnt(AdminExamVo adminExamVo);
+	int getAllListCnt(AdminExamVo adminExamVo);
 
-	public void setAdminExamDataInsert(AdminExamVo adminExamVo);
+	void setAdminExamDataInsert(AdminExamVo adminExamVo);
 
-	public void setAdminExamDataUpdate(AdminExamVo adminExamVo);
+	void setAdminExamDataUpdate(AdminExamVo adminExamVo);
 
-	public void setAdminExamDataDelete(AdminExamVo adminExamVo);
+	void setAdminExamDataDelete(AdminExamVo adminExamVo);
 
-	public AdminExamVo getExamView(AdminExamVo adminExamVo);
+	AdminExamVo getExamView(AdminExamVo adminExamVo);
 
-	public List<?> getQuestionList(AdminQuestionListVo adminQuestionListVo);
+	List<?> getExamCategoryList(AdminExamVo vo);
 
-	public void setAdminExamQuestionListInsert(AdminQuestionListVo adminQuestionListVo);
+	List<?> getQuestionList(AdminQuestionListVo adminQuestionListVo);
 
-	public void setAdminExamQuestionListUpdate(AdminQuestionListVo adminQuestionListVo);
+	void setAdminExamQuestionListInsert(AdminQuestionListVo adminQuestionListVo);
 
-	public void setAdminExamQuestionListDelete(AdminQuestionListVo adminQuestionListVo);
+	void setAdminExamQuestionListUpdate(AdminQuestionListVo adminQuestionListVo);
 
-	public List<?> getExamTypeAllList();
+	void setAdminExamQuestionListDelete(AdminQuestionListVo adminQuestionListVo);
 
-	public List<?> getExamCategoryList(AdminExamVo vo);
+	List<?> getStatusQuestionList(AdminExamVo adminExamVo);
 
-	public List<?> getStatusQuestionList(AdminExamVo adminExamVo);
+	List<?> getExamResultMemberAll(AdminExamVo adminExamVo);
 
-	public List<?> getExamResultMemberAll(AdminExamVo adminExamVo);
+	List<?> getExamAllList(AdminExamVo adminExamVo);
 
 }
