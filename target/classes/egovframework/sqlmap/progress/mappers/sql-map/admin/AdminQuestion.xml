@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="egovframework.sample.admin.question.service.impl.AdminQuestionMapper">
-	<select id="getAllList" parameterType="AdminQuestionVo" resultType="hashMap">
+<mapper namespace="egovframework.kaist.admin.question.service.impl.AdminQuestionMapper">
+	<select id="getAllList" parameterType="egovframework.kaist.admin.question.model.AdminQuestionVo" resultType="hashMap">
 		SELECT	* FROM TBL_QUESTION
 		WHERE 1=1
 		<if test="type != ''">
@@ -29,7 +29,7 @@
 	    LIMIT ${LIMIT} OFFSET ${OFFSET}
 	</select>
 	
-	<select id="getAllListCnt" parameterType="AdminQuestionVo" resultType="int" >
+	<select id="getAllListCnt" parameterType="egovframework.kaist.admin.question.model.AdminQuestionVo" resultType="int" >
 		SELECT	COUNT(*) FROM TBL_QUESTION
 		WHERE 1=1
 		<if test="type != ''">
@@ -37,22 +37,22 @@
 		</if>
 	</select>
 	
-	<insert id="setQuestionDataInsert" parameterType="AdminQuestionVo">
+	<insert id="setQuestionDataInsert" parameterType="egovframework.kaist.admin.question.model.AdminQuestionVo">
 		INSERT INTO TBL_QUESTION( NAME , TYPE , CATEGORY , CONTENT , OBJECTIVES , SELECT_TYPE , SELECT_VAL , SOLUTION , CREATE_TM , UPDATE_TM)
 		VALUES(#{name} , #{type} , #{category} , #{content} , #{objectives} , #{select_type} , #{select_val} , #{solution} , now() , now())
 	</insert>
 	
-	<insert id="setQuestionDataAjaxInsert" parameterType="AdminQuestionVo" useGeneratedKeys="true" keyProperty="idx">
+	<insert id="setQuestionDataAjaxInsert" parameterType="egovframework.kaist.admin.question.model.AdminQuestionVo" useGeneratedKeys="true" keyProperty="idx">
 		INSERT INTO TBL_QUESTION( NAME , TYPE , CATEGORY ,  CONTENT , OBJECTIVES , SELECT_TYPE , SELECT_VAL , SOLUTION , CREATE_TM , UPDATE_TM)
 		VALUES(#{name} , #{type} , #{category} , #{content} , #{objectives} , #{select_type} , #{select_val} , #{solution} , now() , now())
 	</insert>
 	
-	<select id="getQuestionData" parameterType="AdminQuestionVo" resultType="AdminQuestionVo">
+	<select id="getQuestionData" parameterType="egovframework.kaist.admin.question.model.AdminQuestionVo" resultType="egovframework.kaist.admin.question.model.AdminQuestionVo">
 		SELECT * FROM TBL_QUESTION
 		WHERE IDX = #{idx}
 	</select>
 	
-	<update id="setQuestionDataUpdate" parameterType="AdminQuestionVo">
+	<update id="setQuestionDataUpdate" parameterType="egovframework.kaist.admin.question.model.AdminQuestionVo">
 		UPDATE TBL_QUESTION SET
 		<if test="name != ''">
 			NAME = #{name},
@@ -82,11 +82,11 @@
 		WHERE IDX = #{idx}
 	</update>
 	
-	<delete id="setQuestionDataDelete" parameterType="AdminQuestionVo">
+	<delete id="setQuestionDataDelete" parameterType="egovframework.kaist.admin.question.model.AdminQuestionVo">
 		DELETE FROM TBL_QUESTION WHERE IDX = #{idx}
 	</delete>
 	
-	<select id="getTypeAllList" parameterType="AdminQuestionVo" resultType="AdminQuestionVo">
+	<select id="getTypeAllList" parameterType="egovframework.kaist.admin.question.model.AdminQuestionVo" resultType="egovframework.kaist.admin.question.model.AdminQuestionVo">
 		SELECT TYPE FROM TBL_QUESTION
 	</select>
 

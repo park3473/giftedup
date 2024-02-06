@@ -47,11 +47,9 @@ public class UserNoticesController {
 		{
 			ITEM_COUNT = "10";
 		}
-		
 
 		userNoticesVo.setPAGE(Integer.parseInt(PAGE));
 		userNoticesVo.setITEM_COUNT(Integer.parseInt(ITEM_COUNT));
-		
 		
 		ModelMap model = new ModelMap();
 	
@@ -59,9 +57,6 @@ public class UserNoticesController {
 		
 		userNoticesVo.setLIMIT(Integer.parseInt(ITEM_COUNT));
 		userNoticesVo.setOFFSET(pagelimit);
-		
-	
-    			
 		
 		model = userNoticesService.getList(userNoticesVo);
 		
@@ -78,8 +73,6 @@ public class UserNoticesController {
 		}
 		
 		model.put("beforeDomain", userNoticesVo);
-
-		
 
 		return new ModelAndView("user/notices/list", "model", model);
 	}
