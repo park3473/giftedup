@@ -26,8 +26,8 @@
 	</select>
 	
 	<insert id="setAdminExamDataInsert" parameterType="egovframework.kaist.admin.exam.model.AdminExamVo">
-		INSERT INTO TBL_EXAM (NAME , CATEGORY , L_CATEGORY , M_CATEGORY , TYPE , POINT , CONTENT , GREET ,  IMAGE , COMENT ,  CREATE_TM , UPDATE_TM)
-		VALUES(#{name} , #{category} , #{l_category} , #{m_category} , 0 , #{point} , #{content} , #{greet} , #{image} , #{coment} , now() , now())
+		INSERT INTO TBL_EXAM (NAME , CATEGORY , ONOFF , CONTENT , COMENT ,  CREATE_TM , UPDATE_TM)
+		VALUES(#{name} , #{category} , 0 , #{content} , #{coment} , now() , now())
 	</insert>
 	
 	<update id="setAdminExamDataUpdate" parameterType="egovframework.kaist.admin.exam.model.AdminExamVo">
@@ -35,23 +35,11 @@
 		<if test="name != ''">
 			NAME = #{name},
 		</if>
-		<if test="l_category != ''">
-		L_CATEGORY = #{l_category},
-		</if>
-		<if test="m_category != ''">
-		M_CATEGORY = #{m_category},
-		</if>
-		<if test="type != ''">
-		TYPE = #{type},
-		</if>
-		<if test="greet != ''">
-		GREET = #{greet},
+		<if test="onoff != ''">
+		ONOFF = #{onoff},
 		</if>
 		<if test="content != ''">
 		CONTENT = #{content},
-		</if>
-		<if test="image != ''">
-		IMAGE = #{image},
 		</if>
 		<if test="coment != ''">
 			COMENT = #{coment},
@@ -89,7 +77,7 @@
 	
 	<!-- question_list 부분 -->
 	<select id="getQuestionList" parameterType="egovframework.kaist.admin.question.model.AdminQuestionListVo" resultType="hashMap">
-		SELECT LIST.* , Q.NAME , Q.TYPE , Q.CONTENT , Q.OBJECTIVES , Q.SELECT_TYPE , Q.SELECT_VAL , Q.SOLUTION FROM TBL_QUESTION_LIST LIST JOIN TBL_QUESTION Q ON LIST.QUESTION_IDX = Q.IDX
+		SELECT LIST.* , Q.NAME , Q.ONOFF , Q.CONTENT , Q.SELECT_TYPE FROM TBL_QUESTION_LIST LIST JOIN TBL_QUESTION Q ON LIST.QUESTION_IDX = Q.IDX
 		WHERE EXAM_IDX = #{exam_idx}
 		ORDER BY SEQ
 	</select>
@@ -114,8 +102,7 @@
 	</delete>
 	
 	<select id="getStatusQuestionList" parameterType="egovframework.kaist.admin.exam.model.AdminExamVo" resultType="hashMap">
-		SELECT Q.*, COUNT(S.idx) AS select_count , GROUP_CONCAT(S.content ORDER BY S.seq SEPARATOR '#') AS Choices,
-		    GROUP_CONCAT(S.image ORDER BY S.seq SEPARATOR '#') AS ChoicesImage
+		SELECT Q.*, COUNT(S.idx) AS select_count , GROUP_CONCAT(S.content ORDER BY S.seq SEPARATOR '#') AS Choices
 		FROM TBL_QUESTION Q
 		JOIN TBL_QUESTION_LIST L ON Q.idx = L.question_idx 
 		LEFT JOIN TBL_SELECT S ON Q.idx = S.question_idx

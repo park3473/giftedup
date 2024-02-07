@@ -39,10 +39,10 @@ public class AdminExamServiceImpl implements AdminExamService {
 		System.out.println("size : " + list.size());
 		
 		int itemtotalcount = adminExamMapper.getAllListCnt(adminExamVo);
-		int itemcount  = adminExamVo.getITEM_COUNT();
+		int itemCount  = adminExamVo.getITEM_COUNT();
 		int itempage = adminExamVo.getPAGE();
 		
-		PageVO pageVo = new PageVO(itemcount, itemtotalcount, itempage);
+		PageVO pageVo = new PageVO(itemCount, itemtotalcount, itempage);
 		
 		if(pageVo.isItempagenext() == true){
 			modelMap.put("itempagenext", "true");
@@ -53,7 +53,8 @@ public class AdminExamServiceImpl implements AdminExamService {
 		System.out.println(pageVo.getItempage());
 		
 		modelMap.put("page", pageVo.getItempage());
-		modelMap.put("itemcount", pageVo.getItemCount());
+		System.out.println("itemCount" + pageVo.getItemCount());
+		modelMap.put("itemCount", pageVo.getItemCount());
 		modelMap.put("itempagestart", pageVo.getItempagestart());
 		modelMap.put("itempageend", pageVo.getItempageend());
 		modelMap.put("itemtotalcount", pageVo.getItemtotalcount());
@@ -95,22 +96,22 @@ public class AdminExamServiceImpl implements AdminExamService {
 		
 		model.put("view", view);
 		
-		AdminExamVo vo = new AdminExamVo();
+		//AdminExamVo vo = new AdminExamVo();
 		
-		vo.setL_category("TRUE");
+		//vo.setL_category("TRUE");
 		
 		//l category 가져오기 
-		List<?> LCategoryList = adminExamMapper.getExamCategoryList(vo); 
+		//List<?> LCategoryList = adminExamMapper.getExamCategoryList(vo); 
 		
-		model.put("LCategoryList", LCategoryList);
+		//model.put("LCategoryList", LCategoryList);
 		
-		vo.setL_category("");
-		vo.setM_category("TRUE");
+		//vo.setL_category("");
+		//vo.setM_category("TRUE");
 		
 		//m category 가져오기
-		List<?> MCategoryList = adminExamMapper.getExamCategoryList(vo); 
+		//List<?> MCategoryList = adminExamMapper.getExamCategoryList(vo); 
 		
-		model.put("MCategoryList", MCategoryList);
+		//model.put("MCategoryList", MCategoryList);
 		
 		return model;
 	}
@@ -153,22 +154,22 @@ public class AdminExamServiceImpl implements AdminExamService {
 		
 		ModelMap model = new ModelMap();
 		
-		AdminExamVo vo = new AdminExamVo();
+		//AdminExamVo vo = new AdminExamVo();
 		
-		vo.setL_category("TRUE");
+		//vo.setL_category("TRUE");
 		
 		//l category 가져오기 
-		List<?> LCategoryList = adminExamMapper.getExamCategoryList(vo); 
+		//List<?> LCategoryList = adminExamMapper.getExamCategoryList(vo); 
 		
-		model.put("LCategoryList", LCategoryList);
+		//model.put("LCategoryList", LCategoryList);
 		
-		vo.setL_category("");
-		vo.setM_category("TRUE");
+		//vo.setL_category("");
+		//vo.setM_category("TRUE");
 		
 		//m category 가져오기
-		List<?> MCategoryList = adminExamMapper.getExamCategoryList(vo); 
+		//List<?> MCategoryList = adminExamMapper.getExamCategoryList(vo); 
 		
-		model.put("MCategoryList", MCategoryList);
+		//model.put("MCategoryList", MCategoryList);
 		
 		return model;
 		

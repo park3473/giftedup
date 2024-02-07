@@ -69,31 +69,6 @@ public class AdminSelectController {
 	@RequestMapping(value="/admin/select/insert.do" , method = RequestMethod.POST)
 	public void AdminSelectInsert(@ModelAttribute("AdminSelectVo")AdminSelectVo AdminSelectVo , MultipartHttpServletRequest request , HttpServletResponse response) {
 		
-		//이미지 파일 등록
-		//이미지 파일 등록 여부
-		if(AdminSelectVo.getImage_boolean().equals("true")) {
-		
-			String drv = request.getRealPath("");
-			drv = drv.substring(0 , drv.length()) + "./resources/" + ((HttpServletRequest) request).getContextPath() + "/upload/select/image/";
-			
-			String filename = SUtil.setFileUpload(request, drv);
-			
-			AdminSelectVo.setImage(filename);
-			
-		}else if(AdminSelectVo.getImage_boolean().equals("false")) {
-			
-			//이미지 없을시 해당 OX 퀴즈일시 해당 이미지 넣기 (front 단에서 오류를 대비)
-			if(AdminSelectVo.getContent().equals("O") ||AdminSelectVo.getContent().equals("X")) {
-				
-				String Content = AdminSelectVo.getContent();
-				
-				AdminSelectVo.setImage(Content);
-				
-				
-			}
-			
-		}
-		
 		adminSelectService.setSelectData(AdminSelectVo , "insert");
 		
 	}
@@ -112,19 +87,6 @@ public class AdminSelectController {
 	
 	@RequestMapping(value="/admin/select/update.do" , method = RequestMethod.POST)
 	public void AdminSelectUpdate(@ModelAttribute("AdminSelectVo")AdminSelectVo AdminSelectVo , MultipartHttpServletRequest request , HttpServletResponse response) {
-		
-		String file_change_type = request.getParameter("file_change_type");
-		
-		if(file_change_type.equals("true")) {
-		////이미지 파일 등록
-		String drv = request.getRealPath("");
-		drv = drv.substring(0 , drv.length()) + "./resources/" + ((HttpServletRequest) request).getContextPath() + "/upload/select/image/";
-			
-		String filename = SUtil.setFileUpload(request, drv);
-			
-		AdminSelectVo.setImage(filename);
-			
-		}
 		
 		adminSelectService.setSelectData(AdminSelectVo , "update");
 		

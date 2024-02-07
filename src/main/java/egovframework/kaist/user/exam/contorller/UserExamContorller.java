@@ -77,7 +77,6 @@ public class UserExamContorller {
 		//결과 저장
 		userExamService.setExamResultData(UserExamResultVo);
 		
-		
 		return  "redirect:/index.do";
 		
 	}

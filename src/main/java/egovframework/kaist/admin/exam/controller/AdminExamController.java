@@ -31,7 +31,7 @@ public class AdminExamController {
 	@RequestMapping(value="/admin/exam/list.do" , method = RequestMethod.GET)
 	public ModelAndView AdminExamListGet(@ModelAttribute("AdminExamVo")AdminExamVo AdminExamVo , HttpServletRequest request , HttpServletResponse response) {
 		
-		System.out.println("PAGE!!dsadsa : " + AdminExamVo.getPAGE());
+		System.out.println("PAGE : " + AdminExamVo.getPAGE());
 		System.out.println("ITEM_COUNT : " + AdminExamVo.getITEM_COUNT());
 		
 		String PAGE = request.getParameter("PAGE") != null ? request
@@ -53,8 +53,6 @@ public class AdminExamController {
 		
 		model.put("before", AdminExamVo);
 		
-		System.out.println("???D?");
-		
 		return new ModelAndView("admin/exam/list" , "model" , model);
 		
 	}
@@ -64,7 +62,7 @@ public class AdminExamController {
 		
 		ModelMap model = new ModelMap();
 		
-		model = adminExamService.getExamCategoryAllList();
+		//model = adminExamService.getExamCategoryAllList();
 		
 		return new ModelAndView("admin/exam/insert" , "model" , model);
 		
@@ -72,14 +70,6 @@ public class AdminExamController {
 	
 	@RequestMapping(value="/admin/exam/insert.do", method = RequestMethod.POST )
 	public void AdminExamInsertPost(@ModelAttribute("AdminExamVo")AdminExamVo AdminExamVo , MultipartHttpServletRequest request , HttpServletResponse response) throws IOException {
-		
-		//파일 등록
-		String drv = request.getRealPath("");
-		drv = drv.substring(0 , drv.length()) + "./resources/" + ((HttpServletRequest) request).getContextPath() + "/upload/exam/image/";
-				
-		String filename = SUtil.setFileUpload(request, drv);
-		
-		AdminExamVo.setImage(filename);
 		
 		adminExamService.setAdminExamData(AdminExamVo , "insert");
 		
@@ -100,16 +90,6 @@ public class AdminExamController {
 	
 	@RequestMapping(value="/admin/exam/update.do", method = RequestMethod.POST)
 	public void AdminExamUpdatePost(@ModelAttribute("AdminExamVo")AdminExamVo AdminExamVo ,  MultipartHttpServletRequest  request , HttpServletResponse response) throws IOException {
-		
-		if(AdminExamVo.getImage_change_bool().equals("true")) {
-			//파일 등록
-			String drv = request.getRealPath("");
-			drv = drv.substring(0 , drv.length()) + "./resources/" + ((HttpServletRequest) request).getContextPath() + "/upload/exam/image/";
-					
-			String filename = SUtil.setFileUpload(request, drv);
-			
-			AdminExamVo.setImage(filename);
-		}
 		
 		adminExamService.setAdminExamData(AdminExamVo , "update");
 		

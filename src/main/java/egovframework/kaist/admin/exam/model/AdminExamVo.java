@@ -8,7 +8,7 @@ public class AdminExamVo extends SearchVo{
 	String name = "";
 	String l_category = "";
 	String m_category = "";
-	String type = "";
+	String onoff = "";
 	String content = "";
 	String greet = "";
 	String image = "";
@@ -46,11 +46,11 @@ public class AdminExamVo extends SearchVo{
 	public void setM_category(String m_category) {
 		this.m_category = m_category;
 	}
-	public String getType() {
-		return type;
+	public String getOnoff() {
+		return onoff;
 	}
-	public void setType(String type) {
-		this.type = type;
+	public void setOnoff(String onoff) {
+		this.onoff = onoff;
 	}
 	public String getGreet() {
 		return greet;

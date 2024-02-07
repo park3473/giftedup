@@ -35,7 +35,7 @@ public class AdminQuestionServiceImpl implements AdminQuestionService {
 		System.out.println("size : " + list.size());
 		int itemtotalcount = adminQuestionMapper.getAllListCnt(adminQuestionVo);
 		int itemcount  = adminQuestionVo.getITEM_COUNT();
-		int itempage = adminQuestionVo.getITEM_PAGE();
+		int itempage = adminQuestionVo.getPAGE();
 		
 		PageVO pageVo = new PageVO(itemcount, itemtotalcount, itempage);
 		
@@ -48,7 +48,7 @@ public class AdminQuestionServiceImpl implements AdminQuestionService {
 		System.out.println(pageVo.getItempage());
 		
 		modelMap.put("page", pageVo.getItempage());
-		modelMap.put("itemcount", pageVo.getItemCount());
+		modelMap.put("itemCount", pageVo.getItemCount());
 		modelMap.put("itempagestart", pageVo.getItempagestart());
 		modelMap.put("itempageend", pageVo.getItempageend());
 		modelMap.put("itemtotalcount", pageVo.getItemtotalcount());

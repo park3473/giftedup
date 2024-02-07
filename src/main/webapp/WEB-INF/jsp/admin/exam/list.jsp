@@ -3,6 +3,7 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -37,7 +38,7 @@
                         <div class="sc_con">
                             <div class="title">
                                 <span></span>
-                                <span>자가진단 관리</span>
+                                <span>설문 폼 관리</span>
                             </div>
                             <div class="table_wrap">
                                 <table id="bootstrap-data-table">
@@ -45,9 +46,6 @@
                                         <th class="number">번호</th>
                                         <th class="name">제목</th>
                                         <th class="category">유형</th>
-                                        <th class="l_category">대분류</th>
-                                        <th class="m_category">소분류</th>
-                                        <th class="type">사용여부</th>
                                         <th class="create_tm">생성일시</th>
                                         <th class="update_tm">수정일시</th>
                                         <th class="setting">비고</th>
@@ -57,18 +55,7 @@
                                         <td>${model.itemtotalcount - (status.index + model.page *  model.itemcount)}</td>
                                         <td>${item.name }</td>
                                         <td>
-                                        	<c:choose>
-                                        		<c:when test="${item.category == '0' }">설문</c:when>
-                                        		<c:when test="${item.category == '1' }">진단</c:when>
-                                        	</c:choose>
-                                        </td>
-                                        <td>${item.l_category }</td>
-                                        <td>${item.m_category }</td>
-                                        <td>
-                                        	<c:choose>
-                                        		<c:when test="${item.type == '1' }">ON</c:when>
-                                        		<c:when test="${item.type == '0' }">OFF</c:when>
-                                        	</c:choose>
+                                        	설문
                                         </td>
                                         <td>
                                             ${fn:substring(item.create_tm,0,11)}
@@ -102,20 +89,16 @@
                                 <div class="adm_btn_wrap stats_btn_area">
                                     <ul>
                                     <li class="delete">
-                                        <a href="./insert.do">자가진단 등록</a>
+                                        <a href="./insert.do">설문 폼 등록</a>
                                     </li>
                                 </ul>
                                 </div>
                             </div>
 
                             <!--관리자 버튼 end-->
-
-
-                            <!--페이지 넘버-->
+							<!--페이지 넘버-->
                             <nav class="paging_number">
-                                <ul class="page">
-                                   <%@ include file="../include/pageing.jsp" %>
-                                </ul>
+                                <%@ include file="../include/pageing.jsp" %>
                             </nav>
                             <!--페이지 넘버 end-->
                         </div>
@@ -134,7 +117,15 @@
     <!--푸터 end-->
 
 </body>
-<script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function () {
+    $(".adm_menu_con > li").eq(6).find(".sub_menu_con").show();
+    $(".adm_menu_con > li").eq(6).css({
+        backgroundColor: "#fff"
+    });
+});
 
 function searchBtnClick(){
 	
@@ -148,14 +139,6 @@ function searchBtnClick(){
 	location.href = URL;
 	
 }
-
-$(document).ready(function () {
-	
-	$(".adm_menu_con > li").eq(3).find(".sub_menu_con").show();
-	$(".adm_menu_con > li").eq(3).css({
-	    backgroundColor: "#fff"
-	});
-});
 
 </script>
 

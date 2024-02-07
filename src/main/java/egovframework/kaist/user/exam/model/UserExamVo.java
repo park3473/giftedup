@@ -11,7 +11,7 @@ public class UserExamVo extends SearchVo {
 	String point = "";
 	String start_tm = "";
 	String end_tm = "";
-	String type = "";
+	String onoff = "";
 	String content = "";
 	String image = "";
 	String greet = "";
@@ -44,11 +44,11 @@ public class UserExamVo extends SearchVo {
 	public void setM_category(String m_category) {
 		this.m_category = m_category;
 	}
-	public String getType() {
-		return type;
+	public String getOnoff() {
+		return onoff;
 	}
-	public void setType(String type) {
-		this.type = type;
+	public void setOnoff(String onoff) {
+		this.onoff = onoff;
 	}
 	public String getGreet() {
 		return greet;

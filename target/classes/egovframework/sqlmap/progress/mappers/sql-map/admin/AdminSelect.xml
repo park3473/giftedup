@@ -21,8 +21,8 @@
 	</select>
 	
 	<insert id="setSelectInsert" parameterType="egovframework.kaist.admin.select.model.AdminSelectVo">
-		INSERT INTO TBL_SELECT (SEQ , QUESTION_IDX , CONTENT , IMAGE , CREATE_TM , UPDATE_TM)
-		VALUES (#{seq} , #{question_idx} , #{content} , #{image} , now() , now())
+		INSERT INTO TBL_SELECT (SEQ , QUESTION_IDX , CONTENT , CREATE_TM , UPDATE_TM)
+		VALUES (#{seq} , #{question_idx} , #{content} , now() , now())
 	</insert>
 	
 	<update id="setSelectUpdate" parameterType="egovframework.kaist.admin.select.model.AdminSelectVo">
@@ -32,9 +32,6 @@
 		</if>
 		<if test="content">
 			CONTENT = #{content},
-		</if>
-		<if test="image">
-			IMAGE = #{image},
 		</if>
 		UPDATE_TM = now()
 		WHERE IDX = #{idx}

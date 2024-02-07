@@ -13,8 +13,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <!-- ckeditor필요한 부분 -->
-<script src="${pageContext.request.contextPath}/resources/ckeditor/ckeditor.js"></script>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/ckeditor/ckeditor.css">
+<script src="${pageContext.request.contextPath}/resources/ckeditor2/ckeditor.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/ckeditor2/ckeditor.css">
 <script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
 <style>
 	/*admin css 와 ckeditor css 충돌나서 바꿔버림*/
@@ -46,72 +46,27 @@
                 	<div>
                     <form action="./insert.do" method="post" name="insertForm" id="insertForm" enctype="multipart/form-data">
                         <input type="hidden"  name="csrf" value="${CSRF_TOKEN}" />
-                        <input type="hidden" name="level" value="1"  />
-                        <input type="hidden" name="type" value="0"  />
+                        <input type="hidden" name="onoff" value="1"  />
+                        <input type="hidden" name="category" value="0"  />
                         <div class="sc_con" id="div_con">
                             <div class="title">
                                 <span></span>
-                                <span>자가진단 등록</span>
+                                <span>설문 폼 등록</span>
                             </div>
                             <div class="member_register_wrap">
                                 <div class="member_input_wrap">
                                     <ul class="member_input">
                                         <li>
-                                            <span class="list_t">자가진단 명</span>
-                                            <input class="input_size mr" type="text" id="name" name="name">
-                                        </li>
-                                        <li>
-                                        	<div id="changeImg" style="width:227px;heigth:295px; display:none;">
-											<img style="width:100%;height:100%;object-fit:cover" id="preview_img" src="" alt="no"/>
-											</div>
-                                           	<span class="list_t">대표 이미지 선택</span>
-                                            <input type="file" id="file1" name="file1" onchange="changeValue(this)">
-											<input type="hidden" id="image" name="image">
-                                        </li>
-                                        <li>
-                                        	<span class="list_t">유형</span>
-                                        	<select name="category">
-                                        		<option value="0">설문</option>]
-                                        		<option value="1">진단</option>]
-                                        	</select>
-                                        </li>
-                                        <li>
-                                        	<span class="list_t">대분류</span>
-                                        	<input class="input_title" type="text" name="l_category" id="l_category" list="l_category_list" >
-                                        	<c:if test="${model.LCategoryList.size() > 0 }">
-                                        	<c:forEach items="${model.LCategoryList }" varStatus="status" var="item">
-                                        	<datalist id="l_category_list">
-                                        		<option>${item.L_CATEGORY }</option>
-                                        	</datalist>
-                                        	</c:forEach>
-                                        	</c:if>
-                                        </li>
-                                        <li>
-                                        	<span class="list_t">중분류</span>
-                                        	<input class="input_title" type="text" name="m_category" id="m_category" list="m_category_list" >
-                                        	<c:if test="${model.MCategoryList.size() > 0 }">
-                                        	<c:forEach items="${model.MCategoryList }" varStatus="status" var="item">
-                                        	<datalist id="m_category_list">
-                                        		<option>${item.M_CATEGORY }</option>
-                                        	</datalist>
-                                        	</c:forEach>
-                                        	</c:if>
-                                        </li>
-                                        <li>
-                                        	<span class="list_t">포인트</span>
-                                        	<input class="input_size mr" type="text" name="point" id="point"/>
+                                            <span class="list_t">설문 명</span>
+                                            <input class="input_title" type="text" id="name" name="name">
                                         </li>
                                         <li>
                                         	<span class="list_t">설명</span>
-                                        	<input class="input_size mr" type="text" name="coment" id="coment"/>
+                                        	<input class="input_title" type="text" name="coment" id="coment"/>
                                         </li>
                                         <li>
                                         	<span class="list_t">개요</span>
                                         	<textarea name="content" id="editor"></textarea>
-                                        </li>
-                                        <li>
-                                        	<span class="list_t">인사말</span>
-                                        	<textarea name="greet" id="editor2"></textarea>
                                         </li>
                                     </ul>
                                 </div>
@@ -151,7 +106,7 @@
 </body>
 </html>
 <script type="module" >
-	import editor from '/resources/ckeditor/editor.js'
+	import editor from '/resources/ckeditor2/editor.js'
     $(document).ready(function () {
         editor("#editor").then(editor => {
         	// some code..
@@ -167,8 +122,8 @@
 
 $(document).ready(function () {
 	
-	$(".adm_menu_con > li").eq(3).find(".sub_menu_con").show();
-	$(".adm_menu_con > li").eq(3).css({
+	$(".adm_menu_con > li").eq(6).find(".sub_menu_con").show();
+	$(".adm_menu_con > li").eq(6).css({
 	    backgroundColor: "#fff"
 	});
 });
@@ -184,60 +139,4 @@ function insertClick()
 
 	$('#insertForm').submit();
 }
-
-
-//파일 이름 변경 함수
-function changeValue(obj){
-  var fileObj = obj.value;
-  var pathHeader , pathMiddle, pathEnd, allFilename, fileName, extName;
-  pathHeader = fileObj.lastIndexOf("\\");
-  pathMiddle = fileObj.lastIndexOf(".");
-  pathEnd = fileObj.length;
-  fileName = fileObj.substring(pathHeader+1, pathMiddle);
-  extName = fileObj.substring(pathMiddle+1, pathEnd);
-  allFilename = fileName+"."+extName;
-
-  $('#image').val(allFilename);
-  
-  $('#image_change_bool').val('ture');
-}
-
-//프로필 사진 미리보기
-function preview_img(input){
-	const reader = new FileReader();
-	reader.onload = e => {
-		const previewImage = document.getElementById('preview_img');
-		previewImage.src = e.target.result
-	}
-	
-	reader.readAsDataURL(input.files[0]);
-	
-	$('#changeImg').show();
-	
-}
-
-//프로필 사진 등록 함수 이벤트 설정
-const inputImage = document.getElementById('file1')
-inputImage.addEventListener('change' , e => {
-	preview_img(e.target);
-})
-
-$(document).ready(function(){
-$('#location_list').change(function(){
-  var selectedValue = $(this).val();
-  console.log(selectedValue); // This will log the value of the selected option
-  var html = `<span class="location_list_div">`+selectedValue+`</span>`;
-  $('#location_div').append(html);
-  
-  var location = $('[name=location]').val();
-  
-  selectedValue = '%23' + selectedValue;
-  
-  location += selectedValue;
-  
-  $('[name=location]').val(location);
-  
-});
-});
-
 </script>
