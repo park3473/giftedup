@@ -22,6 +22,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.system.util.SUtil;
 
 import egovframework.kaist.admin.exam.model.AdminExamRespondentsVo;
+import egovframework.kaist.admin.exam.model.AdminExamResultVo;
 import egovframework.kaist.admin.exam.model.AdminExamVo;
 import egovframework.kaist.admin.exam.service.AdminExamService;
 import egovframework.kaist.admin.question.model.AdminQuestionListVo;
@@ -245,6 +246,36 @@ public class AdminExamController {
 		String resultData = Integer.toString(result);
 		
 		return resultData;
+		
+	}
+	
+	@RequestMapping(value="/admin/exam/result/list.do" , method = RequestMethod.GET)
+	public ModelAndView AdminExamResultGet(@ModelAttribute("AdminExamResultVo")AdminExamResultVo AdminExamResultVo , HttpServletRequest request , HttpServletResponse response) {
+		
+		System.out.println("PAGE : " + AdminExamResultVo.getPAGE());
+		System.out.println("ITEM_COUNT : " + AdminExamResultVo.getITEM_COUNT());
+		
+		String PAGE = request.getParameter("PAGE") != null ? request
+				.getParameter("PAGE") : "0";
+		String ITEM_COUNT = request.getParameter("ITEM_COUNT") != null ? request
+				.getParameter("ITEM_COUNT") : "10";
+		
+		AdminExamResultVo.setPAGE(Integer.parseInt(PAGE));
+		AdminExamResultVo.setITEM_COUNT(Integer.parseInt(ITEM_COUNT));
+		
+		int pagelimit = AdminExamResultVo.getPAGE() * AdminExamResultVo.getITEM_COUNT();
+		
+		AdminExamResultVo.setLIMIT(Integer.parseInt(ITEM_COUNT));
+		AdminExamResultVo.setOFFSET(pagelimit);
+		
+		ModelMap model = new ModelMap();
+		
+		model = adminExamService.getAllResultList(AdminExamResultVo);
+		
+		model.put("before", model);
+		
+		return new ModelAndView("admin/submission/list" , "model" , model);
+		
 		
 	}
 	

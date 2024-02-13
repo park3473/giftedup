@@ -1,7 +1,9 @@
-package egovframework.kaist.user.exam.model;
+package egovframework.kaist.admin.exam.model;
 
-public class UserExamResultVo {
+import egovframework.kaist.admin.SearchVo;
 
+public class AdminExamResultVo extends SearchVo{
+	
 	String idx = "";
 	String exam_idx = "";
 	String member_id = "";
@@ -11,9 +13,6 @@ public class UserExamResultVo {
 	String complete_tm = "";
 	String create_tm = "";
 	String update_tm = "";
-	String category = "";
-	
-	int point = 0;
 	
 	public String getIdx() {
 		return idx;
@@ -69,18 +68,7 @@ public class UserExamResultVo {
 	public void setUpdate_tm(String update_tm) {
 		this.update_tm = update_tm;
 	}
-	public int getPoint() {
-		return point;
-	}
-	public void setPoint(int point) {
-		this.point = point;
-	}
-	public String getCategory() {
-		return category;
-	}
-	public void setCategory(String category) {
-		this.category = category;
-	}
+
 	
 	
 	

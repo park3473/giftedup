@@ -13,6 +13,7 @@ import org.springframework.ui.ModelMap;
 import com.system.util.PageVO;
 
 import egovframework.kaist.admin.exam.model.AdminExamRespondentsVo;
+import egovframework.kaist.admin.exam.model.AdminExamResultVo;
 import egovframework.kaist.admin.exam.model.AdminExamVo;
 import egovframework.kaist.admin.exam.service.AdminExamService;
 import egovframework.kaist.admin.member.service.impl.AdminMemberMapper;
@@ -253,6 +254,43 @@ public class AdminExamServiceImpl implements AdminExamService {
 		int result = adminExamMapper.getExamRespondentsAjaxListCnt(adminExamRespondentsVo);
 		
 		return result;
+	}
+
+	@Override
+	public ModelMap getAllResultList(AdminExamResultVo adminExamResultVo) {
+
+ModelMap modelMap = new ModelMap();
+		
+		List<?> list = adminExamMapper.getExamAllResultList(adminExamResultVo);
+		
+		System.out.println("size : " + list.size());
+		
+		int itemtotalcount = adminExamMapper.getAllResultListCnt(adminExamResultVo);
+		int itemCount  = adminExamResultVo.getITEM_COUNT();
+		int itempage = adminExamResultVo.getPAGE();
+		
+		PageVO pageVo = new PageVO(itemCount, itemtotalcount, itempage);
+		
+		if(pageVo.isItempagenext() == true){
+			modelMap.put("itempagenext", "true");
+		}else {
+			modelMap.put("itempagenext", "false");
+		}
+		
+		System.out.println(pageVo.getItempage());
+		
+		modelMap.put("page", pageVo.getItempage());
+		System.out.println("itemCount" + pageVo.getItemCount());
+		modelMap.put("itemCount", pageVo.getItemCount());
+		modelMap.put("itempagestart", pageVo.getItempagestart());
+		modelMap.put("itempageend", pageVo.getItempageend());
+		modelMap.put("itemtotalcount", pageVo.getItemtotalcount());
+		modelMap.put("itemtotalpage", pageVo.getItemtotalpage());
+		
+		modelMap.put("list", list);
+		
+		return modelMap;
+		
 	}
 	
 }

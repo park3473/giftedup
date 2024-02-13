@@ -3,6 +3,7 @@ package egovframework.kaist.admin.exam.service;
 import org.springframework.ui.ModelMap;
 
 import egovframework.kaist.admin.exam.model.AdminExamRespondentsVo;
+import egovframework.kaist.admin.exam.model.AdminExamResultVo;
 import egovframework.kaist.admin.exam.model.AdminExamVo;
 import egovframework.kaist.admin.question.model.AdminQuestionListVo;
 
@@ -31,6 +32,8 @@ public interface AdminExamService {
 	public void setExamRespondents(AdminExamRespondentsVo adminExamRespondentsVo, String type);
 
 	public int getExamRespondentsAjaxListCnt(AdminExamRespondentsVo adminExamRespondentsVo);
+
+	public ModelMap getAllResultList(AdminExamResultVo adminExamResultVo);
 
 
 }
