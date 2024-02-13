@@ -126,6 +126,7 @@ String NowYear = String.valueOf(year);
                                         <div class="title notosans">
                                             <span></span>
                                             <span>게시판 관리</span>
+                                        </div>
                                         <li <c:if test="${fn:indexOf(requestURI, 'admin/notices_data/1/') > -1}">class="nav_active"</c:if>>
                                         	<a href="${pageContext.request.contextPath}/admin/notices_data/1/list.do">· 전체 공지사항</a>
                                         	<ul class="sub_menu_ob">

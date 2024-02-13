@@ -48,7 +48,7 @@
                                     <div class="member_input_wrap">
                                         <ul class="member_input">
 											<li class="group_list_area" id="group_list_area">
-												<div class="teacher_list" style="width:750px !important;">
+												<div class="teacher_list" style="width:700px !important;">
 													<h2>등록 가능 응답자 목록</h2>
 													<div id="search_box" style="padding: 10px; display: flex; align-items: center;">
 												    <div class="year_select" style="margin-right: 20px;">
@@ -109,7 +109,7 @@
 														</table>
 													</div>
 												</div>
-												<div class="group_list" style="width:750px !important;">
+												<div class="group_list" style="width:700px !important;">
 													<h2>등록한 응답자 목록</h2>
 													<div>
 														<table id="respondents_table">

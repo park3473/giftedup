@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
+<%@ page import="java.net.URLDecoder" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html lang="ko">
@@ -62,33 +63,45 @@
                                     </div>
                                     
                                     <input type="hidden" name="csrf" value="${CSRF_TOKEN}" />
-                                    <input type="hidden" name="award_idx" value="${model.view.idx }">
+                                    <input type="hidden" name="submission_idx" value="${model.view.idx }">
+                                    <input type="hidden" name="award_idx" value="${model.view.award_idx }">
                                     <input type="hidden" name="member_id" value="${ssion_user_id }">
                                     <input type="hidden" name="name" value="${ssion_name }">
                                    	<div id="respondents" class="member_input_wrap">
                                         <!-- 학생 view페이지 -->
                                         <ul class="member_input nanumgothic">
-                                        	<c:forEach var="item" items="${model.require}" varStatus="status">
+                                        	<c:forEach var="item" items="${model.detailList}" varStatus="status">
                                         		<li class="pd-lr-10 submission_detail">
-                                        			<input type="hidden" name="require_idx" value="${item.idx }">
+                                        			<input type="hidden" name="idx" value="${item.idx }">
                                         			<span class="list_t">${item.require_name}</span>
-                                        			<input class="input_title" type="text" name="respond" placeholder="${item.require_content }">
+                                        			<input class="input_title" type="text" name="respond" placeholder="${item.require_content }" value="${item.respond }">
                                         		</li>
                                         	</c:forEach>
-                                        	<c:forEach var="fileCnt" begin="1" end="${model.award.file_cnt }">
+                                        	<c:forEach var="fileCnt" begin="1" end="${model.award.file_cnt - model.fileListSize }">
                                         	<li class="pd-lr-10">
-                                        	<form action="" method="post" name="insertform" id="insertform_${fileCnt }" enctype="multipart/form-data" class="file_list"> 
+                                        	<form action="" method="post" name="insertform" id="insertform_${fileCnt }" enctype="multipart/form-data" class="file_list" data-type="insert"> 
                                         		<input type="hidden" name="">
-                                        		<span class="list_t">파일 등록_${fileCnt }</span>
+                                        		<span class="list_t">파일 등록</span>
                                                 <input class="input_size" type="text" name="fileName" id="fileName_${fileCnt}" style="display:none;">
                                                 <input type="file" id="file1" name="file1" onchange="changeValue(this , ${fileCnt})" />
                                                 <input type="hidden" name="file" value="" id="file_${fileCnt}">
                                         	</form>
                                         	</li>
                                         	</c:forEach>
+                                        	<c:forEach var="item" items="${model.fileList}" varStatus="status">
+											    <li class="pd-lr-10">
+											        <form action="" method="post" name="insertform" id="insertform_${status.index}" enctype="multipart/form-data" class="file_list" data-type="update"> 
+											            <input type="hidden" name="idx" value="${item.idx }">
+											            <span class="list_t">파일 등록</span>
+											            <input class="input_size file_update_list" type="text" name="fileName" id="fileName_${model.award.file_cnt - model.fileListSize + status.index + 1}" readonly="readonly" data-file-path="${item.file}" value="">
+											            <a href="/fileDown.do?path=/resources/upload/submission/${item.file}">파일다운로드</a>
+											            <button type="button" onclick="delete_file(this , ${model.award.file_cnt - model.fileListSize + status.index + 1})">파일 삭제</button>
+											        </form>
+											    </li>
+											</c:forEach>
                                         	<li class="pd-lr-10">
                                         		<span class="list_t">추가입력</span>
-                                        		<textarea name="content" id="editor"></textarea>
+                                        		<textarea name="content" id="editor">${model.view.content }</textarea>
                                         	</li>
                                         	           
                                         </ul>
@@ -186,33 +199,33 @@ function submission(){
 	var member_id = $('[name="member_id"]').val();
 	var name = $('[name="name"]').val();
 	var award_idx = $('[name="award_idx"]').val();
+	var submission_idx =  $('[name="submission_idx"]').val();
 	$.ajax({
-		url : '/user/submission/insert.do',
+		url : '/user/submission/update.do',
 		type : 'POST',
 		data : ({
+			idx : submission_idx,
 			award_idx : award_idx,
 			member_id : member_id,
 			name : name,
 			content : content
 		}),
-			dataType : 'json',
-			success: function(data , status , success) {
-				console.log('success : ' + data);
+			success: function(status , success) {
+				console.log('success');
 				
 				var cnt = $(".submission_detail").length;
 				if(cnt > 0){
 					
 					$(".submission_detail").each(function(index) {
-						var submission_idx = data;
-						var require_idx = $(this).find('input[name="require_idx"]').val();
+						var submission_idx =  $('[name="submission_idx"]').val();
+						var idx = $(this).find('input[name="idx"]').val();
 					    var respond = $(this).find('input[name="respond"]').val();
 					    
 						$.ajax({
-	                    	url : '/user/submission/detail/insert.do',
+	                    	url : '/user/submission/detail/update.do',
 	                		type : 'POST',
 	                		data : ({
-	                			submission_idx : submission_idx,
-	                			require_idx : require_idx,
+	                			idx : idx,
 	                			respond : respond
 	                		}),
 	                		success: function(status , success) {
@@ -235,38 +248,76 @@ function submission(){
 				var filecnt = $(".file_list").length;
 				if(filecnt > 0){
 					$(".file_list").each(function(index) {
-					    var fileName = $(this).find('input[name="file1"]').val();
-					    
-					    if(fileName != ''){
-						    
-						    var formData = new FormData($(this)[0]);
+						
+						var type = $(this).data('type');
+						
+						switch (type) {
+						case 'insert':
 
-						    var submission_idx = data;
-						    var member_id = $('[name="member_id"]').val();
-						    formData.append("submission_idx", submission_idx);
-						    formData.append("member_id", member_id);
-						    
-						    $.ajax({
-						    	type: "POST",
-						    	enctype: 'multipart/form-data',	// 필수
-						    	url: '/user/submission/file/insert.do',
-						    	data: formData,		// 필수
-						    	processData: false,	// 필수
-						    	contentType: false,	// 필수
-						    	cache: false,
-						    	success: function (stauts) {
-						    	},
-						    	error: function (e) {
-						    	}
-						    });
-					    	
-					    }
+							var fileName = $(this).find('input[name="file1"]').val();
+							
+						    if(fileName != ''){
+							    
+							    var formData = new FormData($(this)[0]);
+
+							    var submission_idx =  $('[name="submission_idx"]').val();
+							    var member_id = $('[name="member_id"]').val();
+							    formData.append("submission_idx", submission_idx);
+							    formData.append("member_id", member_id);
+							    
+							    $.ajax({
+							    	type: "POST",
+							    	enctype: 'multipart/form-data',	// 필수
+							    	url: '/user/submission/file/insert.do',
+							    	data: formData,		// 필수
+							    	processData: false,	// 필수
+							    	contentType: false,	// 필수
+							    	cache: false,
+							    	success: function (stauts) {
+							    	},
+							    	error: function (e) {
+							    	}
+							    });
+						    	
+						    }
+							
+							break;
+						case 'delete':
+							
+						    var idx = $(this).find('input[name="idx"]').val();
+
+						    var submission_idx =  $('[name="submission_idx"]').val();
+							    var member_id = $('[name="member_id"]').val();
+							    
+							    $.ajax({
+			                    	url : '/user/submission/file/delete.do',
+			                		type : 'POST',
+			                		data : ({
+			                			idx : idx,
+			                			member_id : member_id,
+			                			submission_idx : submission_idx
+			                		}),
+			                		success: function(status , success) {
+			                			
+			                			console.log('success_file : ' + index);
+			                			
+			                		},
+			                		error : function (xhr , status , error){
+			                			
+			                			console.log('error_file : ' + index);
+			                			
+			                		}
+			                    })
+							
+							break;
+						}
+					    
 					    
 					})
 				}
 				
 				alert('제출 완료 되었습니다.');
-				location.href='/index.do';
+				location.reload();
 			
 			},
 	        error: function(xhr, status, error) {
@@ -276,6 +327,37 @@ function submission(){
 		});
 		
 	}
+	
+function delete_file(button , fileCnt) {
+    var li = $(button).closest('li');
+    
+    // 새로운 li 요소의 HTML 구조
+    var newLiHtml = `
+        <li class="pd-lr-10">
+            <form action="" method="post" name="insertform" id="insertform_${fileCnt}" enctype="multipart/form-data" class="file_list" data-type="insert"> 
+                <input type="hidden" name="">
+                <span class="list_t">파일 등록_`+fileCnt+`</span>
+                <input class="input_size" type="text" name="fileName" id="fileName_`+fileCnt+`" style="display:none;">
+                <input type="file" id="file1" name="file1" onchange="changeValue(this, `+fileCnt+`)" />
+                <input type="hidden" name="file" value="" id="file_`+fileCnt+`">
+            </form>
+        </li>`;
+    li.hide();
+    li.after(newLiHtml);
+    li.find('form').attr('data-type', 'delete');
+}
+	
+document.addEventListener('DOMContentLoaded', function () {
+    // 모든 입력 필드를 찾아 처리
+    document.querySelectorAll('.file_update_list').forEach(function(input) {
+        // data-file-path 속성에서 URL 인코딩된 파일 경로를 가져옵니다.
+        var encodedFilePath = input.getAttribute('data-file-path');
+        // 파일 경로의 인코딩된 부분을 디코딩합니다.
+        var decodedFileName = decodeURIComponent(encodedFilePath.substring(13));
+        // 디코딩된 파일명을 입력 필드의 값으로 설정합니다.
+        input.value = decodedFileName;
+    });
+});
 
 </script>
 

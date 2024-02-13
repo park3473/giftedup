@@ -84,7 +84,7 @@
                                         </td>
                                         <td>${fn:substring(item.create_tm , 0 , 11)}</td>
                                         <td>
-                                        	<button type="button" onclick="location.href='/user/submission/update.do?idx=${item.idx}&award_idx=${item.award_idx }'">상세보기</button>
+                                        	<button type="button" onclick="location.href='/user/submission/update.do?idx=${item.idx}&award_idx=${item.award_idx }&member_id=${item.member_id}'">상세보기</button>
                                         </td>
                                     </tr>
                                     </c:forEach>

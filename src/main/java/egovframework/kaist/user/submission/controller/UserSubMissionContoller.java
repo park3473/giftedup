@@ -122,6 +122,13 @@ public class UserSubMissionContoller {
 		
 	}
 	
+	@RequestMapping(value="/user/submission/file/delete.do" , method = RequestMethod.POST)
+	public void UserSubMissionFileDelete(@ModelAttribute("UserSubMissionFileVo")UserSubMissionFileVo UserSubMissionFileVo ,HttpServletRequest request , HttpServletResponse response) {
+		
+		userSubMissionService.setUserSubMissionFileData(UserSubMissionFileVo , "delete");
+		
+	}
+	
 	@RequestMapping(value="/user/submission/detail/insert.do" , method = RequestMethod.POST)
 	public void UserSubMissionDetailInsert(@ModelAttribute("UserSubMissionDetailVo")UserSubMissionDetailVo UserSubMissionDetailVo , HttpServletRequest request , HttpServletResponse response) {
 		

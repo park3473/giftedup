@@ -73,7 +73,7 @@
                                         <td>
                                         	<button type="button" onclick="location.href='/admin/exam/question_list.do?exam_idx=${item.idx}&category=${item.category }'">리스트 확인</button>
                                         	<button type="button" onclick="location.href='/admin/exam/update.do?idx=${item.idx}'">관리</button>
-                                        	<button type="button" onclick="location.href='/admin/exam/respondents/list.do?exam_idx=${item.idx}'">응답자 확인</button>
+                                        	<button type="button" onclick="location.href='/admin/exam/respondents/list.do?exam_idx=${item.idx}'">응답자 관리</button>
                                         	<button type="button"  onclick="location.href='/admin/exam/status.do?idx=${item.idx}&category=${item.category }'">통계</button>
                                         </td>
                                     </tr>

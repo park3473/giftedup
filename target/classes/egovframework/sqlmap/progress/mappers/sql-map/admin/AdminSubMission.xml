@@ -58,7 +58,7 @@
 	</delete>
 	
 	<select id="getSubMissionDetailList" parameterType="egovframework.kaist.admin.submission.model.AdminSubMissionVo" resultType="hashMap">
-		SELECT detail.* , requires.require_name , requires.require_idx FROM TBL_SUBMISSION_DETAIL detail JOIN TBL_AWARD_REQUIRE requires ON detail.require_idx = requires.idx
+		SELECT detail.* , requires.require_name , requires.require_content FROM TBL_SUBMISSION_DETAIL detail JOIN TBL_AWARD_REQUIRE requires ON detail.require_idx = requires.idx
 		WHERE detail.SUBMISSION_IDX = #{idx}
 		ORDER BY detail.CREATE_TM
 	</select>
