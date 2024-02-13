@@ -120,5 +120,13 @@ public class AdminQuestionServiceImpl implements AdminQuestionService {
 		
 		return Question_idx;
 	}
+
+	@Override
+	public List<?> getQuestionAllList(AdminQuestionVo adminQuestionVo) {
+		
+		List<?> list = adminQuestionMapper.getQuestionAllList(adminQuestionVo);
+		
+		return list;
+	}
 	
 }

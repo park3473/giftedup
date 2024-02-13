@@ -10,6 +10,8 @@ public interface AdminQuestionService {
 
 	public ModelMap getAllList(AdminQuestionVo adminQuestionVo);
 
+	public List<?> getQuestionAllList(AdminQuestionVo adminQuestionVo);
+	
 	public void setQuestionData(AdminQuestionVo adminQuestionVo, String string);
 
 	public String setQuestionAjaxData(AdminQuestionVo adminQuestionVo);

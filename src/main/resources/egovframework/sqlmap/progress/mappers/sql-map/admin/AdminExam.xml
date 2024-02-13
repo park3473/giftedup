@@ -12,6 +12,7 @@
 	    		 AND ${SEARCH_TYPE} LIKE '%${SEARCH_TEXT}%'
 	    	</if>
 	    </if>
+	   	ORDER BY CREATE_TM DESC
 	    LIMIT ${LIMIT} OFFSET ${OFFSET}
 	</select>
 	
@@ -77,7 +78,7 @@
 	
 	<!-- question_list 부분 -->
 	<select id="getQuestionList" parameterType="egovframework.kaist.admin.question.model.AdminQuestionListVo" resultType="hashMap">
-		SELECT LIST.* , Q.NAME , Q.ONOFF , Q.CONTENT , Q.SELECT_TYPE FROM TBL_QUESTION_LIST LIST JOIN TBL_QUESTION Q ON LIST.QUESTION_IDX = Q.IDX
+		SELECT LIST.* , Q.NAME , Q.TYPE , Q.CONTENT , Q.SELECT_TYPE FROM TBL_QUESTION_LIST LIST JOIN TBL_QUESTION Q ON LIST.QUESTION_IDX = Q.IDX
 		WHERE EXAM_IDX = #{exam_idx}
 		ORDER BY SEQ
 	</select>
@@ -91,6 +92,9 @@
 		UPDATE TBL_QUESTION_LIST SET
 		<if test="question_idx != ''">
 			QUESTION_IDX = #{question_idx},
+		</if>
+		<if test="seq != ''">
+			SEQ = #{seq},
 		</if>
 		UPDATE_TM = now()
 		WHERE IDX = #{idx}
@@ -112,17 +116,56 @@
 	</select>
 	
 	<select id="getExamResultMemberAll" parameterType="egovframework.kaist.admin.exam.model.AdminExamVo" resultType="hashMap">
-	SELECT 
-    er.* , m.address_local , m.age , m.job , m.sex
-	FROM 
-	    TBL_EXAM_RESULT er
-	JOIN 
-	    TBL_EXAM e ON er.exam_idx = e.idx
-	JOIN 
-	    TBL_MEMBER m ON er.member_id = m.member_id
-	WHERE 
-	    e.idx = #{idx}
+		SELECT 
+	    	er.* , m.address_local , m.school_year , m.school_type , m.type , m.sex
+		FROM 
+		    TBL_EXAM_RESULT er
+		JOIN 
+		    TBL_EXAM e ON er.exam_idx = e.idx
+		JOIN 
+		    TBL_MEMBER m ON er.member_id = m.member_id
+		WHERE 
+		    e.idx = #{idx}
 	</select>
+	
+	<update id="setAdminExamQuestionSort" parameterType="egovframework.kaist.admin.exam.model.AdminExamVo">
+		SET @seq = 0;
+		UPDATE TBL_QUESTION_LIST
+		SET seq = @seq := @seq + 1
+		WHERE exam_idx = #{exam_idx}
+		ORDER BY seq
+	</update>
+	
+	<select id="getRespondentsList" parameterType="egovframework.kaist.admin.exam.model.AdminExamRespondentsVo" resultType="hashMap">
+		SELECT * FROM TBL_EXAM_RESPONDENTS
+		WHERE EXAM_IDX = #{exam_idx}
+	</select>
+	
+	<select id="getExamRespondentsAjaxListCnt" parameterType="egovframework.kaist.admin.exam.model.AdminExamRespondentsVo" resultType="int">
+		SELECT COUNT(*) FROM TBL_EXAM_RESPONDENTS
+		WHERE EXAM_IDX = #{exam_idx}
+	</select>
+	
+	<select id="getNoRespondentsList" parameterType="egovframework.kaist.admin.exam.model.AdminExamRespondentsVo" resultType="hashMap">
+		SELECT m.member_id AS member_id , m.name AS name , m.phone AS phone , m.school_name AS school_name , m.type AS type
+		FROM TBL_MEMBER m
+		LEFT JOIN TBL_EXAM_RESPONDENTS e ON m.MEMBER_ID = e.member_id AND e.exam_idx = #{exam_idx}
+		WHERE e.idx IS NULL AND m.phone IS NOT NULL AND m.phone != '' AND m.phone != '0' AND m.phone not like '%-%'
+		<if test="member_id != ''">
+			AND m.member_id like '${member_id}%'
+		</if> 
+		<if test="type != ''">
+			AND m.type = #{type}
+		</if> 
+	</select>
+	
+	<insert id="setExamRespondentsInsert" parameterType="egovframework.kaist.admin.exam.model.AdminExamRespondentsVo">
+		INSERT INTO TBL_EXAM_RESPONDENTS(EXAM_IDX , MEMBER_ID , TYPE , SCHOOL_NAME , NAME , PHONE , RESPONDENTS) VALUES (#{exam_idx} , #{member_id} , #{type} , #{school_name} , #{name} , #{phone} , 'no')
+	</insert>
+	
+	<delete id="setExamRespondentsDelte" parameterType="egovframework.kaist.admin.exam.model.AdminExamRespondentsVo">
+		DELETE FROM TBL_EXAM_RESPONDENTS WHERE IDX = #{idx}
+	</delete>
 
 
 </mapper>

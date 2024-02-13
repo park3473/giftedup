@@ -12,6 +12,7 @@ import org.springframework.ui.ModelMap;
 
 import com.system.util.PageVO;
 
+import egovframework.kaist.admin.exam.model.AdminExamRespondentsVo;
 import egovframework.kaist.admin.exam.model.AdminExamVo;
 import egovframework.kaist.admin.exam.service.AdminExamService;
 import egovframework.kaist.admin.member.service.impl.AdminMemberMapper;
@@ -189,6 +190,69 @@ public class AdminExamServiceImpl implements AdminExamService {
 		model.put("resultList", resultList);
 		
 		return model;
+	}
+
+	@Override
+	public void setAdminExamQuestionSort(AdminQuestionListVo adminQuestionListVo) {
+		
+		adminExamMapper.setAdminExamQuestionSort(adminQuestionListVo);
+		
+	}
+
+	@Override
+	public ModelMap getExamRespondentsList(AdminExamRespondentsVo adminExamRespondentsVo) {
+		
+		ModelMap model = new ModelMap();
+		
+		List<?> respondents = adminExamMapper.getRespondentsList(adminExamRespondentsVo);
+		
+		model.put("respondents", respondents);
+		
+		return model;
+	}
+
+	@Override
+	public ModelMap getExamRespondentsAjaxList(AdminExamRespondentsVo adminExamRespondentsVo , String callType) {
+		
+		ModelMap model = new ModelMap();
+		
+		switch (callType) {
+		case "member":
+			List<?> member = adminExamMapper.getNoRespondentsList(adminExamRespondentsVo);
+			model.put("member", member);
+			break;
+		case "respondents":
+			List<?> respondents = adminExamMapper.getRespondentsList(adminExamRespondentsVo);
+			model.put("respondents", respondents);
+			break;
+		}
+		
+		model.put("callType", callType);
+			
+		return model;
+	}
+
+	@Override
+	public void setExamRespondents(AdminExamRespondentsVo adminExamRespondentsVo, String type) {
+		
+		switch (type) {
+		case "insert":
+			adminExamMapper.setExamRespondentsInsert(adminExamRespondentsVo);
+			break;
+		case "delete":
+			adminExamMapper.setExamRespondentsDelte(adminExamRespondentsVo);
+			break;
+		}
+		
+		
+	}
+
+	@Override
+	public int getExamRespondentsAjaxListCnt(AdminExamRespondentsVo adminExamRespondentsVo) {
+		
+		int result = adminExamMapper.getExamRespondentsAjaxListCnt(adminExamRespondentsVo);
+		
+		return result;
 	}
 	
 }

@@ -1,7 +1,9 @@
 package egovframework.kaist.admin.exam.controller;
 
 import java.io.IOException;
+import java.util.List;
 
+import javax.enterprise.inject.Model;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -9,22 +11,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.system.util.SUtil;
 
+import egovframework.kaist.admin.exam.model.AdminExamRespondentsVo;
 import egovframework.kaist.admin.exam.model.AdminExamVo;
 import egovframework.kaist.admin.exam.service.AdminExamService;
 import egovframework.kaist.admin.question.model.AdminQuestionListVo;
+import egovframework.kaist.admin.question.model.AdminQuestionVo;
+import egovframework.kaist.admin.question.service.AdminQuestionService;
 
 @Controller
 public class AdminExamController {
 
 	@Autowired
 	AdminExamService adminExamService;
+	
+	@Autowired
+	AdminQuestionService adminQuestionService;
 
 	
 	//EXAM
@@ -73,7 +84,7 @@ public class AdminExamController {
 		
 		adminExamService.setAdminExamData(AdminExamVo , "insert");
 		
-		SUtil.AlertAndPageMove(response, "해당 자가진단이 등록되었습니다.", "/admin/exam/list.do");
+		SUtil.AlertAndPageMove(response, "해당 설문이 등록되었습니다.", "/admin/exam/list.do");
 	
 	}
 	
@@ -93,7 +104,14 @@ public class AdminExamController {
 		
 		adminExamService.setAdminExamData(AdminExamVo , "update");
 		
-		SUtil.AlertAndPageMove(response, "해당 자가진단이 수정되었습니다.", "/admin/exam/list.do");
+		SUtil.AlertAndPageMove(response, "해당 설문이 수정되었습니다.", "/admin/exam/list.do");
+		
+	}
+	
+	@RequestMapping(value="/admin/exam/updateApi.do", method = RequestMethod.POST)
+	public void AdminExamUpdatePostApi(@ModelAttribute("AdminExamVo")AdminExamVo AdminExamVo ,  HttpServletRequest  request , HttpServletResponse response){
+		
+		adminExamService.setAdminExamData(AdminExamVo , "update");
 		
 	}
 	
@@ -104,7 +122,7 @@ public class AdminExamController {
 		adminExamService.setAdminExamData(AdminExamVo, "delete");
 		
 		//해당 문항 및 답안 삭제
-		SUtil.AlertAndPageMove(response, "해당 자가진단이 삭제 되었습니다.", "/admin/exam/list.do");
+		SUtil.AlertAndPageMove(response, "해당 설문이 삭제 되었습니다.", "/admin/exam/list.do");
 	}
 	
 	@RequestMapping(value="/admin/exam/status.do" , method = RequestMethod.GET)
@@ -135,6 +153,15 @@ public class AdminExamController {
 		
 		model.put("category", category);
 		
+		AdminQuestionVo question = new AdminQuestionVo();
+		
+		List<?> list = adminQuestionService.getQuestionAllList(question);
+		
+		List<?> TypeList = adminQuestionService.getTypeAllList();
+		
+		model.put("question_list",list);
+		model.put("TypeList", TypeList);
+		
 		return new ModelAndView("admin/exam/question_list" , "model" , model);
 		
 	}
@@ -160,6 +187,66 @@ public class AdminExamController {
 		
 	}
 	
+	@RequestMapping(value="/admin/question_list/sort.do" , method = RequestMethod.POST)
+	public void AdminQuestionSortList(@ModelAttribute("AdminQuestionListVo")AdminQuestionListVo AdminQuestionListVo , HttpServletRequest request , HttpServletResponse response) {
+		
+		adminExamService.setAdminExamQuestionSort(AdminQuestionListVo);
+		
+	}
+	
+	@RequestMapping(value="/admin/exam/respondents/list.do" , method = RequestMethod.GET)
+	public ModelAndView AdminExamRespondents(@ModelAttribute("AdminExamRespondentsVo")AdminExamRespondentsVo AdminExamRespondentsVo , HttpServletRequest request , HttpServletResponse response) {
+		
+		ModelMap model = new ModelMap();
+		
+		model = adminExamService.getExamRespondentsList(AdminExamRespondentsVo);
+		
+		model.put("before", AdminExamRespondentsVo);
+		
+		return new ModelAndView("admin/exam/respondents", "model" , model);
+		
+	}
+	
+	@RequestMapping(value="/admin/exam/respondents/insert.do" , method = RequestMethod.POST)
+	public void AdminExamRespondentsInsert(@ModelAttribute("AdminExamRespondentsVo")AdminExamRespondentsVo AdminExamRespondentsVo , HttpServletRequest request , HttpServletResponse response) {
+		
+		adminExamService.setExamRespondents(AdminExamRespondentsVo , "insert");
+		
+	}
+	
+	@RequestMapping(value="/admin/exam/respondents/Ajaxlist.do" , method = RequestMethod.POST)
+	public ModelAndView AdminExamRespondentsAJAX(@ModelAttribute("AdminExamRespondentsVo")AdminExamRespondentsVo AdminExamRespondentsVo , HttpServletRequest request , HttpServletResponse response) {
+		
+		ModelMap model = new ModelMap();
+		
+		System.out.println("callType : " + AdminExamRespondentsVo.getCalltype());
+		
+		model = adminExamService.getExamRespondentsAjaxList(AdminExamRespondentsVo , AdminExamRespondentsVo.getCalltype());
+		
+		return new ModelAndView("admin/exam/ResponAjax", "model" , model);
+		
+	}
+	
+	@RequestMapping(value="/admin/exam/respondents/delete.do" , method = RequestMethod.POST)
+	public void AdminExamRespondentsDelete(@ModelAttribute("AdminExamRespondentsVo")AdminExamRespondentsVo AdminExamRespondentsVo , HttpServletRequest request , HttpServletResponse response) {
+		
+		adminExamService.setExamRespondents(AdminExamRespondentsVo , "delete");
+		
+	}
+	
+	@RequestMapping(value="/admin/exam/respondents/listCnt.do" , method = RequestMethod.POST,produces = "application/json; charset=utf8")
+	@ResponseBody
+	public String AdminExamRespondentsCnt(@ModelAttribute("AdminExamRespondentsVo")AdminExamRespondentsVo AdminExamRespondentsVo , HttpServletRequest request , HttpServletResponse response)throws JsonProcessingException {
+		
+		int result = adminExamService.getExamRespondentsAjaxListCnt(AdminExamRespondentsVo);
+		
+		System.out.println(result);
+		
+		String resultData = Integer.toString(result);
+		
+		return resultData;
+		
+	}
 	
 	
 }

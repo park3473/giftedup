@@ -28,5 +28,7 @@ public interface UserExamMapper {
 
 	List<?> getIndexList();
 
+	void setExamRespondents(UserExamResultVo userExamResultVo);
+
 	
 }

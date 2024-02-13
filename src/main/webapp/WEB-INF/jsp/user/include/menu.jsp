@@ -162,6 +162,9 @@
 			        		<li>
 			        			<a href="${pageContext.request.contextPath}/user/communicator/list.do">창의융합 커뮤니케이터</a>
 			        		</li>
+			        		<li>
+			        			<a href="${pageContext.request.contextPath}/user/award/list.do">참여 게시판</a>
+			        		</li>
 			        	</ul>
 			        </li>
 			        <li class="has-sub
@@ -272,6 +275,9 @@
 			        		</li>
 			        		<li>
 			        			<a href="${pageContext.request.contextPath}/user/mypage/survey/list.do">설문조사</a>
+			        		</li>
+			        		<li>
+			        			<a href="${pageContext.request.contextPath}/user/submission/list.do?member_id=${ssion_user_id }">참여 게시판</a>
 			        		</li>
 			        	</ul>
 			        </li>

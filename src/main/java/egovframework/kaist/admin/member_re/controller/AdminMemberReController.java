@@ -58,7 +58,6 @@ import egovframework.kaist.admin.member_re.service.AdminMemberReService;
 import egovframework.kaist.admin.sms_log.service.AdminSmsLogService;
 import egovframework.kaist.user.member_re.model.UserMemberReDocumentVo;
 import egovframework.kaist.user.member_re.model.UserMemberReVo;
-import jdk.internal.org.jline.utils.Log;
 
 @Controller
 public class AdminMemberReController {

@@ -24,4 +24,6 @@ public interface AdminQuestionMapper {
 
 	public void setQuestionDataAjaxInsert(AdminQuestionVo adminQuestionVo);
 
+	public List<?> getQuestionAllList(AdminQuestionVo adminQuestionVo);
+
 }

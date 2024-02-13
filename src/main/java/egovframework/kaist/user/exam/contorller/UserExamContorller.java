@@ -72,12 +72,10 @@ public class UserExamContorller {
 	}
 	
 	@RequestMapping(value="/user/exam/result/insert.do" , method = RequestMethod.POST)
-	public String UserExamResultPost(@ModelAttribute("UserExamResultVo")UserExamResultVo UserExamResultVo , HttpServletRequest request , HttpServletResponse response) {
-
+	public void UserExamResultPost(@ModelAttribute("UserExamResultVo")UserExamResultVo UserExamResultVo , HttpServletRequest request , HttpServletResponse response) {
+		
 		//결과 저장
 		userExamService.setExamResultData(UserExamResultVo);
-		
-		return  "redirect:/index.do";
 		
 	}
 	

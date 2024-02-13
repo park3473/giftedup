@@ -2,6 +2,7 @@ package egovframework.kaist.admin.exam.service.impl;
 
 import java.util.List;
 
+import egovframework.kaist.admin.exam.model.AdminExamRespondentsVo;
 import egovframework.kaist.admin.exam.model.AdminExamVo;
 import egovframework.kaist.admin.question.model.AdminQuestionListVo;
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
@@ -36,5 +37,17 @@ public interface AdminExamMapper {
 	List<?> getExamResultMemberAll(AdminExamVo adminExamVo);
 
 	List<?> getExamAllList(AdminExamVo adminExamVo);
+
+	void setAdminExamQuestionSort(AdminQuestionListVo adminQuestionListVo);
+
+	List<?> getNoRespondentsList(AdminExamRespondentsVo adminExamRespondentsVo);
+
+	List<?> getRespondentsList(AdminExamRespondentsVo adminExamRespondentsVo);
+
+	void setExamRespondentsInsert(AdminExamRespondentsVo adminExamRespondentsVo);
+
+	void setExamRespondentsDelte(AdminExamRespondentsVo adminExamRespondentsVo);
+
+	int getExamRespondentsAjaxListCnt(AdminExamRespondentsVo adminExamRespondentsVo);
 
 }

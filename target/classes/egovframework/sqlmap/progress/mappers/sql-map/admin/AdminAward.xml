@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egovframework.kaist.admin.award.service.impl.AdminAwardMapper">
+	<select id="getAwardAllList" parameterType="egovframework.kaist.admin.award.model.AdminAwardVo" resultType="hashMap">
+		SELECT * FROM TBL_AWARD
+		WHERE 1=1
+		<if test="SEARCH_TEXT != ''">
+		    <if test="SEARCH_TYPE != 'ALL'">
+	    		 AND ${SEARCH_TYPE} LIKE '%${SEARCH_TEXT}%'
+	    	</if>
+	    </if>
+	   	ORDER BY CREATE_TM DESC
+	    LIMIT ${LIMIT} OFFSET ${OFFSET}
+	</select>
+	<select id="getAwardAllListCnt" parameterType="egovframework.kaist.admin.award.model.AdminAwardVo" resultType="int">
+		SELECT COUNT(*) FROM TBL_AWARD
+		WHERE 1=1
+		<if test="SEARCH_TEXT != ''">
+		    <if test="SEARCH_TYPE != 'ALL'">
+	    		 AND ${SEARCH_TYPE} LIKE '%${SEARCH_TEXT}%'
+	    	</if>
+	    </if>
+	</select>
+	
+	<insert id="setAdminAwardDataInsert" parameterType="egovframework.kaist.admin.award.model.AdminAwardVo">
+		INSERT INTO TBL_AWARD (TITLE , DESCRIPTION , FILE_CNT , START , END , CREATE_TM , UPDATE_TM)
+		VALUES (#{title} , #{description} , #{file_cnt} , #{start} , #{end} , now() , now())
+	</insert>
+	
+	<insert id="setAdminAwardDataAjaxInsert" parameterType="egovframework.kaist.admin.award.model.AdminAwardVo" useGeneratedKeys="true" keyProperty="idx">
+		INSERT INTO TBL_AWARD (TITLE , DESCRIPTION , FILE_CNT , START , END , CREATE_TM , UPDATE_TM)
+		VALUES (#{title} , #{description} , #{file_cnt} , #{start} , #{end} , now() , now())
+	</insert>
+	
+	<update id="setAdminAwardDataUpdate" parameterType="egovframework.kaist.admin.award.model.AdminAwardVo">
+		UPDATE TBL_AWARD SET 
+		<if test="title != ''">
+			TITLE = #{title},
+		</if>
+		<if test="description != ''">
+			DESCRIPTION = #{description},
+		</if>
+		<if test="file_cnt != ''">
+			FILE_CNT = #{file_cnt},
+		</if>
+		<if test="start != ''">
+			START = #{start},
+		</if>
+		<if test="end != ''">
+			END = #{end},
+		</if>
+		UPDATE_TM = now()
+		WHERE IDX = #{idx}
+	</update>
+	
+	<delete id="setAdminAwardDataDelete" parameterType="egovframework.kaist.admin.award.model.AdminAwardVo">
+		DELETE FROM TBL_AWARD WHERE IDX = #{idx}
+	</delete>
+	
+	<select id="getAwardViewData" parameterType="egovframework.kaist.admin.award.model.AdminAwardVo" resultType="egovframework.kaist.admin.award.model.AdminAwardVo">
+		SELECT * FROM TBL_AWARD
+		WHERE IDX = #{idx}
+	</select>
+	
+	<select id="getAwardRequireList" parameterType="egovframework.kaist.admin.award.model.AdminAwardRequireVo" resultType="hashMap">
+		SELECT * FROM TBL_AWARD_REQUIRE
+		WHERE AWARD_IDX = #{award_idx}
+	</select>
+	
+	<insert id="setAdminAwardRequireDataInsert" parameterType="egovframework.kaist.admin.award.model.AdminAwardRequireVo">
+		INSERT INTO TBL_AWARD_REQUIRE (AWARD_IDX , REQUIRE_NAME , REQUIRE_CONTENT , CREATE_TM , UPDATE_TM)
+		VALUES (#{award_idx} , #{require_name} , #{require_content} , now() , now())
+	</insert>
+	
+	<update id="setAdminAwardRequireDataUpdate" parameterType="egovframework.kaist.admin.award.model.AdminAwardRequireVo">
+		UPDATE TBL_AWARD_REQUIRE SET
+		<if test="require_name != ''">
+			REQUIRE_NAME = #{require_name},
+		</if>
+		<if test="require_content != ''">
+			REQUIRE_CONTENT = #{require_content},
+		</if>
+		UPDATE_TM = now()
+		WHERE IDX = #{idx}
+	</update>
+	
+	<delete id="setAdminAwardRequireDataDelete" parameterType="egovframework.kaist.admin.award.model.AdminAwardRequireVo">
+		DELETE FROM TBL_AWARD_REQUIRE WHERE IDX = #{idx} AND AWARD_IDX = #{award_idx}
+	</delete>
+	
+</mapper>

@@ -94,6 +94,8 @@ public class AdminQuestionController {
 		
 		List<?> TypeList = adminQuestionService.getTypeAllList();
 		
+		System.out.println(TypeList.size());
+		
 		model.put("TypeList", TypeList);
 		
 		model.put("exam_idx", exam_idx);

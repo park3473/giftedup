@@ -48,8 +48,8 @@
                                         <th class="setting">비고</th>
                                     </tr>
                                     <c:forEach var="item" items="${model.list}" varStatus="status">
-                                    <tr data-role="button" data-id="${item.idx}"  data-itemtotalcount="${model.itemtotalcount}" data-page="${model.page}" data-itemcount="${model.itemcount}">
-                                        <td>${model.itemtotalcount - (status.index + model.page *  model.itemcount)}</td>
+                                    <tr data-role="button" data-id="${item.idx}"  data-itemtotalcount="${model.itemtotalcount}" data-page="${model.page}" data-itemcount="${model.itemCount}">
+                                        <td>${model.itemtotalcount - (status.index + model.page *  model.itemCount)}</td>
                                         <td>${item.name }</td>
                                         <td>${item.type }</td>
                                         <td>
@@ -80,7 +80,7 @@
                                 <div class="adm_btn_wrap stats_btn_area">
                                     <ul>
                                     <li class="delete">
-                                        <a href="./insert.do?category=${model.before.category }">생성</a>
+                                        <a href="./insert.do">생성</a>
                                     </li>
                                 </ul>
                                 </div>
@@ -112,6 +112,7 @@
     <!--푸터 end-->
 
 </body>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
 
 function searchBtnClick(){
@@ -128,11 +129,10 @@ function searchBtnClick(){
 }
 
 $(document).ready(function () {
-	
-	$(".adm_menu_con > li").eq(3).find(".sub_menu_con").show();
-	$(".adm_menu_con > li").eq(3).css({
-	    backgroundColor: "#fff"
-	});
+    $(".adm_menu_con > li").eq(6).find(".sub_menu_con").show();
+    $(".adm_menu_con > li").eq(6).css({
+        backgroundColor: "#fff"
+    });
 });
 
 </script>

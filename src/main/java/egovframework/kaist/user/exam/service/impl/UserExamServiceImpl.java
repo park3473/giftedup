@@ -83,10 +83,11 @@ public class UserExamServiceImpl implements UserExamService {
 
 	@Override
 	public void setExamResultData(UserExamResultVo userExamResultVo) {
-		// TODO Auto-generated method stub
 		
+		//응답자 처리
+		userExamMapper.setExamRespondents(userExamResultVo);
+		//결과 저장
 		userExamMapper.setExamResultData(userExamResultVo);
-		
 		
 	}
 

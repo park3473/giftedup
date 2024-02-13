@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egovframework.kaist.admin.submission.service.impl.AdminSubMissionMapper">
+	<select id="getSubMissionAllList" parameterType="egovframework.kaist.admin.submission.model.AdminSubMissionVo" resultType="hashMap">
+		SELECT * FROM TBL_SUBMISSION
+		WHERE 1=1
+		<if test="SEARCH_TEXT != ''">
+		    <if test="SEARCH_TYPE != 'ALL'">
+	    		 AND ${SEARCH_TYPE} LIKE '%${SEARCH_TEXT}%'
+	    	</if>
+	    </if>
+	    AND AWARD_IDX = #{award_idx}
+	   	ORDER BY CREATE_TM DESC
+	    LIMIT ${LIMIT} OFFSET ${OFFSET}
+	</select>
+	
+	<select id="getSubMissionAllListCnt" parameterType="egovframework.kaist.admin.submission.model.AdminSubMissionVo" resultType="int">
+		SELECT COUNT(*) FROM TBL_SUBMISSION
+		WHERE 1=1
+		<if test="SEARCH_TEXT != ''">
+		    <if test="SEARCH_TYPE != 'ALL'">
+	    		 AND ${SEARCH_TYPE} LIKE '%${SEARCH_TEXT}%'
+	    	</if>
+	    </if>
+	    AND AWARD_IDX = #{award_idx}
+	</select>
+	
+	<insert id="setAdminSubMissionDataInsert" parameterType="egovframework.kaist.admin.submission.model.AdminSubMissionVo">
+		INSERT INTO TBL_SUBMISSION (AWARD_IDX , MEMBER_ID , NAME , CONTENT , STATUS , CREATE_TM , UPDATE_TM)
+		VALUES (#{award_idx} , #{member_id} , #{name} , #{content} , '0' , now() , now())
+	</insert>
+	
+	<insert id="setAdminSubMissionDataAjaxInsert" parameterType="egovframework.kaist.admin.submission.model.AdminSubMissionVo" useGeneratedKeys="true" keyProperty="idx" >
+		INSERT INTO TBL_SUBMISSION (AWARD_IDX , MEMBER_ID , NAME , CONTENT , STATUS , CREATE_TM , UPDATE_TM)
+		VALUES (#{award_idx} , #{member_id} , #{name} , #{content} , '0' , now() , now())
+	</insert>
+	
+	<select id="getSubMissionDataView" parameterType="egovframework.kaist.admin.submission.model.AdminSubMissionVo" resultType="egovframework.kaist.admin.submission.model.AdminSubMissionVo">
+		SELECT * FROM TBL_SUBMISSION WHERE IDX = #{idx} AND AWARD_IDX = #{award_idx}
+	</select>
+	
+	<update id="setAdminSubMissionDataUpdate" parameterType="egovframework.kaist.admin.submission.model.AdminSubMissionVo">
+		UPDATE TBL_SUBMISSION SET
+		<if test="content != ''">
+			CONTENT = #{content},
+		</if>
+		<if test="status != ''">
+			STATUS = #{status},
+		</if>
+		UPDATE_TM = now()
+		WHERE IDX = #{idx}
+	</update>
+	
+	<delete id="setAdminSubMissionDataDelete" parameterType="egovframework.kaist.admin.submission.model.AdminSubMissionVo">
+		DELETE FROM TBL_SUBMISSION WHERE IDX = #{idx}
+	</delete>
+	
+	<select id="getSubMissionDetailList" parameterType="egovframework.kaist.admin.submission.model.AdminSubMissionVo" resultType="hashMap">
+		SELECT detail.* , requires.require_name , requires.require_idx FROM TBL_SUBMISSION_DETAIL detail JOIN TBL_AWARD_REQUIRE requires ON detail.require_idx = requires.idx
+		WHERE detail.SUBMISSION_IDX = #{idx}
+		ORDER BY detail.CREATE_TM
+	</select>
+	
+	<insert id="setAdminSubMissionDetailInsert" parameterType="egovframework.kaist.admin.submission.model.AdminSubMissionDetailVo">
+		INSERT INTO TBL_SUBMISSION_DETAIL (SUBMISSION_IDX , REQUIRE_IDX , RESPOND , CREATE_TM , UPDATE_TM)
+		VALUES (#{submission_idx} , #{require_idx} , #{respond} , now() , now())
+	</insert>
+	
+	<update id="setAdminSubMissionDetailUpdate" parameterType="egovframework.kaist.admin.submission.model.AdminSubMissionDetailVo">
+		UPDATE TBL_SUBMISSION_DETAIL SET
+		<if test="respond != ''">
+			RESPOND = #{respond},
+		</if>
+		UPDATE_TM = now()
+		WHERE IDX = #{idx}
+	</update>
+	
+	<delete id="setAdminSubMissionDetailDelete" parameterType="egovframework.kaist.admin.submission.model.AdminSubMissionDetailVo">
+		DELETE FROM TBL_SUBMISSION_DETAIL WHERE IDX = #{idx}
+	</delete>
+	
+	<delete id="setAdminSubMissionDetailDeleteAll" parameterType="egovframework.kaist.admin.submission.model.AdminSubMissionDetailVo">
+		DELETE FROM TBL_SUBMISSION_DETAIL WHERE SUBMISSION_IDX = #{submission_idx}
+	</delete>
+
+	<select id="getSubMissionFileList" parameterType="egovframework.kaist.admin.submission.model.AdminSubMissionVo" resultType="hashMap">
+		SELECT * FROM TBL_SUBMISSION_FILE
+		WHERE SUBMISSION_IDX = #{idx} AND MEMBER_ID = #{member_id}
+	</select>
+	
+	<insert id="setAdminSubMissionFileInsert" parameterType="egovframework.kaist.admin.submission.model.AdminSubMissionFileVo">
+		INSERT INTO TBL_SUBMISSION_FILE (SUBMISSION_IDX , MEMBER_ID , FILE , CREATE_TM , UPDATE_TM)
+		VALUES (#{submission_idx} , #{member_id} , #{file} , now() , now())
+	</insert>
+
+	<delete id="setAdminSubMissionFileDelete" parameterType="egovframework.kaist.admin.submission.model.AdminSubMissionFileVo">
+		DELETE FROM TBL_SUBMISSION_FILE WHERE IDX = #{idx} AND SUBMISSION_IDX = #{submission_idx} AND MEMBER_ID = #{member_id}
+	</delete>
+
+</mapper>

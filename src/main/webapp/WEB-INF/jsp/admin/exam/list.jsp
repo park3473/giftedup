@@ -46,6 +46,7 @@
                                         <th class="number">번호</th>
                                         <th class="name">제목</th>
                                         <th class="category">유형</th>
+                                        <th class="onoff">시작여부</th>
                                         <th class="create_tm">생성일시</th>
                                         <th class="update_tm">수정일시</th>
                                         <th class="setting">비고</th>
@@ -58,14 +59,21 @@
                                         	설문
                                         </td>
                                         <td>
+                                        	<c:choose>
+                                        		<c:when test="${item.onoff == '0' }">진행X</c:when>
+                                        		<c:when test="${item.onoff == '1' }">진행중</c:when>
+                                        	</c:choose>
+                                        </td>
+                                        <td>
                                             ${fn:substring(item.create_tm,0,11)}
                                         </td>
                                         <td>
                                             ${fn:substring(item.update_tm,0,11)}
                                         </td>
                                         <td>
-                                        	<button type="button" onclick="location.href='/admin/exam/question_list.do?exam_idx=${item.idx}&category=${item.category }'">문제 확인</button>
+                                        	<button type="button" onclick="location.href='/admin/exam/question_list.do?exam_idx=${item.idx}&category=${item.category }'">리스트 확인</button>
                                         	<button type="button" onclick="location.href='/admin/exam/update.do?idx=${item.idx}'">관리</button>
+                                        	<button type="button" onclick="location.href='/admin/exam/respondents/list.do?exam_idx=${item.idx}'">응답자 확인</button>
                                         	<button type="button"  onclick="location.href='/admin/exam/status.do?idx=${item.idx}&category=${item.category }'">통계</button>
                                         </td>
                                     </tr>
@@ -78,9 +86,7 @@
                                 <div>
                                     <select id="SEARCH_TYPE" name="SEARCH_TYPE">
                                         <option value="ALL">전체</option>
-                                        <option value="type" <c:if test="${model.before.SEARCH_TYPE == 'type'}">selected</c:if>>상태</option>
-                                        <option value="l_category"  <c:if test="${model.before.SEARCH_TYPE == 'l_category'}">selected</c:if>>대분류</option>
-                                        <option value="m_category" <c:if test="${model.before.SEARCH_TYPE == 'm_category'}">selected</c:if>>중분류</option>
+                                        <option value="type" <c:if test="${model.before.SEARCH_TYPE == 'onoff'}">selected</c:if>>상태</option>
                                         <option value="name" <c:if test="${model.before.SEARCH_TYPE == 'name'}">selected</c:if>>이름</option>
                                     </select>
                                     <input style="width: 191px;" type="text" value="${model.before.SEARCH_TEXT }" name="SEARCH_TEXT" id="SEARCH_TEXT" >
@@ -106,7 +112,8 @@
                     <!--본문 내용 end-->
                 </div>
             </div>
-        </div>
+
+		</div>
     </section>
     <!--본문 end-->
 

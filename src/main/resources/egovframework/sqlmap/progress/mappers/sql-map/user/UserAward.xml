@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egovframework.kaist.user.award.service.impl.UserAwardMapper">
+	<select id="getAwardAllList" parameterType="egovframework.kaist.user.award.model.UserAwardVo" resultType="hashMap">
+		SELECT * FROM TBL_AWARD
+		WHERE 1=1
+		<if test="SEARCH_TEXT != ''">
+		    <if test="SEARCH_TYPE != 'ALL'">
+	    		 AND ${SEARCH_TYPE} LIKE '%${SEARCH_TEXT}%'
+	    	</if>
+	    </if>
+	    AND NOW() BETWEEN START AND (END + INTERVAL 1 DAY)
+	   	ORDER BY CREATE_TM DESC
+	    LIMIT ${LIMIT} OFFSET ${OFFSET}
+	</select>
+	<select id="getAwardAllListCnt" parameterType="egovframework.kaist.user.award.model.UserAwardVo" resultType="int">
+		SELECT COUNT(*) FROM TBL_AWARD
+		WHERE 1=1
+		<if test="SEARCH_TEXT != ''">
+		    <if test="SEARCH_TYPE != 'ALL'">
+	    		 AND ${SEARCH_TYPE} LIKE '%${SEARCH_TEXT}%'
+	    	</if>
+	    </if>
+	    AND NOW() BETWEEN START AND (END + INTERVAL 1 DAY)
+	</select>
+	<select id="getAwardViewData" parameterType="egovframework.kaist.user.award.model.UserAwardVo" resultType="egovframework.kaist.user.award.model.UserAwardVo">
+		SELECT * FROM TBL_AWARD
+		WHERE IDX = #{idx}
+	</select>
+	
+	<select id="getAwardRequireList" parameterType="egovframework.kaist.user.award.model.UserAwardRequireVo" resultType="hashMap">
+		SELECT * FROM TBL_AWARD_REQUIRE
+		WHERE AWARD_IDX = #{award_idx}
+	</select>
+
+</mapper>

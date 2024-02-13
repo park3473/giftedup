@@ -2,6 +2,7 @@ package egovframework.kaist.admin.exam.service;
 
 import org.springframework.ui.ModelMap;
 
+import egovframework.kaist.admin.exam.model.AdminExamRespondentsVo;
 import egovframework.kaist.admin.exam.model.AdminExamVo;
 import egovframework.kaist.admin.question.model.AdminQuestionListVo;
 
@@ -20,6 +21,16 @@ public interface AdminExamService {
 	public ModelMap getExamCategoryAllList();
 
 	public ModelMap getStatusData(AdminExamVo adminExamVo);
+
+	public void setAdminExamQuestionSort(AdminQuestionListVo adminQuestionListVo);
+
+	public ModelMap getExamRespondentsList(AdminExamRespondentsVo adminExamRespondentsVo);
+
+	public ModelMap getExamRespondentsAjaxList(AdminExamRespondentsVo adminExamRespondentsVo, String string);
+
+	public void setExamRespondents(AdminExamRespondentsVo adminExamRespondentsVo, String type);
+
+	public int getExamRespondentsAjaxListCnt(AdminExamRespondentsVo adminExamRespondentsVo);
 
 
 }

@@ -88,19 +88,6 @@ String NowYear = String.valueOf(year);
                                             </ul>
                                             </c:if>
                                         </li>
-                                        <!--
-                                        2022년도 고도화 당시 삭제된 링크들
-                                         
-                                        <li <c:if test="${fn:indexOf(requestURI, 'local_group') > -1}">class="nav_active"</c:if>>
-                                            <a href="${pageContext.request.contextPath}/admin/local_group_member/list.do">· 교사 지역별 그룹관리</a>
-                                        </li>
-                                        <li <c:if test="${fn:indexOf(requestURI, 'member/human') > -1}">class="nav_active"</c:if>>
-                                            <a href="${pageContext.request.contextPath}/admin/member/human/list.do">· 휴면회원 관리</a>
-                                        </li>
-                                        <li <c:if test="${fn:indexOf(requestURI, 'member/info_agreement') > -1}">class="nav_active"</c:if>>
-                                            <a href="${pageContext.request.contextPath}/admin/member/info_agreement/insert.do">· 개인정보동의서</a>
-                                        </li>
-                                         -->
                                     </ul>
                                 </li>
                                 <li <c:if test="${fn:indexOf(requestURI, 'program') > -1
@@ -259,9 +246,9 @@ String NowYear = String.valueOf(year);
                                         </li>
                                     </ul>
                                 </li>
-                                   <li <c:if test="${fn:indexOf(requestURI, 'exam') > -1
-                                    && fn:indexOf(requestURI, 'question') == -1
-                                    && fn:indexOf(requestURI, 'select') == -1}">
+                                <li <c:if test="${fn:indexOf(requestURI, 'exam') > -1
+                                    || fn:indexOf(requestURI, 'question') > -1
+                                    || fn:indexOf(requestURI, 'select') > -1}">
                                     class="adm_menu_active"
                                     </c:if> >
                                     <a href="${pageContext.request.contextPath}/admin/exam/list.do">
@@ -277,6 +264,23 @@ String NowYear = String.valueOf(year);
                                         </li>
                                         <li <c:if test="${fn:indexOf(requestURI, 'question/list.do') > -1}">class="nav_active"</c:if>>
                                             <a href="${pageContext.request.contextPath}/admin/question/list.do">· 설문 문제 관리</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li <c:if test="${fn:indexOf(requestURI, 'award') > -1
+                                    || fn:indexOf(requestURI, 'submission') > -1}">
+                                    class="adm_menu_active"
+                                    </c:if> >
+                                    <a href="${pageContext.request.contextPath}/admin/award/list.do">
+                                        <i class="las la-bars"></i>
+                                    </a>
+                                    <ul class="sub_menu_con">
+                                        <div class="title notosans">
+                                            <span></span>
+                                            <span>참여 게시판 관리</span>
+                                        </div>
+                                        <li <c:if test="${fn:indexOf(requestURI, 'award/list.do') > -1}">class="nav_active"</c:if>>
+                                            <a href="${pageContext.request.contextPath}/admin/award/list.do">· 참여 게시판 관리</a>
                                         </li>
                                     </ul>
                                 </li>

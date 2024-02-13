@@ -165,14 +165,14 @@ function deleteClick(){
 function startClick(){
 	
 	console.log('시작하기');
-	var result = confirm('해당 자가진단을 시작하시겠습니까?');
+	var result = confirm('해당 설문을 시작하시겠습니까?\n시작한 설문은 종료하기 전까지 수정이 불가능합니다.');
 	if(result){
 		
 		console.log('시작하기전 날짜 설정');
 		Swal.fire({
-	        title: '진단 시작하기',
-	        html: `<input type="date" id="start-date" class="swal2-input" placeholder="시작일자">
-	               <input type="date" id="end-date" class="swal2-input" placeholder="종료일자">`,
+	        title: '설문 시작하기',
+	        html: `<p>설문 시작일</p><input type="date" id="start-date" class="swal2-input" placeholder="시작일자">
+	        		<p>설문 종료일</p><input type="date" id="end-date" class="swal2-input" placeholder="종료일자">`,
 	        confirmButtonText: '시작하기',
 	        focusConfirm: false,
 	        preConfirm: () => {
@@ -183,12 +183,11 @@ function startClick(){
 	    }).then((result) => {
 	        if (result.isConfirmed) {
 	            console.log('진단 시작:', result.value.startDate, '부터', result.value.endDate, '까지');
-	            
 	            $('[name=start_tm]').val(result.value.startDate);
 		        $('[name=end_tm]').val(result.value.endDate);
-		        $('[name=type]').val('1');
+		        $('[name=onoff]').val('1');
 		        
-		        updateClick()
+		        ExamStart();
 	            
 	        }
 	        
@@ -197,6 +196,88 @@ function startClick(){
 	}else{
 		console.log('시작프로세스 cancel');
 	}
+	
+}
+
+function endClick(){
+
+	console.log('종료하기');
+	var result = confirm('해당 자가진단을 종료하시겠습니까?');
+	if(result){
+		
+		$('[name=start_tm]').val('');
+		$('[name=end_tm]').val('');
+		$('[name=onoff]').val('0');
+		updateClick();
+		
+	}else{
+		console.log('시작프로세스 cancel');
+	}
+	
+}
+
+function ExamStart(){
+	
+	var exam_idx = '${model.view.idx}';
+	
+	$.ajax({
+		url : '/admin/exam/respondents/listCnt.do',
+		type : 'POST',
+		cache : false,
+		data : ({
+			exam_idx : exam_idx
+		}),
+		dataType : "json",
+		success: function(result , status , success){
+			console.log('result : ' + result);
+			
+			if(result > 0){
+				
+				alert('응답자 수 : ' + result);
+				
+				var idx = $('[name=idx]').val();
+				var start_tm = $('[name=start_tm]').val();
+		        var end_tm = $('[name=end_tm]').val();
+		        var onoff = $('[name=onoff]').val();
+				
+		        console.log('update start');
+		        
+				$.ajax({
+					url : '/admin/exam/updateApi.do',
+					type : 'POST',
+					data : ({
+						idx : idx,
+						start_tm : start_tm,
+						end_tm : end_tm,
+						onoff : onoff
+					}),
+					success: function(status , success){
+						console.log('success');
+						
+						alert('응답자 문자전송 및 시작 완료.');
+						
+						location.href='./list.do';
+						
+					},
+					error : function(status , error){
+						console.log('error');	
+					}
+				})
+				
+				
+			}else{
+				
+				alert('응답자 를 등록해주세요.');
+				alert('응답자 수 : ' + result);
+			}
+			
+			
+		},
+		error : function(status , error){
+			console.log('error');
+		}
+	});
+
 	
 }
 

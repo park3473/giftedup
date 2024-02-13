@@ -54,13 +54,12 @@
 	<select id="getQuestionList" parameterType="egovframework.kaist.user.exam.model.UserExamVo" resultType="hashMap">
 		SELECT 
 		    q.*,
-		    GROUP_CONCAT(s.content ORDER BY s.seq SEPARATOR '#') AS Choices,
-		    GROUP_CONCAT(s.image ORDER BY s.seq SEPARATOR '#') AS ChoicesImage
+		    COALESCE(GROUP_CONCAT(s.content ORDER BY s.seq SEPARATOR '#'), '') AS Choices
 		FROM 
 		    TBL_QUESTION_LIST ql
 		JOIN 
 		    TBL_QUESTION q ON ql.question_idx = q.idx
-		JOIN 
+		LEFT JOIN 
 		    TBL_SELECT s ON q.idx = s.question_idx
 		WHERE 
 		    ql.exam_idx = #{idx}
@@ -69,6 +68,11 @@
 		ORDER BY 
 		    ql.seq;
 	</select>
+	
+	<update id="setExamRespondents" parameterType="egovframework.kaist.user.exam.model.UserExamResultVo">
+		UPDATE TBL_EXAM_RESPONDENTS SET RESPONDENTS = 'yes' WHERE EXAM_IDX = #{exam_idx} AND MEMBER_ID = #{member_id}
+	</update>
+	
 	<insert id="setExamResultData" parameterType="egovframework.kaist.user.exam.model.UserExamResultVo">
 		INSERT INTO TBL_EXAM_RESULT (EXAM_IDX , MEMBER_ID , NAME , SELECT_LIST , COMPLETE , COMPLETE_TM , CREATE_TM , UPDATE_TM)
 		VALUES(#{exam_idx} , #{member_id} , #{name} , #{select_list} , #{complete} , now() , now() , now())

@@ -17,15 +17,7 @@
 	    		 AND ${SEARCH_TYPE} LIKE '%${SEARCH_TEXT}%'
 	    	</if>
 	    </if>
-	    <if test="UP != ''">
-	    	order by ${UP} asc
-	    </if>
-	    <if test="DOWN != ''">
-	    	order by ${DOWN} desc
-	    </if>
-	    <if test="DOWN == '' and UP == ''">
-	    	order by CREATE_TM desc
-	    </if>
+	    ORDER BY CREATE_TM DESC
 	    LIMIT ${LIMIT} OFFSET ${OFFSET}
 	</select>
 	
@@ -74,8 +66,12 @@
 		DELETE FROM TBL_QUESTION WHERE IDX = #{idx}
 	</delete>
 	
-	<select id="getTypeAllList" parameterType="egovframework.kaist.admin.question.model.AdminQuestionVo" resultType="egovframework.kaist.admin.question.model.AdminQuestionVo">
-		SELECT TYPE FROM TBL_QUESTION
+	<select id="getTypeAllList" parameterType="egovframework.kaist.admin.question.model.AdminQuestionVo" resultType="hashMap">
+		SELECT  DISTINCT(TYPE) FROM TBL_QUESTION
+	</select>
+
+	<select id="getQuestionAllList" resultType="hashMap">
+		SELECT * FROM TBL_QUESTION
 	</select>
 
 </mapper>
