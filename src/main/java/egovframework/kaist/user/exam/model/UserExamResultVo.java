@@ -1,6 +1,8 @@
 package egovframework.kaist.user.exam.model;
 
-public class UserExamResultVo {
+import egovframework.kaist.admin.SearchVo;
+
+public class UserExamResultVo extends SearchVo {
 
 	String idx = "";
 	String exam_idx = "";

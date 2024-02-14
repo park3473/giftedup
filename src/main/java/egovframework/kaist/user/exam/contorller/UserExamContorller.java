@@ -79,6 +79,33 @@ public class UserExamContorller {
 		
 	}
 	
+	@RequestMapping(value="/user/exam/result/list.do" , method = RequestMethod.GET)
+	public ModelAndView UserExamResultList(@ModelAttribute("UserExamResultVo")UserExamResultVo UserExamResultVo , HttpServletRequest request , HttpServletResponse response) {
+		
+		System.out.println(("PAGE : " + UserExamResultVo.getPAGE()));
+		System.out.println("ITEM_COUNT : " + UserExamResultVo.getITEM_PAGE());
+		
+		String PAGE = request.getParameter("PAGE") != null ? request.getParameter("PAGE") : "0";
+		String ITEM_COUNT = request.getParameter("ITEM_COUNT") != null ? request.getParameter("ITEM_COUNT") : "10";
+		
+		UserExamResultVo.setPAGE(Integer.parseInt(PAGE));
+		UserExamResultVo.setITEM_COUNT(Integer.parseInt(ITEM_COUNT));
+		
+		int pagelimit = UserExamResultVo.getPAGE() * UserExamResultVo.getITEM_COUNT();
+		
+		UserExamResultVo.setLIMIT(Integer.parseInt(ITEM_COUNT));
+		UserExamResultVo.setOFFSET(pagelimit);
+		
+		ModelMap model = new ModelMap();
+		
+		model = userExamService.getResultAllList(UserExamResultVo);
+		
+		model.put("beforeData", UserExamResultVo);
+		
+		return new ModelAndView("user/mypage/exam/list" , "model" , model);
+		
+	}
+	
 	@RequestMapping(value="/user/exam/result/view.do" , method = RequestMethod.GET)
 	public ModelAndView UserExamResultView(@ModelAttribute("UserExamResultVo")UserExamResultVo UserExamResultVo , HttpServletRequest request , HttpServletResponse response) {
 		
@@ -89,7 +116,7 @@ public class UserExamContorller {
 		
 		model.put("before", UserExamResultVo);
 		
-		return new ModelAndView("user/mypage/result" , "model" , model);
+		return new ModelAndView("user/mypage/exam/result" , "model" , model);
 		
 	}
 	

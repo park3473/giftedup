@@ -274,8 +274,13 @@
 			        			<a href="${pageContext.request.contextPath}/user/mypage/program/list.do">프로그램 신청</a>
 			        		</li>
 			        		<li>
+			        			<a href="${pageContext.request.contextPath}/user/exam/result/list.do?member_id=${ssion_user_id}">설문결과리스트</a>
+			        		</li>
+			        		<!-- 
+			        		<li>
 			        			<a href="${pageContext.request.contextPath}/user/mypage/survey/list.do">설문조사</a>
 			        		</li>
+			        		-->
 			        		<li>
 			        			<a href="${pageContext.request.contextPath}/user/submission/list.do?member_id=${ssion_user_id }">참여 게시판</a>
 			        		</li>

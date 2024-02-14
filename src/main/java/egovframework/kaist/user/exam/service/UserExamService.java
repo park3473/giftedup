@@ -22,5 +22,7 @@ public interface UserExamService {
 
 	List<?> getIndexList();
 
+	ModelMap getResultAllList(UserExamResultVo userExamResultVo);
+
 
 }

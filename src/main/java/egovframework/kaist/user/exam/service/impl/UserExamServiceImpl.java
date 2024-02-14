@@ -50,7 +50,7 @@ public class UserExamServiceImpl implements UserExamService {
 		System.out.println(pageVo.getItempage());
 		
 		modelMap.put("page", pageVo.getItempage());
-		modelMap.put("itemcount", pageVo.getItemCount());
+		modelMap.put("itemCount", pageVo.getItemCount());
 		modelMap.put("itempagestart", pageVo.getItempagestart());
 		modelMap.put("itempageend", pageVo.getItempageend());
 		modelMap.put("itemtotalcount", pageVo.getItemtotalcount());
@@ -133,6 +133,40 @@ public class UserExamServiceImpl implements UserExamService {
 		List<?> list = userExamMapper.getIndexList();
 		
 		return list;
+	}
+
+	@Override
+	public ModelMap getResultAllList(UserExamResultVo userExamResultVo) {
+		ModelMap modelMap = new ModelMap();
+		
+		List<?> list = userExamMapper.getResultAllList(userExamResultVo);
+		
+		System.out.println("size : " + list.size());
+		
+		int itemtotalcount = userExamMapper.getResultAllListCnt(userExamResultVo);
+		int itemcount = userExamResultVo.getITEM_COUNT();
+		int itempage = userExamResultVo.getITEM_PAGE();
+		
+		PageVO pageVo = new PageVO(itemcount, itemtotalcount, itempage);
+		
+		if(pageVo.isItempagenext() == true){
+			modelMap.put("itempagenext", "true");
+		}else {
+			modelMap.put("itempagenext", "false");
+		}
+		
+		System.out.println(pageVo.getItempage());
+		
+		modelMap.put("page", pageVo.getItempage());
+		modelMap.put("itemCount", pageVo.getItemCount());
+		modelMap.put("itempagestart", pageVo.getItempagestart());
+		modelMap.put("itempageend", pageVo.getItempageend());
+		modelMap.put("itemtotalcount", pageVo.getItemtotalcount());
+		modelMap.put("itemtotalpage", pageVo.getItemtotalpage());
+		
+		modelMap.put("list", list);
+		
+		return modelMap;
 	}
 	
 	

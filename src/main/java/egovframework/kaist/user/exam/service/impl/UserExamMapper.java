@@ -30,5 +30,9 @@ public interface UserExamMapper {
 
 	void setExamRespondents(UserExamResultVo userExamResultVo);
 
+	List<?> getResultAllList(UserExamResultVo userExamResultVo);
+
+	int getResultAllListCnt(UserExamResultVo userExamResultVo);
+
 	
 }

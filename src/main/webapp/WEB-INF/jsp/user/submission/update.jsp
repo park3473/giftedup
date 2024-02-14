@@ -108,7 +108,7 @@
                                     </div>                              
                                     <div class="board_btn_wrap">
                                   		<div class="board_btn">
-                                  			<a class="stat_update" href="#" onclick="submission()">설문 제출</a>
+                                  			<a class="stat_update" href="#" onclick="submission()">저장하기</a>
                                   		</div>
                                   	</div>
                                 </div>
