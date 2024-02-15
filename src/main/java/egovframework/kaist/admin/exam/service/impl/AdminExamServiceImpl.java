@@ -182,8 +182,19 @@ public class AdminExamServiceImpl implements AdminExamService {
 		
 		ModelMap model = new ModelMap();
 		
+		AdminExamRespondentsVo adminExamRespondentsVo = new AdminExamRespondentsVo();
+		
+		adminExamRespondentsVo.setExam_idx(adminExamVo.getIdx());
+		
+		//응답자 목록
+		List<?> respondents = adminExamMapper.getRespondentsList(adminExamRespondentsVo);
+		
+		model.put("respondents", respondents);
+		
+		//문제리스트
 		List<?> question = adminExamMapper.getStatusQuestionList(adminExamVo);
 		
+		//결과 리스트
 		List<?> resultList = adminExamMapper.getExamResultMemberAll(adminExamVo);
 		
 		model.put("question" , question);

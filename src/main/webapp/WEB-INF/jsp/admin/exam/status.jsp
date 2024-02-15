@@ -61,17 +61,17 @@ console.log(select);
                 <!--본문 내용-->
                 <section class="adm_sc_txt">
                     <div class="status_div2">
-                    	<h2>참여율 </h2>
+                    	<h2>전체 참여율 </h2>
+                    	yes or no
 					    <div class="chart">
-					    	<canvas id="pieChartAddressLocal"  width="400px" height="400px" ></canvas>
+					    	<canvas id="pieChartRespondents"  width="400px" height="400px" ></canvas>
 					    </div>
                     </div>
                     
                     <c:forEach var="item" items="${model.question }" varStatus="status">
 	                    <c:if test="${item.select_type != '3' }">
 		                    <div class="status_div2">
-		                    	<h2>문제별 차트 (${status.index + 1 }번 문항)</h2>
-		                    	<h2>${item.name }</h2>
+		                    	<h2>${status.index + 1 }번 문항 ${item.name }</h2>
 		                    	<c:forEach var="choice" items="${fn:split(item.Choices, '#')}"  varStatus="select_status">
 								 	${select_status.index + 1 }. ${choice}
 								 </c:forEach>
@@ -103,6 +103,35 @@ console.log(select);
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 <script type="text/javascript">
+
+function Respondents(idx , exam_idx , member_id , type , school_name , name , phone , respondents){
+	
+	this.idx = idx;
+	this.exam_idx = exam_idx;
+	this.member_id = member_id;
+	this.type = type;
+	this.school_name = school_name;
+	this.name = name;
+	this.phone = phone;
+	this.respondents = respondents;
+	
+}
+//=====================================================================================================
+var respondents = [];	
+<c:forEach var="item" items="${model.respondents}" varStatus="status" >
+respondents.push(new Respondents(
+	'${item.idx}',
+	'${item.exam_idx}',
+	'${item.member_id}',
+	'${item.type}',
+	'${item.school_name}',
+	'${item.name}',
+	'${item.phone}',
+	'${item.respondents}',
+))
+</c:forEach>
+
+//=====================================================================================================
 
 function Question(idx , name , type , content , select_type , select_cnt , Choices){
 	
@@ -155,6 +184,79 @@ results.push(new Result(
 ));
 </c:forEach>
 //=====================================================================================================
+	
+function calculateParticipationFrequencies(respondents) {
+    let frequencies = { yes: 0, no: 0 };
+
+    respondents.forEach(function(respondent) {
+        if(respondent.respondents === 'yes') {
+            frequencies.yes += 1;
+        } else if(respondent.respondents === 'no') {
+            frequencies.no += 1;
+        }
+    });
+
+    return frequencies;
+}
+
+var frequencies = calculateParticipationFrequencies(respondents);
+createParticipationChart(frequencies);
+
+function createParticipationChart(frequencies) {
+    var ctx = document.getElementById('pieChartRespondents').getContext('2d');
+    var participationChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['Yes', 'No'],
+            datasets: [{
+                label: '참여율',
+                data: [frequencies.yes, frequencies.no],
+                backgroundColor: [
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 99, 132, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 99, 132, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            plugins: {
+            	legend: {
+                    position: 'right',
+                    labels: {
+                        generateLabels: function(chart) {
+                            const data = chart.data;
+                            return data.labels.map((label, index) => {
+                                const value = data.datasets[0].data[index];
+                                return {
+                                    text: label + ' : ' + value, // 레이블과 값 모두 표시
+                                    fillStyle: data.datasets[0].backgroundColor[index],
+                                };
+                            });
+                        }
+                    }
+                },
+                datalabels: {
+                    color: '#000000',
+                    anchor: 'center',
+                    align: 'center',
+                    formatter: (value, context) => {
+                        const total = context.dataset.data.reduce((sum, val) => sum + val, 0);
+                        const percentage = (value / total * 100).toFixed(2);
+                        return percentage + "%";
+                    }
+                }
+            }
+        },
+        plugins: [ChartDataLabels]
+    });
+}
+
+
+
 	
 // 집계 함수
 function aggregateData(results, field) {
