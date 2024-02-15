@@ -276,7 +276,6 @@ public class AdminExamController {
 		
 		return new ModelAndView("admin/submission/list" , "model" , model);
 		
-		
 	}
 	
 	

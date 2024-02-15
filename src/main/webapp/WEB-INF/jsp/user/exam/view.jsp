@@ -76,14 +76,14 @@
                                         				<c:when test="${item.select_type == '1' }">
                                         					<ul class="list_ob list_ob_01">
                                         						<c:forEach var="choice" items="${fn:split(item.Choices, '#')}" varStatus="choice_status">
-				                                                    <input type="checkbox" value="${choice_status.index + 1}" name="${status.index + 1}" ><span>${choice}</span>
+				                                                    <input type="radio" value="${choice_status.index + 1}" name="${status.index + 1}" ><span>${choice}</span>
 			                                                    </c:forEach>
 			                                                </ul>
                                         				</c:when>
                                         				<c:when test="${item.select_type == '2' }">
                                         					<ul class="list_ob list_ob_01">
                                         						<c:forEach var="choice" items="${fn:split(item.Choices, '#')}" varStatus="choice_status" >
-				                                                    <input type="radio" value="${choice_status.index + 1}" name="${status.index + 1}"><span>${choice}</span>
+				                                                    <input type="checkbox" value="${choice_status.index + 1}" name="${status.index + 1}"><span>${choice}</span>
 			                                                    </c:forEach>
 			                                                </ul>
                                         				</c:when>
