@@ -50,31 +50,33 @@
         창의융합캠프는 영재키움 프로젝트에 참가하는 학생들이 방학 중 KAIST에 집합하여, 2박 3일간 협동학습을 통해 창의적 문제해결능력을 향상시키는 프로그램
 		<div class="line_bnk_15"></div>
         <div class="font_noto all_tit_22"><span class="cont_blit_01"></span>(일정) 여름방학 중 2박 3일</div>
-        <table class="table table-bordered">
-        <tbody>
-        <tr class="align_c cell_bg">
-            <th>회차</th>
-            <th>기간</th>
-            <th>대상</th>
-            <th>장소</th>
-            <th>인원</th>
-        </tr>
-        <tr>
-            <td>1차</td>
-            <td>여름방학 중 2박 3일</td>
-            <td>초등학생</td>
-            <td>KAIST 본원</td>
-            <td>약 250명</td>
-        </tr>
-        <tr>
-            <td>2차</td>
-            <td>여름방학 중 2박 3일</td>
-            <td>중,고등학생</td>
-            <td>KAIST 본원</td>
-            <td>약 250명</td>
-        </tr>
-        </tbody>
+        <div class="overflow_scroll">
+        <table class="table table-bordered txt-nowrap">
+            <tbody>
+            <tr class="align_c cell_bg">
+                <th>회차</th>
+                <th>기간</th>
+                <th>대상</th>
+                <th>장소</th>
+                <th>인원</th>
+            </tr>
+            <tr>
+                <td>1차</td>
+                <td>여름방학 중 2박 3일</td>
+                <td>초등학생</td>
+                <td>KAIST 본원</td>
+                <td>약 250명</td>
+            </tr>
+            <tr>
+                <td>2차</td>
+                <td>여름방학 중 2박 3일</td>
+                <td>중,고등학생</td>
+                <td>KAIST 본원</td>
+                <td>약 250명</td>
+            </tr>
+            </tbody>
         </table>
+        </div>
 
         <div class="line_gab_30"></div>
         <div class="font_noto all_tit_22"><span class="cont_blit_01"></span>교육내용</div>
@@ -83,7 +85,7 @@
         - (인문학) 전문 강사와 함께 하는 인문학 프로그램 및 토크콘서트<br>
         - (진로멘토링) KAIST 대학생 및 전문가와 함께 하는 진로 멘토링<br>
         - (융합과학 프로젝트) 담당 멘토 선생님과 함께하는 STEAM 프로젝트 수행 등
-		<div class="line_bnk_15"></div>
+		<div class="line_bnk_15 c_hide"></div>
 
         <!-- 운영방안 -->
         <div class="kaist font_noto f_wet_03">
@@ -103,78 +105,80 @@
 
         <div class="line_gab_30"></div>
         <div class="font_noto all_tit_22"><span class="cont_blit_01"></span>캠프 프로그램 예시</div>
-        <table class="table table-bordered">
-        <tbody>
-        <tr class="align_c cell_bg">
-            <th style="width:15%">시간</th>
-            <th>1일차</th>
-            <th>2일차</th>
-            <th>3일차</th>
-        </tr>
-        <tr>
-            <td class="align_c">07:00 ~ 09:00</td>
-            <td rowspan="2">대전 KAIST학생이동</td>
-            <td>기상 및 아침식사</td>
-            <td>기상 및 아침식사</td>
-        </tr>
-        <tr>
-            <td class="align_c">09:00 ~ 11:30</td>
-            <td rowspan="2">인문학과의 만남</td>
-            <td>도전골든벨</td>
-        </tr>
-        <tr>
-            <td class="align_c">11:30 ~ 12:30</td>
-            <td>등록 및 멘토 배정</td>
-            <td>설문조사 및 폐회</td>
-        </tr>
-        <tr>
-            <td class="align_c">12:30 ~ 13:30</td>
-            <td>점심 식사</td>
-            <td>점심 식사</td>
-            <td>점심 식사</td>
-        </tr>
-        <tr>
-            <td class="align_c">13:30 ~ 14:00</td>
-            <td>개회식 및 안전교육</td>
-            <td rowspan="2">인문학 토크 콘서트</td>
-            <td rowspan="8">귀가</td>
-        </tr>
-        <tr>
-            <td class="align_c">14:00 ~ 15:30</td>
-            <td>Magic Science 특강</td>
-        </tr>
-        <tr>
-            <td class="align_c">15:30 ~ 17:00</td>
-            <td>명사특강</td>
-            <td rowspan="2">
-                융합과학프로젝트(초,중등)<br>
-                자기소개서 작성법(고등)
-            </td>
-        </tr>
-        <tr>
-            <td class="align_c">17:00 ~ 17:30</td>
-            <td rowspan="2">캠퍼스 투어</td>
-        </tr>
-        <tr>
-            <td class="align_c">17:30 ~ 18:00</td>
-            <td rowspan="2">미식가 프로그램</td>
-        </tr>
-        <tr>
-            <td class="align_c">18:00 ~ 19:00</td>
-            <td>저녁식사</td>
-        </tr>
-        <tr>
-            <td class="align_c">19:00 ~ 21:00</td>
-            <td>KAIST 대학생 진로멘토링</td>
-            <td>전문가 진로멘토링</td>
-        </tr>
-        <tr>
-            <td class="align_c">21:00 ~ 22:00</td>
-            <td>숙소 이동 및 점호</td>
-            <td>숙소 이동 및 점호</td>
-        </tr>
-        </tbody>
-        </table>
+        <div class="overflow_scroll">
+            <table class="table table-bordered txt-nowrap">
+            <tbody>
+            <tr class="align_c cell_bg">
+                <th style="width:15%">시간</th>
+                <th>1일차</th>
+                <th>2일차</th>
+                <th>3일차</th>
+            </tr>
+            <tr>
+                <td class="align_c">07:00 ~ 09:00</td>
+                <td rowspan="2">대전 KAIST학생이동</td>
+                <td>기상 및 아침식사</td>
+                <td>기상 및 아침식사</td>
+            </tr>
+            <tr>
+                <td class="align_c">09:00 ~ 11:30</td>
+                <td rowspan="2">인문학과의 만남</td>
+                <td>도전골든벨</td>
+            </tr>
+            <tr>
+                <td class="align_c">11:30 ~ 12:30</td>
+                <td>등록 및 멘토 배정</td>
+                <td>설문조사 및 폐회</td>
+            </tr>
+            <tr>
+                <td class="align_c">12:30 ~ 13:30</td>
+                <td>점심 식사</td>
+                <td>점심 식사</td>
+                <td>점심 식사</td>
+            </tr>
+            <tr>
+                <td class="align_c">13:30 ~ 14:00</td>
+                <td>개회식 및 안전교육</td>
+                <td rowspan="2">인문학 토크 콘서트</td>
+                <td rowspan="8">귀가</td>
+            </tr>
+            <tr>
+                <td class="align_c">14:00 ~ 15:30</td>
+                <td>Magic Science 특강</td>
+            </tr>
+            <tr>
+                <td class="align_c">15:30 ~ 17:00</td>
+                <td>명사특강</td>
+                <td rowspan="2">
+                    융합과학프로젝트(초,중등)<br>
+                    자기소개서 작성법(고등)
+                </td>
+            </tr>
+            <tr>
+                <td class="align_c">17:00 ~ 17:30</td>
+                <td rowspan="2">캠퍼스 투어</td>
+            </tr>
+            <tr>
+                <td class="align_c">17:30 ~ 18:00</td>
+                <td rowspan="2">미식가 프로그램</td>
+            </tr>
+            <tr>
+                <td class="align_c">18:00 ~ 19:00</td>
+                <td>저녁식사</td>
+            </tr>
+            <tr>
+                <td class="align_c">19:00 ~ 21:00</td>
+                <td>KAIST 대학생 진로멘토링</td>
+                <td>전문가 진로멘토링</td>
+            </tr>
+            <tr>
+                <td class="align_c">21:00 ~ 22:00</td>
+                <td>숙소 이동 및 점호</td>
+                <td>숙소 이동 및 점호</td>
+            </tr>
+            </tbody>
+            </table>
+        </div>
 
     </div>
 </div>

@@ -21,18 +21,18 @@
 </script>  
 
 <style>
-	.tabs .tab-contents ul li{
-    	white-space: nowrap;
-	    overflow: hidden;
-	    text-overflow: ellipsis;
-	    display: block;
-    }
+.tabs .tab-contents ul li{
+  /* white-space: nowrap; */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
     
-    .tabs {
+.tabs {
   max-width: 640px;
   margin: 0 auto;
-  padding: 0 20px;
 }
+
 #tab-button {
   display: table;
   table-layout: fixed;
@@ -41,6 +41,7 @@
   padding: 0;
   list-style: none;
 }
+
 #tab-button li {
   display: table-cell;
   width: 20%;
@@ -65,9 +66,21 @@
 .tab-contents {
   padding: .5em 2em 1em;
   border: 1px solid #ddd;
+  background-color: rgba(233,233,233,0.7);
+  border-radius: 0 0 5px 5px;
 }
 
+.carousel-item img {
+	border-radius: 5px;
+}
 
+#tab-button li:first-child a {
+border-radius: 5px 0 0 0;
+}
+
+#tab-button li:last-child a {
+border-radius: 0 5px 0 0;
+}
 
 .tab-button-outer {
   display: none;
@@ -75,6 +88,17 @@
 .tab-contents {
   margin-top: 20px;
 }
+
+@media screen and (max-width:992px) {
+.tab-contents {
+  margin-top: 0;
+}
+
+.tab-select-outer {
+  margin-top: 20px;
+}
+}
+
 @media screen and (min-width: 640px) {
   .tab-button-outer {
     position: relative;
@@ -95,7 +119,7 @@
 <body>
 	    <!-- 전체 -->
 	<a href="#" class="openMenu pos_a"><i class="las la-bars"></i></a>
-		 <div class="menu_overlay"></div>
+		<div class="menu_overlay"></div>
 		<div class="layout">
 	    <!-- 왼쪽 -->
 	    	<%@ include file="./include/menu.jsp" %>
@@ -164,7 +188,7 @@
 	            </div>
 	            <!-- 슬라이드끝 -->
 	            <!-- 탭 -->
-	            <div class="tabs">
+	            <div class="tabs border_5">
 	                <div class="tab-button-outer font_noto f_wet_03">
 	                    <ul id="tab-button">
 	                        <li><a href="#tab01">공지사항 <i onclick="location.href='${pageContext.request.contextPath}/user/notices_data/1/list.do'" class="fas fa-plus-circle" style="color: #5d7694;"></i> </a></li>

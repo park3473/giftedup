@@ -5,6 +5,17 @@
 
 <mapper namespace="egovframework.kaist.admin.member.service.impl.AdminMemberMapper">
 	 
+	 <select id="getListAllTest" resultType="hashMap" parameterType="egovframework.kaist.admin.member.model.AdminMemberVo">
+	 	SELECT NAME , MEMBER_ID , SEX , PHONE , TYPE FROM TBL_MEMBER
+		WHERE 1=1
+	 	<if test="LO_TYPE == 'TRUE'">
+	    	AND ADDRESS_LOCAL IN 
+		    <foreach collection="LO_LIST" item="local" open="(" close=")" separator=",">
+		    	#{local}
+		    </foreach>
+	    </if>
+	 </select>
+	 
 	<select id="getListAll" resultType="hashMap" >
 		SELECT /*AdminMemberMapper*/ * FROM TBL_MEMBER order by CREATE_TM desc
 	</select>

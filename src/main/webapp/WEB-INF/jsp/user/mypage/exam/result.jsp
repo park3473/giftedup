@@ -22,6 +22,7 @@
 	    text-overflow: ellipsis;
 	    display: block;
     }
+    .select_check{color:#ff0000;font-weight:bold}
 </style>
 
 
@@ -48,70 +49,80 @@
         <!-- 타이틀끝 -->
         
         
-    <section id="new_sub" class="sub_wrap">
-        <div id="new_sub_area" class="sub_area">
-            <div id="new_sub_con" class="sub_con">
-                <div class="sub_size">
-                    <nav class="sub_min_size" id="mento_member_insert">
-                        <div class="sub_page_wrap">
-                            <div class="sub_page">
-                                <div class="list_wrap">
-                                    <div class="title">
-                                        <span><img src="${pageContext.request.contextPath}/resources/img/sub/sub_icon_bars.png" alt="점" /></span>
-                                        <p>${model.view.name }</p>
-                                    </div>
-                                    <!-- 멘토 지원서 -->
-                                    
-                                    <form action="" method="POST" name="member_re_mento_insert_form" id="mento_insertform" style="display:block" autocomplete="off">
-                                    <input type="hidden" name="csrf" value="${CSRF_TOKEN}" />
-                                    <input type="hidden" name="exam_idx" value="${model.view.idx }">
-                                   	<div id="respondents" class="member_input_wrap">
-                                        <!-- 학생 view페이지 -->
-                                        <ul class="member_input nanumgothic">
-                                        	<c:forEach var="item" items="${model.question}" varStatus="status">
-                                        		<li class="pd-lr-10">
-                                        			<p>${item.name}</p>
-                                        			<c:choose>
-                                        				<c:when test="${item.select_type == '1' }">
-                                        					<ul class="list_ob list_ob_01">
-                                        						<c:forEach var="choice" items="${fn:split(item.Choices, '#')}" varStatus="choice_status">
-				                                                    <input type="checkbox" value="${choice_status.index + 1}" name="${status.index + 1}" ><span>${choice}</span>
-			                                                    </c:forEach>
-			                                                </ul>
-                                        				</c:when>
-                                        				<c:when test="${item.select_type == '2' }">
-                                        					<ul class="list_ob list_ob_01">
-                                        						<c:forEach var="choice" items="${fn:split(item.Choices, '#')}" varStatus="choice_status" >
-				                                                    <input type="radio" value="${choice_status.index + 1}" name="${status.index + 1}"><span>${choice}</span>
-			                                                    </c:forEach>
-			                                                </ul>
-                                        				</c:when>
-                                        				<c:when test="${item.select_type == '3' }">
-                                        					<ul class="list_ob list_ob_01">
-                                        						<input type="text" value="" name="${status.index + 1 }" />
-			                                                </ul>
-                                        				</c:when>
-                                        			</c:choose>
-                                        		</li>
-                                        	</c:forEach>                                
-                                        </ul>
-                                    </div>
-                                    </form>   
-                                    <!--                                  
-                                    <div class="board_btn_wrap">
-                                  		<div class="board_btn">
-                                  			<a class="stat_update" href="#" onclick="respondents()">설문 제출</a>
-                                  		</div>
-                                  	</div>
-                                  	-->
-                                </div>
-                            </div>
-                        </div>
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </section>
+			    <section id="new_sub" class="sub_wrap">
+			        <div id="new_sub_area" class="sub_area">
+			            <div id="new_sub_con" class="sub_con">
+			                <div class="sub_size">
+			                    <nav class="sub_min_size" id="mento_member_insert">
+			                        <div class="sub_page_wrap">
+			                            <div class="sub_page">
+			                                <div class="list_wrap">
+			                                    <div class="title">
+			                                        <span><img src="${pageContext.request.contextPath}/resources/img/sub/sub_icon_bars.png" alt="점" /></span>
+			                                        <p>${model.view.name }</p>
+			                                    </div>
+			                                    <!-- 멘토 지원서 -->
+			                                    
+			                                    <form action="" method="POST" name="member_re_mento_insert_form" id="mento_insertform" style="display:block" autocomplete="off">
+			                                    <input type="hidden" name="csrf" value="${CSRF_TOKEN}" />
+			                                    <input type="hidden" name="exam_idx" value="${model.view.idx }">
+			                                   	<div id="respondents" class="member_input_wrap">
+			                                        <!-- 학생 view페이지 -->
+			                                        <ul class="member_input nanumgothic">
+			                                        	<c:forEach var="item" items="${model.question}" varStatus="status">
+			                                        		<li class="pd-lr-10" id="question_list_li">
+			                                        			<p>${item.name}</p>
+			                                        			<c:choose>
+			                                        				<c:when test="${item.select_type == '1' }">
+			                                        					<ul class="list_ob list_ob_01">
+			                                        						<li style="border : 0;" data-question="${status.index }">
+				                                        						<ol>
+				                                        						<c:forEach var="choice" items="${fn:split(item.Choices, '#')}" varStatus="choice_status">
+								                                                    <li data="${choice }">${choice}</li>
+							                                                    </c:forEach>
+							                                                    </ol>
+						                                                   </li>
+						                                                </ul>
+			                                        				</c:when>
+			                                        				<c:when test="${item.select_type == '2' }">
+			                                        					<ul class="list_ob list_ob_01">
+			                                        						<li style="border : 0;" data-question="${status.index }">
+				                                        						<ol>
+				                                        						<c:forEach var="choice" items="${fn:split(item.Choices, '#')}" varStatus="choice_status" >
+								                                                    <li data="${choice }">${choice}</li>
+							                                                    </c:forEach>
+							                                                    </ol>
+						                                                    </li>
+						                                                </ul>
+			                                        				</c:when>
+			                                        				<c:when test="${item.select_type == '3' }">
+			                                        					<ul class="list_ob list_ob_01">
+			                                        						<li style="border : 0;" data-question="${status.index }">
+			                                        							
+			                                        						</li>
+						                                                </ul>
+			                                        				</c:when>
+			                                        			</c:choose>
+			                                        		</li>
+			                                        	</c:forEach>                                
+			                                        </ul>
+			                                    </div>
+			                                    </form>   
+			                                    <!--                                  
+			                                    <div class="board_btn_wrap">
+			                                  		<div class="board_btn">
+			                                  			<a class="stat_update" href="#" onclick="respondents()">설문 제출</a>
+			                                  		</div>
+			                                  	</div>
+			                                  	-->
+			                                </div>
+			                            </div>
+			                        </div>
+			                    </nav>
+			                </div>
+			            </div>
+			        </div>
+			    </section>
  
   <%@ include file="../../include/footerJs.jsp" %> 
 
@@ -154,7 +165,87 @@
 <script type="text/javascript">
 
 
+function Question(idx , name , type , content , select_type , select_cnt , Choices){
+	
+	this.idx = idx;
+	this.name = name;
+	this.type = type;
+	this.content = content;
+	this.select_type = select_type;
+	this.select_cnt = select_cnt;
+	this.Choices = Choices;
+	
+}
 
+//=====================================================================================================
+var questions = [];
+<c:forEach var="item" items="${model.question}" varStatus="status" >
+questions.push(new Question(
+		'${item.idx}',
+		'${item.name}',
+		'${item.type}',
+		'${item.content}',
+		'${item.select_type}',
+		'${item.select_count}',
+		[
+			 <c:forEach var="choice" items="${fn:split(item.Choices, '#')}">
+			 '${choice}',
+			 </c:forEach>
+			 ]
+		));
+</c:forEach>
+//=====================================================================================================
+
+$(document).ready(function() {
+	
+	const select_list = '${model.view.select_list}';
+	console.log(select_list);
+	//먼저, 대괄호 안의 내용을 단일 항목으로 처리하기 위한 준비 작업
+	//대괄호 안의 내용을 임시로 대체할 유니크한 문자열 생성
+	const tempString = select_list.replace(/\[(.*?)\]/g, (match) => {
+	 // 대괄호 안의 콤마를 제거하지 않고, 대괄호를 유지
+	 return match.replace(/,/g, "，"); // 콤마 대신 유니크한 구분자(예: 전각 콤마) 사용
+	});
+
+	//이제 쉼표로 분할하여 각 항목 처리
+	const selects = tempString.split(',').map(item => {
+	 // 대체했던 유니크한 구분자를 다시 콤마로 변경
+	 return item.replace(/，/g, ",");
+	});
+	
+    // questions 배열과 select 배열을 반복 처리
+    for(var i = 0; i < questions.length; i++){
+        var question = questions[i];
+        var selectType = question.select_type;
+        var selectedChoice = selects[i];
+
+        // selectType에 따라 다른 동작 수행
+        switch(selectType){
+            case '1':
+            	$('#question_list_li ol li[data="'+questions[i].Choices[parseInt(selectedChoice)-1]+'"]').addClass('select_check');
+                break;
+            case '2':
+                // 다중 선택 처리
+                // 대괄호를 제거하고 쉼표로 분할하여 배열 생성
+                var choicesArray = selectedChoice.replace(/[\[\]]/g, '').split(',');
+                // 배열 내의 각 선택지에 대해 반복
+                choicesArray.forEach(choice => {
+                    // 해당 선택지에 select_check 클래스 추가
+                	$('#question_list_li ol li[data="'+questions[i].Choices[parseInt(choice)-1]+'"]').addClass('select_check');
+                });
+                break;
+
+            case '3':
+                // 답변형인 경우, 해당 data-question 값을 가진 li에 값을 삽입
+                var answer = selectedChoice; // 이 경우, selectedChoice는 사용자의 텍스트 답변을 나타냄
+                $('li[data-question="'+i+'"]').text(answer); // data-question 값으로 해당하는 li 요소 찾아 텍스트 삽입
+                break;
+        }
+    }
+});
+
+//=====================================================================================================
+	
 </script>
 
 </html>

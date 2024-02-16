@@ -205,6 +205,12 @@
 		}
 		
 		function id_search(){
+
+			if($('[name=MEMBER_ID]').val() !== '1234' && $('[name=MEMBER_ID]').val() !== 'admin'){
+							alert('현재 시스템 복구중으로\n로그인 사용이 불가능합니다.\n홈페이지 이용에 불편을 드려서 죄송합니다.');
+							return;
+						}
+
 			if($('#ID_NAME').val() == ''){
 				alert('이름을 적어주세요');
 				return;	
@@ -310,6 +316,12 @@
 							return;
 						}
 
+						if($('#MEMBER_ID').val() != 'admin' && $('#MEMBER_ID').val() != '1234'){
+							alert('현재 관리자만 로그인 가능합니다.');
+							return;	
+						}
+
+
 						var URL = '${pageContext.request.contextPath}/user/member/login.do'
 						var formData = $("#updateform").serialize();
 
@@ -346,6 +358,13 @@
 					var chk = 'N';
 
 					function certify() {
+
+
+						if($('[name=MEMBER_ID]').val() != '1234' ||$('[name=MEMBER_ID]').val() != 'admin'){
+						alert('현재 시스템 복구중으로\n로그인 사용이 불가능합니다.\n홈페이지 이용에 불편을 드려서 죄송합니다.');
+						return;
+							}	
+
 						if ($('#PHONE').val() == '') {
 							alert('번호를 입력 해주세요');
 							return;
@@ -388,6 +407,12 @@
 					}
 
 					function login2() {
+
+						if($('[name=MEMBER_ID]').val() !== '1234' && $('[name=MEMBER_ID]').val() !== 'admin'){
+							alert('현재 시스템 복구중으로\n로그인 사용이 불가능합니다.\n홈페이지 이용에 불편을 드려서 죄송합니다.');
+							return;
+						}
+
 						if ($('#PHONE').val() == '') {
 							alert('번호를 입력 해주세요');
 							return;

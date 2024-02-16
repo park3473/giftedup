@@ -268,6 +268,15 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 		return modelMap;
 	}
 
+	@Override
+	public ModelMap getListAll(AdminMemberVo adminMemberVo) {
+		ModelMap modelMap = new ModelMap();
+		List<?> list = adminMemberMapper.getListAllTest(adminMemberVo);
+		modelMap.addAttribute("list", list);
+		System.out.println("------------------size : " + list.size());
+		return modelMap;
+	}
+
 
 		
 }

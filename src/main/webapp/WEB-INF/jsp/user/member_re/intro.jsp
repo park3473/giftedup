@@ -92,7 +92,8 @@
         <div class="font_noto all_tit_22"><span class="cont_blit_01"></span>'온라인 지원서' 작성 방법</div>
         <div class="txt_just green_02 b_pad_15">※ 아래 3가지 유형 중 해당되는 유형에 따라 온라인 지원서를 작성해주시고, 지원서류를 첨부하여 주시기 바랍니다</div>
 
-        <table class="table table-bordered">
+        <div class="overflow_scroll">
+        <table class="table table-bordered txt-nowrap">
         <tbody>
         <tr class="align_c cell_bg">
             <th style="width:8%">유형</th>
@@ -132,7 +133,8 @@
 
         <div class="line_bnk_15"></div>
         <div class="font_noto all_tit_22"><span class="cont_blit_01"></span>지원서류 및 증빙서류 목록</div>
-        <table class="table table-bordered align_c ">
+        <div class="overflow_scroll">
+        <table class="table table-bordered align_c txt-nowrap">
         <tbody>
         <tr class="cell_bg">
             <th rowspan="2" style="width: 10%;">순번</th>
@@ -185,7 +187,8 @@
         </tr>
         </tbody>
         </table>
-
+        </div>
+        </div>
     </div>
 </div>
 <!-- 본문 끝 -->

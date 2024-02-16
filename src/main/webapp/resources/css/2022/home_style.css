@@ -123,12 +123,12 @@ border:1px #dedede solid !important;
 .right .you_btn{top:50%;left:50%;transform: translate(-50%, -50%);z-index:2}
 
 /* 슬라이드 */
-.content .cont_right .slide{height:300px}
+.content .cont_right .slide{height:275px}
 #carousel11_indicator {max-width:100%}
-#carousel11_indicator .carousel-inner img{max-width:100%;margin-top:110px;margin-left:-100px}
+#carousel11_indicator .carousel-inner img{max-width:100%;margin-top:110px;}
 #carousel11_indicator .carousel-inner{text-align:center;}
-#carousel11_indicator .carousel-control-prev{left:0%;z-index:3;font-size:48px}
-#carousel11_indicator .carousel-control-next{right:0%;z-index:3;font-size:48px}
+#carousel11_indicator .carousel-control-prev{left:-15%;z-index:3;font-size:48px; top: 33%;}
+#carousel11_indicator .carousel-control-next{right:-15%;z-index:3;font-size:48px; top: 33%;}
 #carousel11_indicator .carousel-indicators{bottom:3%;display:none}
 #carousel11_indicator .carousel-caption {top:10%;text-align:right;z-index:3}
 #carousel11_indicator .carousel-caption .txt_24{font-size:1.5rem;line-height:32px;padding-bottom:15px}
@@ -178,7 +178,7 @@ border:1px #dedede solid !important;
 
 /* 테이블 */
 .table-bordered thead td, .table-bordered thead th {border-bottom-width:0px}
-.table thead th {vertical-align: bottom;border-bottom:none}
+.table thead th {vertical-align:middle;border-bottom:none}
 .table tbody+tbody {border-top:none}
 .table th,.table td {display:table-cell;vertical-align:middle}
 .table .cell_bg{background:rgba(0,89,156,.05)}
@@ -231,7 +231,7 @@ body {font-size:14px}
 
 /* 메인배너 */
 .content .cont_right .slide{height:auto}
-#carousel11_indicator .carousel-inner img{max-width:50%;margin-top:90px}
+#carousel11_indicator .carousel-inner img{max-width:100%; margin-top: 0px}
 #carousel11_indicator .carousel-control-prev{left:-10%}
 #carousel11_indicator .carousel-control-next{right:-10%}
 #carousel11_indicator .carousel-caption {top:15%;right:7%;left:7%}
@@ -308,8 +308,6 @@ body {font-size:14px}
 .col_sm_3 .sul{border-bottom:1px #ededed solid;padding-bottom:15px;margin-bottom:15px}
 .col_sm_3 .end{border-bottom:none;padding-bottom:0;margin-bottom:0}
 .all_blit{padding-bottom:0px}
-
-
 }
 
 @media screen and (min-width:768px) {
@@ -337,3 +335,13 @@ body {font-size:14px}
 .font-22 {font-size:22px;}
 .font-28 {font-size:28px;}
 .line_gab_20 {margin: 20px 0; border-top:1px #dedede solid;}
+.border_5 { border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -ms-border-radius: 5px; -o-border-radius: 5px; }
+
+
+@media only screen and (max-width: 1024px) {
+.overflow_scroll {overflow: scroll;}
+.txt-nowrap {white-space: nowrap;}
+.div_2 {margin: 15px 0 !important;}
+.all_tit_20 {font-size: 18px; word-break: break-all;}
+#carousel11_indicator .carousel-control-prev, #carousel11_indicator .carousel-control-next {top: 0%; font-size: 30px;}
+}

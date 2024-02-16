@@ -21,9 +21,12 @@ import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -229,8 +232,6 @@ public class AdminMemberController {
 	@RequestMapping(value = "/admin/member/list.do", method = RequestMethod.GET)
 	public ModelAndView list(@ModelAttribute("AdminMemberVo") AdminMemberVo adminMemberVo,
 			HttpServletRequest request, HttpServletResponse response) {
-
-		System.out.println("zzzzzzdsadsasaddas");
 		
 		String PAGE = request.getParameter("PAGE") != null ? request
 				.getParameter("PAGE") : "0";
@@ -1156,26 +1157,44 @@ public class AdminMemberController {
 	    headStyle.setBorderBottom(BorderStyle.THIN);
 	    headStyle.setBorderLeft(BorderStyle.THIN);
 	    headStyle.setBorderRight(BorderStyle.THIN);
-
-	    // 배경색은 노란색입니다.
-	    headStyle.setFillForegroundColor(HSSFColorPredefined.YELLOW.getIndex());
-	    headStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-
+	    
 	    // 데이터는 가운데 정렬합니다.
 	    headStyle.setAlignment(HorizontalAlignment.CENTER);
 
 	    // 데이터용 경계 스타일 테두리만 지정
 
 	    CellStyle bodyStyle = wb.createCellStyle();
+	    
+	    Font headerFont = wb.createFont();
+	    headerFont.setBold(true); // 헤더 폰트 굵게
+	    headerFont.setFontHeightInPoints((short) 12); // 폰트 크기
+	    headerFont.setFontName("Arial"); // 폰트 종류
 
+	    headStyle.setFont(headerFont); // 헤더 스타일에 폰트 적용
+
+	    Font bodyFont = wb.createFont();
+	    bodyFont.setBold(false); // 본문 폰트 일반
+	    bodyFont.setFontHeightInPoints((short) 10);
+	    bodyFont.setFontName("Arial");
+
+	    bodyStyle.setFont(bodyFont); // 본문 스타일에 폰트 적용
+	    
+	    headStyle.setFillForegroundColor(IndexedColors.LIGHT_BLUE.getIndex());
+	    headStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+	    
+	    bodyStyle.setAlignment(HorizontalAlignment.LEFT); // 텍스트 왼쪽 정렬
+	    bodyStyle.setVerticalAlignment(VerticalAlignment.CENTER); // 수직 중앙 정렬
+
+	    
 	    bodyStyle.setBorderTop(BorderStyle.THIN);
-
 	    bodyStyle.setBorderBottom(BorderStyle.THIN);
-
 	    bodyStyle.setBorderLeft(BorderStyle.THIN);
-
 	    bodyStyle.setBorderRight(BorderStyle.THIN);
-
+	    bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+	    bodyStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+	    bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+	    bodyStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+	    
 
 
 	    // 헤더 생성
@@ -1357,7 +1376,10 @@ public class AdminMemberController {
 	    cell.setCellValue("전공");
 	    
 	    
-	  
+	    for(int i = 0; i < columnCnt; i++) {
+	        sheet.autoSizeColumn(i); // 열 너비 자동 조정
+	        sheet.setColumnWidth(i, sheet.getColumnWidth(i) + 512); // 조금 더 여유 있게 조정
+	    }
 		
 
 	    for(int i = 0; i < list.size(); i++ )
@@ -1667,6 +1689,7 @@ public class AdminMemberController {
             HSSFWorkbook workbook = new HSSFWorkbook(fis);
             HSSFSheet sheet = workbook.getSheetAt(0); // 해당 엑셀파일의 시트(Sheet) 수
             int rows = sheet.getPhysicalNumberOfRows(); // 해당 시트의 행의 개수
+            
             for (int rowIndex = 1; rowIndex < rows; rowIndex++)
             {
                 HSSFRow row = sheet.getRow(rowIndex); // 각 행을 읽어온다
@@ -1946,6 +1969,37 @@ public class AdminMemberController {
 		
 		
 		return "redirect:./list.do";
+	}
+	
+	// TODO : 테스트 용도
+	/*회원 그룹 관리 - 모든 회원*/
+	@RequestMapping(value = "/admin/member/test/list.do", method = RequestMethod.GET)
+	public ModelAndView listTest(@ModelAttribute("AdminMemberVo") AdminMemberVo adminMemberVo,
+			HttpServletRequest request, HttpServletResponse response) {
+
+		//지역별 관리자 확인 1.session에 지역확인 2.sutil 에 저장된 배열 받기(지역관리)
+		HttpSession session = request.getSession();
+		
+		if(session.getAttribute("ssion_local_type") != null && session.getAttribute("ssion_local_type") != "전체") {
+			
+			System.out.println(session.getAttribute("ssion_local_type"));
+			
+			String LOCAL = (String) session.getAttribute("ssion_local_type");
+			System.out.println(LOCAL);
+			
+			List <String> LO_TYPE = SUtil.getLO_TYPE_LIST(LOCAL);
+			
+			adminMemberVo.setLO_LIST(LO_TYPE);
+			
+			adminMemberVo.setLO_TYPE("TRUE");
+			
+		}
+		
+		ModelMap model = new ModelMap();
+		
+		model = adminMemberService.getListAll(adminMemberVo);
+		
+		return new ModelAndView("admin/member/test", "model", model);
 	}
 	
 	

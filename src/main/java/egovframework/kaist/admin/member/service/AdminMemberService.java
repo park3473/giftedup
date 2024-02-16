@@ -48,6 +48,8 @@ public interface AdminMemberService {
 
 	public Object getMatchingList(AdminMemberVo adminMemberVo);
 
+	public ModelMap getListAll(AdminMemberVo adminMemberVo);
+
 	
 	
 

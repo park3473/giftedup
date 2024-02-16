@@ -56,5 +56,7 @@ public interface AdminMemberMapper {
 	public List<?> getMatchingList(AdminMemberVo adminMemberVo);
 
 	public List<?> getAllList(AdminExamVo adminExamVo);
+
+	public List<?> getListAllTest(AdminMemberVo adminMemberVo);
 	
 }

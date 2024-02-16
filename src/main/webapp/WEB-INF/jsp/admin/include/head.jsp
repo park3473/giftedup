@@ -17,6 +17,4 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/jquery.datetimepicker.css">
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/favicon.ico" type="image/x-icon">
     <link rel="icon" href="${pageContext.request.contextPath}/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
     <title>영재키움프로젝트</title>

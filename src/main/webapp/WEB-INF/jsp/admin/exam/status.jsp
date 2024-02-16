@@ -246,7 +246,11 @@ function createParticipationChart(frequencies) {
                     formatter: (value, context) => {
                         const total = context.dataset.data.reduce((sum, val) => sum + val, 0);
                         const percentage = (value / total * 100).toFixed(2);
-                        return percentage + "%";
+                        if (percentage === '0.00') {
+                            return ''; // 0%일 때는 레이블을 표시하지 않음
+                        } else {
+                        	return percentage + "%";
+                        }
                     }
                 }
             }

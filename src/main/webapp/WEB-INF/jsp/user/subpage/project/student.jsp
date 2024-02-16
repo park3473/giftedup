@@ -8,27 +8,27 @@
     <%@ include file="../../include/head.jsp" %>
 </head>
 <script>
-    AOS.init({
-        easing:'ease-out-back',
-        duration:1000,
-		 once: true
-    }); 
+AOS.init({
+    easing:'ease-out-back',
+    duration:1000,
+	 once: true
+}); 
     
 </script>  
 
 <style>
-	.tabs .tab-contents ul li{
-    	white-space: nowrap;
-	    overflow: hidden;
-	    text-overflow: ellipsis;
-	    display: block;
-    }
+.tabs .tab-contents ul li{
+	white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+}
     
-    thead {background-color:#89b5d4; color:white;}
+thead {background-color:#89b5d4; color:white;}
 .table-striped tbody tr:nth-of-type(odd) {background-color: #e4f2f9;}
 .div_2 {margin:0 20px 0 20px;}
 .col_sm_3 .tit {border-bottom: 1px #cccccc solid;}
-.row {margin-right: 0px; margin-left: 0px;}
+.row_1 {margin-right: 0px; margin-left: 0px;}
 .kaist .item_03, .kaist .item_05 {flex-basis: 360px;}
 .kaist .item_03 {padding:20px; color: rgba(0,0,0,.5);}
 
@@ -42,7 +42,7 @@
 	    	<%@ include file="../../include/menu.jsp" %>
 
     <!-- 본문 -->
-   <div class="content">
+    <div class="content">
     <div class="sub_cont_wrap">
 
         <!-- 타이틀 -->
@@ -128,11 +128,12 @@
 
         <div class="line_gab_30"></div>
 
-        <div class="row kaist">
+        <div class="kaist">
+            <div class="row">
             <div class="col-sm-12">
                 <div class="font_noto all_tit_22"><span class="cont_blit_01"></span>개인별 포트폴리오 관리</div>
                 <div class="b_pad_15">참여 학생들이 직접 교육프로그램 참여 이력 및 소감 작성, 담당 멘토교사가 내용 확인 및 피드백을 통해 체계적인 기록관리</div>
-                <div class="row col_sm_3 txt-brk text-center">
+                <div class="row_1 row col_sm_3 txt-brk text-center">
                 <div class="col-md col-12 aos-init aos-animate pt-3" style="background-color:rgba(0,89,156,.05); border-radius:10px;" data-aos="fade-up" data-aos-delay="300">
                 <img src="${pageContext.request.contextPath}/resources/img/2022/ic_ico_05.png">
                 <div class="tit all_tit_20 font_noto">[학생-멘토교사]<br>멘토링 활동</div>
@@ -158,7 +159,8 @@
                 </div>
                 </div>
                 </div>
-            </div>                
+            </div>
+            </div>
         </div>
 
         <div class="line_gab_30"></div>
@@ -191,7 +193,7 @@
         <div class="row kaist">
         <div class="col-sm-12">
             <div class="font_noto all_tit_22"><span class="cont_blit_01"></span>과학고 영재학교 방문 프로그램</div>
-            <div class="row col_sm_3 txt-brk text-center">
+            <div class="row_1 row col_sm_3 txt-brk text-center">
             <div class="col-md col-12 aos-init aos-animate pt-3" style="background-color:rgba(0,89,156,.05); border-radius:10px;" data-aos="fade-up" data-aos-delay="300">
             <div class="tit all_tit_20 font_noto" style="border-bottom:none;">과학고, 영재학교, 마이스터고, 대학 방문 진로탐색</div>
             </div>
@@ -203,7 +205,7 @@
         <div class="row kaist">
         <div class="col-sm-12">
             <div class="font_noto all_tit_22"><span class="cont_blit_01"></span>창의융합 캠프</div>
-            <div class="row col_sm_3 txt-brk text-center">
+            <div class="row_1 row col_sm_3 txt-brk text-center">
             <div class="col-md col-12 aos-init aos-animate pt-3" style="background-color:rgba(0,89,156,.05); border-radius:10px;" data-aos="fade-up" data-aos-delay="300">
             <div class="b_pad_15 mb-2">진로 설계 및 창의적 문제해결력 향상을 위한 캠프, (초등) 온라인 캠프, (중ㆍ고등) 집합 캠프
             <br><span class="blue_01 font-bold font-14">※ 캠프 프로그램을 모두 참여한 경우에만 시수 인정</span>
@@ -219,7 +221,7 @@
         <div class="row kaist">
             <div class="col-sm-12">
                 <div class="font_noto all_tit_22"><span class="cont_blit_01"></span>온라인 학습멘토링</div>
-                <div class="row col_sm_3 txt-brk text-center">
+                <div class="row_1 row col_sm_3 txt-brk text-center">
                 <div class="col-md col-12 aos-init aos-animate pt-3" style="background-color:rgba(0,89,156,.05); border-radius:10px;" data-aos="fade-up" data-aos-delay="300">
                 <div class="tit all_tit_20 font_noto">KAIST 온라인 학습 지원</div>
                 <div class="sul mb-3">

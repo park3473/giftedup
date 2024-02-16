@@ -48,7 +48,7 @@
 <script src="${pageContext.request.contextPath}/resources/js/2022/aos.js"></script>
 <!--  2022 end -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/font-kopub/1.0/kopubdotum.css" type="text/css">
-<title>테스트서버 프로젝트</title>
+<title>영재키움 프로젝트</title>
 
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/sweetalert/sweetalert2.min.css">

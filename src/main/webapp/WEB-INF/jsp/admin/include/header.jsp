@@ -44,6 +44,9 @@ String NowYear = String.valueOf(year);
                                             <span></span>
                                             <span>학사관리</span>
                                         </div>
+                                        <li <c:if test="${fn:indexOf(requestURI, '/member/test/list') > -1}">class="nav_active"</c:if>>
+                                        	<a href="${pageContext.request.contextPath}/admin/member/test/list.do" >· 테스트 관리</a>
+                                        </li>
                                         <li <c:if test="${fn:indexOf(requestURI, '/member/allstudentlist') > -1}">class="nav_active"</c:if>>
                                         	<a href="${pageContext.request.contextPath}/admin/member/allstudentlist.do" >· 학적부 관리</a>
                                         </li>
@@ -64,7 +67,6 @@ String NowYear = String.valueOf(year);
 											</c:forEach>
 										</ul>
                                         </li>
-                                        
                                         <li <c:if test="${fn:indexOf(requestURI, '/member/list') > -1}">class="nav_active"
                                             </c:if>>
                                             <a href="${pageContext.request.contextPath}/admin/member/list.do">· 회원그룹관리</a>
