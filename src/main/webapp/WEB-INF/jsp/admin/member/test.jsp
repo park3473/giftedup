@@ -29,7 +29,7 @@
                         <div class="sc_con">
                             <div class="title">
                                 <span></span>
-                                <span>회원목록관리</span>
+                                <span>테스트 회원목록관리</span>
                                 
                             </div>
                             <input type="text" id="search-field" placeholder="Search data...">
@@ -40,12 +40,6 @@
                             <!--관리자 버튼-->
                             <div class="adm_btn_wrap">
                                 <ul>
-                                	<li class="register" id="member_excel">
-                                        <a href="#">현재 테이블 엑셀 다운로드</a>
-                                    </li>
-                                    <li class="register" id="member_excel">
-                                        <a href="#">회원 엑셀 업로드</a>
-                                    </li>
                                     <li class="register">
                                         <a href="${pageContext.request.contextPath}/admin/member/insert.do">등록하기</a>
                                     </li>
@@ -89,6 +83,7 @@
         pagination: "local", // 페이지네이션 사용 설정
         paginationSize: 10, // 페이지 당 행의 수
         columns: [
+        	{title: "기본아이디", field: "idx" , visible:false},
             {title: "이름", field: "name", editor: "input"},
             {title: "아이디", field: "member_id", editor: "input"},
             {title: "성별", field: "sex", editor: "select", editorParams: {values: ["남자", "여자"]}},
@@ -103,8 +98,9 @@
 
 
 	//=====================================================================================================
-	function Member(member_id , name , sex , phone , type){
+	function Member(idx , member_id , name , sex , phone , type){
 	
+		this.idx = idx;
 		this.member_id = member_id;
 		this.name = name;
 		this.sex = sex;
@@ -117,6 +113,7 @@
 	var member = [];
 	<c:forEach var="item" items="${model.list}" varStatus="status">
 	member.push(new Member(
+			'${item.MEMBER_ID}',
 			'${item.MEMBER_ID}',
 			'${item.NAME}',
 			'${item.SEX}',
@@ -136,7 +133,7 @@
 	table.on("cellEdited", function (cell) {
 	var data = cell.getRow().getData(); // 편집된 행의 데이터를 가져옵니다.
 	           console.log(data);
-			   alert('수정된 아이디 : '+ data.member_id + '\n'+'수정 데이터 : ' + cell.getValue())
+			   alert('수정된 idx : '+ data.idx + '\n'+'수정 데이터 : ' + cell.getValue())
 	        });    
 	// 초기 데이터 설정
 	    table.setData(member);

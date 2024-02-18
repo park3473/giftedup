@@ -50,18 +50,12 @@
                         <div class="sc_con" id="div_con">
                             <div class="title">
                                 <span></span>
-                                <span> 설문 등록</span>
+                                <span>설문 문제 등록</span>
                             </div>
                             
                             <div class="member_register_wrap">
                                 <div class="member_input_wrap">
                                     <ul class="member_input">
-                                    	<c:if test="${model.exam_idx != 'false' }">
-	                                        <li id="list_input_seq">
-	                                            <span class="list_t">문항 번호</span>
-	                                            <input class="input_size mr" type="text" id="seq" name="seq">
-	                                        </li>
-                                        </c:if>
                                         <li>
                                         	<span class="list_t">타입</span>
                                         	<input class="input_size mr" type="text" name="type" id="type" list="type_list" >

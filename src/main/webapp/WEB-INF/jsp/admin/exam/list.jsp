@@ -71,6 +71,7 @@
                                             ${fn:substring(item.update_tm,0,11)}
                                         </td>
                                         <td>
+                                        	<button type="button" onclick="location.href='/user/exam/view.do?idx=${item.idx}'">설문지 보기</button>
                                         	<button type="button" onclick="location.href='/admin/exam/question_list.do?exam_idx=${item.idx}&category=${item.category }'">리스트 확인</button>
                                         	<button type="button" onclick="location.href='/admin/exam/update.do?idx=${item.idx}'">관리</button>
                                         	<button type="button" onclick="location.href='/admin/exam/respondents/list.do?exam_idx=${item.idx}'">응답자 관리</button>

@@ -49,51 +49,36 @@
                         <div class="sc_con" id="div_con">
                             <div class="title">
                                 <span></span>
-                                <span>문제 등록</span>
+                                <span>설문 문제 수정</span>
                             </div>
                             
                             <div class="member_register_wrap">
                                 <div class="member_input_wrap">
                                     <ul class="member_input">
                                         <li>
-                                        	<span class="list_t">타입</span>
-                                        	<input class="input_size mr" type="text" name="type" id="type"  value="${model.view.type }" >
+                                        	<span class="list_t">타입 ${model.view.type}</span>
+                                        	<input class="input_size mr" type="text" name="type" id="type" list="type_list" value="${model.view.TYPE }">
+                                        	<c:if test="${model.TypeList.size() > 0 }">
+                                        	<datalist id="type_list">
+                                        	<c:forEach items="${model.TypeList }" var="item" varStatus="status">                                        	
+                                        		<option >${item.TYPE }</option>
+                                        	</c:forEach>
+                                        	</datalist>
+                                        	</c:if>
+                                        	<!-- <span><button type="button" onclick="question_select()">문제 가져오기</button></span> -->
                                         </li>
                                         <li>
-                                            <span class="list_t">문제 제목</span>
-                                            <input class="input_title" type="text" id="name" name="name" value="${model.view.name }" >
+                                            <span class="list_t">설문 제목</span>
+                                            <input class="input_title" type="text" id="name" name="name" value="${model.view.name }">
                                         </li>
-                                        <c:if test="${model.view.category == '1'  }">
-                                        <li>
-                                            <span class="list_t">진단 목표</span>
-                                            <input class="input_title" type="text" id="objectives" name="objectives" value="${model.view.objectives }" >
-                                        </li>
-                                        </c:if>
                                         <li id="select_type_li">
-                                            <span class="list_t">답안 타입</span>
-                                            <select name="select_type" id="select_type" onchange="select_type_change()" disabled="disabled">
-                                            	<option value="false">타입을 선택해 주세요</option>
-                                            	<option value="0" <c:if test="${model.view.select_type == '0' }">selected="selected"</c:if> >OX 퀴즈</option>
-                                            	<option value="1" <c:if test="${model.view.select_type == '1' }">selected="selected"</c:if> >다지선다</option>
+                                            <span class="list_t">설문 타입</span>
+                                            <select name="select_type" id="select_type" onchange="select_type_change()">
+                                            	<option value="false" selected="selected">타입을 선택해 주세요</option>
+                                            	<option value="1" <c:if test="${model.view.select_type == '1' }">selected="selected"</c:if> >객관식</option>
+                                            	<option value="2" <c:if test="${model.view.select_type == '2' }">selected="selected"</c:if> >체크박스</option>
+                                            	<option value="3" <c:if test="${model.view.select_type == '3' }">selected="selected"</c:if> >답변형</option>
                                             </select>
-                                            <button type="button" onclick="select_change()">답안 수정</button>
-                                        </li>
-                                        <c:if test="${model.view.category == '1'  }">
-                                        <li id="select_val_li">
-                                            <span class="list_t">답안</span>
-                                            <select name="select_val" id="select_val" onchange="select_form_open()">
-                                            	<option value="O">O</option>
-                                            	<option value="X">X</option>
-                                            </select>
-                                        </li>
-                                        </c:if>
-                                        <li>
-                                        	<span class="list_t">문제 내용</span>
-                                        	<textarea name="content" id="editor">${model.view.content }</textarea>
-                                        </li>
-                                        <li>
-                                            <span class="list_t">해설</span>
-                                            <input class="input_title" type="text" id="solution" name="solution" value="${model.view.solution }"  >
                                         </li>
                                     </ul>
                                 </div>
@@ -102,6 +87,7 @@
                         </form>
                     </div>
                     <div id="select_box">
+                    	<c:if test="${model.view.select_type == '1' || model.view.select_type == '2'}">
                     	<form action="./insert.do" method="post" name="select_insertForm" id="select_insertForm" enctype="multipart/form-data">
                     		<input type="hidden" name="select_confrim" value="false">
                     		<div class="member_register_wrap">
@@ -112,18 +98,13 @@
 	                            	<c:forEach items="${model.list}" var="item" varStatus="status">
 		                            	<ul class="member_input" id="select_ul_${status.index }">
 		                            		<li>번호 : <input type="text" name="seq" value="${item.seq }" readonly="readonly"/></li>
-		                            		<li>내용 : <input type="text" name="content" value="${item.content }" readonly="readonly" /></li>
-		                            		<c:if test="${item.image != ''}">
-		                            			<li>이미지 : <input type="text" name="image" value="${item.image }" readonly="readonly" /> <button type="button" onclick="image_change(this , '${status.index}')">이미지 변경</button></li>
-		                            		</c:if>
-		                            		<c:if test="${item.image == ''}">
-		                            			<li>이미지 : <input type="file" name="image" value=""></li>
-		                            		</c:if>
+		                            		<li>내용 : <input type="text" name="content" value="${item.content }" /></li>
 		                            	</ul>
 	                            	</c:forEach>
 	                            </div>
                             </div>
                     	</form>
+                    	</c:if>
                     	<!--저장하기 버튼-->
                         <div class="register_btn_area">
                             <div class="register_btn_con" id="admin_button">
@@ -173,47 +154,33 @@ $(document).ready(function () {
 </script>
 <script type="text/javascript">
 
+//메뉴창
 $(document).ready(function () {
 	
-	$(".adm_menu_con > li").eq(3).find(".sub_menu_con").show();
-	$(".adm_menu_con > li").eq(3).css({
+	$(".adm_menu_con > li").eq(6).find(".sub_menu_con").show();
+	$(".adm_menu_con > li").eq(6).css({
 	    backgroundColor: "#fff"
 	});
 	
-if($('#select_type').val() == '0'){
-		$('#select_val_li').html(admin_select_val_0);
-		$('[name=select_val]').val('${model.view.select_val}');
-	}else if ($('#select_type').val() == '1'){
-		$('#select_val_li').html(admin_select_val_1);
-		$('[name=select_val]').val('${model.view.select_val}');
-		
-		
-	}
+	console.log($('.ck-editor__editable')[0]);
+	
 	
 });
 
-<c:if test="${model.view.category == '1'  }">
 //select box 3개
-const admin_select_val_0 = `<span class="list_t">답안</span>
-    <select name="select_val" id="select_val" onchange="select_form_open()">
-    <option value="0">답안을 선택하여주세요</option>
-	<option value="O">O</option>
-	<option value="X">X</option>
-</select>`;
-</c:if>
 
-const admin_select_val_1 = `<span class="list_t">답안</span>
-    <select name="select_val" id="select_val" onchange="select_form_open()">
-    <option value="0">답안을 선택하여주세요</option>
+const admin_select_val_1 = `<span class="list_t">선택지</span>
+    <select name="select_val" id="select_val">
 	<option value="1">1</option>
 	<option value="2">2</option>
  <option value="3">3</option>
  <option value="4">4</option>
+ <option value="5">5</option>
  <option value="6">6</option>
 </select>`;
 
 const admin_select_type_1 = `<div id="select_type_cnt_box"><br><span class="list_t">갯수</span>
-<select name="select_type_cnt" id="select_type_cnt" onchange="select_form_open()">
+<select name="select_type_cnt" id="select_type_cnt">
 	<option value="1">1</option>
 	<option value="2">2</option>
 	<option value="3">3</option>
@@ -250,26 +217,21 @@ function select_type_change(){
 		break;
 	case '1':
 		$('#select_val_li').html(admin_select_val_1);
+		$('#select_type_li #select_type_cnt_box').remove();
 		$('#select_type_li').append(admin_select_type_1);
 		break;
+	case '2':
+		$('#select_val_li').html(admin_select_val_1);
+		$('#select_type_li #select_type_cnt_box').remove();
+		$('#select_type_li').append(admin_select_type_1);
+		break;
+	case '3':
+		$('#select_val_li').html(admin_select_val_1);
+		if($('#select_type_li #select_type_cnt_box').length >= 1){
+			$('#select_type_li #select_type_cnt_box').remove();
+		}
+		break;
 	}
-}
-
-function img_modal(image){
-	
-	window.open('/resources/upload/ckeditor/'+image , '이미지 확인', 'width=500, height=500');
-	
-}
-
-//이미지 변경
-function image_change(e,list_idx){
-	
-	console.log(e);
-	console.log($('#select_ul_'+list_idx+''));
-	$(e).before('<input type="file" name="image">');
-	$('#select_ul_'+list_idx+' [name=image][type=text]').remove();
-	$(e).remove();
-	
 }
 
 //답안 수정 관련 변경
@@ -303,18 +265,17 @@ function select_form_open(){
 	
 	if($('#question_insertForm [name=select_type]').val() == '0'){
 		
-		var length = $('#select_input_warp ul').length;
-		if(length < 2){
-			select_list_append('2','0','0');	
-		}
+		select_list_append('2','0','0');
 		$('#select_insertForm').show();
 		
-	}else if($('#question_insertForm [name=select_type]').val() == '1'){
+	}else if($('#question_insertForm [name=select_type]').val() == '1' || $('#question_insertForm [name=select_type]').val() == '2'){
 	
 		select_list($('#question_insertForm [name=select_type_cnt]').val());
 		$('#select_insertForm').show();
 		
 	}
+	
+	$('#admin_button').html(admin_button_4);
 	
 }
 
@@ -433,12 +394,6 @@ function updateClick(InsertToConnectType)
 		
 		alert('제목을 입력 하여 주세요.');
 		return;
-	}
-	<c:if test="${model.view.category == '1'  }">
-	else if($('#question_insertForm [name=objectives]').val() == ''){
-		
-		alert('진단 목표를 입력 하여 주세요.');
-		return;
 	}else if($('#question_insertForm [name=select_type]').val() == ''){
 		
 		alert('답안 타입을 설정 하여 주세요.');
@@ -446,41 +401,33 @@ function updateClick(InsertToConnectType)
 	}else if($('#question_insertForm [name=select_val]').val() == ''){
 		
 		alert('답안 정답을 입력 하여 주세요.');
-	}else if($('#question_insertForm [name=solution]').val() == ''){
-		
-		alert('해설을 입력 하여 주세요.');
-		return;
 	}
-	if($('#select_insertForm #select_input_warp ul').length <= 0){
-	
-		alert('답안 작성을 해주세요.');
-		return;
-		
-	}
-	
-	var select_cnt = $('#select_insertForm #select_input_warp ul').length;
-	
-	for(i = 0; i < select_cnt; i++){
-		
-		if($('#select_ul_'+i+' [name=seq]').val() == ''){
-			alert('답안을 모두 작성 해주세요.');
+	if($('#question_insertForm [name=select_type]').val() != '3'){
+		if($('#select_insertForm #select_input_warp ul').length <= 0){
+			
+			alert('답안 작성을 해주세요.');
 			return;
 			
 		}
 		
-		if($('#select_ul_'+i+' [name=content]').val() == ''){
-			alert('답안을 모두 작성 해주세요.');
-			return;
+		var select_cnt = $('#select_insertForm #select_input_warp ul').length;
+		
+		for(i = 0; i < select_cnt; i++){
 			
-		}
+			if($('#select_ul_'+i+' [name=seq]').val() == ''){
+				alert('선택지를 모두 작성 해주세요.');
+				return;
+				
+			}
+			
+			if($('#select_ul_'+i+' [name=content]').val() == ''){
+				alert('선택지를 모두 작성 해주세요.');
+				return;
+				
+			}	
+	}
 		
 	}
-	</c:if>
-
-	//방식 변경 => question form submit 으로 보내는것이 아닌
-	//ajax 로 보내는것으로 변경
-	//$('#question_insertForm').submit();
-	$('#question_insertForm [name=content]').val(ckeditorInstance.getData());
 	
 	var questionForm = $('#question_insertForm').serialize();
 	
@@ -499,7 +446,7 @@ function updateClick(InsertToConnectType)
 			var select_cnt = $('#select_insertForm #select_input_warp ul').length;
 			
 			//업데이트 이므로 답안 수정이 안됬을시에는 넘어가기
-			if($('[name=select_change_bool]').val() == 'true'){
+			if($('[name=select_change_bool]').val() == 'true' || $('#question_insertForm [name=select_type]').val() != '3'){
 				
 				var question_idx = $('[name=idx]').val();
 				//먼저 수정시 기존 답안들 전부 삭제
@@ -522,24 +469,7 @@ function updateClick(InsertToConnectType)
 							SelectForm.append('seq', seq);
 							SelectForm.append('content', content);
 							
-							if($('#select_ul_'+i+' [name=image][type=file]').val() != null && $('#select_ul_'+i+' [name=image][type=file]').val() != ''){
-								var image_boolean = 'true';
-								
-								SelectForm.append('file', $('#select_ul_'+i+' [name=image]')[0].files[0]); // 파일 입력 필드에서 파일을 가져와 추가합니다
-							}else{
-								
-								if($('#select_ul_'+i+' [name=image][type=text]').val() != null && $('#select_ul_'+i+' [name=image][type=text]').val() != ''){
-									
-									SelectForm.append('image', $('#select_ul_'+i+' [name=image][type=text]').val());
-									
-								}else{
-								
-									SelectForm.append('image', '');
-									
-								}
-								
-							}
-							SelectForm.append('image_boolean', image_boolean);
+							
 							SelectForm.append('question_idx', question_idx);
 							
 							console.log(i+'번째 답안 보내기');

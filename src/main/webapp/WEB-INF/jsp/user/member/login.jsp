@@ -316,11 +316,6 @@
 							return;
 						}
 
-						if($('#MEMBER_ID').val() != 'admin' && $('#MEMBER_ID').val() != '1234'){
-							alert('현재 관리자만 로그인 가능합니다.');
-							return;	
-						}
-
 
 						var URL = '${pageContext.request.contextPath}/user/member/login.do'
 						var formData = $("#updateform").serialize();
