@@ -41,14 +41,11 @@
      <!-- 타이틀 -->
         <div class="font_noto all_tit_30">설문조사</div>
         <div class="t_pad_15">
-					<span class="all_tit_sub">영재키움프로젝트는 환경에 상관없이 영재교육 대상자를 선발하여
-						맞춤형 교육을 지원합니다.</span> <span class="all_sort">마이페이지<i
-						class="las la-angle-right"></i><b class="blue_01">설문 조사</b></span>
-				</div>
-				<div class="line_gab_15"></div>
+			<span class="all_tit_sub">영재키움프로젝트는 환경에 상관없이 영재교육 대상자를 선발하여 맞춤형 교육을 지원합니다.</span>
+			<span class="all_sort">마이페이지<i class="las la-angle-right"></i><b class="blue_01">설문 조사</b></span>
+		</div>
+		<div class="line_gab_15"></div>
         <!-- 타이틀끝 -->
-        
-        
 			    <section id="new_sub" class="sub_wrap">
 			        <div id="new_sub_area" class="sub_area">
 			            <div id="new_sub_con" class="sub_con">
@@ -107,14 +104,7 @@
 			                                        	</c:forEach>                                
 			                                        </ul>
 			                                    </div>
-			                                    </form>   
-			                                    <!--                                  
-			                                    <div class="board_btn_wrap">
-			                                  		<div class="board_btn">
-			                                  			<a class="stat_update" href="#" onclick="respondents()">설문 제출</a>
-			                                  		</div>
-			                                  	</div>
-			                                  	-->
+			                                    </form>
 			                                </div>
 			                            </div>
 			                        </div>
