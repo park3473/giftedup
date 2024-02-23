@@ -72,59 +72,131 @@
 
 </body>
 
-</html>
-
-<%@ include file="../include/footerJs.jsp" %>
-
 <script>
-    var table = new Tabulator("#member-table", {
-        height: "auto",
-        layout: "fitColumns",
-        pagination: "local", // 페이지네이션 사용 설정
-        paginationSize: 10, // 페이지 당 행의 수
-        columns: [
-        	{title: "기본아이디", field: "idx" , visible:false},
-            {title: "이름", field: "name", editor: "input"},
-            {title: "아이디", field: "member_id", editor: "input"},
-            {title: "성별", field: "sex", editor: "select", editorParams: {values: ["남자", "여자"]}},
-            {title: "연락처", field: "phone", editor: "input"},
-            {title: "회원구분", field: "type", editor: "select", editorParams: {values: ["교사", "학생"]}},
-			{title: "상세보기", field: "actions", align: "center", formatter: function(cell, formatterParams) {
-                var value = cell.getValue();
-                return "<button onclick='viewDetails(\"" + cell.getRow().getData().member_id + "\")'>상세 보기</button>";
-            }},
-        ]
-    });
-
+	var table = new Tabulator("#member-table", {
+	    height: "auto",
+	    layout: "fitColumns",
+	    pagination: "local", // 페이지네이션 사용 설정
+	    paginationSize: 10, // 페이지 당 행의 수
+	    columns: [
+	        {title: "학생 기본 아이디", field: "StudentIDX", visible: false , frozen:true},
+	        {title: "호" , field : "StudentNUM" , frozen : true , minWidth : 100},
+	        {title: "학생 구분" , field : "StudentCATE" , frozen : true , minWidth : 100},
+	        {title: "학생 지역", field: "Student_ADDRESS_LOCAL" ,  minWidth : 200 , frozen:true ,  editor: "select", editorParams: {values: ["강원" , "경기" , "경남" , "경북" , "광주" , "대구" , "대전" , "부산" , "서울" , "세종" , "울산" , "인천" , "전남" , "전북" , "제주" , "충남" , "충북"]}},
+	        {title: "학생 아이디", field: "StudentID",  minWidth : 200 , frozen:true},
+	        {title: "학생 이름", field: "StudentName", editor: "input" ,  minWidth : 200 , frozen:true},
+	        {title: "학생 생년월일", field: "StudentBIRTH", editor: "input" ,  minWidth : 200},
+	        {title: "성별", field: "StudentSEX", editor: "select", editorParams: {values: ["남자", "여자"]} ,  minWidth : 200},
+	        {title: "학교 이름", field: "StudentSCHOOL_NAME", editor: "input" ,  minWidth : 200},
+	        {title: "학년", field: "StudentSCHOOL_YEAR", editor: "select" , editorParams : {values : ["초등학교4학년","초등학교5학년","초등학교6학년","중학교1학년","중학교2학년","중학교3학년","고등학교1학년","고등학교2학년","고등학교3학년"]} ,  minWidth : 200 },
+	        {title: "지원 영역", field: "StudentSUPPORT_AREA", editor: "input" ,  minWidth : 200},
+	        {title: "학생 전화번호", field: "StudentPHONE", editor: "input" ,  minWidth : 200},
+	        {title: "부모님 전화번호", field: "StudentPARENTS_PHONE", editor: "input" ,  minWidth : 200},
+	        {title: "지원 자격", field: "StudentELIGIBILITY", editor: "input" ,  minWidth : 200},
+	        {title: "주소", field: "StudentADDRESS", editor: "input" ,  minWidth : 200},
+	        {title: "상세 주소", field: "StudentADDRESS_DETAIL", editor: "input" ,  minWidth : 200},
+	        // Assuming fields to differentiate between student and teacher, as some names are duplicated.
+	        {title: "교사 아이디", field: "TeacherID", minWidth : 200},
+	        {title: "교사 이름", field: "TeacherName", editor: "input" ,  minWidth : 200},
+	        {title: "교사 지역", field: "Teacher_ADDRESS_LOCAL", editor: "input" ,  minWidth : 200},
+	        {title: "교사 학교 이름", field: "Teacher_SCHOOL_NAME", editor: "input" ,  minWidth : 200},
+	        {title: "교사 성별", field: "Teacher_SEX", editor: "select", editorParams: {values: ["남자", "여자"]} ,  minWidth : 200},
+	        {title: "교사 전화번호", field: "Teacher_PHONE", editor: "input" ,  minWidth : 200},
+	        {title: "교사 이메일", field: "Teacher_EMAIL", editor: "input" ,  minWidth : 200},
+	        {title: "상세보기", field: "actions", align: "center", formatter: function(cell, formatterParams) {
+	            var value = cell.getValue();
+	            return "<button onclick='viewDetails(\"" + cell.getRow().getData().StudentID + "\")'>상세 보기</button>";
+	        } ,  minWidth : 200},
+	    ]
+	});
 
 	//=====================================================================================================
-	function Member(idx , member_id , name , sex , phone , type){
-	
-		this.idx = idx;
-		this.member_id = member_id;
-		this.name = name;
-		this.sex = sex;
-		this.phone = phone;
-		this.type = type;
-		
+	function Member(StudentNUM , StudentCATE , StudentIDX, Student_ADDRESS_LOCAL, StudentID , StudentName, StudentBIRTH, StudentSEX, StudentSCHOOL_NAME, StudentSCHOOL_YEAR, StudentSUPPORT_AREA, StudentPHONE, StudentPARENTS_PHONE, StudentELIGIBILITY, StudentADDRESS, StudentADDRESS_DETAIL, TeacherID, TeacherName, Teacher_ADDRESS_LOCAL, Teacher_SCHOOL_NAME, Teacher_SEX, Teacher_PHONE, Teacher_EMAIL) {
+	    this.StudentNUM = StudentNUM;
+		this.StudentCATE = StudentCATE;
+		this.StudentIDX = StudentIDX;
+	    this.Student_ADDRESS_LOCAL = Student_ADDRESS_LOCAL;
+	    this.StudentID = StudentID;
+	    this.StudentName = StudentName;
+	    this.StudentBIRTH = StudentBIRTH;
+	    this.StudentSEX = StudentSEX;
+	    this.StudentSCHOOL_NAME = StudentSCHOOL_NAME;
+	    this.StudentSCHOOL_YEAR = StudentSCHOOL_YEAR;
+	    this.StudentSUPPORT_AREA = StudentSUPPORT_AREA;
+	    this.StudentPHONE = StudentPHONE;
+	    this.StudentPARENTS_PHONE = StudentPARENTS_PHONE;
+	    this.StudentELIGIBILITY = StudentELIGIBILITY;
+	    this.StudentADDRESS = StudentADDRESS;
+	    this.StudentADDRESS_DETAIL = StudentADDRESS_DETAIL;
+	    this.TeacherID = TeacherID;
+	    this.TeacherName = TeacherName;
+	    this.Teacher_ADDRESS_LOCAL = Teacher_ADDRESS_LOCAL;
+	    this.Teacher_SCHOOL_NAME = Teacher_SCHOOL_NAME;
+	    this.Teacher_SEX = Teacher_SEX;
+	    this.Teacher_PHONE = Teacher_PHONE;
+	    this.Teacher_EMAIL = Teacher_EMAIL;
 	}
 
 	//=====================================================================================================
 	var member = [];
+	// 가정: model.list는 위 SQL 쿼리에 의해 반환된 결과물의 리스트입니다.
 	<c:forEach var="item" items="${model.list}" varStatus="status">
-	member.push(new Member(
-			'${item.MEMBER_ID}',
-			'${item.MEMBER_ID}',
-			'${item.NAME}',
-			'${item.SEX}',
-			'${item.PHONE}',
-			<c:if test="${item.TYPE == '1'}">
-			'학생',
-			</c:if>
-			<c:if test="${item.TYPE == '2'}">
-			'교사',
-			</c:if>
-			));
+	    member.push(new Member(
+	    	`${status.index + 1}`,
+	    	<c:choose>
+	    		<c:when test="${fn:indexOf(item.StudentID, '2023') > -1}">`신규`</c:when>
+	    		<c:when test="${fn:indexOf(item.StudentID, '2023') == -1}">`기존`</c:when>
+	    	</c:choose>
+	    	,
+	        `${item.StudentID}`,
+	        `${item.Student_ADDRESS_LOCAL}`,
+	        `${item.StudentID}`,
+	        `${item.StudentName}`,
+	        `${item.StudentBIRTH}`,
+	        `${item.StudentSEX}`,
+	        `${item.StudentSCHOOL_NAME}`,
+	        <c:choose>
+	        	<c:when test="${item.StudentSCHOOL_YEAR == '4'}">`초등학교4학년`</c:when>
+	        </c:choose>
+	        <c:choose>
+	        	<c:when test="${item.StudentSCHOOL_YEAR == '5'}">`초등학교5학년`</c:when>
+	        </c:choose>
+	        <c:choose>
+	        	<c:when test="${item.StudentSCHOOL_YEAR == '6'}">`초등학교6학년`</c:when>
+	        </c:choose>
+	        <c:choose>
+	        	<c:when test="${item.StudentSCHOOL_YEAR == '7'}">`중학교1학년`</c:when>
+	        </c:choose>
+	        <c:choose>
+	        	<c:when test="${item.StudentSCHOOL_YEAR == '8'}">`중학교2학년`</c:when>
+	        </c:choose>
+	        <c:choose>
+	        	<c:when test="${item.StudentSCHOOL_YEAR == '9'}">`중학교3학년`</c:when>
+	        </c:choose>
+	        <c:choose>
+	        	<c:when test="${item.StudentSCHOOL_YEAR == '10'}">`고등학교1학년`</c:when>
+	        </c:choose>
+	        <c:choose>
+	        	<c:when test="${item.StudentSCHOOL_YEAR == '11'}">`고등학교2학년`</c:when>
+	        </c:choose>
+	        <c:choose>
+	        	<c:when test="${item.StudentSCHOOL_YEAR == '12'}">`고등학교3학년`</c:when>
+	        </c:choose>
+	        ,
+	        `${item.StudentSUPPORT_AREA}`,
+	        `${item.StudentPHONE}`,
+	        `${item.StudentPARENTS_PHONE}`,
+	        `${item.StudentELIGIBILITY}`,
+	        `${item.StudentADDRESS}`,
+	        `${item.StudentADDRESS_DETAIL}`,
+	        `${item.TeacherID}`,
+	        `${item.TeacherName}`,
+	        `${item.TeacherADDRESS_LOCAL}`,
+	        `${item.TeacherSCHOOL_NAME}`,
+	        `${item.TeacherSEX}`,
+	        `${item.TeacherPHONE}`,
+	        `${item.TeacherEMAIL}`
+	    ));
 	</c:forEach>
 	//=====================================================================================================
     
@@ -133,7 +205,7 @@
 	table.on("cellEdited", function (cell) {
 	var data = cell.getRow().getData(); // 편집된 행의 데이터를 가져옵니다.
 	           console.log(data);
-			   alert('수정된 idx : '+ data.idx + '\n'+'수정 데이터 : ' + cell.getValue())
+			   alert('수정된 idx : '+ data.StudentIDX + '\n'+'수정 데이터 : ' + cell.getValue())
 	        });    
 	// 초기 데이터 설정
 	    table.setData(member);
@@ -153,389 +225,7 @@
         alert("상세 정보 보기: " + member_id);
     };
 </script>
-<script>
-    
-    $('a[href="#"]').click(function(e) {
-        e.preventDefault();
-    });
 
-    $('#fileDownBtn1').click(function(e) {
+</html>
 
-        var url = '${pageContext.request.contextPath}/resources/files/member_explanation.pptx'; 
-        location.href = url;
-    });
-    
-    $('#fileDownBtn2').click(function(e) {
-        var url = '${pageContext.request.contextPath}/resources/files/member_explanation.xls'; 
-        location.href = url;
-    });
-    
-    var uploadCheckBtn = false;
-    function memberXlexUpload() {
-        if(uploadCheckBtn == false) {
-            uploadCheckBtn = true;
-            $('#memberExcelform').submit();	
-        }else {
-            alert('처리중입니다.');	
-        }
-    }
-    
-    function membercomparingUpload() {
-        $('#membercomparingExcelform').submit();	
-    }
-
-
-    function update() {
-        cnt =  0;
-        deleteArrIdx = "";
-        $("input[name=chk_calc]").each(function() {
-
-            var chk = $(this).is(":checked");
-
-            console.log(chk);
-
-            if(chk == true) {
-                cnt = cnt + 1;
-                deleteArrIdx = deleteArrIdx + $(this).data("id") + ",";
-            }
-
-        }); 
-
-        if(deleteArrIdx == '') {
-            alert('수정할 대상을를 선택 하여 주세요');
-            return;
-        }
-
-        deleteArrIdx = deleteArrIdx.substring(0, deleteArrIdx.length-1);
-        location.href = './'+deleteArrIdx+'/update.do';
-    }
-
-    function deleteArrClick() {
-        cnt =  0;
-        deleteArrIdx = "";
-        $("input[name=chk_calc]").each(function() {
-
-            var chk = $(this).is(":checked");
-
-            console.log(chk);
-
-            if(chk == true) {
-                cnt = cnt + 1;
-                deleteArrIdx = deleteArrIdx + $(this).data("id") + ",";
-            }
-
-        }); 
-
-        if(deleteArrIdx == '') {
-            alert('삭제할 대상을를 선택 하여 주세요');
-            return;
-        }
-
-        var URL = './deleteArr.do?MEMBER_ID='+ deleteArrIdx;
-        console.log(URL);
-        $.ajax({
-            type : "POST",
-            url : URL,
-            cache : false,
-            data : "",
-            success: function(result) {
-                var s = result.indexOf("true");
-                console.log(s);
-                if(s != -1) {
-                    alert('삭제되었습니다.');
-                    
-                    var moveUrl = "?SEARCH_TEXT="+encodeURI('${model.boforeDomain.SEARCH_TEXT}');
-                    moveUrl = moveUrl + "&SEARCH_TYPE="+encodeURI('${model.boforeDomain.SEARCH_TYPE}');
-
-                    if("${model.boforeDomain.page}" != "") {
-                        moveUrl = moveUrl + "&page=${model.boforeDomain.page}";
-                    }
-
-                    idchk = true;
-                    location.href = './list.do'+moveUrl;
-                    return;
-                }else {
-                    alert('실패하였습니다.');
-                    return;
-                }
-            }
-        });
-    }
-
-    $(document).on("click", "#chk_calc_all", function(e) {
-
-        if ($(this).prop('checked')) {
-            $('input[name="chk_calc"]').prop('checked', true);
-        } else {
-            $('input[name="chk_calc"]').prop('checked', false);
-        }
-    });
-
-    function searchBtnClick() {
-        URL = './list.do';
-        URL = URL + "?PAGE=0";
-        
-        if($('#ITEM_COUNT').val() == '') {
-            URL = URL + "&ITEM_COUNT=" + '10';
-        }else {
-            URL = URL + "&ITEM_COUNT=" + $('#ITEM_COUNT').val();
-        }
-		URL = URL + "&LEVEL=" + $('#LEVEL').val();
-        URL = URL + "&TYPE=" + $('#TYPE').val();
-        URL = URL + "&SCHOOL_YEAR=" +$('#SCHOOL_YEAR').val();
-
-        URL = URL + "&SEARCH_TEXT=" + encodeURI($('#SEARCH_TEXT').val());
-        URL = URL + "&SEARCH_TYPE=" + $('#SEARCH_TYPE').val();
-        location.href = URL;
-    }
-
-    function levelChangedArr() {
-        if($('#LEVEL2').val() == "") {
-            alert('회원등급을 선택 해주세요.');
-            return;	
-        }
-
-        deleteArrIdx = "";
-        $("input[name=chk_calc]").each(function() {
-
-            var chk = $(this).is(":checked");
-
-            console.log(chk);
-
-            if(chk == true) {
-                deleteArrIdx = deleteArrIdx + $(this).data("id") + ",";
-            }
-
-        }); 
-
-        if(deleteArrIdx == "") {
-            alert('회원을 선택 해주세요.');
-            return;	
-        }
-
-        var URL = './TypeToTextUpdateArr.do?';
-
-        //var formData = $("#updateform").serialize();
-        var formData = "SEARCH_TYPE=LEVEL";
-        formData += "&SEARCH_TEXT="+$('#LEVEL2').val();
-        formData += "&MEMBER_ID="+deleteArrIdx;
-        
-
-        $.ajax({
-            type : "POST",
-            url : URL,
-            cache : false,
-            data : formData,
-            success: function(result) {
-                if(result.indexOf("true") > -1) {
-                    alert('성공하였습니다.');
-                    //$('.modal').click();
-                    window.location.reload();
-                }else {
-                    alert('실패 하였습니다.');
-                    //$('.modal').click();
-                }
-            }
-        });
-    }
-
-    function dormancyUpdate() {
-        deleteArrIdx = "";
-        $("input[name=chk_calc]").each(function() {
-            var chk = $(this).is(":checked");
-            console.log(chk);
-            if(chk == true) {
-                deleteArrIdx = deleteArrIdx + $(this).data("id") + ",";
-            }
-        }); 
-
-        if(deleteArrIdx == "") {
-            alert('회원을 선택 해주세요.');
-            return;	
-        }
-
-        var URL = './TypeToTextUpdateArr.do?';
-
-        //var formData = $("#updateform").serialize();
-        var formData = "SEARCH_TYPE=DORMANCY";
-        formData += "&SEARCH_TEXT=1";
-        formData += "&MEMBER_ID="+deleteArrIdx;
-
-        $.ajax({
-            type : "POST",
-            url : URL,
-            cache : false,
-            data : formData,
-            success: function(result) {
-                if(result.indexOf("true") > -1) {
-                    alert('성공하였습니다.');
-                    window.location.reload();	
-                }else {
-                    alert('실패 하였습니다.');
-                }
-            }
-        });
-    }
-
-    function excelDown() {
-        deleteArrIdx = "";
-        var member_id = "";
-        var cnt = 0;
-        $("input[name=chk_calc]").each(function() {
-            var chk = $(this).is(":checked");
-            console.log(chk);
-            if(chk == true) {
-                deleteArrIdx = deleteArrIdx + "'"+$(this).data("id") + "',";
-                member_id = $(this).data("id");
-                cnt = cnt + 1;
-            }
-        }); 
-
-       
-        var st = $(":input:radio[name=excelDownType]:checked").val();
-        //console.log(st);
-
-        if("INFO_AGREEMENT" == st) {
-            if(cnt != 1) {
-                alert('한개만 선택 하여 주세요');
-                return;
-            }else {
-                $('#iframe2').show();
-                $('#iframeDiv').attr('src', '${pageContext.request.contextPath}/admin/member/'+member_id+'/infoPdf.do');
-
-                setTimeout(function() {
-                    $('#iframe2').hide();
-                }, 500);
-
-                //window.open('./'+member_id+'/infoPdf.do','팝업창','width=750, height=800, left=300, top=150');
-            }
-        }else {
-            location.href = './'+st+'/excelDown.do?MEMBER_ID='+deleteArrIdx;	
-        }
-    }
-    
-    function Info_AgreementUpdate() {
-        deleteArrIdx = "";
-        var member_id = "";
-        var cnt = 0;
-        $("input[name=chk_calc]").each(function() {
-
-            var chk = $(this).is(":checked");
-
-            console.log(chk);
-
-            if(chk == true) {
-                deleteArrIdx = deleteArrIdx + $(this).data("id") + ",";
-                member_id = $(this).data("id");
-                cnt = cnt + 1;
-            }
-
-        }); 
-
-
-        if(cnt == 0) {
-            swal({
-                title: "알림",
-                text: "정말로 전체 회원을 초기화 하시겠습니까?",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonClass: "btn-success",
-                cancelButtonText: " 아니오",
-                confirmButtonText: "네",
-                closeOnConfirm: true,
-            },function(isConfirm){
-                if (isConfirm) {
-                    var url = '${pageContext.request.contextPath}/admin/member/info_AgreementUpdate.do';
-                    $.ajax({
-                        type : "GET",
-                        url : url,
-                        cache : false,
-                        success: function(result) {
-                            if(result.indexOf("true") > -1) {
-                                alert('성공하였습니다.');
-                                window.location.reload();	
-                            }else {
-                                alert('실패 하였습니다.');
-                            }
-                        }
-                    });
-                    return true;
-                } else {
-                }
-            });
-        }else {
-            swal({
-                title: "알림",
-                text: cnt + "명의 회원을 초기화 하시겠습니까?",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonClass: "btn-success",
-                cancelButtonText: " 아니오",
-                confirmButtonText: "네",
-                closeOnConfirm: true,
-            },function(isConfirm){
-                if (isConfirm) {
-                    var URL = './TypeToTextUpdateArr.do?';
-                    //var formData = $("#updateform").serialize();
-                    var formData = "SEARCH_TYPE=INFO_AGREEMENT";
-                    formData += "&SEARCH_TEXT=0";
-                    formData += "&MEMBER_ID="+deleteArrIdx;
-
-                    $.ajax({
-                        type : "POST",
-                        url : URL,
-                        cache : false,
-                        data : formData,
-                        success: function(result) {
-                            if(result.indexOf("true") > -1) {
-                                alert('성공하였습니다.');
-                                window.location.reload();
-
-                            }else {
-                                alert('실패 하였습니다.');
-                            }
-                        }
-                    });
-
-                    return true;
-                } else {
-
-                }
-            });
-            
-        }   
-    }
-
-    function schoolNumberUpdate() {
-        var url = '${pageContext.request.contextPath}/admin/member/schoolNumberUpdate.do';
-        $.ajax({
-            type : "GET",
-            url : url,
-            cache : false,
-            success: function(result) {
-                if(result.indexOf("true") > -1) {
-                    alert('성공하였습니다.');
-                    window.location.reload();	
-                }else {
-                    alert('실패 하였습니다.');
-                }
-            }
-        });
-    }
-
-    function memberModal(){
-        $("#member_excel > a").click(function(){
-            $(".member_modal_wrap").fadeIn(300);
-        });
-
-        $(".modal_close > a").click(function(){
-            $(".member_modal_wrap").fadeOut(300);
-        });
-    }
-    memberModal();
-
-</script>
-
-<div id="iframe2" style="display:none">
-    <iframe id="iframeDiv" src="#" width="750" height="800" left="300" top="150"></iframe>
-</div>
+<%@ include file="../include/footerJs.jsp" %>
