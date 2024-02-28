@@ -45,6 +45,7 @@
 				<th style="width: 98px">번호</th>
 				<th style="width: 98px">타입</th>
 				<th style="width: 98px">학교</th>
+				<th style="width: 98px">응답여부</th>
 				<th style="width: 98px">삭제</th>
 			</tr>
 		<thead>
@@ -59,6 +60,7 @@
 							<c:when test="${item.type == '2'}">교사</c:when>
 						</c:choose></td>
 					<td>${item.school_name}</td>
+					<td>${item.respondents }</td>
 					<td>
 						<button type="button" onclick="deleteAjax(this)" data-idx="${item.idx }" data-member_id="${item.member_id }" data-name="${item.name }" data-phone="${item.phone }" data-type="${item.type }" data-school_name="${item.school_name }" >삭제</button>
 					</td>
