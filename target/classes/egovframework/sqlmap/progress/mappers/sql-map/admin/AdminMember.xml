@@ -686,5 +686,13 @@
 	    AND EXP_DATA != ''
 	    ORDER BY NAME
 	</select>
+	
+	<update id="setStudentSchoolAllYearUp" parameterType="String">
+		UPDATE TBL_MEMBER SET SCHOOL_YEAR = (SCHOOL_YEAR + 1) WHERE TYPE = '1' AND LEVEL = '11' AND EXP_DATA LIKE '%${value}%'
+	</update>
+
+	<update id="setUpdateAjaxTest" parameterType="egovframework.kaist.admin.member.model.AdminMemberVo">
+		UPDATE TBL_MEMBER SET ${SEARCH_TYPE} = '${SEARCH_TEXT}' WHERE MEMBER_ID = ${MEMBER_ID}
+	</update>
 
 </mapper>

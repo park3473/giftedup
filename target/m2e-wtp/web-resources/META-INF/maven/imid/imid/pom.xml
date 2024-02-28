@@ -209,8 +209,6 @@
 		  <artifactId>jcl-over-slf4j</artifactId>
 		  <version>1.7.21</version>
 		</dependency>
-
-		
 		 <dependency>
 			<groupId>net.sf</groupId>
 			<artifactId>log4jdbc3</artifactId>

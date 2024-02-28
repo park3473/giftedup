@@ -2002,5 +2002,275 @@ public class AdminMemberController {
 		return new ModelAndView("admin/member/test", "model", model);
 	}
 	
+	@RequestMapping(value="/admin/member/test/update.do" , method = RequestMethod.POST)
+	public void updateTest(@ModelAttribute("AdminMemberVo") AdminMemberVo adminMemberVo,
+			HttpServletRequest request, HttpServletResponse response) {
+		
+		adminMemberService.setUpdateAjaxTest(adminMemberVo);
+		
+	}
+	
+	@RequestMapping(value = "/admin/member/test/excelDown.do", method = RequestMethod.GET)
+	public void excelDown2(@ModelAttribute("AdminMemberVo") AdminMemberVo adminMemberVo, HttpServletRequest request, HttpServletResponse response)
+	{
+		
+	    // 워크북 생성
+	    Workbook wb = new HSSFWorkbook();
+
+	    Sheet sheet = wb.createSheet("매칭리스트");
+	    
+	    // 첫 세 개의 열을 고정
+	   sheet.createFreezePane(3, 0);
+	    
+	    Row row = null;
+	    
+	    Row row2 = null;
+
+	    Cell cell = null;
+	    
+	    int columnCnt = 0;
+
+	    int rowNo = 0;
+	    int rowNo2 = 0;
+	    
+	    // 헤더 생성
+	    row = sheet.createRow(rowNo++); // 첫 번째 행에 헤더를 생성
+	    CellStyle headStyle = wb.createCellStyle();
+
+	    // 헤더 스타일 설정
+	    headStyle.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
+	    headStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+	    headStyle.setBorderTop(BorderStyle.THIN);
+	    headStyle.setBorderBottom(BorderStyle.THIN);
+	    headStyle.setBorderLeft(BorderStyle.THIN);
+	    headStyle.setBorderRight(BorderStyle.THIN);
+	    headStyle.setAlignment(HorizontalAlignment.CENTER);
+	    
+	    // 바디 스타일 생성
+	    CellStyle bodyStyle = wb.createCellStyle();
+	    bodyStyle.setAlignment(HorizontalAlignment.CENTER);
+	    bodyStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+	    bodyStyle.setBorderTop(BorderStyle.THIN);
+	    bodyStyle.setBorderBottom(BorderStyle.THIN);
+	    bodyStyle.setBorderLeft(BorderStyle.THIN);
+	    bodyStyle.setBorderRight(BorderStyle.THIN);
+
+	    Font headerFont = wb.createFont();
+	    headerFont.setBold(true);
+	    headerFont.setFontHeightInPoints((short) 12);
+	    headStyle.setFont(headerFont);
+
+	    // 헤더 셀에 스타일 적용 및 값 설정
+	    String[] headers = new String[] {
+	        "호", "학생 구분", "학생 지역", "학생 아이디", "학생 이름", "학생 생년월일", "성별", "학교 이름",
+	        "학년", "지원 영역", "학생 전화번호", "부모님 전화번호", "지원 자격", "주소", "상세 주소",
+	        "교사 아이디", "교사 이름", "교사 지역", "교사 학교 이름", "교사 성별", "교사 전화번호", "교사 이메일"
+	    };
+
+	    int headerIndex = 0;
+	    for (String header : headers) {
+	        cell = row.createCell(headerIndex++);
+	        cell.setCellStyle(headStyle);
+	        cell.setCellValue(header);
+	    }
+	    
+
+	    for(int i = 0; i < columnCnt; i++) {
+	        sheet.autoSizeColumn(i); // 열 너비 자동 조정
+	        sheet.setColumnWidth(i, sheet.getColumnWidth(i) + 512); // 조금 더 여유 있게 조정
+	    }
+		
+	    
+	    ModelMap model = new ModelMap();
+
+		model = adminMemberService.getListAll(adminMemberVo);
+				
+		List<HashMap> list = (List<HashMap>) model.get("list");
+
+
+		int IndexNum = 0;
+		
+		for (HashMap<String, Object> tempMap : list) {
+		    row = sheet.createRow(rowNo++);
+		    int cellNum = -1; // 셀 인덱스는 0부터 시작하므로, 첫 번째 셀 생성 전에 -1로 설정
+
+		    IndexNum += 1;
+		    
+		    // "호" 필드 값 할당
+		    cell = row.createCell(++cellNum);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(Integer.toString(IndexNum));
+
+		    // "학생 구분" - 신규 또는 기존 학생 여부
+		    cell = row.createCell(++cellNum);
+		    cell.setCellStyle(bodyStyle);
+		    String studentId = String.valueOf(tempMap.getOrDefault("StudentID", ""));
+		    if (studentId.startsWith("2023")) {
+		        cell.setCellValue("신규");
+		    } else {
+		        cell.setCellValue("기존");
+		    }
+
+		    // 나머지 필드에 대해 동일하게 처리
+		    // "학생 지역"
+		    cell = row.createCell(++cellNum);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(String.valueOf(tempMap.getOrDefault("Student_ADDRESS_LOCAL", "")));
+
+		    // "학생 아이디"
+		    cell = row.createCell(++cellNum);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(studentId);
+
+		    // "학생 이름"
+		    cell = row.createCell(++cellNum);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(String.valueOf(tempMap.getOrDefault("StudentName", "")));
+
+		    // "학생 생년월일"
+		    cell = row.createCell(++cellNum);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(String.valueOf(tempMap.getOrDefault("StudentBIRTH", "")));
+
+		    // "성별"
+		    cell = row.createCell(++cellNum);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(String.valueOf(tempMap.getOrDefault("StudentSEX", "")));
+
+		    // "학교 이름"
+		    cell = row.createCell(++cellNum);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(String.valueOf(tempMap.getOrDefault("StudentSCHOOL_NAME", "")));
+
+		    // "학년" 처리를 위한 복잡한 로직, 여기서는 예시로 간단화
+		    cell = row.createCell(++cellNum);
+		    cell.setCellStyle(bodyStyle);
+		    String schoolYear = String.valueOf(tempMap.getOrDefault("StudentSCHOOL_YEAR", ""));
+		    switch (schoolYear) {
+		        case "4":
+		            cell.setCellValue("초등학교4학년");
+		            break;
+		        case "5":
+		            cell.setCellValue("초등학교5학년");
+		            break;
+		        case "6":
+		            cell.setCellValue("초등학교6학년");
+		            break;
+		        case "7":
+		            cell.setCellValue("중학교1학년");
+		            break;
+		        case "8":
+		            cell.setCellValue("중학교2학년");
+		            break;
+		        case "9":
+		            cell.setCellValue("중학교3학년");
+		            break;
+		        case "10":
+		            cell.setCellValue("고등학교1학년");
+		            break;
+		        case "11":
+		            cell.setCellValue("고등학교2학년");
+		            break;
+		        case "12":
+		            cell.setCellValue("고등학교3학년");
+		            break;
+		        default:
+		            cell.setCellValue(""); // 미해당 시 빈 문자열 할당
+		    }
+		    // "지원 영역"
+		    cell = row.createCell(++cellNum);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(String.valueOf(tempMap.getOrDefault("StudentSUPPORT_AREA", "")));
+
+		    // "학생 전화번호"
+		    cell = row.createCell(++cellNum);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(String.valueOf(tempMap.getOrDefault("StudentPHONE", "")));
+
+		    // "부모님 전화번호"
+		    cell = row.createCell(++cellNum);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(String.valueOf(tempMap.getOrDefault("StudentPARENTS_PHONE", "")));
+
+		    // "지원 자격"
+		    cell = row.createCell(++cellNum);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(String.valueOf(tempMap.getOrDefault("StudentELIGIBILITY", "")));
+
+		    // "주소"
+		    cell = row.createCell(++cellNum);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(String.valueOf(tempMap.getOrDefault("StudentADDRESS", "")));
+
+		    // "상세 주소"
+		    cell = row.createCell(++cellNum);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(String.valueOf(tempMap.getOrDefault("StudentADDRESS_DETAIL", "")));
+
+		    // 교사 정보는 별도의 로직이 필요하지 않는 경우 동일한 방식으로 추가합니다.
+		    // "교사 아이디"
+		    cell = row.createCell(++cellNum);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(String.valueOf(tempMap.getOrDefault("TeacherID", "")));
+
+		    // "교사 이름"
+		    cell = row.createCell(++cellNum);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(String.valueOf(tempMap.getOrDefault("TeacherName", "")));
+
+		    // "교사 지역"
+		    cell = row.createCell(++cellNum);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(String.valueOf(tempMap.getOrDefault("Teacher_ADDRESS_LOCAL", "")));
+
+		    // "교사 학교 이름"
+		    cell = row.createCell(++cellNum);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(String.valueOf(tempMap.getOrDefault("Teacher_SCHOOL_NAME", "")));
+
+		    // "교사 성별"
+		    cell = row.createCell(++cellNum);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(String.valueOf(tempMap.getOrDefault("TeacherSEX", "")));
+
+		    // "교사 전화번호"
+		    cell = row.createCell(++cellNum);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(String.valueOf(tempMap.getOrDefault("TeacherPHONE", "")));
+
+		    // "교사 이메일"
+		    cell = row.createCell(++cellNum);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(String.valueOf(tempMap.getOrDefault("TeacherEMAIL", "")));
+
+		    // 모든 데이터를 셀에 추가한 후, 각 셀에 스타일을 적용합니다.
+		    // 이 예시는 각 키(필드명)가 HashMap 내에 존재한다고 가정합니다.
+		    // 실제 데이터에 따라 키 이름이나 처리 방식을 조정해야 할 수 있습니다.
+
+		    // 열 너비 자동 조정을 위한 코드는 모든 셀 데이터 추가 후에 실행합니다.
+		    for(int colIndex = 0; colIndex < columnCnt; colIndex++) {
+		        sheet.autoSizeColumn(colIndex);
+		    }
+
+		}
+
+	    // 컨텐츠 타입과 파일명 지정
+
+	    response.setContentType("ms-vnd/excel");
+
+	    response.setHeader("Content-Disposition", "attachment;filename=MEMBER.xls");
+
+	    // 엑셀 출력
+	   
+	    try {
+	    	wb.write(response.getOutputStream());
+			wb.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+	
 	
 }

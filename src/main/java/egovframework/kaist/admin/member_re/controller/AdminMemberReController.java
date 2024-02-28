@@ -55,6 +55,7 @@ import egovframework.kaist.admin.member_re.model.AdminDcmntFileVo;
 import egovframework.kaist.admin.member_re.model.AdminDcmntVo;
 import egovframework.kaist.admin.member_re.model.AdminMemberReVo;
 import egovframework.kaist.admin.member_re.service.AdminMemberReService;
+import egovframework.kaist.admin.sms_log.model.AdminSmsLogVo;
 import egovframework.kaist.admin.sms_log.service.AdminSmsLogService;
 import egovframework.kaist.user.member_re.model.UserMemberReDocumentVo;
 import egovframework.kaist.user.member_re.model.UserMemberReVo;
@@ -615,6 +616,7 @@ public class AdminMemberReController {
 			adminMember_reService.setMatching(AdminMatchingVo);
 			
 		}
+		
 		
 	}
 	

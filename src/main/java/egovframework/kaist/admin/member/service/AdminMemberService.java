@@ -50,6 +50,11 @@ public interface AdminMemberService {
 
 	public ModelMap getListAll(AdminMemberVo adminMemberVo);
 
+	public void setStudentSchoolAllYearUp(String school);
+
+	public void setUpdateAjaxTest(AdminMemberVo adminMemberVo);
+
+
 	
 	
 

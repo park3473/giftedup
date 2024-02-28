@@ -277,6 +277,23 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 		return modelMap;
 	}
 
+	@Override
+	public void setStudentSchoolAllYearUp(String school) {
+		// TODO Auto-generated method stub
+		//학년 증가
+		adminMemberMapper.setStudentSchoolAllYearUp(school);
+		
+	}
+
+	@Override
+	public void setUpdateAjaxTest(AdminMemberVo adminMemberVo) {
+		// TODO Auto-generated method stub
+		
+		adminMemberMapper.setUpdateAjaxTest(adminMemberVo);
+		
+	}
+
+
 
 		
 }

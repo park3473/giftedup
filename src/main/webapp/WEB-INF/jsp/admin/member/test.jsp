@@ -43,6 +43,9 @@
                                     <li class="register">
                                         <a href="${pageContext.request.contextPath}/admin/member/insert.do">등록하기</a>
                                     </li>
+                                    <li class="register">
+                                        <a href="${pageContext.request.contextPath}/admin/member/test/excelDown.do">엑셀출력하기</a>
+                                    </li>
                                 </ul>
                             </div>
                             <!--관리자 버튼 end-->
@@ -202,28 +205,141 @@
     
 	document.addEventListener("DOMContentLoaded", function() {
 		
-	table.on("cellEdited", function (cell) {
-	var data = cell.getRow().getData(); // 편집된 행의 데이터를 가져옵니다.
-	           console.log(data);
-			   alert('수정된 idx : '+ data.StudentIDX + '\n'+'수정 데이터 : ' + cell.getValue())
-	        });    
+		table.on("cellEdited", function(cell) {
+		    var data = cell.getRow().getData(); // 편집된 행의 데이터를 가져옵니다.
+		    var fieldName = cell.getField(); // 편집된 셀의 필드명
+		    var value = cell.getValue(); // 편집된 셀의 값
+		    var idx; // 수정된 IDX를 저장할 변수
+
+		    // 수정된 필드명에 따라 IDX 설정
+		    if (fieldName.startsWith("Student")) {
+		        idx = data.StudentID;
+		    } else if (fieldName.startsWith("Teacher")) {
+		        idx = data.TeacherID;
+		    }
+
+		    // 필드명을 서버에 전송할 형식으로 변경
+		    var serverFieldName = fieldName.replace("Student", "").replace("Teacher", "").toLowerCase();
+		    switch (serverFieldName) {
+		        case "_address_local":
+		            serverFieldName = "address_local";
+		            break;
+		        case "name":
+		            serverFieldName = "name";
+		            break;
+		        case "birth":
+		            serverFieldName = "birth";
+		            break;
+		        case "sex":
+		        case "_sex":
+		            serverFieldName = "sex";
+		            break;
+		        case "school_name":
+		        case "_school_name":
+		            serverFieldName = "school_name";
+		            break;
+		        case "school_year":
+		            serverFieldName = "school_year";
+		            break;
+		        case "support_area":
+		            serverFieldName = "support_area";
+		            break;
+		        case "phone":
+		        case "_phone":
+		            serverFieldName = "phone";
+		            break;
+		        case "parents_phone":
+		            serverFieldName = "parents_phone";
+		            break;
+		        case "eligibility":
+		            serverFieldName = "eligibility";
+		            break;
+		        case "address":
+		            serverFieldName = "address";
+		            break;
+		        case "address_detail":
+		            serverFieldName = "address_detail";
+		            break;
+		        case "email":
+		            serverFieldName = "address_detail";
+		            break;
+		    }
+
+		    console.log("수정된 idx: " + idx + ", 필드: " + serverFieldName + ", 값: " + value);
+
+		    // AJAX 호출 예제
+		    updateAjax(idx, serverFieldName, value);
+		});  
 	// 초기 데이터 설정
 	    table.setData(member);
 	});
 
 	// 검색 기능
     document.getElementById("search-field").addEventListener("keyup", function() {
-        var searchValue = this.value;
-        table.setFilter(customFilter); // 사용자 정의 필터 적용
+    var searchValue = this.value.toLowerCase(); // 검색어를 소문자로 변환
+    table.setFilter(customFilter); // 사용자 정의 필터 적용
 
-        function customFilter(data){
-            return data.name.includes(searchValue) || data.member_id.includes(searchValue) || data.sex.includes(searchValue) || data.phone.includes(searchValue) || data.type.includes(searchValue);
-        }
-    });
+    function customFilter(data) {
+        // 검색 대상 필드를 확인하고, 대소문자를 구분하지 않는 검색을 수행합니다.
+        // 데이터가 없는 경우를 대비하여 문자열로 변환 전에 검사합니다.
+        return (data.StudentID && data.StudentID.toString().toLowerCase().includes(searchValue)) ||
+               (data.Student_ADDRESS_LOCAL && data.Student_ADDRESS_LOCAL.toString().toLowerCase().includes(searchValue)) ||
+               (data.StudentName && data.StudentName.toString().toLowerCase().includes(searchValue)) ||
+               (data.StudentBIRTH && data.StudentBIRTH.toString().toLowerCase().includes(searchValue)) ||
+               (data.StudentSEX && data.StudentSEX.toString().toLowerCase().includes(searchValue)) ||
+               (data.StudentSCHOOL_NAME && data.StudentSCHOOL_NAME.toString().toLowerCase().includes(searchValue)) ||
+               (data.StudentSCHOOL_YEAR && data.StudentSCHOOL_YEAR.toString().toLowerCase().includes(searchValue)) ||
+               (data.StudentSUPPORT_AREA && data.StudentSUPPORT_AREA.toString().toLowerCase().includes(searchValue)) ||
+               (data.StudentPHONE && data.StudentPHONE.toString().toLowerCase().includes(searchValue)) ||
+               (data.StudentPARENTS_PHONE && data.StudentPARENTS_PHONE.toString().toLowerCase().includes(searchValue)) ||
+               (data.StudentELIGIBILITY && data.StudentELIGIBILITY.toString().toLowerCase().includes(searchValue)) ||
+               (data.StudentADDRESS && data.StudentADDRESS.toString().toLowerCase().includes(searchValue)) ||
+               (data.StudentADDRESS_DETAIL && data.StudentADDRESS_DETAIL.toString().toLowerCase().includes(searchValue)) ||
+               (data.TeacherID && data.TeacherID.toString().toLowerCase().includes(searchValue)) ||
+               (data.TeacherName && data.TeacherName.toString().toLowerCase().includes(searchValue)) ||
+               (data.Teacher_ADDRESS_LOCAL && data.Teacher_ADDRESS_LOCAL.toString().toLowerCase().includes(searchValue)) ||
+               (data.Teacher_SCHOOL_NAME && data.Teacher_SCHOOL_NAME.toString().toLowerCase().includes(searchValue)) ||
+               (data.Teacher_SEX && data.Teacher_SEX.toString().toLowerCase().includes(searchValue)) ||
+               (data.Teacher_PHONE && data.Teacher_PHONE.toString().toLowerCase().includes(searchValue)) ||
+               (data.Teacher_EMAIL && data.Teacher_EMAIL.toString().toLowerCase().includes(searchValue));
+	    }
+	});
 	// 상세 보기 버튼 클릭 이벤트 처리
     window.viewDetails = function(member_id) {
         alert("상세 정보 보기: " + member_id);
     };
+    
+    function updateAjax(idx, fieldName, value) {
+    	
+    	var result = confirm('수정할 아이디 : ' + idx + '\n' + '수정될 필드명 : ' + fieldName + '\n' + '수정될 값 : ' + value + '\n을 수정하시겠습니까?');
+    	
+    	if(!result){
+    		return;
+    	}
+    	
+        // AJAX 요청 구현
+        console.log("AJAX 요청: IDX=" + idx + ", 필드=" + fieldName + ", 값=" + value);
+        // 실제 AJAX 요청 코드 추가
+        //필드는 search_type 으로 수정값은 search_text 로 넣어서 보내기
+       $.ajax({
+    	  url : '/admin/member/test/update.do',
+    	  type : 'POST',
+    	  data : ({
+    		  MEMBER_ID : idx,
+    		  SEARCH_TYPE : fieldName,
+    		  SEARCH_TEXT : value
+    	  }),
+    	  success : function(xhr , status , success){
+    		  console.log('success');
+    	  },
+    	  error : function(xhr , status , error){
+    		  console.log('error');
+    	  }
+    	   
+       });
+        
+        
+    }
 </script>
 
 </html>

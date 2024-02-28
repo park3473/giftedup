@@ -58,5 +58,10 @@ public interface AdminMemberMapper {
 	public List<?> getAllList(AdminExamVo adminExamVo);
 
 	public List<?> getListAllTest(AdminMemberVo adminMemberVo);
+
+	public void setStudentSchoolAllYearUp(String school);
+
+	public void setUpdateAjaxTest(AdminMemberVo adminMemberVo);
+
 	
 }
