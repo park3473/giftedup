@@ -98,6 +98,7 @@ public class UserPortfolioController {
 		model.put("TYPE", TYPE);
 		
 		return new ModelAndView("user/portfolio/insert", "model", model);
+		
 	}
 
 	@RequestMapping(value = "/user/portfolio/insert.do", method = RequestMethod.POST)

@@ -268,6 +268,9 @@ String NowYear = String.valueOf(year);
                                         <li <c:if test="${fn:indexOf(requestURI, 'question/list.do') > -1}">class="nav_active"</c:if>>
                                             <a href="${pageContext.request.contextPath}/admin/question/list.do">· 설문 문제 관리</a>
                                         </li>
+                                        <li <c:if test="${fn:indexOf(requestURI, 'exam/test/insert.do') > -1}">class="nav_active"</c:if>>
+                                            <a href="${pageContext.request.contextPath}/admin/exam/test/insert.do">· 설문 생성 테스트</a>
+                                        </li>
                                     </ul>
                                 </li>
                                 <li <c:if test="${fn:indexOf(requestURI, 'award') > -1

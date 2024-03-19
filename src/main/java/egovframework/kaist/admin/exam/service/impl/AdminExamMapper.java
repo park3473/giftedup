@@ -55,4 +55,12 @@ public interface AdminExamMapper {
 
 	int getAllResultListCnt(AdminExamResultVo adminExamResultVo);
 
+	List<?> getRespondentsResultList(AdminExamRespondentsVo adminExamRespondentsVo);
+
+	int getExamRespondentsTotalCnt(AdminExamVo adminExamVo);
+
+	int getExamRespondentsCnt(AdminExamVo adminExamVo);
+
+	AdminExamResultVo getExamResultView(AdminExamResultVo view);
+
 }

@@ -182,20 +182,24 @@ public class AdminExamServiceImpl implements AdminExamService {
 		
 		ModelMap model = new ModelMap();
 		
-		AdminExamRespondentsVo adminExamRespondentsVo = new AdminExamRespondentsVo();
+		/*0319방식 변경 = 응답자 리스트가 아닌
+		 * TOTAL_CNT = 총 응답자 수
+		 * RESPON_CNT = 응답한 수
+		 */
 		
-		adminExamRespondentsVo.setExam_idx(adminExamVo.getIdx());
+		int total_cnt = adminExamMapper.getExamRespondentsTotalCnt(adminExamVo);
 		
-		//응답자 목록
-		List<?> respondents = adminExamMapper.getRespondentsList(adminExamRespondentsVo);
-		
-		model.put("respondents", respondents);
+		int respon_cnt = adminExamMapper.getExamRespondentsCnt(adminExamVo);
 		
 		//문제리스트
 		List<?> question = adminExamMapper.getStatusQuestionList(adminExamVo);
 		
-		//결과 리스트
+		//응답자들 결과 리스트
 		List<?> resultList = adminExamMapper.getExamResultMemberAll(adminExamVo);
+		
+		model.put("total_cnt", total_cnt);
+		
+		model.put("respon_cnt", respon_cnt);
 		
 		model.put("question" , question);
 		
@@ -302,6 +306,43 @@ ModelMap modelMap = new ModelMap();
 		
 		return modelMap;
 		
+	}
+
+	@Override
+	public ModelMap getExamRespondentsResultList(AdminExamRespondentsVo adminExamRespondentsVo) {
+		
+		ModelMap model = new ModelMap();
+		
+		List<?> ResultList = adminExamMapper.getRespondentsResultList(adminExamRespondentsVo);
+		
+		model.put("ResultList", ResultList);
+		
+		return model;
+	}
+
+	@Override
+	public ModelMap getExamRespondentsResultView(AdminExamRespondentsVo adminExamRespondentsVo) {
+		
+		ModelMap model = new ModelMap();
+		
+		//해당 응답자의 결과 가져오기
+		AdminExamResultVo view = new AdminExamResultVo();
+		
+		view.setExam_idx(adminExamRespondentsVo.getExam_idx());
+		view.setMember_id(adminExamRespondentsVo.getMember_id());
+		
+		view = adminExamMapper.getExamResultView(view);
+		
+		AdminQuestionListVo listVo = new AdminQuestionListVo();
+		
+		listVo.setExam_idx(adminExamRespondentsVo.getExam_idx());
+		//해당 응답자의 문제 가져오기
+		List<?> question = adminExamMapper.getQuestionList(listVo);
+		
+		model.put("view", view);
+		model.put("question", question);
+		
+		return model;
 	}
 	
 }

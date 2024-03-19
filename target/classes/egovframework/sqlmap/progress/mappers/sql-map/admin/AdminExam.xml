@@ -117,13 +117,11 @@
 	
 	<select id="getExamResultMemberAll" parameterType="egovframework.kaist.admin.exam.model.AdminExamVo" resultType="hashMap">
 		SELECT 
-	    	er.* , m.address_local , m.school_year , m.school_type , m.type , m.sex
+	    	er.idx , er.member_id , er.select_list
 		FROM 
 		    TBL_EXAM_RESULT er
 		JOIN 
 		    TBL_EXAM e ON er.exam_idx = e.idx
-		JOIN 
-		    TBL_MEMBER m ON er.member_id = m.member_id
 		WHERE 
 		    e.idx = #{idx}
 	</select>
@@ -166,6 +164,22 @@
 	<delete id="setExamRespondentsDelte" parameterType="egovframework.kaist.admin.exam.model.AdminExamRespondentsVo">
 		DELETE FROM TBL_EXAM_RESPONDENTS WHERE IDX = #{idx}
 	</delete>
+	
+	<select id="getRespondentsResultList" parameterType="egovframework.kaist.admin.exam.model.AdminExamRespondentsVo">
+		SELECT MEMBER_ID , NAME , PHONE , SCHOOL_NAME FROM TBL_EXAM_RESPONDENTS WHERE EXAM_IDX = #{exam_idx} AND RESPONDENTS = 'yes'
+	</select>
+	
+	<select id="getExamRespondentsTotalCnt" parameterType="egovframework.kaist.admin.exam.model.AdminExamVo" resultType="int">
+		SELECT COUNT(*) AS TOTAL_CNT FROM tbl_exam_respondents WHERE exam_idx = #{idx}
+	</select>
+
+	<select id="getExamRespondentsCnt" parameterType="egovframework.kaist.admin.exam.model.AdminExamVo" resultType="int">
+		SELECT COUNT(*) AS RESPON_CNT FROM tbl_exam_respondents WHERE exam_idx = #{idx} AND respondents = 'yes'
+	</select>
+	
+	<select id="getExamResultView" parameterType="egovframework.kaist.admin.exam.model.AdminExamResultVo" resultType="egovframework.kaist.admin.exam.model.AdminExamResultVo">
+		SELECT * FROM TBL_EXAM_RESULT WHERE MEMBER_ID = #{member_id} AND EXAM_IDX = #{exam_idx}
+	</select>
 
 
 </mapper>

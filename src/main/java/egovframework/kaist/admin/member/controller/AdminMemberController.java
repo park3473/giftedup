@@ -68,7 +68,6 @@ public class AdminMemberController {
 	
 
 	private static final Logger Logger = LoggerFactory.getLogger(AdminMemberController.class);
-
 	
 	@RequestMapping(value = { "/admin/member/info_agreement/insert.do" }, method = RequestMethod.GET)
 	public ModelAndView info_agreement(

@@ -278,5 +278,42 @@ public class AdminExamController {
 		
 	}
 	
+	/*
+	 * 2024 신규 수정 페이지
+	 * */
+	
+	@RequestMapping(value="/admin/exam/test/insert.do" , method = RequestMethod.GET)
+	public String AdminExamInsertGet2(HttpServletRequest request , HttpServletResponse response) {
+		
+		return "/admin/exam/test";
+		
+	}
+	
+	@RequestMapping(value="/admin/exam/respondents/result.do" , method = RequestMethod.GET)
+	public ModelAndView AdminExamRespondentsResultList(@ModelAttribute("AdminExamRespondentsVo")AdminExamRespondentsVo AdminExamRespondentsVo , HttpServletRequest request , HttpServletResponse response) {
+		
+		ModelMap model = new ModelMap();
+		
+		model = adminExamService.getExamRespondentsResultList(AdminExamRespondentsVo);
+		
+		model.put("before", AdminExamRespondentsVo);
+		
+		return new ModelAndView("admin/exam/respondents_result", "model" , model);
+		
+	}
+	
+	@RequestMapping(value="/admin/exam/respondents/result/view.do" , method = RequestMethod.GET)
+	public ModelAndView AdminExamRespndentsResultView(@ModelAttribute("AdminExamRespondentsVo")AdminExamRespondentsVo AdminExamRespondentsVo , HttpServletRequest request , HttpServletResponse response) {
+		
+		ModelMap model = new ModelMap();
+		
+		model = adminExamService.getExamRespondentsResultView(AdminExamRespondentsVo);
+		
+		model.put("before", AdminExamRespondentsVo);
+		
+		return new ModelAndView("admin/exam/respondents_view", "model" , model);
+		
+	}
+	
 	
 }
