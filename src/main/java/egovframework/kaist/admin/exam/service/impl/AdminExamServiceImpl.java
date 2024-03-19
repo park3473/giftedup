@@ -333,11 +333,11 @@ ModelMap modelMap = new ModelMap();
 		
 		view = adminExamMapper.getExamResultView(view);
 		
-		AdminQuestionListVo listVo = new AdminQuestionListVo();
+		AdminExamVo ExamVo = new AdminExamVo();
 		
-		listVo.setExam_idx(adminExamRespondentsVo.getExam_idx());
+		ExamVo.setIdx(adminExamRespondentsVo.getExam_idx());
 		//해당 응답자의 문제 가져오기
-		List<?> question = adminExamMapper.getQuestionList(listVo);
+		List<?> question = adminExamMapper.getStatusQuestionList(ExamVo);
 		
 		model.put("view", view);
 		model.put("question", question);
