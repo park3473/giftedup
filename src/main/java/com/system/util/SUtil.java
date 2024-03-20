@@ -980,7 +980,7 @@ public class SUtil {
 		return type;
 	}
 	
-public static void AlertAndPageMove(HttpServletResponse response , String alertText , String MovePage) throws IOException{
+	public static void AlertAndPageMove(HttpServletResponse response , String alertText , String MovePage) throws IOException{
 		
 		response.setContentType("text/html; charset=UTF-8");
 		

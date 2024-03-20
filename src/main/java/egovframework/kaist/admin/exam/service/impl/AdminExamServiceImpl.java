@@ -343,6 +343,23 @@ ModelMap modelMap = new ModelMap();
 		model.put("question", question);
 		
 		return model;
+		
+	}
+
+	@Override
+	public ModelMap getExamResultExcelData(AdminExamVo adminExamVo) {
+
+		ModelMap model = new ModelMap();
+		
+		List<?> question = adminExamMapper.getStatusQuestionList(adminExamVo);
+		
+		List<?> respondents = adminExamMapper.getExamResultMemberAll(adminExamVo);
+		
+		model.put("question", question);
+		
+		model.put("respondents", respondents);
+		
+		return model;
 	}
 	
 }

@@ -106,7 +106,7 @@
 	</delete>
 	
 	<select id="getStatusQuestionList" parameterType="egovframework.kaist.admin.exam.model.AdminExamVo" resultType="hashMap">
-		SELECT Q.idx , Q.name , Q.category , Q.type , Q.select_type , COUNT(S.idx) AS select_count , GROUP_CONCAT(S.content ORDER BY S.seq SEPARATOR '#') AS Choices
+		SELECT Q.idx , Q.name , Q.type , Q.select_type , COUNT(S.idx) AS select_count , GROUP_CONCAT(S.content ORDER BY S.seq SEPARATOR '#') AS Choices
 		FROM TBL_QUESTION Q
 		JOIN TBL_QUESTION_LIST L ON Q.idx = L.question_idx 
 		LEFT JOIN TBL_SELECT S ON Q.idx = S.question_idx
@@ -117,7 +117,7 @@
 	
 	<select id="getExamResultMemberAll" parameterType="egovframework.kaist.admin.exam.model.AdminExamVo" resultType="hashMap">
 		SELECT 
-	    	er.idx , er.member_id , er.select_list
+	    	er.idx , er.member_id , er.name , er.select_list
 		FROM 
 		    TBL_EXAM_RESULT er
 		JOIN 

@@ -39,5 +39,7 @@ public interface AdminExamService {
 
 	public ModelMap getExamRespondentsResultView(AdminExamRespondentsVo adminExamRespondentsVo);
 
+	public ModelMap getExamResultExcelData(AdminExamVo adminExamVo);
+
 
 }

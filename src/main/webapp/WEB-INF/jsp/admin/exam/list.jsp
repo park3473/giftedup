@@ -95,6 +95,7 @@
                                 </div>
                                 <div class="adm_btn_wrap stats_btn_area">
                                     <ul>
+                                    <button type="button" onclick="test()">테스트</button>
                                     <li class="delete">
                                         <a href="./insert.do">설문 폼 등록</a>
                                     </li>
@@ -145,6 +146,30 @@ function searchBtnClick(){
      URL = URL + "&SEARCH_TYPE=" + $('#SEARCH_TYPE').val();
 
 	location.href = URL;
+	
+}
+
+function test(){
+	
+	$.ajax({
+	    url : '/admin/exam/result/excel.do',
+	    type: 'POST',
+	    data : {idx : '9'},
+	    dataType : 'json',
+	    success : function(data){
+	    	console.log('data : ' + data.filePath);
+	    	var result = confirm('해당 엑셀 파일을 다운로드 받으시겠습니까?');
+	    	if(result){
+	    		window.location.href = data.filePath;
+	    	}
+	    },
+	    error: function(xhr, status, error){
+	        console.log('Error:', xhr.status); // HTTP 상태 코드
+	        console.log('Status:', status); // 에러 상태
+	        console.log('Error Thrown:', error); // 에러 메시지
+	    }
+
+	})
 	
 }
 

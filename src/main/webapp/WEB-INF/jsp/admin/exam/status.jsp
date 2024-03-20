@@ -111,11 +111,10 @@ console.log(select);
 <script type="text/javascript">
 //=====================================================================================================
 
-function Question(idx , name , type , content , select_type , select_cnt , Choices){
+function Question(idx , name , content , select_type , select_cnt , Choices){
 	
 	this.idx = idx;
 	this.name = name;
-	this.type = type;
 	this.content = content;
 	this.select_type = select_type;
 	this.select_cnt = select_cnt;
@@ -129,7 +128,6 @@ var questions = [];
 questions.push(new Question(
 		'${item.idx}',
 		'${item.name}',
-		'${item.type}',
 		'${item.content}',
 		'${item.select_type}',
 		'${item.select_count}',
