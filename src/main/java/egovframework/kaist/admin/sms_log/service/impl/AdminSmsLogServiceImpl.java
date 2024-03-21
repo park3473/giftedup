@@ -27,6 +27,7 @@ import org.springframework.ui.ModelMap;
 import com.system.util.PageVO;
 import com.thoughtworks.xstream.core.util.Base64Encoder;
 
+import egovframework.kaist.admin.member_re.model.AdminMemberReVo;
 import egovframework.kaist.admin.sms_log.model.AdminSmsLogVo;
 import egovframework.kaist.admin.sms_log.service.AdminSmsLogService;
 import java.util.Base64;
@@ -396,5 +397,11 @@ public class AdminSmsLogServiceImpl implements AdminSmsLogService {
 		byte[] strByte = str.getBytes();
 		String result = encoder.encode(strByte);
 		return result;
+	}
+
+	@Override
+	public void setMemberReSmsIDPW(AdminMemberReVo adminMemberReVo) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -60,23 +60,7 @@ public class AdminExamController {
 	//EXAM
 	@RequestMapping(value="/admin/exam/list.do" , method = RequestMethod.GET)
 	public ModelAndView AdminExamListGet(@ModelAttribute("AdminExamVo")AdminExamVo AdminExamVo , HttpServletRequest request , HttpServletResponse response) {
-		
-		System.out.println("PAGE : " + AdminExamVo.getPAGE());
-		System.out.println("ITEM_COUNT : " + AdminExamVo.getITEM_COUNT());
-		
-		String PAGE = request.getParameter("PAGE") != null ? request
-				.getParameter("PAGE") : "0";
-		String ITEM_COUNT = request.getParameter("ITEM_COUNT") != null ? request
-				.getParameter("ITEM_COUNT") : "10";
-		
-		AdminExamVo.setPAGE(Integer.parseInt(PAGE));
-		AdminExamVo.setITEM_COUNT(Integer.parseInt(ITEM_COUNT));
-		
-		int pagelimit = AdminExamVo.getPAGE() * AdminExamVo.getITEM_COUNT();
-		
-		AdminExamVo.setLIMIT(Integer.parseInt(ITEM_COUNT));
-		AdminExamVo.setOFFSET(pagelimit);
-		
+				
 		ModelMap model = new ModelMap();
 		
 		model = adminExamService.getAllList(AdminExamVo);
@@ -386,7 +370,7 @@ public class AdminExamController {
         bodyStyle.setAlignment(HorizontalAlignment.CENTER);
 
         // 헤더 생성
-        String[] headers = {"문항 순서", "문항 제목", "문항 타입", "선택지 갯수", "선택지 리스트"};
+        String[] headers = {"문항 순서", "문항 제목", "문항 타입", "선택지 갯수", "선택지"};
         Row headerRow = sheet.createRow(0);
         for (int i = 0; i < headers.length; i++) {
             Cell cell = headerRow.createCell(i);
@@ -423,13 +407,8 @@ public class AdminExamController {
 
             // "선택지 갯수"와 "선택지 리스트"
             row.createCell(3).setCellValue(String.valueOf(question.getOrDefault("select_count", "")));
-            row.createCell(4).setCellValue(String.valueOf(question.getOrDefault("Choices", "")));
+            row.createCell(4).setCellValue(String.valueOf(question.getOrDefault("Choices", "")));            
             
-            
-            // 바디 스타일 적용
-            for(int i = 0; i < headers.length; i++) {
-                row.getCell(i).setCellStyle(bodyStyle);
-            }
             
         }
 
@@ -472,97 +451,118 @@ public class AdminExamController {
         }
 
         // 열 너비 자동 조정
-        for (int i = 0; i < headers.length; i++) {
+        for (int i = 0; i < headers2.length; i++) {
             sheet2.autoSizeColumn(i);
         }
 
-        // 문항별 선택지 카운트와 답변형 응답 저장 구조 초기화
+     // 문항별 선택지 카운트 및 답변형 응답을 저장할 구조 초기화
         Map<Integer, Map<String, Integer>> questionChoiceCounts = new HashMap<>();
         Map<Integer, List<String>> questionTextResponses = new HashMap<>();
-        
-        // 세 번째 시트 생성
-        Sheet statsSheet = workbook.createSheet("통계");
 
-        // 헤더 행의 셀 제목
-        String[] columnTitles = {"문항 ID", "문항 제목", "선택지/응답", "카운트/내용"};
-        for (int i = 0; i < columnTitles.length; i++) {
-            Cell cell = headerRow.createCell(i);
-            cell.setCellValue(columnTitles[i]);
-            cell.setCellStyle(headerStyle);
+        // 문항 리스트에서 각 문항의 정보 추출 및 초기화
+        for (HashMap<String, Object> question : questionList) {
+        	Integer questionId = Integer.parseInt(String.valueOf(question.getOrDefault("idx","")));
+        	questionChoiceCounts.put(questionId, new HashMap<String, Integer>()); // 선택지 카운트용
+        	questionTextResponses.put(questionId, new ArrayList<String>()); // 답변형 응답용
         }
 
+        // 응답자의 선택을 파싱하여 카운트 집계
         for (HashMap<String, Object> respondent : respondents) {
-            String selectList = (String) respondent.get("select_list");
+            String selectList = String.valueOf(respondent.get("select_list"));
             List<String> responses = parseSelectList(selectList);
 
+            // 가정: 응답자의 응답은 questionList의 순서와 일치한다고 가정
             for (int i = 0; i < responses.size(); i++) {
-                int questionId = i + 1; // 문항 ID 가정
-                List<String> parsedResponses = parseSelectList(responses.get(i));
+                Integer questionId = Integer.parseInt(String.valueOf(questionList.get(i).get("idx")));
+                String response1 = responses.get(i);
 
-                for (String response1 : parsedResponses) {
-                    if (response1.matches("\\[.*\\]")) { // 체크박스 처리
-                        response1 = response1.substring(1, response1.length() - 1); // 대괄호 제거
-                        for (String subResponse : response1.split(",")) {
-                            Map<String, Integer> counts = questionChoiceCounts.getOrDefault(questionId, new HashMap<String, Integer>());
-                            counts.put(subResponse, counts.getOrDefault(subResponse, 0) + 1);
-                            questionChoiceCounts.put(questionId, counts);
+                // 선택지 타입에 따라 분기 처리
+                switch (String.valueOf(questionList.get(i).get("select_type"))) {
+                    case "1": // 객관식
+                    case "2": // 체크박스
+                        if (response1.matches("\\[.*\\]")) {
+                            // 체크박스 응답 처리
+                            response1 = response1.replaceAll("\\[|\\]", ""); // 대괄호 제거
+                            String[] selectedOptions = response1.split(",");
+                            for (String option : selectedOptions) {
+                                questionChoiceCounts.get(questionId).put(option, questionChoiceCounts.get(questionId).getOrDefault(option, 0) + 1);
+                            }
+                        } else {
+                            // 객관식 응답 처리
+                            questionChoiceCounts.get(questionId).put(response1, questionChoiceCounts.get(questionId).getOrDefault(response1, 0) + 1);
                         }
-                    } else if (!response1.matches("응답.*")) { // 라디오 처리
-                        Map<String, Integer> counts = questionChoiceCounts.getOrDefault(questionId, new HashMap<String, Integer>());
-                        counts.put(response1, counts.getOrDefault(response1, 0) + 1);
-                        questionChoiceCounts.put(questionId, counts);
-                    } else { // 답변형 처리
-                    	questionTextResponses.putIfAbsent(questionId, new ArrayList<String>()); // 수정된 부분
-                    	questionTextResponses.get(questionId).add(response1);
-                    }
+                        break;
+                    case "3": // 답변형
+                        questionTextResponses.get(questionId).add(response1);
+                        break;
                 }
             }
         }
+        
+     // 3번째 시트 생성
+        Sheet sheet3 = workbook.createSheet("응답 통계");
 
-        // 문항별 데이터 기록
-        int rowNum1 = 1; // 헤더 다음 행부터 시작
+        // 헤더 생성
+        Row headerRow1 = sheet3.createRow(0);
+        String[] headers1 = {"문항 제목", "선택지", "응답 횟수" , "응답 통계"};
+        for (int i = 0; i < headers1.length; i++) {
+            Cell cell = headerRow1.createCell(i);
+            cell.setCellValue(headers1[i]);
+            cell.setCellStyle(headerStyle); // 앞서 정의한 headerStyle 사용
+        }
 
-        // 문항 ID 및 제목을 매핑할 맵 생성 (문항 리스트를 기반으로)
-        Map<Integer, String> questionIdToTitle = new HashMap<>();
+        int rowIndex1 = 1; // 데이터를 쓸 행의 시작 인덱스
+
+        // 각 문항별 응답 데이터 쓰기
         for (HashMap<String, Object> question : questionList) {
-            Integer questionId = Integer.parseInt(String.valueOf(question.getOrDefault("idx", 0)));
-            String questionTitle = String.valueOf(question.getOrDefault("name", ""));
-            questionIdToTitle.put(questionId, questionTitle);
-        }
+            Integer questionId = Integer.parseInt(String.valueOf(question.getOrDefault("idx", "")));
+            Map<String, Integer> choiceCounts = questionChoiceCounts.get(questionId);
+            List<String> textResponses = questionTextResponses.get(questionId);
 
-        // 선택지별 카운트 데이터 기록
-        for (Map.Entry<Integer, Map<String, Integer>> entry : questionChoiceCounts.entrySet()) {
-            Integer questionId = entry.getKey();
-            String questionTitle = questionIdToTitle.getOrDefault(questionId, "");
-            Map<String, Integer> choices = entry.getValue();
+            // 문항 기본 정보 표시 (문항 번호와 제목)
+            Row questionRow = sheet3.createRow(rowIndex1++);
+            questionRow.createCell(0).setCellValue(String.valueOf(question.getOrDefault("name", "")));
 
-            for (Map.Entry<String, Integer> choiceEntry : choices.entrySet()) {
-                Row row = statsSheet.createRow(rowNum1++);
-                row.createCell(0).setCellValue(questionId.doubleValue()); // 셀에 숫자형으로 기록
-                row.createCell(1).setCellValue(questionTitle);
-                row.createCell(2).setCellValue(choiceEntry.getKey()); // 선택지
-                row.createCell(3).setCellValue(choiceEntry.getValue().doubleValue()); // 카운트 (숫자형으로 기록)
-            }
-        }
-
-        // 답변형 응답 데이터 기록
-        for (Map.Entry<Integer, List<String>> entry : questionTextResponses.entrySet()) {
-            Integer questionId = entry.getKey();
-            String questionTitle = questionIdToTitle.getOrDefault(questionId, "");
-            List<String> responses = entry.getValue();
-
-            for (String response1 : responses) {
-                Row row = statsSheet.createRow(rowNum1++);
-                row.createCell(0).setCellValue(questionId.doubleValue()); // 셀에 숫자형으로 기록
-                row.createCell(1).setCellValue(questionTitle);
-                row.createCell(2).setCellValue("답변형 응답");
-                row.createCell(3).setCellValue(response1);
+            // 선택지 유형에 따라 데이터 쓰기
+            String selectType = String.valueOf(question.getOrDefault("select_type", ""));
+            if (!selectType.equals("3")) { // 라디오박스 또는 체크박스
+            	// 전체 응답 횟수 계산
+                int totalResponses = choiceCounts.values().stream().mapToInt(Integer::intValue).sum();
+                String choicesStr = String.valueOf(question.get("Choices")); // "2021#2022#2023"
+                String[] choicesArr = choicesStr.split("#");
+                
+                for (Map.Entry<String, Integer> choice : choiceCounts.entrySet()) {
+                    Row choiceRow = sheet3.createRow(rowIndex1++);
+                    int choiceIndex = Integer.parseInt(choice.getKey()) - 1;
+                    choiceRow.createCell(1).setCellValue(choicesArr[choiceIndex]);
+                    choiceRow.createCell(2).setCellValue(choice.getValue());
+                    
+                    // "응답 비율" 셀에 응답 비율 계산 및 입력
+                    if (totalResponses > 0) { // 분모가 0이 아닌 경우에만 계산
+                        double responseRate = (double) choice.getValue() / totalResponses * 100; // 응답 비율 계산
+                        choiceRow.createCell(3).setCellValue(String.format("%.2f%%", responseRate)); // 소수점 둘째 자리까지 표시
+                    } else {
+                    	choiceRow.createCell(3).setCellValue("N/A"); // 응답이 없는 경우
+                    }
+                    
+                }
+                
+                
+            } else { // 답변형
+                for (String response1 : textResponses) {
+                    Row responseRow = sheet3.createRow(rowIndex1++);
+                    responseRow.createCell(1).setCellValue(response1);
+                    // 답변형 응답에는 "응답 횟수" 셀을 비워둠
+                    
+                }
+             
+                
             }
         }
 
         // 열 너비 자동 조정
-        for (int i = 0; i < columnTitles.length; i++) {
-            statsSheet.autoSizeColumn(i);
+        for (int i = 0; i < headers1.length; i++) {
+            sheet3.autoSizeColumn(i);
         }
 
         // 파일 저장 경로 설정
@@ -578,7 +578,7 @@ public class AdminExamController {
         
         try {
             // 엑셀 파일 임시 저장 (임시 파일명 사용 또는 직접 지정)
-            String tempFileName = "exam.xls";
+            String tempFileName = adminExamVo.getName() + "_total.xls";
             FileOutputStream fileOut = new FileOutputStream(savePath + tempFileName);
             workbook.write(fileOut);
             fileOut.close();
