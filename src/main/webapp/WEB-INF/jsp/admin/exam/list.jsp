@@ -11,7 +11,8 @@
 <head>
     <%@ include file="../include/head.jsp" %>
     <script src="${pageContext.request.contextPath}/resources/sweetalert/sweetalert2.min.js"></script>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/sweetalert/sweetalert2.min.css"> 
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/sweetalert/sweetalert2.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/tabulator-tables/dist/css/tabulator.min.css" rel="stylesheet">  
 </head>
 
 <style>
@@ -38,77 +39,14 @@
                         <div class="sc_con">
                             <div class="title">
                                 <span></span>
-                                <span>설문 폼 관리</span>
+                                <span>설문조사 관리</span>
+                                
                             </div>
+                            <input type="text" id="search-field" placeholder="Search data...">
                             <div class="table_wrap">
-                                <table id="bootstrap-data-table">
-                                    <tr>
-                                        <th class="number">번호</th>
-                                        <th class="name">제목</th>
-                                        <th class="category">유형</th>
-                                        <th class="onoff">시작여부</th>
-                                        <th class="create_tm">생성일시</th>
-                                        <th class="update_tm">수정일시</th>
-                                        <th class="setting">비고</th>
-                                    </tr>
-                                    <c:forEach var="item" items="${model.list}" varStatus="status">
-                                    <tr data-role="button" data-id="${item.idx}"  >
-                                        <td>${model.itemtotalcount - (status.index + model.page *  model.itemcount)}</td>
-                                        <td>${item.name }</td>
-                                        <td>
-                                        	설문
-                                        </td>
-                                        <td>
-                                        	<c:choose>
-                                        		<c:when test="${item.onoff == '0' }">진행X</c:when>
-                                        		<c:when test="${item.onoff == '1' }">진행중</c:when>
-                                        	</c:choose>
-                                        </td>
-                                        <td>
-                                            ${fn:substring(item.create_tm,0,11)}
-                                        </td>
-                                        <td>
-                                            ${fn:substring(item.update_tm,0,11)}
-                                        </td>
-                                        <td>
-                                        	<button type="button" onclick="location.href='/user/exam/view.do?idx=${item.idx}'">설문지 보기</button>
-                                        	<button type="button" onclick="location.href='/admin/exam/question_list.do?exam_idx=${item.idx}&category=${item.category }'">리스트 확인</button>
-                                        	<button type="button" onclick="location.href='/admin/exam/update.do?idx=${item.idx}'">관리</button>
-                                        	<button type="button" onclick="location.href='/admin/exam/respondents/list.do?exam_idx=${item.idx}'">응답자 관리</button>
-                                        	<button type="button"  onclick="location.href='/admin/exam/status.do?idx=${item.idx}&category=${item.category }'">통계</button>
-                                        </td>
-                                    </tr>
-                                    </c:forEach>
-                                </table>
+                            	<div id="member-table"></div>
                             </div>
-
-                            <!--관리자 버튼-->
-                            <div class="page_seach">
-                                <div>
-                                    <select id="SEARCH_TYPE" name="SEARCH_TYPE">
-                                        <option value="ALL">전체</option>
-                                        <option value="type" <c:if test="${model.before.SEARCH_TYPE == 'onoff'}">selected</c:if>>상태</option>
-                                        <option value="name" <c:if test="${model.before.SEARCH_TYPE == 'name'}">selected</c:if>>이름</option>
-                                    </select>
-                                    <input style="width: 191px;" type="text" value="${model.before.SEARCH_TEXT }" name="SEARCH_TEXT" id="SEARCH_TEXT" >
-                                    <button type="button" value="검색" onClick="searchBtnClick()">검색</button>
-                                </div>
-                                <div class="adm_btn_wrap stats_btn_area">
-                                    <ul>
-                                    <button type="button" onclick="test()">테스트</button>
-                                    <li class="delete">
-                                        <a href="./insert.do">설문 폼 등록</a>
-                                    </li>
-                                </ul>
-                                </div>
-                            </div>
-
-                            <!--관리자 버튼 end-->
-							<!--페이지 넘버-->
-                            <nav class="paging_number">
-                                <%@ include file="../include/pageing.jsp" %>
-                            </nav>
-                            <!--페이지 넘버 end-->
+                            
                         </div>
                     </section>
                     <!--본문 내용 end-->
@@ -127,6 +65,7 @@
 
 </body>
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/tabulator-tables/dist/js/tabulator.min.js"></script>
 <script type="text/javascript">
 
 $(document).ready(function () {
@@ -136,25 +75,98 @@ $(document).ready(function () {
     });
 });
 
-function searchBtnClick(){
-	
-	 URL = './list.do';
-     URL = URL + "?PAGE=0";
-     URL = URL + "&ITEM_COUNT=" + '10';
+var table = new Tabulator("#member-table", {
+    height: "auto",
+    layout: "fitColumns",
+    pagination: "local", // 페이지네이션 사용 설정
+    paginationSize: 10, // 페이지 당 행의 수
+    columns: [
+        {title: "번호", field: "IDX", visible: false },
+        {title: "No", field: "INDEX", minWidth : 100},
+        {title: "설문조사 명", field: "NAME", minWidth : 200},
+        {title: "시작일시", field: "START_TM", minWidth : 200},
+        {title: "종료일시", field: "END_TM", minWidth : 200},
+        {title: "응답 리스트", field: "actions", align: "center", formatter: function(cell, formatterParams) {
+            var value = cell.getValue();
+            return "<button onclick='resultListGet(\"" + cell.getRow().getData().IDX + "\")'>응답 리스트</button>";
+        } ,  minWidth : 200},
+        {title: "결과물 출력", field: "actions", align: "center", formatter: function(cell, formatterParams) {
+            var value = cell.getValue();
+            return "<button onclick='total_excelDown(\"" + cell.getRow().getData().IDX + "\",\"" + cell.getRow().getData().NAME + "\")'>결과물 출력</button>";
+        } ,  minWidth : 200},
+        {title: "응답자 관리", field: "actions", align: "center", formatter: function(cell, formatterParams) {
+            var value = cell.getValue();
+            return "<button onclick='respondents(\"" + cell.getRow().getData().IDX + "\")'>응답자 관리</button>";
+        } ,  minWidth : 200},
+        {title: "설문조사 관리", field: "actions", align: "center", formatter: function(cell, formatterParams) {
+            var value = cell.getValue();
+            return "<button onclick='ViewDetails(\"" + cell.getRow().getData().IDX + "\")'>설문조사 관리</button>";
+        } ,  minWidth : 200},
+        {title: "통계", field: "actions", align: "center", formatter: function(cell, formatterParams) {
+            var value = cell.getValue();
+            return "<button onclick='status(\"" + cell.getRow().getData().IDX + "\",0)'>통계</button>";
+        } ,  minWidth : 200}
+    ]
+});
 
-     URL = URL + "&SEARCH_TEXT=" + encodeURI($('#SEARCH_TEXT').val());
-     URL = URL + "&SEARCH_TYPE=" + $('#SEARCH_TYPE').val();
-
-	location.href = URL;
-	
+//=====================================================================================================
+function Exam(INDEX , IDX , NAME , START_TM , END_TM ) {
+	this.INDEX = INDEX;
+    this.IDX = IDX;
+    this.NAME = NAME;
+    this.START_TM = START_TM;
+    this.END_TM = END_TM;
 }
+//=====================================================================================================
+var exam = [];
+// 가정: model.list는 위 SQL 쿼리에 의해 반환된 결과물의 리스트입니다.
+<c:forEach var="item" items="${model.list}" varStatus="status">
+    exam.push(new Exam(
+    	`${status.index + 1}`,
+    	`${item.IDX}`,
+    	`${item.NAME}`,
+    	<c:if test="${item.START_TM == ''}">
+    		``
+    	</c:if>
+    	<c:if test="${item.START_TM != ''}">
+    		`${fn:substring(item.START_TM,0,11)}`
+    	</c:if>
+    	,
+    	<c:if test="${item.END_TM == ''}">
+    		``
+    	</c:if>
+    	<c:if test="${item.END_TM != ''}">
+    		`${fn:substring(item.END_TM,0,11)}`
+    	</c:if>,
+    ));
+</c:forEach>
+//=====================================================================================================
+	
+document.addEventListener("DOMContentLoaded", function() {  
+	// 초기 데이터 설정
+	    table.setData(exam);
+	});
+	
+//검색 기능
+document.getElementById("search-field").addEventListener("keyup", function() {
+var searchValue = this.value.toLowerCase(); // 검색어를 소문자로 변환
+table.setFilter(customFilter); // 사용자 정의 필터 적용
+
+function customFilter(data) {
+    // 검색 대상 필드를 확인하고, 대소문자를 구분하지 않는 검색을 수행합니다.
+    // 데이터가 없는 경우를 대비하여 문자열로 변환 전에 검사합니다.
+    return (data.NAME && data.NAME.toString().toLowerCase().includes(searchValue)) ||
+           (data.START_TM && data.START_TM.toString().toLowerCase().includes(searchValue)) ||
+           (data.END_TM && data.END_TM.toString().toLowerCase().includes(searchValue));
+    }
+});
 
 function test(){
 	
 	$.ajax({
 	    url : '/admin/exam/result/excel.do',
 	    type: 'POST',
-	    data : {idx : '9'},
+	    data : {idx : '9' , name : '영재키움 트래킹'},
 	    dataType : 'json',
 	    success : function(data){
 	    	console.log('data : ' + data.filePath);
@@ -172,6 +184,13 @@ function test(){
 	})
 	
 }
+
+function status(idx , category){
+	
+	location.href='/admin/exam/status.do?idx='+idx+'&category='+category;
+	
+}
+
 
 </script>
 

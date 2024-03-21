@@ -5,25 +5,12 @@
 <mapper namespace="egovframework.kaist.admin.exam.service.impl.AdminExamMapper">
 
 	<select id="getExamAllList" resultType="hashMap"  parameterType="egovframework.kaist.admin.exam.model.AdminExamVo">
-		SELECT * FROM TBL_EXAM
-		WHERE 1=1
-		<if test="SEARCH_TEXT != ''">
-		    <if test="SEARCH_TYPE != 'ALL'">
-	    		 AND ${SEARCH_TYPE} LIKE '%${SEARCH_TEXT}%'
-	    	</if>
-	    </if>
+		SELECT IDX , NAME , START_TM , END_TM FROM TBL_EXAM
 	   	ORDER BY CREATE_TM DESC
-	    LIMIT ${LIMIT} OFFSET ${OFFSET}
 	</select>
 	
 	<select id="getAllListCnt" resultType="int" parameterType="egovframework.kaist.admin.exam.model.AdminExamVo">
 		SELECT COUNT(*) FROM TBL_EXAM
-		WHERE 1=1
-		<if test="SEARCH_TEXT != ''">
-		    <if test="SEARCH_TYPE != 'ALL'">
-	    		 AND ${SEARCH_TYPE} LIKE '%${SEARCH_TEXT}%'
-	    	</if>
-	    </if> 
 	</select>
 	
 	<insert id="setAdminExamDataInsert" parameterType="egovframework.kaist.admin.exam.model.AdminExamVo">
@@ -165,8 +152,8 @@
 		DELETE FROM TBL_EXAM_RESPONDENTS WHERE IDX = #{idx}
 	</delete>
 	
-	<select id="getRespondentsResultList" parameterType="egovframework.kaist.admin.exam.model.AdminExamRespondentsVo">
-		SELECT MEMBER_ID , NAME , PHONE , SCHOOL_NAME FROM TBL_EXAM_RESPONDENTS WHERE EXAM_IDX = #{exam_idx} AND RESPONDENTS = 'yes'
+	<select id="getRespondentsResultList" parameterType="egovframework.kaist.admin.exam.model.AdminExamRespondentsVo" resultType="hashMap">
+		SELECT IDX , MEMBER_ID , NAME , PHONE , SCHOOL_NAME FROM TBL_EXAM_RESPONDENTS WHERE EXAM_IDX = #{exam_idx} AND RESPONDENTS = 'yes'
 	</select>
 	
 	<select id="getExamRespondentsTotalCnt" parameterType="egovframework.kaist.admin.exam.model.AdminExamVo" resultType="int">

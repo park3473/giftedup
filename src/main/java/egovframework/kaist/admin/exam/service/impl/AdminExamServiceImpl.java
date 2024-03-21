@@ -38,31 +38,11 @@ public class AdminExamServiceImpl implements AdminExamService {
 		
 		List<?> list = adminExamMapper.getExamAllList(adminExamVo);
 		
-		System.out.println("size : " + list.size());
-		
 		int itemtotalcount = adminExamMapper.getAllListCnt(adminExamVo);
-		int itemCount  = adminExamVo.getITEM_COUNT();
-		int itempage = adminExamVo.getPAGE();
-		
-		PageVO pageVo = new PageVO(itemCount, itemtotalcount, itempage);
-		
-		if(pageVo.isItempagenext() == true){
-			modelMap.put("itempagenext", "true");
-		}else {
-			modelMap.put("itempagenext", "false");
-		}
-		
-		System.out.println(pageVo.getItempage());
-		
-		modelMap.put("page", pageVo.getItempage());
-		System.out.println("itemCount" + pageVo.getItemCount());
-		modelMap.put("itemCount", pageVo.getItemCount());
-		modelMap.put("itempagestart", pageVo.getItempagestart());
-		modelMap.put("itempageend", pageVo.getItempageend());
-		modelMap.put("itemtotalcount", pageVo.getItemtotalcount());
-		modelMap.put("itemtotalpage", pageVo.getItemtotalpage());
 		
 		modelMap.put("list", list);
+		
+		modelMap.put("totalCount" , itemtotalcount);
 		
 		return modelMap;
 	}
