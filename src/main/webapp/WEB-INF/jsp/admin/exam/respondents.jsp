@@ -11,6 +11,8 @@
 <head>
 <%@ include file="../include/head.jsp" %>
 <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet">
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/sweetalert/sweetalert2.min.css">
 </head>
 
 <body>
@@ -33,10 +35,22 @@
 							<div class="page_seach">
                                 <div class="adm_btn_wrap stats_btn_area">
                                     <ul>
-                                    <li class="delete">
-                                        <a href="#" onclick="respondentsSave()">응답자 저장</a>
-                                    </li>
-                                </ul>
+	                                    <li class="delete">
+	                                        <a href="#" onclick="respondentsExcelDown('${model.before.exam_idx}' , '${model.before.name }')">응답자 출력</a>
+	                                    </li>
+	                                    <li class="delete">
+	                                        <a href="#" onclick="respondentsFormDown()">응답자 엑셀폼 다운로드</a>
+	                                    </li>
+	                                    <li class="delete">
+	                                        <a href="#" onclick="respondentsExcelModal()">응답자 엑셀 업로드</a>
+	                                    </li>
+	                                    <li class="delete">
+	                                        <a href="#" onclick="respondentsGroupModal()">응답자 그룹 등록</a>
+	                                    </li>
+	                                    <li class="delete">
+	                                        <a href="#" onclick="respondentsSave()">응답자 저장</a>
+	                                    </li>
+	                                </ul>
                                 </div>
                             </div>
                             <div class="member_register_wrap">
@@ -172,7 +186,11 @@
 		</ul>
 	</div>
 
-    <!--푸터-->
+	<div class="member_modal_wrap" id="excelUploadMoal">
+	</div>
+
+
+	<!--푸터-->
     <footer>
 	<%@ include file="../include/footer.jsp" %>
     </footer>
@@ -389,8 +407,149 @@ function respondentsSave(){
 	
 }
 
+function respondentsExcelDown(idx , name){
+	
+	$.ajax({
+	    url : '/admin/exam/respondents/excelDown.do',
+	    type: 'POST',
+	    data : {exam_idx : idx , name : name},
+	    dataType : 'json',
+	    success : function(data){
+	    	console.log('data : ' + data.filePath);
+	    	var result = confirm('해당 엑셀 파일을 다운로드 받으시겠습니까?');
+	    	if(result){
+	    		window.location.href = data.filePath;
+	    	}
+	    },
+	    error: function(xhr, status, error){
+	        console.log('Error:', xhr.status); // HTTP 상태 코드
+	        console.log('Status:', status); // 에러 상태
+	        console.log('Error Thrown:', error); // 에러 메시지
+	    }
+
+	})
+	
+	
+}
+
+function respondentsFormDown(){
+	
+	var url = '/resources/upload/exam/RespondentsUploadSample.xlsx';
+	
+	window.location.href = url;
+	
+}
+function respondentsExcelModal(){
+	
+	var HTML = `<div class="member_modal_con member_input_wrap">
+		<div class="modal_title">
+		<h2>응답자 엑셀 업로드</h2>
+	</div>
+	<form id="RespondentsExcelUpload" enctype="multipart/form-data" method="post">
+	<ul class="modal_form member_input">
+		<li>
+			<span class="list_t">엑셀 업로드</span>
+			<input type="file" id="file1" name="file" accept=".xls">
+			<span class="relate_c">※ 양식에 맞는 엑셀(xls)을 업로드 해주세요.</span>
+		</li>
+	</ul>
+	</form>
+	<div id="excelCompleteTable" class="table_wrap" style="max-height:300px;overflow:scroll">
+		
+	</div>
+	<div class="member_btn adm_btn_wrap mr-0">
+		<ul id="step_button">
+			<li class="register modal_close"><a href="javascript:ExcelModelFadeOut()">취소</a></li>
+			<li class="register modal_upload" id="excel_upload_step_1">
+				<a href="javascript:RespondentsExcelUpload()">엑셀 업로드</a>
+			</li>
+		</ul>
+	</div>
+</div>`
+	
+	$("#excelUploadMoal").html(HTML);
+	
+	$(".member_modal_wrap").fadeIn(300);
+}
+
+function ExcelModelFadeOut(){
+	
+	$("#excelUploadMoal").html('');
+	$(".member_modal_wrap").fadeOut(300);
+}
+
+function RespondentsExcelUpload(){
+	
+	var form = $('#RespondentsExcelUpload')[0];
+	var formData = new FormData(form);
+	
+	// 파일 업로드 AJAX 요청
+    $.ajax({
+      url: '/admin/exam/respondents/ExcelUpload.do',
+      type: 'POST',
+      data: formData,
+      dataType : 'json',
+      processData: false,
+      contentType: false,
+      success: function(data) {
+      	  // 테이블 HTML 생성
+      	  let tableHtml = '<table id="excelUploadTable" style="width:100%"><tr><th>아이디</th><th>타입</th><th>학교명</th><th>이름</th><th>전화번호</th></tr>';
+      	  
+      	  data.forEach(function(item) {
+      	    tableHtml += `<tr>
+      	                    <td class="member_id">`+item.MEMBER_ID+`</td>
+      	                    <td class="type">`+item.TYPE+`</td>
+      	                    <td class="school_name">`+item.SCHOOL_NAME+`</td>
+      	                    <td class="name">`+item.NAME+`</td>
+      	                    <td class="phone">`+item.PHONE+`</td>
+      	                  </tr>`;
+      	  });
+      	  
+      	  tableHtml += '</table>';
+      	  $('#excelCompleteTable').html(tableHtml);
+ 		  $('#excel_upload_step_1').remove();  
+      	  $('#step_button').append('<li class="register modal_upload" id="excel_upload_step_2"><a href="javascript:RespondentsExcelDataUpload()">데이터 등록</a></li>')
+      	},
+      error: function(xhr, status, error) {
+        console.log('???error');
+      }
+    });
+	
+}
+
+function RespondentsExcelDataUpload(){
+	
+	var dataList = [];
+	
+	$('#excelUploadTable tr:not(:first)').each(function() {
+        var row = $(this);
+        var dataMap = {
+            MEMBER_ID: row.find(".member_id").text(), // 클래스나 id를 사용하여 셀 데이터 접근
+            TYPE: row.find(".type").text(),
+            SCHOOL_NAME: row.find(".school_name").text(),
+            NAME: row.find(".name").text(),
+            PHONE: row.find(".phone").text()
+        };
+        dataList.push(dataMap);
+    });
+	
+	console.log(dataList);
+		$.ajax({
+	        url: '/admin/exam/respondents/ExcelDataUpload.do', // 실제 서버 엔드포인트 URL로 대체
+	        type: 'POST',
+	        data: {dataList : dataList},
+	        success: function(response) {
+	            console.log(response);
+	        },
+	        error: function(xhr, status, error) {
+	            // 오류 처리 로직
+	        }
+	    });
 
 	
+}
+
+
 </script>
 
 </html>

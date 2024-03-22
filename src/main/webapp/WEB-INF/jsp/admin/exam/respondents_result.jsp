@@ -42,7 +42,27 @@
                                 <span>응답 결과 관리</span>
                                 
                             </div>
+                            
+                            <div class="page_seach">
+                                <div class="adm_btn_wrap stats_btn_area">
+                                    <ul>
+	                                    <li class="delete">
+	                                        <a href="#" id="download-xlsx" >응답 결과 다운로드</a>
+	                                    </li>
+	                                    <li class="delete">
+	                                        <a href="#" id="download-pdf" >PDF 다운로드</a>
+	                                    </li>
+	                                </ul>
+                                </div>
+                            </div>
+                            
                             <input type="text" id="search-field" placeholder="Search data...">
+                            <select id="search_school_name">
+                            	<option value=""></option>
+                            	<option value="대구영선초등학교">대구영선초등학교</option>
+                            	<option value="카이스트">카이스트</option>
+                            	<option value="고양중학교">고양중학교</option>
+                            </select>
                             <div class="table_wrap">
                             	<div id="member-table"></div>
                             </div>
@@ -65,6 +85,9 @@
 </body>
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
  <script src="https://cdn.jsdelivr.net/npm/tabulator-tables/dist/js/tabulator.min.js"></script>
+   <script type="text/javascript" src="https://oss.sheetjs.com/sheetjs/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.20/jspdf.plugin.autotable.min.js"></script>
 <script type="text/javascript">
 
 $(document).ready(function () {
@@ -81,14 +104,14 @@ var table = new Tabulator("#member-table", {
     paginationSize: 50, // 페이지 당 행의 수
     columns: [
     	{title: "응답자 번호", field: "IDX", visible: false},
-        {title: "응답자 아이디", field: "MEMBER_ID", align: "center" ,  minWidth : 200},
+        {title: "응답자 아이디", field: "MEMBER_ID", align: "center" ,  minWidth : 200 , 
+    		cellClick: function(e, cell) {
+            	DetailView("" + cell.getRow().getData().IDX + "")
+        	}
+    	},
         {title: "응답자 성명", field: "NAME", align: "center" ,  minWidth : 200},
         {title: "응답자 전화번호", field: "PHONE", align: "center" ,  minWidth : 200},
         {title: "응답자 학교명", field: "SCHOOL_NAME", align: "center" ,  minWidth : 200},
-        {title: "상세보기", field: "actions", align: "center", formatter: function(cell, formatterParams) {
-            var value = cell.getValue();
-            return "<button onclick='viewDetails(\"" + cell.getRow().getData().IDX + "\")'>상세 보기</button>";
-        } ,  minWidth : 200},
     ]
 });
 
@@ -133,10 +156,52 @@ function customFilter(data) {
     }
 });
 
-// 상세 보기 버튼 클릭 이벤트 처리
-window.viewDetails = function(idx) {
-    alert("상세 정보 보기: " + idx);
-};
+//셀렉트 박스 이벤트 리스너
+document.getElementById("search_school_name").addEventListener("change", function(){
+    var selectedValue = this.value;
+
+    if(selectedValue === ""){
+        table.clearFilter(); // 필터링 해제
+    } else {
+        // 선택된 옵션에 따라 필터링
+        table.setFilter("SCHOOL_NAME", "=", selectedValue);
+    }
+});
+
+function DetailView(idx){
+	alert('view : ' + idx);
+}
+
+//trigger download of data.xlsx file
+document.getElementById("download-xlsx").addEventListener("click", function(){
+    table.download("xlsx", "data.xlsx", {sheetName:"Data"});
+});
+
+//trigger download of data.pdf file
+document.getElementById("download-pdf").addEventListener("click", function(){
+    table.download("pdf", "응답결과리스트.pdf", {
+        orientation:"portrait", //set page orientation to portrait
+        jsPDF: {
+            unit: "mm", //set units to mm
+            format: [420, 297], // A3
+        },
+        autoTable: function (doc) {
+        	doc.addFileToVFS('/resources/ttf/NotoSansKR-VariableFont_wght.ttf');
+        	doc.addFont('/resources/ttf/NotoSansKR-VariableFont_wght.ttf', 'NotoSansKR', 'normal');
+            doc.setFontSize(10);
+            return {
+                styles: {
+                    font: "NotoSansKR",
+                    fontStyle: "normal",
+                    fontSize: 10,
+                },
+                theme: 'striped',
+                margin: { top: 35 },
+            }
+        }
+    });
+});
+
 
 </script>
 

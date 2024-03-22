@@ -1,8 +1,11 @@
 package egovframework.kaist.admin.exam.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +17,9 @@ import javax.enterprise.inject.Model;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -30,6 +36,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -37,6 +44,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.system.util.SUtil;
 
 import egovframework.kaist.admin.exam.model.AdminExamRespondentsVo;
@@ -298,13 +306,13 @@ public class AdminExamController {
 
             
             // "문항 순서"는 엑셀 파일 내의 순서를 반영
-            row.createCell(0).setCellValue(String.valueOf(respondents.getOrDefault("MEMBER_ID", "")));
-            row.createCell(1).setCellValue(String.valueOf(respondents.getOrDefault("NAME", "")));
+            row.createCell(0).setCellValue(String.valueOf(respondents.getOrDefault("member_id", "")));
+            row.createCell(1).setCellValue(String.valueOf(respondents.getOrDefault("name", "")));
             
             
             // "문항 타입" 변환
             String selectType = "";
-            switch (String.valueOf(respondents.getOrDefault("TYPE", ""))) {
+            switch (String.valueOf(respondents.getOrDefault("type", ""))) {
                 case "1":
                     selectType = "학생";
                     break;
@@ -315,9 +323,9 @@ public class AdminExamController {
             row.createCell(2).setCellValue(selectType);
 
             // "선택지 갯수"와 "선택지 리스트"
-            row.createCell(3).setCellValue(String.valueOf(respondents.getOrDefault("PHONE", "")));
-            row.createCell(4).setCellValue(String.valueOf(respondents.getOrDefault("SCHOOL_NAME", "")));
-            row.createCell(5).setCellValue(String.valueOf(respondents.getOrDefault("RESPONDENTS", "")));
+            row.createCell(3).setCellValue(String.valueOf(respondents.getOrDefault("phone", "")));
+            row.createCell(4).setCellValue(String.valueOf(respondents.getOrDefault("school_name", "")));
+            row.createCell(5).setCellValue(String.valueOf(respondents.getOrDefault("respondents", "")));
             
             
         }
@@ -362,34 +370,143 @@ public class AdminExamController {
 		
 	}
 	
-	@RequestMapping(value="/admin/exam/result/list.do" , method = RequestMethod.GET)
-	public ModelAndView AdminExamResultGet(@ModelAttribute("AdminExamResultVo")AdminExamResultVo AdminExamResultVo , HttpServletRequest request , HttpServletResponse response) {
+	@RequestMapping(value="/admin/exam/respondents/ExcelUpload.do" , method = RequestMethod.POST,produces = "application/json; charset=utf8")
+	@ResponseBody
+	public String RespondentsExcelUpload(MultipartHttpServletRequest request , HttpServletResponse response) throws UnsupportedEncodingException, JsonProcessingException{
 		
-		System.out.println("PAGE : " + AdminExamResultVo.getPAGE());
-		System.out.println("ITEM_COUNT : " + AdminExamResultVo.getITEM_COUNT());
+		String drv = request.getRealPath("");
+		drv = drv.substring(0, drv.length()) + "./resources"+request.getContextPath()+"/upload/exam/respondents/";
+		System.out.println(drv);
+		String filename = SUtil.setFileUpload(request, drv);
 		
-		String PAGE = request.getParameter("PAGE") != null ? request
-				.getParameter("PAGE") : "0";
-		String ITEM_COUNT = request.getParameter("ITEM_COUNT") != null ? request
-				.getParameter("ITEM_COUNT") : "10";
+		filename = URLDecoder.decode(filename, "utf-8"); 
 		
-		AdminExamResultVo.setPAGE(Integer.parseInt(PAGE));
-		AdminExamResultVo.setITEM_COUNT(Integer.parseInt(ITEM_COUNT));
+		List<HashMap<String, Object>> list = new ArrayList<HashMap<String,Object>>();
 		
-		int pagelimit = AdminExamResultVo.getPAGE() * AdminExamResultVo.getITEM_COUNT();
+		try {
+            FileInputStream fis = new FileInputStream(drv + filename);
+            HSSFWorkbook workbook = new HSSFWorkbook(fis);
+            HSSFSheet sheet = workbook.getSheetAt(0); // 해당 엑셀파일의 시트(Sheet) 수
+            int rows = sheet.getPhysicalNumberOfRows(); // 해당 시트의 행의 개수
+            
+            
+            for (int rowIndex = 1; rowIndex < rows; rowIndex++)
+            {
+            	HSSFRow row = sheet.getRow(rowIndex); // 각 행을 읽어온다
+                if (row != null) {
+                	
+                	HashMap<String, Object> map = new HashMap<String, Object>();
+                	
+                	int cells = row.getPhysicalNumberOfCells();
+                	for (int columnIndex = 0; columnIndex <= 4; columnIndex++)
+                    {
+                		 HSSFCell cell = row.getCell(columnIndex); // 셀에 담겨있는 값을 읽는다.
+                         String value = "";
+                         try {
+                         	switch (cell.getCellType()) 
+                             { // 각 셀에 담겨있는 데이터의 타입을 체크하고 해당 타입에 맞게 가져온다.
+     	                        case HSSFCell.CELL_TYPE_NUMERIC:
+     	                            value = (int)cell.getNumericCellValue() + "";
+     	                            break;
+     	                        case HSSFCell.CELL_TYPE_STRING:
+     	                            value = cell.getStringCellValue() + "";
+     	                            break;
+     	                        case HSSFCell.CELL_TYPE_BLANK:
+     	                            value = cell.getBooleanCellValue() + "";
+     	                            break;
+     	                        case HSSFCell.CELL_TYPE_ERROR:
+     	                            value = cell.getErrorCellValue() + "";
+     	                            break;
+                             }	
+                         }catch(java.lang.NullPointerException e)
+                         {
+                         	try {
+                         		value = cell.getStringCellValue() + "";	
+                         	}catch(java.lang.NullPointerException e1)
+                         	{
+                         		value = "";
+                         	}
+                         }
+                         
+                         if(columnIndex == 0)
+                         {
+                         	value = value.replace(" ", "");
+                         	System.out.println(value);
+                         	String columnKey = "MEMBER_ID"; // 예시 키 값
+                            map.put(columnKey, value);
+                         	
+                         }
+                         else if(columnIndex == 1)
+                         {
+                        	 value = value.replace(" ", "");
+                        	 System.out.println(value);
+                        	 String columnKey = "TYPE"; // 예시 키 값
+                             map.put(columnKey, value);
+                         }
+                         else if(columnIndex == 2)
+                         {
+                        	 value = value.replace(" ", "");
+                        	 System.out.println(value);
+                        	 String columnKey = "SCHOOL_NAME"; // 예시 키 값
+                             map.put(columnKey, value);
+                        	 
+                         }else if(columnIndex == 3)
+                         {
+                        	value = value.replace(" ", "");
+                         	System.out.println(value);
+                         	String columnKey = "NAME"; // 예시 키 값
+                            map.put(columnKey, value);
+                         	
+                         }
+                         else if(columnIndex == 4)
+                         {
+                        	value = value.replace(" ", "");
+                        	value = value.replace("-", "");
+                          	System.out.println(value);
+                          	String columnKey = "PHONE"; // 예시 키 값
+                            map.put(columnKey, value);
+                            
+                         }
+                         
+                         
+                    }
+                	
+                	list.add(map);
+                	
+                }
+            }
+            
+		} catch (IOException e) {
+            e.printStackTrace();
+        }
 		
-		AdminExamResultVo.setLIMIT(Integer.parseInt(ITEM_COUNT));
-		AdminExamResultVo.setOFFSET(pagelimit);
-		
-		ModelMap model = new ModelMap();
-		
-		model = adminExamService.getAllResultList(AdminExamResultVo);
-		
-		model.put("before", model);
-		
-		return new ModelAndView("admin/submission/list" , "model" , model);
+		System.out.println("All-Complete");
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonStr = mapper.writeValueAsString(list);
+		return jsonStr;
 		
 	}
+	
+	@RequestMapping(value="/admin/exam/respondents/ExcelDataUpload.do" , method = RequestMethod.POST ,produces = "application/json; charset=utf8"  )
+	@ResponseBody
+	public String AdminExamRespondentsExcelDataUpload(@RequestBody List<Map<String, Object>> dataList,HttpServletRequest request , HttpServletResponse response) {
+		
+		String result = "false";
+		
+		for (Map<String, Object> dataMap : dataList) {
+            // 각 데이터 항목 처리
+			System.out.println("MEMBER_ID" + dataMap.getOrDefault("MEMBER_ID", ""));
+			System.out.println("SCHOOL_NAME" + dataMap.getOrDefault("SCHOOL_NAME", ""));
+			System.out.println("TYPE" + dataMap.getOrDefault("TYPE", ""));
+			System.out.println("NAME" + dataMap.getOrDefault("NAME", ""));
+			System.out.println("PHONE" + dataMap.getOrDefault("PHONE", ""));
+        }
+		
+		result = "true";
+		
+		return result;
+	}
+	
 	
 	/*
 	 * 2024 신규 수정 페이지
