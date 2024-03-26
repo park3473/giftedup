@@ -293,6 +293,13 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 		
 	}
 
+	@Override
+	public List<?> getGroupMemberList(AdminMemberVo adminMemberVo) {
+		
+		List<?> list = adminMemberMapper.getGroupMemberList(adminMemberVo);
+		
+		return list;
+	}
 
 
 		

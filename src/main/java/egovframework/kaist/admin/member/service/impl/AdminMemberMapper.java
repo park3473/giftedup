@@ -63,5 +63,7 @@ public interface AdminMemberMapper {
 
 	public void setUpdateAjaxTest(AdminMemberVo adminMemberVo);
 
+	public List<?> getGroupMemberList(AdminMemberVo adminMemberVo);
+
 	
 }

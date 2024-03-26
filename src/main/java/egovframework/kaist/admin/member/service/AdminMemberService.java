@@ -1,5 +1,7 @@
 package egovframework.kaist.admin.member.service;
 
+import java.util.List;
+
 import org.springframework.ui.ModelMap;
 
 import egovframework.kaist.admin.member.model.AdminMemberVo;
@@ -53,6 +55,8 @@ public interface AdminMemberService {
 	public void setStudentSchoolAllYearUp(String school);
 
 	public void setUpdateAjaxTest(AdminMemberVo adminMemberVo);
+
+	public List<?> getGroupMemberList(AdminMemberVo adminMemberVo);
 
 
 	

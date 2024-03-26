@@ -695,4 +695,8 @@
 		UPDATE TBL_MEMBER SET ${SEARCH_TYPE} = '${SEARCH_TEXT}' WHERE MEMBER_ID = ${MEMBER_ID}
 	</update>
 
+	<select id="getGroupMemberList" parameterType="egovframework.kaist.admin.member.model.AdminMemberVo" resultType="hashMap">
+		SELECT * FROM TBL_MEMBER
+	</select>
+
 </mapper>

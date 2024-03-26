@@ -39,6 +39,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -51,6 +52,8 @@ import egovframework.kaist.admin.exam.model.AdminExamRespondentsVo;
 import egovframework.kaist.admin.exam.model.AdminExamResultVo;
 import egovframework.kaist.admin.exam.model.AdminExamVo;
 import egovframework.kaist.admin.exam.service.AdminExamService;
+import egovframework.kaist.admin.member.model.AdminMemberVo;
+import egovframework.kaist.admin.member.service.AdminMemberService;
 import egovframework.kaist.admin.question.model.AdminQuestionListVo;
 import egovframework.kaist.admin.question.model.AdminQuestionVo;
 import egovframework.kaist.admin.question.service.AdminQuestionService;
@@ -63,6 +66,9 @@ public class AdminExamController {
 	
 	@Autowired
 	AdminQuestionService adminQuestionService;
+	
+	@Autowired
+	AdminMemberService adminMemberService;
 
 	
 	//EXAM
@@ -487,24 +493,61 @@ public class AdminExamController {
 		
 	}
 	
-	@RequestMapping(value="/admin/exam/respondents/ExcelDataUpload.do" , method = RequestMethod.POST ,produces = "application/json; charset=utf8"  )
+	@RequestMapping(value="/admin/exam/respondents/ExcelDataUpload.do" , method = RequestMethod.POST ,produces = "application/json; charset=utf8")
 	@ResponseBody
-	public String AdminExamRespondentsExcelDataUpload(@RequestBody List<Map<String, Object>> dataList,HttpServletRequest request , HttpServletResponse response) {
+	public String AdminExamRespondentsExcelDataUpload(@RequestParam("dataList") String dataListStr, @ModelAttribute("AdminExamRespondentsVo")AdminExamRespondentsVo AdminExamRespondentsVo ,HttpServletRequest request , HttpServletResponse response) {
 		
-		String result = "false";
-		
-		for (Map<String, Object> dataMap : dataList) {
-            // 각 데이터 항목 처리
-			System.out.println("MEMBER_ID" + dataMap.getOrDefault("MEMBER_ID", ""));
-			System.out.println("SCHOOL_NAME" + dataMap.getOrDefault("SCHOOL_NAME", ""));
-			System.out.println("TYPE" + dataMap.getOrDefault("TYPE", ""));
-			System.out.println("NAME" + dataMap.getOrDefault("NAME", ""));
-			System.out.println("PHONE" + dataMap.getOrDefault("PHONE", ""));
+		try {
+            ObjectMapper mapper = new ObjectMapper();
+            // JSON 문자열을 자바 객체로 변환
+            List<Map<String, Object>> dataList = mapper.readValue(dataListStr, List.class);
+
+            for (Map<String, Object> data : dataList) {
+            	
+            	//값 설정
+                AdminExamRespondentsVo.setMember_id(String.valueOf(data.getOrDefault("MEMBER_ID", "")));
+                AdminExamRespondentsVo.setName(String.valueOf(data.getOrDefault("NAME", "")));
+                AdminExamRespondentsVo.setSchool_name(String.valueOf(data.getOrDefault("SCHOOL_NAME", "")));
+                String Type = String.valueOf(data.getOrDefault("TYPE", ""));
+                switch (Type) {
+				case "학생":
+					Type = "1";
+					break;
+				case "교사":
+					Type = "2";
+					break;
+				}
+                AdminExamRespondentsVo.setType(Type);
+                AdminExamRespondentsVo.setPhone(String.valueOf(data.getOrDefault("PHONE", "")));
+                
+                adminExamService.setExamRespondents(AdminExamRespondentsVo , "insert");
+                
+                //초기화
+                AdminExamRespondentsVo.setMember_id(null);
+                AdminExamRespondentsVo.setName(null);
+                AdminExamRespondentsVo.setSchool_name(null);
+                AdminExamRespondentsVo.setType(null);
+                AdminExamRespondentsVo.setPhone(null);
+                
+                
+            }
+
+            return "{\"result\":\"success\"}";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "{\"result\":\"error\"}";
         }
+	}
+	
+	@RequestMapping(value="/admin/exam/respondents/GroupList.do" , method = RequestMethod.POST)
+	public String AdminRespondentsGroupListPost(@ModelAttribute("AdminMemberVo")AdminMemberVo AdminMemberVo , HttpServletRequest request , HttpServletResponse response) throws JsonProcessingException {
 		
-		result = "true";
+		List<?> list = adminMemberService.getGroupMemberList(AdminMemberVo);
 		
-		return result;
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonStr = mapper.writeValueAsString(list);
+		return jsonStr;
+		
 	}
 	
 	

@@ -434,14 +434,14 @@ function respondentsExcelDown(idx , name){
 
 function respondentsFormDown(){
 	
-	var url = '/resources/upload/exam/RespondentsUploadSample.xlsx';
+	var url = '/resources/upload/exam/RespondentsUploadSample.xls';
 	
 	window.location.href = url;
 	
 }
 function respondentsExcelModal(){
 	
-	var HTML = `<div class="member_modal_con member_input_wrap">
+	var HTML = `<div class="member_modal_con member_input_wrap" style="width : 1050px">
 		<div class="modal_title">
 		<h2>응답자 엑셀 업로드</h2>
 	</div>
@@ -497,11 +497,16 @@ function RespondentsExcelUpload(){
       	  
       	  data.forEach(function(item) {
       	    tableHtml += `<tr>
-      	                    <td class="member_id">`+item.MEMBER_ID+`</td>
-      	                    <td class="type">`+item.TYPE+`</td>
-      	                    <td class="school_name">`+item.SCHOOL_NAME+`</td>
-      	                    <td class="name">`+item.NAME+`</td>
-      	                    <td class="phone">`+item.PHONE+`</td>
+      	                    <td class="member_id"><input name="MEMBER_ID" type="text" value="`+item.MEMBER_ID+`"></td>
+      	                  	<td class="type">
+		      	                <select name="TYPE">
+		      	                    <option value="교사" `+ (item.TYPE === "교사" ? "selected" : "") +`>교사</option>
+		      	                    <option value="학생" `+ (item.TYPE === "학생" ? "selected" : "") +`>학생</option>
+		      	                </select>
+		      	            </td>
+      	                    <td class="school_name"><input name="SCHOOL_NAME" type="text" value="`+item.SCHOOL_NAME+`"></td>
+      	                    <td class="name"><input name="NAME" type="text" value="`+item.NAME+`"></td>
+      	                    <td class="phone"><input name="PHONE" type="text" value="`+item.PHONE+`"></td>
       	                  </tr>`;
       	  });
       	  
@@ -519,16 +524,18 @@ function RespondentsExcelUpload(){
 
 function RespondentsExcelDataUpload(){
 	
+	var exam_idx = `${model.before.exam_idx}`;
+	
 	var dataList = [];
 	
 	$('#excelUploadTable tr:not(:first)').each(function() {
         var row = $(this);
         var dataMap = {
-            MEMBER_ID: row.find(".member_id").text(), // 클래스나 id를 사용하여 셀 데이터 접근
-            TYPE: row.find(".type").text(),
-            SCHOOL_NAME: row.find(".school_name").text(),
-            NAME: row.find(".name").text(),
-            PHONE: row.find(".phone").text()
+            MEMBER_ID: row.find(".member_id input").val(), // 클래스나 id를 사용하여 셀 데이터 접근
+            TYPE: row.find(".type select").val(),
+            SCHOOL_NAME: row.find(".school_name input").val(),
+            NAME: row.find(".name input").val(),
+            PHONE: row.find(".phone input").val()
         };
         dataList.push(dataMap);
     });
@@ -537,12 +544,14 @@ function RespondentsExcelDataUpload(){
 		$.ajax({
 	        url: '/admin/exam/respondents/ExcelDataUpload.do', // 실제 서버 엔드포인트 URL로 대체
 	        type: 'POST',
-	        data: {dataList : dataList},
+	        data: {dataList: JSON.stringify(dataList) , exam_idx : exam_idx},
+	        dataType : 'json',
 	        success: function(response) {
-	            console.log(response);
+	            console.log("서버 응답:", response);
+	            console.log('data');
 	        },
 	        error: function(xhr, status, error) {
-	            // 오류 처리 로직
+	            console.error("에러 발생:", error);
 	        }
 	    });
 
