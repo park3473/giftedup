@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +29,9 @@ import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Row.MissingCellPolicy;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +48,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.system.util.SUtil;
 
@@ -562,6 +566,50 @@ public class AdminExamController {
 		
 	}
 	
+	@RequestMapping(value="/admin/exam/test/insert.do" , method = RequestMethod.POST , produces = "application/json; charset=utf8")
+	@ResponseBody
+	public String AdminExamInsertPost2(@RequestParam("surveyData") String surveyDataStr ,HttpServletRequest request , HttpServletResponse response) {
+		
+		try {
+	        ObjectMapper mapper = new ObjectMapper();
+	        // JSON 문자열을 자바 객체로 변환
+	        Map<String, Object> surveyDataMap = mapper.readValue(surveyDataStr, new TypeReference<Map<String, Object>>() {});
+
+	        // 여기서부터 설문 제목, 설명 등을 추출
+	        String title = String.valueOf(surveyDataMap.getOrDefault("title", ""));
+	        String description = String.valueOf(surveyDataMap.getOrDefault("description", ""));
+	        List<Map<String, Object>> questions = (List<Map<String, Object>>) surveyDataMap.get("questions");
+	        
+	        System.out.println("exam_title" + title);
+	        System.out.println("exam_description" + description);
+
+	        //설문 데이터 생성
+	        
+	        // questions 리스트 처리
+	        for (Map<String, Object> questionMap : questions) {
+	            String questionText =  String.valueOf(questionMap.getOrDefault("title", ""));
+	            String questionType = String.valueOf(questionMap.getOrDefault("type", ""));
+	            List<String> answers = (List<String>) questionMap.get("answers");
+	            
+	            System.out.println("question_text : " + questionText);
+	            System.out.println("question_type : " + questionType);
+	            
+	            // 여기서 각 질문의 답변 리스트를 반복 처리합니다.
+	            for (String answer : answers) {
+	                // 답변 처리 로직
+	                // 예: 데이터베이스에 질문과 함께 저장
+	                System.out.println("answer : " + answer); // 답변 내용 출력 또는 처리
+	            }
+	            
+	        }
+
+	        return "{\"result\":\"success\"}";
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return "{\"result\":\"error\"}";
+	    }
+	}
+	
 	@RequestMapping(value="/admin/exam/respondents/result.do" , method = RequestMethod.GET)
 	public ModelAndView AdminExamRespondentsResultList(@ModelAttribute("AdminExamRespondentsVo")AdminExamRespondentsVo AdminExamRespondentsVo , HttpServletRequest request , HttpServletResponse response) {
 		
@@ -678,63 +726,191 @@ public class AdminExamController {
 
             // "선택지 갯수"와 "선택지 리스트"
             row.createCell(3).setCellValue(String.valueOf(question.getOrDefault("select_count", "")));
-            row.createCell(4).setCellValue(String.valueOf(question.getOrDefault("Choices", "")));            
+         // 선택지 정보를 가져옵니다.
+            String choicesStr = String.valueOf(question.getOrDefault("Choices", ""));
+            // 선택지 정보를 '#' 기준으로 분리합니다.
             
+            if(!selectType.equals("답변형")) {
+            	
+                String[] choicesArr = choicesStr.split("#");
+
+                // 결과 문자열을 저장할 StringBuilder 객체를 생성합니다.
+                StringBuilder formattedChoices = new StringBuilder();
+
+                // 분리된 선택지 정보를 순회하면서 번호를 붙여 문자열을 구성합니다.
+                for (int i = 0; i < choicesArr.length; i++) {
+                    // i + 1은 선택지 앞에 붙일 순서 번호입니다.
+                    formattedChoices.append(i + 1).append(". ").append(choicesArr[i]);
+                    // 마지막 선택지가 아니라면 공백을 추가합니다.
+                    if (i < choicesArr.length - 1) {
+                        formattedChoices.append(" ");
+                    }
+                }
+
+                // 엑셀 셀에 구성된 문자열을 기록합니다.
+                row.createCell(4).setCellValue(formattedChoices.toString());
+            	
+            }
             
         }
 
+        // 제목행에만 배경색 스타일 적용
+        Row headerRow1 = sheet.getRow(0); // 0번째 행이 제목행이라고 가정
+        if (headerRow1 != null) {
+            for (int cellNum = 0; cellNum < headerRow1.getLastCellNum(); cellNum++) {
+                Cell cell = headerRow1.getCell(cellNum, MissingCellPolicy.CREATE_NULL_AS_BLANK);
+                cell.setCellStyle(headerStyle);
+            }
+        }
+
+        // 중앙 정렬 스타일 생성
+        CellStyle centerAlignStyle = workbook.createCellStyle();
+        centerAlignStyle.setAlignment(HorizontalAlignment.CENTER);
+        centerAlignStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+        
+        // 나머지 행들에 대해서는 기존에 정의한 중앙 정렬 스타일 적용
+        for (int rowNum1 = 1; rowNum1 <= sheet.getLastRowNum(); rowNum1++) {
+            Row row = sheet.getRow(rowNum1);
+            if (row != null) {
+                for (int cellNum = 0; cellNum < row.getLastCellNum(); cellNum++) {
+                    Cell cell = row.getCell(cellNum, MissingCellPolicy.CREATE_NULL_AS_BLANK);
+                    cell.setCellStyle(centerAlignStyle);
+                }
+            }
+        }
         
         // 열 너비 자동 조정
         for (int i = 0; i < headers.length; i++) {
-            sheet.autoSizeColumn(i);
+            sheet.autoSizeColumn(i , true);
+            int width = sheet.getColumnWidth(i);
+            sheet.setColumnWidth(i, width + 1024);
         }
         
         // 두 번째 시트 생성
         Sheet sheet2 = workbook.createSheet("응답자");
         
-        // 헤더 생성
-        String[] headers2 = {"호", "응답자 아이디", "응답자 성명", "응답 결과"};
+     // 헤더 생성
+        List<String> headers2 = new ArrayList<>(Arrays.asList("응답 시간", "응답자 아이디", "응답자 성명"));
+        // 문항 제목을 헤더에 추가
+        for (HashMap<String, Object> question : questionList) {
+            headers2.add(String.valueOf(question.getOrDefault("name","")));
+        }
+        // 헤더 행에 셀을 생성하고 값 할당
         Row headerRow2 = sheet2.createRow(0);
-        for (int i = 0; i < headers2.length; i++) {
+        for (int i = 0; i < headers2.size(); i++) {
             Cell cell = headerRow2.createCell(i);
-            cell.setCellValue(headers2[i]);
+            cell.setCellValue(headers2.get(i));
             cell.setCellStyle(headerStyle);
         }
+
         
+        // 문항 ID와 선택지 텍스트를 매핑합니다.
+        Map<Integer, String[]> questionIdToChoices = new HashMap<>();
+        Map<Integer, Integer> seqToQuestionId = new HashMap<>();
+        for (HashMap<String, Object> question : questionList) {
+            int questionId = Integer.parseInt(String.valueOf(question.get("idx")));
+            String choicesStr = String.valueOf(question.getOrDefault("Choices", ""));
+            String[] choicesArr = choicesStr.split("#");
+            questionIdToChoices.put(questionId, choicesArr);
+            int seq = Integer.parseInt(String.valueOf(question.getOrDefault("seq", "0")));
+            seqToQuestionId.put(seq, questionId);
+        }
+
+     // 응답자 데이터 입력
         int rowNum = 1;
         for (HashMap<String, Object> respondent : respondents) {
-            Row row = sheet2.createRow(rowNum++);
-            
-            // "호"는 순번
-            row.createCell(0).setCellValue(rowNum - 1);
-            
-            // "응답자 아이디"
-            row.createCell(1).setCellValue(String.valueOf(respondent.getOrDefault("member_id", "")));
-            
-            // "응답자 성명"
-            row.createCell(2).setCellValue(String.valueOf(respondent.getOrDefault("name", "")));
-            
-            // "응답 결과"
-            row.createCell(3).setCellValue(String.valueOf(respondent.getOrDefault("select_list", "")));
-            
-            // 셀 스타일 적용이 필요한 경우 여기에 코드 추가
-            // 예: bodyStyle.setAlignment(HorizontalAlignment.CENTER);
+        	Row row = sheet2.createRow(rowNum++);
+        	row.createCell(0).setCellValue(String.valueOf(respondent.getOrDefault("complete_tm", "")));
+            row.createCell(1).setCellValue(String.valueOf(respondent.getOrDefault("member_id", ""))); // "응답자 아이디"
+            row.createCell(2).setCellValue(String.valueOf(respondent.getOrDefault("name", ""))); // "응답자 성명"
+            // "응답 결과" 분석 및 셀에 값 할당
+            String selectList = String.valueOf(respondent.getOrDefault("select_list", ""));
+            List<String> selectedOptions = parseSelectList(selectList);
+            for (int seq = 1; seq <= selectedOptions.size(); seq++) {
+                String response1 = selectedOptions.get(seq - 1);
+                Integer questionId = seqToQuestionId.get(seq);
+                if (questionId != null && questionIdToChoices.containsKey(questionId)) {
+                    String[] choices = questionIdToChoices.get(questionId);
+                    if (response1.matches("\\[.*\\]")) { // 체크박스 응답일 경우
+                    	response1 = response1.substring(1, response1.length() - 1); // 대괄호 제거
+                        String[] subResponses = response1.split(",");
+                        StringBuilder choiceText = new StringBuilder();
+                        for (String subResponse : subResponses) {
+                            int choiceIndex = Integer.parseInt(subResponse.trim()) - 1; // 선택지 인덱스, 공백 제거를 위해 trim() 사용
+                            if (choiceIndex >= 0 && choiceIndex < choices.length) {
+                                choiceText.append(choices[choiceIndex]); // 선택지 텍스트 추가
+                                if (!subResponse.equals(subResponses[subResponses.length - 1])) { // 마지막 선택지가 아닐 경우, 쉼표 추가
+                                    choiceText.append(", ");
+                                }
+                            }
+                        }
+                        row.createCell(seq + 2).setCellValue(choiceText.toString()); // 셀에 선택지 텍스트 할당
+                    } else if (response1.matches("\\d+")) { // 단일 선택지 응답일 경우
+                        int choiceIndex = Integer.parseInt(response1) - 1;
+                        if (choiceIndex >= 0 && choiceIndex < choices.length) {
+                            row.createCell(seq + 2).setCellValue(choices[choiceIndex]);
+                        }
+                    } else { // 답변형 응답일 경우
+                        row.createCell(seq + 2).setCellValue(response1);
+                    }
+                }
+            }
         }
+        
 
+        // 제목행에만 배경색 스타일 적용
+        if (headerRow2 != null) {
+            for (int cellNum = 0; cellNum < headerRow2.getLastCellNum(); cellNum++) {
+                Cell cell = headerRow2.getCell(cellNum, MissingCellPolicy.CREATE_NULL_AS_BLANK);
+                cell.setCellStyle(headerStyle);
+            }
+        }
+        
+        // 나머지 행들에 대해서는 기존에 정의한 중앙 정렬 스타일 적용
+        for (int rowNum2 = 1; rowNum2 <= sheet2.getLastRowNum(); rowNum2++) {
+            Row row = sheet2.getRow(rowNum2);
+            if (row != null) {
+                for (int cellNum = 0; cellNum < row.getLastCellNum(); cellNum++) {
+                    Cell cell = row.getCell(cellNum, MissingCellPolicy.CREATE_NULL_AS_BLANK);
+                    cell.setCellStyle(centerAlignStyle);
+                }
+            }
+        }
+        
         // 열 너비 자동 조정
-        for (int i = 0; i < headers2.length; i++) {
-            sheet2.autoSizeColumn(i);
+        for (int i = 0; i < headers2.size(); i++) {
+            sheet2.autoSizeColumn(i , true);
+            int width = sheet2.getColumnWidth(i);
+            sheet2.setColumnWidth(i, width + 1024);
         }
 
-     // 문항별 선택지 카운트 및 답변형 응답을 저장할 구조 초기화
-        Map<Integer, Map<String, Integer>> questionChoiceCounts = new HashMap<>();
-        Map<Integer, List<String>> questionTextResponses = new HashMap<>();
 
+     
+        
+     // 3번째 시트 생성
+        Sheet sheet3 = workbook.createSheet("응답 통계");
+
+        // 헤더 생성
+        Row headerRow3 = sheet3.createRow(0);
+        String[] headers1 = {"문항 제목", "선택지", "응답 횟수" , "응답 통계"};
+        for (int i = 0; i < headers1.length; i++) {
+            Cell cell = headerRow3.createCell(i);
+            cell.setCellValue(headers1[i]);
+            cell.setCellStyle(headerStyle); // 앞서 정의한 headerStyle 사용
+        }
+
+        int rowIndex1 = 1; // 데이터를 쓸 행의 시작 인덱스
+
+        // 문항별 선택지 카운트 및 답변형 응답을 저장할 구조 초기화
+        Map<Integer, Map<String, Integer>> questionChoiceCounts = new HashMap<>();
+        Map<Integer, Map<String, Integer>> questionTextResponses = new HashMap<>();
+        
+        
         // 문항 리스트에서 각 문항의 정보 추출 및 초기화
         for (HashMap<String, Object> question : questionList) {
-        	Integer questionId = Integer.parseInt(String.valueOf(question.getOrDefault("idx","")));
-        	questionChoiceCounts.put(questionId, new HashMap<String, Integer>()); // 선택지 카운트용
-        	questionTextResponses.put(questionId, new ArrayList<String>()); // 답변형 응답용
+        	Integer questionId = Integer.parseInt(String.valueOf(question.get("idx")));
+            questionChoiceCounts.put(questionId, new HashMap<>()); // 선택지 카운트용
+            questionTextResponses.put(questionId, new HashMap<>()); // 답변형 응답용
         }
 
         // 응답자의 선택을 파싱하여 카운트 집계
@@ -764,31 +940,18 @@ public class AdminExamController {
                         }
                         break;
                     case "3": // 답변형
-                        questionTextResponses.get(questionId).add(response1);
+                    	Map<String, Integer> textResponses = questionTextResponses.get(questionId);
+                        textResponses.put(response1, textResponses.getOrDefault(response1, 0) + 1);
                         break;
                 }
             }
         }
         
-     // 3번째 시트 생성
-        Sheet sheet3 = workbook.createSheet("응답 통계");
-
-        // 헤더 생성
-        Row headerRow1 = sheet3.createRow(0);
-        String[] headers1 = {"문항 제목", "선택지", "응답 횟수" , "응답 통계"};
-        for (int i = 0; i < headers1.length; i++) {
-            Cell cell = headerRow1.createCell(i);
-            cell.setCellValue(headers1[i]);
-            cell.setCellStyle(headerStyle); // 앞서 정의한 headerStyle 사용
-        }
-
-        int rowIndex1 = 1; // 데이터를 쓸 행의 시작 인덱스
-
         // 각 문항별 응답 데이터 쓰기
         for (HashMap<String, Object> question : questionList) {
             Integer questionId = Integer.parseInt(String.valueOf(question.getOrDefault("idx", "")));
             Map<String, Integer> choiceCounts = questionChoiceCounts.get(questionId);
-            List<String> textResponses = questionTextResponses.get(questionId);
+            Map<String, Integer> textResponses = questionTextResponses.get(questionId);
 
             // 문항 기본 정보 표시 (문항 번호와 제목)
             Row questionRow = sheet3.createRow(rowIndex1++);
@@ -796,6 +959,10 @@ public class AdminExamController {
 
             // 선택지 유형에 따라 데이터 쓰기
             String selectType = String.valueOf(question.getOrDefault("select_type", ""));
+            
+            // 답변형 응답에 대한 총 응답수 계산
+            int totalTextResponseCount = textResponses.values().stream().mapToInt(count -> count).sum();
+            
             if (!selectType.equals("3")) { // 라디오박스 또는 체크박스
             	// 전체 응답 횟수 계산
                 int totalResponses = choiceCounts.values().stream().mapToInt(Integer::intValue).sum();
@@ -820,20 +987,60 @@ public class AdminExamController {
                 
                 
             } else { // 답변형
-                for (String response1 : textResponses) {
-                    Row responseRow = sheet3.createRow(rowIndex1++);
-                    responseRow.createCell(1).setCellValue(response1);
-                    // 답변형 응답에는 "응답 횟수" 셀을 비워둠
-                    
-                }
+            	// 답변형 응답 데이터 기록
+            	for (Map.Entry<Integer, Map<String, Integer>> entry : questionTextResponses.entrySet()) {
+            	    Integer questionId1 = entry.getKey();
+            	    Map<String, Integer> responses = entry.getValue();
+
+            	    // 문항 제목을 가져옵니다.
+            	    String questionTitle = questionList.stream()
+            	        .filter(q -> Integer.parseInt(String.valueOf(q.get("idx"))) == questionId1)
+            	        .findFirst()
+            	        .map(q -> String.valueOf(q.get("name")))
+            	        .orElse("Unknown Question");
+
+            	    for (Map.Entry<String, Integer> responseEntry : responses.entrySet()) {
+            	        String response1 = responseEntry.getKey();
+            	        Integer count = responseEntry.getValue();
+                        double percentage = (double) count / totalTextResponseCount * 100;
+
+            	        Row row = sheet3.createRow(rowIndex1++);
+            	        row.createCell(1).setCellValue(response1);
+            	        row.createCell(2).setCellValue(count);
+            	        row.createCell(3).setCellValue(String.format("%.2f%%", percentage));
+            	        // 응답 비율 계산 로직은 선택적으로 추가 가능
+            	    }
+            	}
+
              
                 
             }
         }
 
+        // 제목행에만 배경색 스타일 적용
+        if (headerRow3 != null) {
+            for (int cellNum = 0; cellNum < headerRow3.getLastCellNum(); cellNum++) {
+                Cell cell = headerRow3.getCell(cellNum, MissingCellPolicy.CREATE_NULL_AS_BLANK);
+                cell.setCellStyle(headerStyle);
+            }
+        }
+        
+        // 나머지 행들에 대해서는 기존에 정의한 중앙 정렬 스타일 적용
+        for (int rowNum3 = 1; rowNum3 <= sheet3.getLastRowNum(); rowNum3++) {
+            Row row = sheet3.getRow(rowNum3);
+            if (row != null) {
+                for (int cellNum = 0; cellNum < row.getLastCellNum(); cellNum++) {
+                    Cell cell = row.getCell(cellNum, MissingCellPolicy.CREATE_NULL_AS_BLANK);
+                    cell.setCellStyle(centerAlignStyle);
+                }
+            }
+        }
+        
         // 열 너비 자동 조정
         for (int i = 0; i < headers1.length; i++) {
-            sheet3.autoSizeColumn(i);
+        	sheet3.autoSizeColumn(i , true);
+            int width = sheet3.getColumnWidth(i);
+            sheet3.setColumnWidth(i, width + 1024);
         }
 
         // 파일 저장 경로 설정

@@ -304,6 +304,19 @@ $(document).ready(function() {
         
         console.log(surveyData)
         
+        $.ajax({
+            url: '/admin/exam/test/insert.do',
+            type: 'POST',
+            data: {surveyData : JSON.stringify(surveyData)}, // surveyData를 JSON 문자열로 변환
+            dataType : 'json',
+            success: function(response) {
+                console.log('성공:', response);
+            },
+            error: function(xhr, status, error) {
+                console.error('실패:', error);
+            }
+        });
+        
         
     });
     
