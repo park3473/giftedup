@@ -12,7 +12,8 @@
     <%@ include file="../include/head.jsp" %>
     <script src="${pageContext.request.contextPath}/resources/sweetalert/sweetalert2.min.js"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/sweetalert/sweetalert2.min.css"> 
-    <link href="https://cdn.jsdelivr.net/npm/tabulator-tables/dist/css/tabulator.min.css" rel="stylesheet"> 
+    <link href="https://cdn.jsdelivr.net/npm/tabulator-tables/dist/css/tabulator.min.css" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/tabulator_bootstrap5.css"> -->
 </head>
 
 <style>
@@ -104,14 +105,14 @@ var table = new Tabulator("#member-table", {
     paginationSize: 50, // 페이지 당 행의 수
     columns: [
     	{title: "응답자 번호", field: "IDX", visible: false},
-        {title: "응답자 아이디", field: "MEMBER_ID", align: "center" ,  minWidth : 200 , 
+        {title: "응답자 아이디", field: "MEMBER_ID", hozAlign:"center" ,  minWidth : 200 , 
     		cellClick: function(e, cell) {
             	DetailView("" + cell.getRow().getData().IDX + "")
         	}
     	},
-        {title: "응답자 성명", field: "NAME", align: "center" ,  minWidth : 200},
-        {title: "응답자 전화번호", field: "PHONE", align: "center" ,  minWidth : 200},
-        {title: "응답자 학교명", field: "SCHOOL_NAME", align: "center" ,  minWidth : 200},
+        {title: "응답자 성명", field: "NAME", hozAlign:"center" ,  minWidth : 200},
+        {title: "응답자 전화번호", field: "PHONE", hozAlign:"center" ,  minWidth : 200},
+        {title: "응답자 학교명", field: "SCHOOL_NAME", hozAlign:"center" ,  minWidth : 200},
     ]
 });
 

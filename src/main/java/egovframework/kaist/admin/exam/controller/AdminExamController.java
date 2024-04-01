@@ -952,6 +952,7 @@ public class AdminExamController {
             Integer questionId = Integer.parseInt(String.valueOf(question.getOrDefault("idx", "")));
             Map<String, Integer> choiceCounts = questionChoiceCounts.get(questionId);
             Map<String, Integer> textResponses = questionTextResponses.get(questionId);
+            String questionTitle = String.valueOf(question.getOrDefault("name",""));
 
             // 문항 기본 정보 표시 (문항 번호와 제목)
             Row questionRow = sheet3.createRow(rowIndex1++);
@@ -988,29 +989,22 @@ public class AdminExamController {
                 
             } else { // 답변형
             	// 답변형 응답 데이터 기록
-            	for (Map.Entry<Integer, Map<String, Integer>> entry : questionTextResponses.entrySet()) {
-            	    Integer questionId1 = entry.getKey();
-            	    Map<String, Integer> responses = entry.getValue();
+            	Map<String, Integer> responses = questionTextResponses.get(questionId);
+                // 답변형 응답에 대한 총 응답수 계산
+                int totalResponses = responses.values().stream().mapToInt(Integer::intValue).sum();
 
-            	    // 문항 제목을 가져옵니다.
-            	    String questionTitle = questionList.stream()
-            	        .filter(q -> Integer.parseInt(String.valueOf(q.get("idx"))) == questionId1)
-            	        .findFirst()
-            	        .map(q -> String.valueOf(q.get("name")))
-            	        .orElse("Unknown Question");
+                questionRow.createCell(0).setCellValue(questionTitle);
 
-            	    for (Map.Entry<String, Integer> responseEntry : responses.entrySet()) {
-            	        String response1 = responseEntry.getKey();
-            	        Integer count = responseEntry.getValue();
-                        double percentage = (double) count / totalTextResponseCount * 100;
+                for (Map.Entry<String, Integer> response1 : responses.entrySet()) {
+                    String responseText = response1.getKey();
+                    Integer count = response1.getValue();
+                    double percentage = totalResponses > 0 ? (double) count / totalResponses * 100 : 0;
 
-            	        Row row = sheet3.createRow(rowIndex1++);
-            	        row.createCell(1).setCellValue(response1);
-            	        row.createCell(2).setCellValue(count);
-            	        row.createCell(3).setCellValue(String.format("%.2f%%", percentage));
-            	        // 응답 비율 계산 로직은 선택적으로 추가 가능
-            	    }
-            	}
+                    Row responseRow = sheet3.createRow(rowIndex1++);
+                    responseRow.createCell(1).setCellValue(responseText);
+                    responseRow.createCell(2).setCellValue(count);
+                    responseRow.createCell(3).setCellValue(String.format("%.2f%%", percentage));
+                }
 
              
                 

@@ -558,6 +558,12 @@ function RespondentsExcelDataUpload(){
 	
 }
 
+function respondentsGroupModal(){
+	
+	alert('Error : DataList Error');
+	
+}
+
 
 </script>
 

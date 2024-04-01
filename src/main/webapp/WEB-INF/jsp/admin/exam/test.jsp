@@ -49,7 +49,32 @@
 
 
 </style>
+<style>
+.drag_handle {
+    cursor: move; /* 커서 스타일 변경 */
+    background-color: #f0f0f0; /* 핸들 배경색 */
+    margin-bottom: 10px; /* 여백 조정 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+    font-weight: bold; /* 글씨 두께 */
+}
 
+    .ui-state-highlight {
+    height: 50px;
+    background-color: #fafafa;
+    border: 1px dashed #ccc;
+    margin-bottom: 5px;
+}
+
+.select_drag_handle {
+    cursor: grab; /* 드래그 핸들러에 커서 스타일 적용 */
+    background-color: #eee; /* 배경색 설정 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+    margin-right: 10px; /* 오른쪽 마진 설정 */
+    display: inline-block; /* 인라인 블록 디스플레이 */
+    padding: 5px; /* 패딩 설정 */
+}
+
+</style>
 
 
 
@@ -91,6 +116,7 @@
                 <!-- 내용2 -->
                 <ul id="question_ul_0" class="question">
                     <li class="box_01">
+                    <div class="drag_handle ui-sortable-handle">☰</div> <!-- 드래그 핸들 추가 -->
                     <input type="hidden" name="type" value="1" id="" class="input_70 questionType">
                     <input type="text" name="" value="" id="" class="input_70 questionText" placeholder="질문내용">
                     <select id="survey_select" class="input_30 survey_select">
@@ -100,6 +126,7 @@
                     </select>
                     <ul class="select_box">
                     	<li class="select_li">
+                    		<div class="select_drag_handle">☰</div> <!-- 드래그 핸들러 추가 -->
 							<input type="text" class="input_70 answerText" placeholder="답변"> <input type="button" value="삭제" class="btn_03">
 						</li>
 					</ul>
@@ -107,7 +134,7 @@
 
                     </li>
                     <li>
-                    <input type="button" value="추가하기" id="" accesskey="" class="btn_01 question_plus">
+                    <input type="button" value="문항 추가" id="" accesskey="" class="btn_01 question_plus">
                     <input type="button" value="삭제하기" id="" accesskey="" class="btn_02 question_delete">
                     </li>
                 </ul>
@@ -135,13 +162,13 @@
 <!--  JQuery  -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/jquery-ui.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
 
 
 </body>
 </html>
-<script type="module" >
-</script>
 <script type="text/javascript">
 $(document).ready(function () {
 	
@@ -168,12 +195,12 @@ $(document).ready(function() {
 		console.log(type);
 	    switch (type) {
 	        case 'survey_01': // 객관식
-	            selectBox.append('<li class="select_li"><input type="text" class="input_70 answerText" placeholder="답변"> <input type="button" value="삭제" class="btn_03"></li>');
+	            selectBox.append('<li class="select_li"><div class="select_drag_handle">☰</div> <!-- 드래그 핸들러 추가 --><input type="text" class="input_70 answerText" placeholder="답변"> <input type="button" value="삭제" class="btn_03"></li>');
 	        	selectType.val('1');
 	            $(this).siblings('.select_plus').show();
 	            break;
 	        case 'survey_02': // 체크박스
-	            selectBox.append('<li class="select_li"><input type="text" class="input_70 answerText" placeholder="답변"> <input type="button" value="삭제" class="btn_03"></li>');
+	            selectBox.append('<li class="select_li"><div class="select_drag_handle">☰</div> <!-- 드래그 핸들러 추가 --><input type="text" class="input_70 answerText" placeholder="답변"> <input type="button" value="삭제" class="btn_03"></li>');
 	            selectType.val('2');
 	            $(this).siblings('.select_plus').show();
 	            break;
@@ -196,12 +223,20 @@ $(document).ready(function() {
 	
 	    // type 값에 따라 적절한 답변 필드 추가
 	    if (type === '1') { // 객관식
-	        $selectBox.append('<li class="select_li"><input type="text" class="input_70 answerText" placeholder="답변"> <input type="button" value="삭제" class="btn_03"></li>');
+	        $selectBox.append('<li class="select_li"><div class="select_drag_handle">☰</div> <!-- 드래그 핸들러 추가 --><input type="text" class="input_70 answerText" placeholder="답변"> <input type="button" value="삭제" class="btn_03"></li>');
 	    } else if (type === '2') { // 체크박스
-	        $selectBox.append('<li class="select_li"><input type="text" class="input_70 answerText" placeholder="답변"> <input type="button" value="삭제" class="btn_03"></li>');
+	        $selectBox.append('<li class="select_li"><div class="select_drag_handle">☰</div> <!-- 드래그 핸들러 추가 --><input type="text" class="input_70 answerText" placeholder="답변"> <input type="button" value="삭제" class="btn_03"></li>');
 	    } else if (type === '3') { // 답변형
 	        $selectBox.append('<li class="select_li"><input type="text" class="input_70" placeholder="답변형" readonly="readonly" ></li>');
 	    }
+	    $(".question .select_box").sortable({
+	    	handel: '.select_drag_handle',
+	        items: ".select_li", // 답변 항목만 드래그 대상으로 설정
+	        placeholder: "ui-state-highlight",
+	        start: function(event, ui) {
+	            event.stopPropagation();
+	        },
+	    });
 	});
 
     // 답변 삭제 기능
@@ -211,14 +246,19 @@ $(document).ready(function() {
         $(this).remove(); // 삭제 버튼 자체도 삭제
     });
 
-    // 질문 추가 기능
+    // 문항 추가 기능
     $(document).on('click', '.question_plus', function(event) {
+    	
+    	console.log('???!??!?!?!');
+    	console.log($(this));
+    	$(this).remove();
+    	
         event.preventDefault();
-        var newQuestionIndex = $('.survey_wrap').children('ul').length; // 현재 질문의 개수를 기반으로 새 인덱스를 생성합니다.
-        // 새로운 질문 섹션을 추가합니다. 여기서는 간단한 예시로 하나의 질문 필드만 추가합니다.
+        var newQuestionIndex = $('.survey_wrap').children('ul').length;
         $('.survey_wrap').append(`
             <ul id="question_ul_`+newQuestionIndex+`" class="new_question question">
                 <li class="box_01">
+                <div class="drag_handle">☰</div>
                 <input type="hidden" name="type" value="1" id="" class="input_70 questionType">
                 <input type="text" name="" value="" class="input_70 questionText" placeholder="질문내용">
                 <select class="input_30 survey_select">
@@ -228,17 +268,28 @@ $(document).ready(function() {
                 </select>
                 <ul class="select_box">
                 <li class="select_li">
-                	<input type="text" class="input_70 answerText" placeholder="답변"> <input type="button" value="삭제" class="btn_03">
+                	<div class="select_drag_handle">☰</div><input type="text" class="input_70 answerText" placeholder="답변"> <input type="button" value="삭제" class="btn_03">
 				</li>
 				</ul>
 	            <input type="button" value="추가하기" id="" accesskey="" class="input_70 btn_04 select_plus">
                 </li>
                 <li>
-                <input type="button" value="질문 추가" class="btn_01 question_plus">
+                <input type="button" value="문항 추가" class="btn_01 question_plus">
                 <input type="button" value="삭제하기" class="btn_02 question_delete">
                 </li>
             </ul>
         `);
+        
+        $(".survey_wrap").sortable("refresh");
+        $(".question .select_box").sortable({
+        	handel: '.select_drag_handle',
+            items: ".select_li", // 답변 항목만 드래그 대상으로 설정
+            placeholder: "ui-state-highlight",
+            start: function(event, ui) {
+                event.stopPropagation();
+            },
+        });
+        
     });
 
     // 질문 삭제 기능
@@ -302,7 +353,9 @@ $(document).ready(function() {
             });
         });
         
-        console.log(surveyData)
+        console.log(surveyData);
+        
+        alert(JSON.stringify(surveyData));
         
         $.ajax({
             url: '/admin/exam/test/insert.do',
@@ -319,6 +372,17 @@ $(document).ready(function() {
         
         
     });
+
+    
+    $(".question .select_box").sortable({
+    	handel: '.select_drag_handle',
+        items: ".select_li", // 답변 항목만 드래그 대상으로 설정
+        placeholder: "ui-state-highlight",
+        start: function(event, ui) {
+            event.stopPropagation();
+        },
+    });
+    
     
 });
 

@@ -52,9 +52,11 @@
 	                                    <li class="delete">
 	                                        <a href="#" id="download-xlsx" onclick="respondentsExcelDown()">엑셀 다운로드</a>
 	                                    </li>
+	                                    <!-- 
 	                                    <li class="delete">
 	                                        <a href="#" id="download-pdf" onclick="respondentsExcelDown()">PDF 다운로드</a>
 	                                    </li>
+	                                    -->
 	                                </ul>
                                 </div>
                             </div>
@@ -85,6 +87,7 @@
   <script type="text/javascript" src="https://oss.sheetjs.com/sheetjs/xlsx.full.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.20/jspdf.plugin.autotable.min.js"></script>
+<script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
 <script type="text/javascript">
 
 $(document).ready(function () {
@@ -101,30 +104,30 @@ var table = new Tabulator("#member-table", {
     paginationSize: 10, // 페이지 당 행의 수
     columns: [
         {title: "번호", field: "IDX", visible: false },
-        {title: "No", field: "INDEX", minWidth : 100},
-        {title: "설문조사 명", field: "NAME", minWidth : 200},
-        {title: "시작일시", field: "START_TM", hozAlign:"center" , sorter:"date" , minWidth : 200},
-        {title: "종료일시", field: "END_TM", hozAlign:"center" , sorter:"date" , minWidth : 200},
+        {title: "No", field: "INDEX", hozAlign:"center" , minWidth : 80},
+        {title: "설문조사 명", hozAlign:"center" , field: "NAME", minWidth : 200},
+        {title: "시작일시", field: "START_TM", hozAlign:"center" , sorter:"date" , minWidth : 150},
+        {title: "종료일시", field: "END_TM", hozAlign:"center" , sorter:"date" , minWidth : 150},
         {title: "응답 리스트", field: "actions", hozAlign:"center", formatter: function(cell, formatterParams) {
             var value = cell.getValue();
-            return "<button onclick='resultListGet(\"" + cell.getRow().getData().IDX + "\")'>응답 리스트</button>";
+            return "<a onclick='resultListGet(\"" + cell.getRow().getData().IDX + "\")'>응답 리스트</a>";
         } ,  minWidth : 200},
         {title: "결과물 출력", field: "actions", hozAlign:"center", formatter: function(cell, formatterParams) {
             var value = cell.getValue();
-            return "<button onclick='total_excelDown(\"" + cell.getRow().getData().IDX + "\",\"" + cell.getRow().getData().NAME + "\")'>결과물 출력</button>";
+            return "<a onclick='total_excelDown(\"" + cell.getRow().getData().IDX + "\",\"" + cell.getRow().getData().NAME + "\")'>결과물 출력</a>";
         } ,  minWidth : 200},
         {title: "응답자 관리", field: "actions", hozAlign:"center", formatter: function(cell, formatterParams) {
             var value = cell.getValue();
-            return "<button onclick='respondents(\"" + cell.getRow().getData().IDX + "\")'>응답자 관리</button>";
+            return "<a onclick='respondents(\"" + cell.getRow().getData().IDX + "\")'>응답자 관리</a>";
         } ,  minWidth : 200},
         {title: "설문조사 관리", field: "actions", hozAlign:"center", formatter: function(cell, formatterParams) {
             var value = cell.getValue();
-            return "<button onclick='ViewDetails(\"" + cell.getRow().getData().IDX + "\")'>설문조사 관리</button>";
+            return "<a onclick='ViewDetails(\"" + cell.getRow().getData().IDX + "\")'>설문조사 관리</a>";
         } ,  minWidth : 200},
         {title: "통계", field: "actions", hozAlign:"center", formatter: function(cell, formatterParams) {
             var value = cell.getValue();
-            return "<button onclick='status(\"" + cell.getRow().getData().IDX + "\",0)'>통계</button>";
-        } ,  minWidth : 200}
+            return "<a onclick='status(\"" + cell.getRow().getData().IDX + "\",0)'>통계</a>";
+        } ,  minWidth : 100}
     ]
 });
 
@@ -241,17 +244,39 @@ function status(idx , category){
 	location.href='/admin/exam/status.do?idx='+idx+'&category='+category;
 	
 }
-
-//trigger download of data.xlsx file
 document.getElementById("download-xlsx").addEventListener("click", function(){
-    table.download("xlsx", "data.xlsx", {sheetName:"My Data"});
+    var data = table.getData();
+    var ws = XLSX.utils.json_to_sheet(data);
+    ws['!cols'] = [
+        {wch:20}, // 첫 번째 열의 너비를 20 문자 폭으로 설정
+        {wch:30}, // 두 번째 열의 너비를 30 문자 폭으로 설정
+        {wch:30}, // 두 번째 열의 너비를 30 문자 폭으로 설정
+        {wch:30}, // 두 번째 열의 너비를 30 문자 폭으로 설정
+        {wch:30}, // 두 번째 열의 너비를 30 문자 폭으로 설정
+    ];
+    var wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+    XLSX.writeFile(wb, "TableData.xlsx");
 });
+//trigger download of data.xlsx file
+/*
+document.getElementById("download-xlsx").addEventListener("click", function(){
+    table.download("xlsx", "data.xlsx", {sheetName:"My Data",columns:["INDEX","NAME","START_TM","END_TM"]});
+});
+*/
 
 //trigger download of data.pdf file
+/*
 document.getElementById("download-pdf").addEventListener("click", function(){
+	let originalData = table.getData(); // Tabulator에서 데이터 추출
+	let filteredData = originalData.map(row => ({
+	    name: row.name, // 필요한 열만 포함
+	    age: row.age
+	}));
     table.download("pdf", "data.pdf", {
         orientation:"portrait", //set page orientation to portrait
         title:"Example Report", //add title to report
+        column:["index","name"],
         jsPDF: {
             unit: "mm", //set units to mm
             format: [420, 297], // A3
@@ -272,7 +297,7 @@ document.getElementById("download-pdf").addEventListener("click", function(){
         }
     });
 });
-
+*/
 </script>
 
 </html>

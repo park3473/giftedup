@@ -29,13 +29,13 @@ export default class UploadAdapter {
             if(!response || response.error) {
                 return reject( response && response.error ? response.error.message : genericErrorText );
             }
-			console.log(response);
+			console.log(response.filePath);
 			
             resolve({
-                default: response //업로드된 파일 주소
+                default: response.filePath //업로드된 파일 주소
             })
             
-            console.log(response);
+            console.log(response.filePath);
             
         })
         
