@@ -258,8 +258,6 @@
 
 <script>
 	function configCheck(){
-		Swal.fire('죄송합니다\n영재키움 신입생 지원은\n4월 8일부터 가능합니다.');
-		/*
 		$.ajax({
 		    url : '/user/member_re/configcheck.do',
 		    type : 'POST',
@@ -280,7 +278,6 @@
 		        
 		    }
 		})
-		*/
 	}
 </script>
 

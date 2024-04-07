@@ -9,7 +9,7 @@
 	 	SELECT * 
 	 	FROM TBL_MEMBER_CONFIG
 	 	WHERE TYPE = #{TYPE}
-	 	AND YEAR = '2023'
+	 	AND YEAR = '2024'
 	 </select>
 	
 	<!-- 신입생 선발 자격 확인 -->
@@ -216,6 +216,18 @@
 	<select id="getMemberReMatchingView" parameterType="egovframework.kaist.user.member_re.model.UserMemberReVo" resultType="egovframework.kaist.user.member_re.model.UserMemberReVo">
 		SELECT * FROM TBL_MEMBER_RE
 		WHERE MATCHING = #{MATCHING} AND LEVEL = #{LEVEL}
+	</select>
+	
+	<!-- MemberRe쪽 Id 갯수 확인 --> 
+	<select id="getMemberReIdCheck" parameterType="egovframework.kaist.user.member_re.model.UserMemberReVo" resultType="int">
+		SELECT COUNT(*) FROM TBL_MEMBER
+		WHERE NAME = #{NAME} AND PHONE = #{PHONE}
+	</select>
+	
+	<!-- MemberRe쪽 Id 가져오기 --> 
+	<select id="getMemberReIdCheckGet" parameterType="egovframework.kaist.user.member_re.model.UserMemberReVo" resultType="String">
+		SELECT MEMBER_ID FROM TBL_MEMBER
+		WHERE NAME = #{NAME} AND PHONE = #{PHONE} ORDER BY CREATE_TM LIMIT 1
 	</select>
 	
 

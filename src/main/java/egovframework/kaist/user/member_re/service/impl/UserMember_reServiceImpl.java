@@ -404,9 +404,35 @@ public class UserMember_reServiceImpl implements UserMemberReService {
 		userMember_reMapper.setMemberReDocumentDelete(user);
 		
 		String IDX = user.getMEMBER_IDX();
-		
-		userMember_reMapper.setMemberReFileTypeOne(IDX);
-		
+		//우선 유형 데이터 가져와서 분류
+		String TYPE = user.getTYPE();
+		System.out.println("TYPE : " + TYPE);
+		if(TYPE.equals("1")) {
+			UserMemberReVo MemberReVo = new UserMemberReVo();
+			//매칭 번호 가져오기
+			MemberReVo.setIDX(user.getMEMBER_IDX());
+			String Matching = userMember_reMapper.getMatchingView(MemberReVo);
+			
+			MemberReVo.setLEVEL("11");
+			MemberReVo.setMATCHING(Matching);
+			//매칭 번호로 학생 가져오기
+			UserMemberReVo Student = userMember_reMapper.getMemberReMatchingView(MemberReVo);
+			
+			MemberReVo.setLEVEL("8");
+			MemberReVo.setMATCHING(Matching);
+			//매칭 번호로 멘토 가져오기
+			UserMemberReVo Mento = userMember_reMapper.getMemberReMatchingView(MemberReVo);
+			
+			//학생 먼저 file type 변경
+			IDX = Student.getIDX();
+			userMember_reMapper.setMemberReFileTypeOne(IDX);
+			//멘토 변경
+			IDX = Mento.getIDX(); 
+			userMember_reMapper.setMemberReFileTypeOne(IDX);
+			
+		}else {
+			userMember_reMapper.setMemberReFileTypeOne(IDX);
+		}
 	}
 
 
@@ -444,6 +470,24 @@ public class UserMember_reServiceImpl implements UserMemberReService {
 		String result = "";
 		
 		result = userMember_reMapper.getFileLinkCheck(userMemberReDocumentVo);
+		
+		return result;
+	}
+
+
+	@Override
+	public String getMemberReIdCheck(UserMemberReVo userMemberReVo) {
+		
+		int MemberIdCnt = userMember_reMapper.getMemberReIdCheck(userMemberReVo);
+		
+		String result = "false";
+		
+		if(MemberIdCnt > 0) {
+			result = userMember_reMapper.getMemberReIdCheckGet(userMemberReVo);
+		}else {
+			result = "false";
+					
+		}
 		
 		return result;
 	}

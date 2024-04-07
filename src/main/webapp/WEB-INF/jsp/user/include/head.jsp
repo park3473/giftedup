@@ -58,7 +58,7 @@
     input[type="number"]::-webkit-outer-spin-button,
 	input[type="number"]::-webkit-inner-spin-button {-webkit-appearance: none;margin: 0;}
 	.swal2-container{
-		z-index:99999 !important;
+		z-index:999999 !important;
 	}
 	.swal2-styled.swal2-confirm{
 		height:auto !important;

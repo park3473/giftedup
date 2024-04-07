@@ -63,6 +63,8 @@ public class AdminMemberReVo extends SearchVo {
 	
 	String LO_TYPE = "";
 	
+	String COMMENT = "";
+	
 	public String getIDX() {
 		return IDX;
 	}
@@ -302,6 +304,12 @@ public class AdminMemberReVo extends SearchVo {
 	}
 	public void setLO_TYPE(String lO_TYPE) {
 		LO_TYPE = lO_TYPE;
+	}
+	public String getCOMMENT() {
+		return COMMENT;
+	}
+	public void setCOMMENT(String cOMMENT) {
+		COMMENT = cOMMENT;
 	}
 	
 	

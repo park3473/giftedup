@@ -49,5 +49,7 @@ public interface UserMemberReService {
 
 	String getFileLinkCheck(UserMemberReDocumentVo userMemberReDocumentVo);
 
+	String getMemberReIdCheck(UserMemberReVo userMemberReVo);
+
 
 }

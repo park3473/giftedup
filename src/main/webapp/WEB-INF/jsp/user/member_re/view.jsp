@@ -245,10 +245,15 @@
                                             
 	                                         <li class="pd-lr-10">
 	                                         	<span class="list_t">멘토교사 지원동기<br>(<span id="self_length">0</span>)</span>
-	                                         		<textarea type="text" maxlength="1000" name="SELF_INTR" id="SELF_INTR" class="SELF_INTR mr-2 textarea_size" placeholder="아래의 내용이 포함 되어야 합니다.&#13;&#10;1. 지원 동기 : 영재키움 프로젝트 참여한 이유와 동기, 다짐과 각오 등&#13;&#10;2. 태도와 경험: 지원분야(수과학, 영어, 인문사회, 발명 등)에 대한 경험과 어려움을 극복한 사례 등&#13;&#10;3. 성취: 지원 분야 또는 이외의 분야에서 어려움을 이기고 성공한 경험과 사례 등">${model.view.SELF_INTR }</textarea>
+	                                         		<textarea type="text" maxlength="1000" name="SELF_INTR" id="SELF_INTR" class="SELF_INTR mr-2 textarea_size" readonly="readonly" placeholder="아래의 내용이 포함 되어야 합니다.&#13;&#10;1. 지원 동기 : 영재키움 프로젝트 참여한 이유와 동기, 다짐과 각오 등&#13;&#10;2. 태도와 경험: 지원분야(수과학, 영어, 인문사회, 발명 등)에 대한 경험과 어려움을 극복한 사례 등&#13;&#10;3. 성취: 지원 분야 또는 이외의 분야에서 어려움을 이기고 성공한 경험과 사례 등">${model.view.SELF_INTR }</textarea>
 	                                         </li>
 	                                         </c:if>
-											                                        
+	                                         <c:if test="${model.view.COMMENT != '' }">
+											<li class="pd-lr-10">
+	                                         	<span class="list_t">관리자 코멘트</span>
+	                                         		<textarea type="text" name="COMMENT" id="COMMENT" class="COMMENT mr-2 textarea_size" >${model.view.COMMENT }</textarea>
+	                                         </li>									          
+	                                         </c:if>                              
                                         </ul>
                                     </div>
                                     </form>
@@ -362,8 +367,14 @@
 	                                         </li>
 	                                         <li class="pd-lr-10">
 	                                         	<span class="list_t">멘토교사 지원동기<br>(<span id="self_length">0</span>)</span>
-	                                         		<textarea type="text" maxlength="1000" name="SELF_INTR" id="SELF_INTR" class="SELF_INTR mr-2 textarea_size" placeholder="아래의 내용이 포함 되어야 합니다.&#13;&#10;1. 지원 동기 : 영재키움 프로젝트 참여한 이유와 동기, 다짐과 각오 등&#13;&#10;2. 태도와 경험: 지원분야(수과학, 영어, 인문사회, 발명 등)에 대한 경험과 어려움을 극복한 사례 등&#13;&#10;3. 성취: 지원 분야 또는 이외의 분야에서 어려움을 이기고 성공한 경험과 사례 등">${model.mento_view.SELF_INTR }</textarea>
+	                                         		<textarea type="text" maxlength="1000" name="SELF_INTR" id="SELF_INTR" class="SELF_INTR mr-2 textarea_size" readonly="readonly" placeholder="아래의 내용이 포함 되어야 합니다.&#13;&#10;1. 지원 동기 : 영재키움 프로젝트 참여한 이유와 동기, 다짐과 각오 등&#13;&#10;2. 태도와 경험: 지원분야(수과학, 영어, 인문사회, 발명 등)에 대한 경험과 어려움을 극복한 사례 등&#13;&#10;3. 성취: 지원 분야 또는 이외의 분야에서 어려움을 이기고 성공한 경험과 사례 등">${model.mento_view.SELF_INTR }</textarea>
 	                                         </li>
+	                                         <c:if test="${model.mento_view.COMMENT != '' }">
+	                                         <li class="pd-lr-10">
+	                                         	<span class="list_t">멘토교사 - 관리자 코멘트</span>
+	                                         		<textarea type="text" name="COMMENT" id="COMMENT" class="COMMENT mr-2 textarea_size">${model.mento_view.COMMENT }</textarea>
+	                                         </li>	
+	                                         </c:if>
 											                                        
                                         </ul>
                                     </div>
@@ -511,9 +522,14 @@
 	                                         
 	                                         <li class="pd-lr-10">
 	                                         	<span class="list_t">자기소개서<br>(<span id="self_length">0</span>)</span>
-	                                         		<textarea type="text" maxlength="1000" name="SELF_INTR" id="SELF_INTR" class="SELF_INTR mr-2 textarea_size" placeholder="아래의 내용이 포함 되어야 합니다.&#13;&#10;1. 지원 동기 : 영재키움 프로젝트 참여한 이유와 동기, 다짐과 각오 등&#13;&#10;2. 태도와 경험: 지원분야(수과학, 영어, 인문사회, 발명 등)에 대한 경험과 어려움을 극복한 사례 등&#13;&#10;3. 성취: 지원 분야 또는 이외의 분야에서 어려움을 이기고 성공한 경험과 사례 등">${model.student_view.SELF_INTR }</textarea>
+	                                         		<textarea type="text" maxlength="1000" name="SELF_INTR" id="SELF_INTR" class="SELF_INTR mr-2 textarea_size" readonly="readonly" placeholder="아래의 내용이 포함 되어야 합니다.&#13;&#10;1. 지원 동기 : 영재키움 프로젝트 참여한 이유와 동기, 다짐과 각오 등&#13;&#10;2. 태도와 경험: 지원분야(수과학, 영어, 인문사회, 발명 등)에 대한 경험과 어려움을 극복한 사례 등&#13;&#10;3. 성취: 지원 분야 또는 이외의 분야에서 어려움을 이기고 성공한 경험과 사례 등">${model.student_view.SELF_INTR }</textarea>
 	                                         </li>
-											                                        
+	                                         <c:if test="${model.student_view.COMMENT != '' }">
+	                                         <li class="pd-lr-10">
+	                                         	<span class="list_t">학생 - 관리자 코멘트</span>
+	                                         		<textarea type="text" name="COMMENT" id="COMMENT" class="COMMENT mr-2 textarea_size">${model.student_view.COMMENT }</textarea>
+	                                         </li>	
+											</c:if>
                                         </ul>
                                     </div>
                                     <div class="board_btn_wrap">

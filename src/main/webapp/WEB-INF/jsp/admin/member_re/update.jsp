@@ -129,12 +129,16 @@
                                             <c:if test="${model.StudentView.EXP_DATA != '' }">
                                             <li>
                                             	<span class="list_t">기존 아이디</span>
-                                            	<input type="text" id="MEMBER_ID" class="MEMBER_ID" name="MEMBER_ID" value="${model.MentoView.MEMBER_ID }" readonly="readonly">
+                                            	<input type="text" id="MEMBER_ID" class="MEMBER_ID" name="MEMBER_ID" value="${model.StudentView.MEMBER_ID }" readonly="readonly">
                                             </li>
                                             </c:if>
                                              <li>
                                                 <span class="list_t">자기 소개서</span>
                                    			   	<textarea class="textarea_size" type="text" maxlength="1000" name="SELF_INTR" id="SELF_INTR"  style="height: 180px;" value="${model.StudentView.SELF_INTR }">${model.StudentView.SELF_INTR }</textarea>
+                                    		</li>
+                                    		<li>
+                                                <span class="list_t">학생 - 관리자 피드백</span>
+                                   			   	<textarea class="textarea_size" type="text" name="COMMENT" id="COMMENT" style="height: 180px;" >${model.StudentView.COMMENT }</textarea>
                                     		</li>
                                         </ul>
                                     </div>
@@ -145,7 +149,7 @@
                                      <div class="member_input_wrap">
                                         <ul class="member_input">
                                             <li>
-                                                <span class="list_t">학생명</span>
+                                                <span class="list_t">교사명</span>
                                                 <input class="input_size mr" type="text" name="NAME" id="NAME" placeholder="이름"  value="${model.MentoView.NAME}" >
                                             </li>
                                             <li>
@@ -210,6 +214,10 @@
                                              <li>
                                                 <span class="list_t">멘토교사 지원동기</span>
                                    			   	<textarea class="textarea_size" type="text" maxlength="1000" name="SELF_INTR" id="SELF_INTR"  style="height: 180px;" value="${model.MentoView.SELF_INTR }">${model.MentoView.SELF_INTR }</textarea>
+                                    		</li>
+                                    		<li>
+                                                <span class="list_t">멘토교사 - 관리자 피드백</span>
+                                   			   	<textarea class="textarea_size" type="text" name="COMMENT" id=""COMMENT"" style="height: 180px;" >${model.MentoView.COMMENT }</textarea>
                                     		</li>
                                         </ul>
                                     </div>
@@ -318,6 +326,10 @@
                                                 <span class="list_t">자기 소개서</span>
                                    			   	<textarea class="textarea_size" type="text" maxlength="1000" name="SELF_INTR" id="SELF_INTR" style="height: 180px;" value="${model.View.SELF_INTR }">${model.View.SELF_INTR }</textarea>
                                     		</li>
+                                    		<li>
+                                                <span class="list_t">관리자 피드백</span>
+                                   			   	<textarea class="textarea_size" type="text" name="COMMENT" id=""COMMENT"" style="height: 180px;" >${model.View.COMMENT }</textarea>
+                                    		</li>
                                         </ul>
                                     </div>
                                     </form>
@@ -330,71 +342,27 @@
                                      <div class="member_input_wrap">
                                         <ul class="member_input">
                                         	<c:if test="${model.beforeData.TYPE == '1' }">
-                                        		<li>
-                                        			<span class="list_t">보호자 서약서</span> 
-                                        			-
-                                        			<c:if test="${model.UploadFileList.contains('보호자 서약서') }">
-                                        			<span class="list_t">제출 완료</span>
-                                        			<button type="button" onclick="DcmntFileDown(this)" FILENAME="보호자 서약서">파일 다운로드</button>
-                                        			</c:if>
-                                        			<c:if test="${!model.UploadFileList.contains('보호자 서약서') }">
-                                        			<span class="list_t">미제출</span>
-                                        			</c:if>
+                                        		<li data-document="보호자 서약서">
+                                        			<span class="list_t">보호자 서약서</span>
                                         		</li>
-                                        		<li>
+                                        		<li data-document="지원자 서약서">
                                         			<span class="list_t">지원자 서약서</span>
-                                        			-
-                                        			<c:if test="${model.UploadFileList.contains('지원자 서약서') }">
-                                        			<span class="list_t">제출 완료</span>
-                                        			</c:if>
-                                        			<c:if test="${!model.UploadFileList.contains('지원자 서약서') }">
-                                        			<span class="list_t">미제출</span>
-                                        			</c:if>
                                         		</li>
-                                        		<li>
-                                        			<span class="list_t">학교장 확인서</span>
-                                        			-
-                                        			<c:if test="${model.UploadFileList.contains('학교장 확인서') }">
-                                        			<span class="list_t">제출 완료</span>
-                                        			</c:if>
-                                        			<c:if test="${!model.UploadFileList.contains('학교장 확약서') }">
-                                        			<span class="list_t">미제출</span>
-                                        			</c:if>
+                                        		<li data-document="학교장 확인서">
+                                        			<span class="list_t" >학교장 확인서</span>
                                         		</li>
                                         	</c:if>
                                         	<c:if test="${model.beforeData.TYPE == '2' }">
-                                        		<li>
-                                        			<span class="list_t">보호자 서약서</span>
-                                        			-
-                                        			<c:if test="${model.UploadFileList.contains('보호자 서약서') }">
-                                        			<span class="list_t">제출 완료</span>
-                                        			<button type="button" onclick="DcmntFileDown(this)" FILENAME="보호자 서약서">파일 다운로드</button>
-                                        			</c:if>
-                                        			<c:if test="${!model.UploadFileList.contains('보호자 서약서') }">
-                                        			<span class="list_t">미제출</span>
-                                        			</c:if>
+                                        		<li data-document="보호자 서약서">
+                                        			<span class="list_t" >보호자 서약서</span>
                                         		</li>
-                                        		<li>
-                                        			<span class="list_t">지원자 서약서</span>
-                                        			-
-                                        			<c:if test="${model.UploadFileList.contains('지원자 서약서') }">
-                                        			<span class="list_t">제출 완료</span>
-                                        			</c:if>
-                                        			<c:if test="${!model.UploadFileList.contains('지원자 서약서') }">
-                                        			<span class="list_t">미제출</span>
-                                        			</c:if>
+                                        		<li data-document="지원자 서약서">
+                                        			<span class="list_t" >지원자 서약서</span>
                                         		</li>
                                         	</c:if>
                                         	<c:if test="${model.beforeData.TYPE == '3' }">
-                                        		<li>
-                                        			<span class="list_t">지원자 서약서</span>
-                                        			-
-                                        			<c:if test="${model.UploadFileList.contains('지원자 서약서') }">
-                                        			<span class="list_t">제출 완료</span>
-                                        			</c:if>
-                                        			<c:if test="${!model.UploadFileList.contains('지원자 서약서') }">
-                                        			<span class="list_t">미제출</span>
-                                        			</c:if>
+                                        		<li data-document="지원자 서약서">
+                                        			<span class="list_t" >지원자 서약서</span>
                                         		</li>
                                         	</c:if>
                                         </ul>
@@ -407,15 +375,8 @@
                                      <div class="member_input_wrap">
                                         <ul class="member_input">
                                         	<c:forEach var="item" items="${model.DcmntList }" varStatus="status">
-                                        		<li>
-                                        			<span class="list_t">${item.DCMNT_NAME }</span>
-                                        			-
-                                        			<c:if test="${model.UploadFileList.contains(item.DCMNT_NAME) }">
-                                        			<span class="list_t">제출 완료</span>
-	                                        		</c:if>
-	                                        		<c:if test="${!model.UploadFileList.contains(item.DCMNT_NAME) }">
-	                                        			<span class="list_t">미제출</span>
-	                                        		</c:if>
+                                        		<li data-document="${item.DCMNT_NAME }">
+                                        			<span class="list_t" >${item.DCMNT_NAME }</span>
                                         		</li>
                                         	</c:forEach>
                                         </ul>
@@ -448,6 +409,9 @@
                                     </c:if>
                                     <c:if test="${model.beforeData.TYPE == '2' || model.beforeData.TYPE == '3' }">
                                     	<a class="bd_storage_w_btn" onclick="MemberReDelete('${model.beforeData.TYPE }','${model.View.IDX}')">지원 삭제</a>
+                                    </c:if>
+                                    <c:if test="${fn:length(model.UploadFileList) > 0}">
+                                    	<a class="bd_storage_w_btn" onclick="TotalDocumentDown()">서류 통합 다운로드</a>
                                     </c:if>
                                 </div>
                             </div>
@@ -733,6 +697,97 @@
 		
 	}
 	
+	$(document).ready(function(){
+		var UploadList = [];
+		<c:forEach var="item" items="${model.UploadFileList}" varStatus="status">
+		UploadList.push('${item}');
+		</c:forEach>
+		console.log(UploadList);
+		if(UploadList.length > 0){
+			
+			for(var i = 0; i < UploadList.length; i++){
+				
+				var UploadFile = UploadList[i];
+				var html = `<span class="list_t">제출 완료</span>
+        			<button type="button" onclick="DcmntFileDown(this)" FILENAME="`+UploadFile+`">파일 다운로드</button>`;
+				$('[data-document="'+UploadFile+'"]').append(html);
+				
+			}
+			
+		}
+		
+	});
+	
+	
+	function TotalDocumentDown(){
+		
+		var UploadList = [];
+		<c:forEach var="item" items="${model.UploadFileList}" varStatus="status">
+		UploadList.push('${item}');
+		</c:forEach>
+		
+		var filesString = '';
+		
+		let promises = [];
+		
+		for(var i = 0; i < UploadList.length; i ++){
+			
+			var BIRTH = '${model.MentoView.BIRTH}';
+			var MEMBER = '${model.MentoView.NAME}';
+			var NAME = UploadList[i];
+			
+			console.log(NAME);
+			 promises.push(
+				$.ajax({
+					url : '/user/member_re/FileLinkCheck.do',
+					type : 'POST',
+					data : ({
+						NAME : NAME,
+						MEMBER_NAME : MEMBER,
+						BIRTH : BIRTH
+					}),
+					success : function(data , status , xhr){
+						
+						console.log(data);
+						
+						var URL = '/resources/upload/member_re/delete/' + BIRTH + MEMBER + '/'
+						
+						URL += data;
+						
+						if(filesString == ''){
+							filesString = filesString + URL;	
+						}else{
+							filesString = filesString + ',' + URL;	
+						}
+						
+					},
+					error : function(status , xhr){
+						
+					}
+					
+				})
+			)
+			
+			
+		}
+		
+		var BIRTH = '${model.MentoView.BIRTH}';
+		var MEMBER = '${model.MentoView.NAME}';
+		
+		Promise.all(promises).then(function() {
+			
+			console.log(filesString);
+			
+			BIRTH = BIRTH.replaceAll('.','');
+
+			window.location.href = '/fileAllDown.do?NAME='+BIRTH + MEMBER+'&filesString=' + encodeURIComponent(filesString);
+			
+	    }).catch(function(error) {
+	        console.error('오류 발생', error);
+	    });
+
+		
+	}
 
 	
 	

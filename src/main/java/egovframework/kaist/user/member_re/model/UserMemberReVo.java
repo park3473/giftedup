@@ -45,6 +45,8 @@ public class UserMemberReVo extends SearchVo {
 	String EXP_TYPE = "";
 	
 	String FILE_TYPE = "";
+	
+	String COMMENT = "";
 
 	public String getIDX() {
 		return IDX;
@@ -292,6 +294,14 @@ public class UserMemberReVo extends SearchVo {
 
 	public void setFILE_TYPE(String fILE_TYPE) {
 		FILE_TYPE = fILE_TYPE;
+	}
+
+	public String getCOMMENT() {
+		return COMMENT;
+	}
+
+	public void setCOMMENT(String cOMMENT) {
+		COMMENT = cOMMENT;
 	}
 	
 	

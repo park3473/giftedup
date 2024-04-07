@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLEncoder;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,8 +19,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -222,4 +226,52 @@ public class HomeController {
 	        }
 
 	}
+	
+	
+	//일괄 다운로드
+	@RequestMapping(value = {"/fileAllDown.do"}, method = RequestMethod.GET)
+	public void batchDownload(@RequestParam("filesString") String filesString , @RequestParam("NAME") String NAME ,HttpServletRequest request, HttpServletResponse response) throws IOException {
+		System.out.println("ALLDOWN?");
+		String[] files = filesString.split(",");
+		System.out.println(NAME);
+		NAME = URLEncoder.encode(NAME,"UTF-8");
+	    String zipFileName = NAME + "_totalFile.zip";
+	    
+	    System.out.println(zipFileName);
+
+	    response.setContentType("application/octet-stream");
+	    response.setHeader("Content-Disposition", "attachment;filename=" + zipFileName);
+
+	    ZipOutputStream zos = new ZipOutputStream(response.getOutputStream());
+
+	    for (String filePath : files) {
+	    	
+	    	String path = filePath;
+	    	
+	    	String drv = request.getRealPath("");
+	    	//drv = drv.substring(0, drv.length()) + "./resources"+request.getContextPath()+"/upload/notices/";
+	    	drv = drv.substring(0, drv.length());
+	    	
+	    	File file = new File(drv+path);
+	    	System.out.println("drv+path : " + drv+path);
+	        if (!file.exists()) {
+	            continue; // 파일이 존재하지 않으면 넘어갑니다.
+	        }
+	        zos.putNextEntry(new ZipEntry(file.getName()));
+
+	        FileInputStream fis = new FileInputStream(file);
+
+	        byte[] buffer = new byte[1024];
+	        int length;
+	        while ((length = fis.read(buffer)) > 0) {
+	            zos.write(buffer, 0, length);
+	        }
+
+	        zos.closeEntry();
+	        fis.close();
+	    }
+
+	    zos.close();
+	}
+	
 }

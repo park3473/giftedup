@@ -184,6 +184,21 @@ public class UserMemberReController {
 			
 	}
 	
+	//사용자 - 신입생 선발 지원서 - 기존 유저 확인 및 정보가져오기
+		@RequestMapping(value="/user/member_re/memberIdCheck.do" , method = RequestMethod.POST , produces = "application/json; charset=utf8")
+		@ResponseBody
+		public String MemberReIdCheckPost(@ModelAttribute("UserMemberReVo")UserMemberReVo UserMemberReVo , HttpServletRequest request , HttpServletResponse response) throws JsonProcessingException {
+		
+			String result = "false";
+			
+			result = userMember_reService.getMemberReIdCheck(UserMemberReVo);
+			
+			return result;
+			
+		}
+		
+	
+	
 	//사용자 - 신입생 선발 지원서 - [유형1 - 매칭 번호 가져오기]
 	@RequestMapping(value="/user/member_re/matchingcnt.do" , method = RequestMethod.POST , produces = "application/json; charset=utf8")
 	@ResponseBody
@@ -211,9 +226,42 @@ public class UserMemberReController {
 	
 	//사용자 - 신입생 선발 지원서 - 신청 페이지 등록
 	@RequestMapping(value="/user/member_re/insert.do" , method = RequestMethod.POST)
-	public void MemberReInsertPost(@ModelAttribute("UserMemberReVo")UserMemberReVo UserMemberReVo , HttpServletRequest request , HttpServletResponse response) {
+	public void MemberReInsertPost(@ModelAttribute("UserMemberReVo")UserMemberReVo UserMemberReVo , HttpServletRequest request , HttpServletResponse response) throws NoSuchAlgorithmException, IOException {
 		
+		//해당 신입생 선발 데이터 등록
 		userMember_reService.setMemberReInsert(UserMemberReVo);
+		
+		//해당 선발 데이터 지원서 제출 확인 문자 발송
+		if(UserMemberReVo.getNAME().equals("") || UserMemberReVo.getPHONE().equals("")) {
+			
+			System.out.println("sms문자 보내기 실패 : " + UserMemberReVo.getNAME());
+			
+		}else {
+			
+			System.out.println("sms문자 보내기 실행 : " + UserMemberReVo.getNAME());
+			
+			String PHONE = UserMemberReVo.getPHONE();
+			PHONE = PHONE.replace("-", "");
+			PHONE = PHONE.replace(".", "");
+			
+			String SMSTEXT = "안녕하세요 영재키움입니다.\n"+ UserMemberReVo.getNAME()+"님의\n2024년도 영재키움 신입생 선발 지원하셨습니다.\n제출 서류를 확인하셔서 제출 부탁드립니다.";
+			
+			AdminSmsLogVo AdminSmsLogDomain = new AdminSmsLogVo();
+			AdminSmsLogDomain.setNAME(UserMemberReVo.getNAME());
+			AdminSmsLogDomain.setPHONE(PHONE);
+			AdminSmsLogDomain.setMESSAGE(SMSTEXT);
+			AdminSmsLogDomain.setSMS_TYPE("L");
+			
+			System.out.println("???");
+			
+			adminSmsLogService.setInsert(AdminSmsLogDomain);
+			
+			adminSmsLogService.smsSend(AdminSmsLogDomain);
+			
+			System.out.println("문자 보냄?/");
+			
+		}
+		
 		
 	}
 	
@@ -429,8 +477,7 @@ public class UserMemberReController {
 		System.out.println(User.getNAME());
 		System.out.println(User.getLINK());
 		System.out.println(User.getMEMBER_NAME());
-		
-		boolean result = SUtil.FtpFileDelete(User);
+		User.setTYPE(UserMemberReDocumentVo.getTYPE());
 		
 		userMember_reService.setMemberReDocumentDelete(User);
 

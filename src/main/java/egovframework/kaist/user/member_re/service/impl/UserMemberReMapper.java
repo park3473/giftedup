@@ -64,6 +64,10 @@ public interface UserMemberReMapper {
 	UserMemberReVo getMemberReMatchingView(UserMemberReVo memberReVo);
 
 	String getMatchingView(UserMemberReVo memberReVo);
+	
+	public int getMemberReIdCheck(UserMemberReVo userMemberReVo);
+
+	public String getMemberReIdCheckGet(UserMemberReVo userMemberReVo);
 
 
 	

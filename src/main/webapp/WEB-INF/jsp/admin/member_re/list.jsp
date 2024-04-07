@@ -120,7 +120,7 @@
                                                 <th class="check"><input type="checkbox" class="" name="chk_calc_all" id="chk_calc_all" value=""></th>
                                                 <th class="number" data-col="IDX">순번</th>
                                                 <th class="type" data-col="type">유형</th>
-                                                <th class="name">성명</th>
+                                                <th class="name" style="width : 5%;">성명</th>
                                                 <th class="sex">성별<button id="upbtn" class="updwbtn" value="SEX">▲</button><button id="dwbtn" class="updwbtn" value="SEX" >▼</button></th>
                                                 <th class="address_local">지역<button id="upbtn" class="updwbtn" value="ADDRESS_LOCAL">▲</button><button id="dwbtn" class="updwbtn" value="ADDRESS_LOCAL" >▼</button></th>
                                                 <th class="birth">생년월일<button id="upbtn" class="updwbtn" value="BIRTH">▲</button><button id="dwbtn" class="updwbtn" value="BIRTH" >▼</button></th>
@@ -131,7 +131,7 @@
                                                 <th class="eligibility">지원자격</th>
                                                 <th class="support_area">신청 날짜</th>
                                                 <th class="result">서류</th>
-                                                <th class="delete">삭제</th>
+                                                <th class="sms">문자 발송</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -204,14 +204,6 @@
                                                 	<c:if test="${item.FILE_TYPE == '2' }">
                                                 		완료
                                                 	</c:if>
-                                                </td>
-                                                <td class="td_09">
-                                                    <c:if test="${item.TYPE == '1'}">
-                                                        <button type="button" onclick="MemberReDelete('${item.TYPE}','${item.MATCHING}')">삭제</button>
-                                                    </c:if>
-                                                    <c:if test="${item.TYPE == '2' || item.TYPE == '3'}">
-                                                        <button type="button" onclick="MemberReDelete('${item.TYPE}','${item.IDX}')">삭제</button>
-                                                    </c:if>
                                                 </td>
                                             </tr>
                                             </c:forEach>
@@ -503,6 +495,28 @@ function MemberReDelete(TYPE,DATA){
 			}
 			
 		}
+		
+	}
+	
+	
+	
+	function SmsTest(){
+		
+		$.ajax({
+			url : '/admin/member_re/SmsSend.do',
+			type : 'POST',
+			data : ({
+				NAME : '박경호',
+				PHONE : '010-3473-3452',
+				SMSTEXT : ''
+			}),
+			success : function(data){
+				console.log(data);
+			},
+			error : function(xhr , error , status){
+				console.log('error');
+			}
+		})
 		
 	}
     

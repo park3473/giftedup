@@ -10,6 +10,7 @@ import egovframework.kaist.admin.matching.model.AdminMatchingVo;
 import egovframework.kaist.admin.member_re.model.AdminDcmntFileVo;
 import egovframework.kaist.admin.member_re.model.AdminDcmntVo;
 import egovframework.kaist.admin.member_re.model.AdminMemberReVo;
+import egovframework.kaist.user.member_re.model.UserMemberReVo;
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
 
 @Mapper("adminMember_reMapper")

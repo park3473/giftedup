@@ -475,6 +475,7 @@
 
 	function file_re(e){
 		
+		var TYPE = '${TYPE}';
 		var NAME = $(e).attr('FILENAME');
 		var MEMBER_NAME = '${model.beforeData.MEMBER_NAME}';
 		var BIRTH = '${model.beforeData.BIRTH}';
@@ -486,6 +487,7 @@
 				url : '${pageContext.request.contextPath}/user/member_re/document_delete.do',
 				type : 'POST',
 				data : ({
+					TYPE : TYPE,
 					NAME : NAME,
 					MEMBER_NAME : MEMBER_NAME,
 					BIRTH : BIRTH
@@ -520,7 +522,7 @@
 		const complete = $('.FileComplete').length
 		
 		if(upload == complete){
-			alert(' 2023 영재키움 프로젝트 지원서 제출이 완료되었습니다. 감사합니다. ');
+			alert(' 2024 영재키움 프로젝트 지원서 제출이 완료되었습니다. 감사합니다. ');
 		}else{
 			alert('모든 서류를 제출해야지 최종제출이 가능합니다.');
 		}

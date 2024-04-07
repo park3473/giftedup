@@ -37,6 +37,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -431,6 +432,41 @@ public class AdminMemberReController {
 	}
 	
 	/*신입생 선발 설정 관련 종료*/
+	
+	
+	//신입생 선발 문자 발송 모듈
+	@RequestMapping(value="/admin/member_re/SmsSend.do" , method = RequestMethod.POST , produces = "application/json; charset=utf8")
+	public void SmsSendPost(@ModelAttribute("AdminMemberReVo") AdminMemberReVo adminMember_reVo , @RequestParam("SMSTEXT") String SMSTEXT , HttpServletRequest request , HttpServletResponse response)  throws NoSuchAlgorithmException, IOException, JsonProcessingException {
+		
+		
+		if(SMSTEXT.equals("") || adminMember_reVo.getPHONE().equals("")) {
+			//문자 보내는 내용 or 번호 오류 있는지
+			response.getWriter().print("false:1");
+		}else {
+			
+			System.out.println("SMSTEXT : " + SMSTEXT);
+			System.out.println("NAME : " + adminMember_reVo.getNAME());
+			System.out.println("PHONE : " + adminMember_reVo.getPHONE());
+			
+			String PHONE = adminMember_reVo.getPHONE();
+			PHONE = PHONE.replace("-", "");
+			PHONE = PHONE.replace(".", "");
+			
+			AdminSmsLogVo AdminSmsLogDomain = new AdminSmsLogVo();
+			AdminSmsLogDomain.setPHONE(PHONE);
+			AdminSmsLogDomain.setNAME(adminMember_reVo.getNAME());
+			AdminSmsLogDomain.setMESSAGE(SMSTEXT);
+			AdminSmsLogDomain.setSMS_TYPE("L");
+			
+			adminSmsLogService.setInsert(AdminSmsLogDomain);
+			
+			adminSmsLogService.smsSend(AdminSmsLogDomain);
+		
+			response.getWriter().print("true");
+			
+		}
+		
+	}
 	
 	//신입생 선발 선정 모듈
 	//-------------------------------------------------------------------------------------------------------------------

@@ -21,6 +21,11 @@
 	    text-overflow: ellipsis;
 	    display: block;
     }
+    .ZIndexUp{
+    	
+    	width : 700px;
+    
+    }
 </style>
 
 
@@ -214,7 +219,7 @@
                                             
                                             <li class="pd-lr-10">
                                             	<span class="list_t">연락처</span>
-                                            	<input type="number" name="PHONE" id="PHONE" class="PHONE" oninput="max_length(this,11)" onkeydown="return onlyNumber();">
+                                            	<input type="number" name="PHONE" id="PHONE" class="PHONE" oninput="max_length(this,11)" value="010" onkeydown="return onlyNumber();">
                                             	<span class="relate_c">연락처는 숫자만 입력해주세요.</span>
                                             </li>
                                             
@@ -364,8 +369,8 @@
                                 	<div class="title">
                                 		<span><img src="${pageContext.request.contextPath}/resources/img/sub/sub_icon_bars.png" alt="점" /></span>
                                 		<p>안내</p>
-                                    	<p style="color:#f55c5c">신규 지원 : 2023년에 처음으로 영재키움 프로젝트에 지원하는 경우</p>
-                                    	<p style="color:#f55c5c">기존 참가자 : 2019 ~ 2022 년도 중 참여한 적이 있는 경우 또는 ID가 있는 경우 선택</p>
+                                    	<p style="color:#f55c5c">신규 지원 : 2024년에 처음으로 영재키움 프로젝트에 지원하는 경우</p>
+                                    	<p style="color:#f55c5c">기존 참가자 : 2019 ~ 2023 년도 중 참여한 적이 있는 경우 또는 ID가 있는 경우 선택</p>
                                 	</div>
                                 
                                     <div class="title">
@@ -453,7 +458,7 @@
                                             
                                             <li class="pd-lr-10">
                                             	<span class="list_t">연락처</span>
-                                            	<input type="number" name="PHONE" id="PHONE" class="PHONE" oninput="max_length(this,11)" onkeydown="return onlyNumber();" onkeydown="return onlyNumber();">
+                                            	<input type="number" name="PHONE" id="PHONE" class="PHONE" oninput="max_length(this,11)" value="010" onkeydown="return onlyNumber();" onkeydown="return onlyNumber();">
                                             	<span class="relate_c">연락처는 숫자만 입력해주세요.</span>
                                             </li>
                                             
@@ -591,7 +596,7 @@
                                             
                                             <li class="pd-lr-10">
                                             	<span class="list_t">연락처</span>
-                                            	<input type="number" name="PHONE" id="PHONE" class="PHONE" oninput="max_length(this,11)" onkeydown="return onlyNumber();">
+                                            	<input type="number" name="PHONE" id="PHONE" class="PHONE" oninput="max_length(this,11)" value="010" onkeydown="return onlyNumber();">
                                             	<span class="relate_c">연락처는 숫자만 입력해주세요.</span>
                                             </li>
                                             
@@ -730,7 +735,7 @@
             <div class="danger_txt">
                 <h2>기존 유저 확인</h2>
                 <input type="text" name="MODAL_NAME" id="MODAL_NAME" class="MODAL_NAME" placeholder="이름을 입력하여주세요.">
-                <input type="text" name="MODAL_ID" id="MODAL_ID" class="MODAL_ID" placeholder="아이디를 입력하여주세요.">
+                <input type="text" style="width:200px" name="MODAL_ID" id="MODAL_ID" class="MODAL_ID" placeholder="아이디를 입력하여주세요.">
             </div>
             <ul class="danger_btn_box">
                 <li class="danger_btn_01">
@@ -738,6 +743,9 @@
                 </li>
                 <li class="danger_btn_02">
                     <button type="button" onclick="$('.danger_modal_area').css('display','none');$('.danger_bg').css('display','none')">아니요</button>
+                </li>
+                <li class="danger_btn_01">
+                    <button type="button" onclick="MemberIdCheck2024()">아이디 검색</button>
                 </li>
             </ul>
         </div>
@@ -747,18 +755,90 @@
     <!-- 모달 배경 -->
     <div class="danger_bg"></div>
     
-    
- 
-    <!--본문 end-->
-    <footer id="new_ft" class="ft_wrap">
-        <%@ include file="../include/footer.jsp" %>
-    </footer>
-    
     <%@ include file="../include/footerJs.jsp" %>
     
 </body>
 </html>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript">
+	function MemberIdCheck2024(){
+		
+		Swal.fire({
+			customClass: {
+			    popup: 'ZIndexUp',
+			  },
+		    title: '아아디 찾기',
+		    html:
+		      '아이디 : <input id="swal-input1" class="swal2-input" name="NAME" placeholder="이름을적어주세요."><br>' +
+		      '전화번호 :<input style="width : 300px" id="swal-input2" class="swal2-input" name="PHONE" placeholder="전화번호 8자리를적어주세요." value="">',
+		    focusConfirm: false,
+		    preConfirm: () => {
+		      return [
+		        document.getElementById('swal-input1').value,
+		        document.getElementById('swal-input2').value.replace(/-/g, '')
+		      ]
+		    }
+		  }).then((result) => {
+		    if (result.value) {
+		      const [NAME, PHONE] = result.value;
+		      console.log(NAME + PHONE);
+		      
+		      if (PHONE.length < 8) {
+		          Swal.fire('안내드립니다.', '전화번호 뒷8자리를 입력해주시기 바랍니다.', 'error');
+		        } else if (PHONE.length > 8) {
+		        	Swal.fire('안내드립니다.', '전화번호 뒷8자리를 입력해주시기 바랍니다.', 'error');
+		        } else {
+		          // AJAX 요청 실행
+		          MemberIdCheck(NAME, PHONE);
+		      }
+		      
+		    }
+		  });
+		
+	}
+	
+	
+	function MemberIdCheck(NAME , PHONE){
+		
+		PHONE = '010' + PHONE;
+		
+		console.log(NAME);
+		console.log(PHONE);
+		
+		$.ajax({
+			url: '/user/member_re/memberIdCheck.do', // 서버 URL
+	        type: 'POST',
+	        data: {
+	          NAME : NAME,
+	          PHONE: PHONE
+	        },
+	        success: function(response) {
+	          // 성공적으로 데이터를 전송했을 때의 처리
+	          console.log(response);
+	          if(response === false){
+	        	  Swal.fire('죄송합니다','확인되는 아이디가 없습니다.');
+	          }else{
+	        	  Swal.fire('확인되었습니다.', '확인된 아이디는 "' + response + '" 입니다.').then(() => {
+	        	        navigator.clipboard.writeText(response)
+	        	            .then(() => {
+	        	                Swal.fire('클립보드에 복사되었습니다.');
+	        	            })
+	        	            .catch(err => {
+	        	                Swal.fire('클립보드에 복사하는데 실패했습니다');
+	        	            });
+	        	    });
+	          }
+	          
+	        },
+	        error: function(xhr, status, error) {
+	          // 에러 처리
+	          Swal.fire('Oops...', 'Something went wrong!', 'error');
+	        }
+		  });
+		
+	}
+	
+</script>
 <!-- 유형 1 스크립트 -->
 <c:if test="${model.TYPE == '1'}">
 <script type=text/javascript>
@@ -1420,7 +1500,7 @@ jQuery('.BIRTH').datetimepicker({
 															var RESULT = data;
 															
 															if(data == 'true'){
-																alert('이미 2023년도\n신입생 선발에 신청하셨습니다.');
+																alert('이미 2024년도\n신입생 선발에 신청하셨습니다.');
 																
 																WhatResult = 'false';
 																
@@ -1889,7 +1969,7 @@ function SchoolInputOpen(TYPE){
 							var RESULT = data;
 							
 							if(data == 'true'){
-								alert('이미 2023년도\n신입생 선발에 신청하셨습니다.');
+								alert('이미 2024년도\n신입생 선발에 신청하셨습니다.');
 								return;	
 							}else if(data == 'false'){
 								
@@ -1968,7 +2048,7 @@ function SchoolInputOpen(TYPE){
 							var RESULT = data;
 							
 							if(data == 'true'){
-								alert('이미 2023년도\n신입생 선발에 신청하셨습니다.');
+								alert('이미 2024년도\n신입생 선발에 신청하셨습니다.');
 								return;	
 							}else if(data == 'false'){
 								
@@ -2058,7 +2138,7 @@ function SchoolInputOpen(TYPE){
 								var RESULT = data;
 								
 								if(data == 'true'){
-									alert('이미 2023년도\n신입생 선발에 신청하셨습니다.');
+									alert('이미 2024년도\n신입생 선발에 신청하셨습니다.');
 									return;	
 								}else if(data == 'false'){
 									
