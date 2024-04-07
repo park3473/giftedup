@@ -212,7 +212,6 @@
                                                     <c:if test="${item.TYPE == '2' || item.TYPE == '3'}">
                                                         <button type="button" onclick="MemberReDelete('${item.TYPE}','${item.IDX}')">삭제</button>
                                                     </c:if>
-                                                    <button type="button" onclick="alert('${item.NAME}의 ${item.PHONE } 번호로 미흡 서류 안내 문자 발송')">미흡문자 발송</button>
                                                 </td>
                                             </tr>
                                             </c:forEach>

@@ -1537,8 +1537,3 @@ button {
 }
 
 /*포트폴리오 end*/
-
-/*tabulator*/
-.tabulator-header .tabulator-col {
-    text-align: center !important;
-}

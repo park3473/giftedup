@@ -193,7 +193,6 @@
                             <!--관리자 버튼 end-->
 
                             <!-- 모달창 -->
-                            <!-- 
                             <form action="./excelMemberUpload.do?" method="post" name="memberExcelform" id="memberExcelform" enctype="multipart/form-data">
                                 <input type="hidden"  name="csrf" value="${CSRF_TOKEN}" />
                                 <div class="member_modal_wrap">
@@ -228,7 +227,6 @@
                                     </div>
                                 </div>
                             </form>
-                            -->
                             <!-- 모달창 end-->
 
 						<form action="./comparing.do?" method="post" name="membercomparingExcelform" id="membercomparingExcelform" enctype="multipart/form-data">

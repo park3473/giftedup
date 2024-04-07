@@ -146,12 +146,12 @@ border-radius: 0 5px 0 0;
 	                        <div class="col-sm-4 txt_18 font_wet_04">
 	                            <div>학생현황</div>
 	                            <div class="gray_04 pad_5 c_hide">참여중</div>
-	                            <div class="txt_30 gray_10"><span class="timer f_wet_05" data-to="${model.membercnt1}" data-speed="1000"></span><span class="txt_20 l_pad_5">명</span></div>
+	                            <div class="txt_30 gray_10"><span class="timer f_wet_05" data-to="720" data-speed="1000"></span><span class="txt_20 l_pad_5">명</span></div>
 	                        </div>
 	                        <div class="col-sm-4 txt_18 font_wet_04">
 	                            <div>교사현황</div>
 	                            <div class="gray_04 pad_5 c_hide">참여중</div>
-	                            <div class="txt_30 gray_10"><span class="timer f_wet_05" data-to="${model.membercnt2}" data-speed="1000"></span><span class="txt_20 l_pad_5">명</span></div>
+	                            <div class="txt_30 gray_10"><span class="timer f_wet_05" data-to="511" data-speed="1000"></span><span class="txt_20 l_pad_5">명</span></div>
 	                        </div>
 	                        <div class="col-sm-4 txt_18 font_wet_04">
 	                            <div>참여학교<span class="blink">현황</span></div>
@@ -179,7 +179,7 @@ border-radius: 0 5px 0 0;
 	                    </ol>
 	                    <div class="carousel-inner">
 	                        <div class="carousel-item active">
-	                            <img src="${pageContext.request.contextPath}/resources/img/2022/banner_test.jpg" alt="">
+	                            <img style="cursor: pointer;" src="${pageContext.request.contextPath}/resources/img/sin_2024.png" onclick="location.href='/user/member_re/intro.do'" alt="">
 	                        </div>
 	                    </div>
 	                    <a class="carousel-control-prev" href="#carousel11_indicator" role="button" data-slide="prev"><i class="la la-angle-left" aria-hidden="true"></i></a>
@@ -301,10 +301,10 @@ border-radius: 0 5px 0 0;
 		            <span><a href="">이메일무단수집거부</a></span>
 		        </div>
 		        <div class="all_copy">
-		            <span>주소 : 대전광역시 유성구 문지로 193 KAIST문지캠퍼스 카이스트 과학영재교육연구원(34051)</span><span class="gab">ㅣ</span>
-		            <span>TEL : 042-350-6227</span><span class="gab">ㅣ</span>
-		            <span>FAX : 042-350-6224</span><span class="gab">ㅣ</span>
-		            <span>E-MAIL : giftedup@kaist.ac.kr</span>
+		            <!-- <span>주소 : 대전광역시 유성구 문지로 193 KAIST문지캠퍼스 카이스트 과학영재교육연구원(34051)</span><span class="gab">ㅣ</span> -->
+		            <p><span>TEL : </span>서울・강원・제주권역 (서울대학교) : 02-880-4477~8, 경기・인천권역 (인천대학교) : 032-835-4915, 충청・호남권역 (대전대학교) : 042-226-0701(혹은 0705), 경상권역 (부산대학교) : 051-510-1840~2</p>
+		            <!-- <span>FAX : 042-350-8660</span><span class="gab">ㅣ</span> -->
+		            <!-- <span>E-MAIL : giftedup@kaist.ac.kr</span> -->
 		        </div>
 		        <div class="copy">
 		            <span>Copyright © 2020 영재키움 프로젝트 All Rights Reserved</span>

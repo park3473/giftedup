@@ -34,10 +34,10 @@
             </nav>
             <div class="txt">
                 <div class="txt_right">
-                    <p><span class="icon_ob"><img src="${pageContext.request.contextPath}/resources/img/adress_icon.png" alt="주소"></span>대전광역시 유성구 문지로 193 KAIST문지캠퍼스 카이스트 과학영재교육연구원(34051)</p>
-                    <p><span class="icon_ob"><img src="${pageContext.request.contextPath}/resources/img/phone_icon.png" alt="전화"></span>042-350-6227</p>
-                    <p><span class="icon_ob"><img src="${pageContext.request.contextPath}/resources/img/fax_icon.png" alt="팩스"></span>042-350-6224</p>
-                    <p><span class="icon_ob"><img src="${pageContext.request.contextPath}/resources/img/mail_icon.png" alt="이메일"></span>giftedup@kaist.ac.kr</p>
+                    <!--<p><span class="icon_ob"><img src="${pageContext.request.contextPath}/resources/img/adress_icon.png" alt="주소"></span>대전광역시 유성구 문지로 193 KAIST문지캠퍼스 카이스트 과학영재교육연구원(34051)</p> -->
+                    <p><span>TEL : </span>서울・강원・제주권역 (서울대학교) : 02-880-4477~8, 경기・인천권역 (인천대학교) : 032-835-4915, 충청・호남권역 (대전대학교) : 042-226-0701(혹은 0705), 경상권역 (부산대학교) : 051-510-1840~2</p>
+                    <!--<p><span class="icon_ob"><img src="${pageContext.request.contextPath}/resources/img/fax_icon.png" alt="팩스"></span>042-350-8660</p>-->
+                    <!-- <p><span class="icon_ob"><img src="${pageContext.request.contextPath}/resources/img/mail_icon.png" alt="이메일"></span>giftedup@kaist.ac.kr</p> -->
                 </div>
                 <p>Copyright &copy; 2020 영재키움 프로젝트 All Rights Reserved</p>
             </div>

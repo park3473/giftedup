@@ -74,16 +74,21 @@
 	<div class="font_noto main_tit_22">바로가기메뉴</div>
 	<div class="kaist font_noto f_wet_03">
 		<div class="flexbox align_c gray_10">
-			<div class="item_02 box_02 pointer" onclick="location.href='${pageContext.request.contextPath}/user/program/101/list.do'">
-				융합과학<br>프로젝트
+			<div class="item_02 box_02 pointer" onclick="location.href='${pageContext.request.contextPath}/user/notices_data/13/list.do'">
+				학습<br>멘토링
 			</div>
 			<div class="item_02 box_02 pointer" onclick="location.href='${pageContext.request.contextPath}/user/communicator/list.do'">
 				커뮤니<br>케이터
 			</div>
+		<div class="item_02 box_02 pointer" onclick="javascript:alert('2024 신규 참가자 모집은 아직 진행되지않았습니다.')">
+				신입생<br>모집
+			</div>
+		<!--
 			<div class="item_02 box_02 pointer" onclick="location.href='${pageContext.request.contextPath}/user/member_re/intro.do'">
 				신입생<br>모집
 			</div>
-			<div class="item_02 box_03 pointer" onclick="javascript:alert('2022 신규 참가자 모집은 종료되었습니다.')">
+			-->
+			<div class="item_02 box_03 pointer" onclick="javascript:alert('2024 신규 참가자 모집은 아직 진행되지않았습니다.')">
 				지원서<br>조회
 			</div>
 		</div>
@@ -97,13 +102,9 @@
 
 	<div class="main_gab_30"></div>
 	<div class="pos_r movie">
-		<div class="you_btn pos_a">
-			<img
-				src='${pageContext.request.contextPath}/resources/img/2022/youtube_btn.png'>
-		</div>
 		<div class="pic">
 			<img
-				src='${pageContext.request.contextPath}/resources/img/2022/movie_img_01.png'>
+				src='${pageContext.request.contextPath}/resources/img/2022/main_slide_01.png'>
 		</div>
 	</div>
 
@@ -115,7 +116,7 @@
 				type : 'POST',
 				success : function(data , xhr , status){
 					//console.log(data);
-					for(i=0; i < data.length; i++){
+					for(i=0; i < 6; i++){
 						$('#slide_01').append('<div class="item"><img src="/resources/upload/notices_data/'+data[i].IMAGE+'" alt="'+data[i].IMAGE+'" ><div class="cont"><div class="tit" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" >'+data[i].TITLE+'</div></div></div> ')
 					}
 					

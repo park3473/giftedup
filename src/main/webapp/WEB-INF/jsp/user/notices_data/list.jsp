@@ -104,10 +104,7 @@
 		            <span><a href="">이메일무단수집거부</a></span>
 		        </div>
 		        <div class="all_copy">
-		            <span>주소 : 대전광역시 유성구 문지로 193 KAIST문지캠퍼스 카이스트 과학영재교육연구원(34051)</span><span class="gab">ㅣ</span>
-		            <span>TEL : 042-350-6227</span><span class="gab">ㅣ</span>
-		            <span>FAX : 042-350-6224</span><span class="gab">ㅣ</span>
-		            <span>E-MAIL : giftedup@kaist.ac.kr</span>
+		            <p><span>TEL : </span>서울・강원・제주권역 : 02-880-4477~8, 경기・인천권역 : 032-835-4915, 충청・호남권역 : 042-226-0701(혹은 0705), 경상권역 : 051-510-1840~2</p>
 		        </div>
 		        <div class="copy">
 		            <span>Copyright © 2020 영재키움 프로젝트 All Rights Reserved</span>

@@ -88,7 +88,7 @@
                                         	</c:forEach>
                                         	<li class="pd-lr-10">
                                         		<span class="list_t">추가입력</span>
-                                        		<textarea name="content" id="editor"></textarea>
+                                        		<textarea name="content" id="editor">${model.view.description }</textarea>
                                         	</li>
                                         	           
                                         </ul>

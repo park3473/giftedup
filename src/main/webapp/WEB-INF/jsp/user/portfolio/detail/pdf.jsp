@@ -199,53 +199,6 @@
 	    location.href = URL;
 	}
 	
-	
-	
-</script>
-<script>
-	async function convertHiddenDivToPDF(type) {
-    const content = document.getElementById('hidden-content');
-    
-    // 숨겨진 div를 임시로 보이게 설정
-    content.style.display = 'block';
-    content.style.position = 'absolute'; // 화면 레이아웃에 영향을 주지 않도록 설정 (사용자 화면에 보이면 안되니까)
-    content.style.left = '-9999px'; // 화면 밖으로 이동하여 보이지 않게 함
-
-    // `html2canvas`로 캔버스를 생성 - 이미지는 png 로 추출
-    const canvas = await html2canvas(content);
-    const imageData = canvas.toDataURL('image/png');
-    
-    //해당 포트폴리오 일괄 인지 단일인지 확인
-    switch (type) {
-	case '1':
-		//단일 출력문
-		
-		break;
-	case '2':
-		//일괄 출력문 함수변경
-		convertHiddenDivToPDFAll(data);
-		break;
-
-	}
-    
-    if(type == '2'){
-    	//일괄 출력문이므로 여기서 중단
-    	return;
-    }
-
-    // PDF 생성
-    const pdf = new window.jspdf.jsPDF('p', 'mm', 'a4');
-    const imgProps = pdf.getImageProperties(imageData);
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-    pdf.addImage(imageData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-    pdf.save('hidden-div.pdf');
-    
-    // 원래대로 숨겨진 div 설정 복원
-    content.style.display = 'none';
-    content.style.position = '';
-    content.style.left = '';
-}
 </script>
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/sub.css">

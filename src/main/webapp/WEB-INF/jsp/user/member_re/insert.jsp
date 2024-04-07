@@ -61,8 +61,8 @@
                                     <div class="title">
                                 		<span><img src="${pageContext.request.contextPath}/resources/img/sub/sub_icon_bars.png" alt="점" /></span>
                                 		<p>안내</p>
-                                    	<p style="color:#f55c5c">신규 지원 : 2023년에 처음으로 영재키움 프로젝트에 지원하는 경우</p>
-                                    	<p style="color:#f55c5c">기존 참가자 : 2019 ~ 2022 년도 중 참여한 적이 있는 경우 또는 ID가 있는 경우 선택</p>
+                                    	<p style="color:#f55c5c">신규 지원 : 2024년에 처음으로 영재키움 프로젝트에 지원하는 경우</p>
+                                    	<p style="color:#f55c5c">기존 참가자 : 2019 ~ 2023 년도 중 참여한 적이 있는 경우 또는 ID가 있는 경우 선택</p>
                                 	</div>
                                     
                                     <div class="title">
@@ -712,11 +712,7 @@
 						class="gab">ㅣ</span> <span><a href="">이메일무단수집거부</a></span>
 				</div>
 				<div class="all_copy">
-					<span>주소 : 대전광역시 유성구 문지로 193 KAIST문지캠퍼스 카이스트
-						과학영재교육연구원(34051)</span><span class="gab">ㅣ</span> <span>TEL :
-						042-350-6227</span><span class="gab">ㅣ</span> <span>FAX :
-						042-350-6224</span><span class="gab">ㅣ</span> <span>E-MAIL :
-						giftedup@kaist.ac.kr</span>
+					<p><span>TEL : </span>서울・강원・제주권역 (서울대학교) : 02-880-4477~8, 경기・인천권역 (인천대학교) : 032-835-4915, 충청・호남권역 (대전대학교) : 042-226-0701(혹은 0705), 경상권역 (부산대학교) : 051-510-1840~2</p>
 				</div>
 				<div class="copy">
 					<span>Copyright © 2020 영재키움 프로젝트 All Rights Reserved</span>

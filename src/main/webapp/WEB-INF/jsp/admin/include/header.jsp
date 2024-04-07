@@ -9,13 +9,6 @@ int year = cal.get(cal.YEAR);
 
 String NowYear = String.valueOf(year);
 %>
-<link type="text/css" rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
-<style>
-.adm_menu_area i{font-size:36px;color:#999;padding:15px 0 0 15px}
-.adm_menu_con li a {
-    font-weight: 600 !important;
-}
-</style>
 <!DOCTYPE html>
 <meta charset="UTF-8">
     <header id="adm_hd">
@@ -44,9 +37,6 @@ String NowYear = String.valueOf(year);
                                             <span></span>
                                             <span>학사관리</span>
                                         </div>
-                                        <li <c:if test="${fn:indexOf(requestURI, '/member/test/list') > -1}">class="nav_active"</c:if>>
-                                        	<a href="${pageContext.request.contextPath}/admin/member/test/list.do" >· 테스트 관리</a>
-                                        </li>
                                         <li <c:if test="${fn:indexOf(requestURI, '/member/allstudentlist') > -1}">class="nav_active"</c:if>>
                                         	<a href="${pageContext.request.contextPath}/admin/member/allstudentlist.do" >· 학적부 관리</a>
                                         </li>
@@ -67,6 +57,7 @@ String NowYear = String.valueOf(year);
 											</c:forEach>
 										</ul>
                                         </li>
+                                        
                                         <li <c:if test="${fn:indexOf(requestURI, '/member/list') > -1}">class="nav_active"
                                             </c:if>>
                                             <a href="${pageContext.request.contextPath}/admin/member/list.do">· 회원그룹관리</a>
@@ -74,22 +65,40 @@ String NowYear = String.valueOf(year);
                                             <ul class="sub_menu_ob">
                                             	<li <c:if test="${fn:indexOf(requestURI, '/member/list.do') > -1 && model.beforeDomain.LEVEL == ''}">class="nav_active"</c:if> >
                                             		<a href="${pageContext.request.contextPath}/admin/member/list.do" >통합</a>
+                                                    <a href="#" onclick="alert('데이터 복구중입니다.')" >통합</a>
                                             	</li>
                                             	<li <c:if test="${fn:indexOf(requestURI, '/member/list.do') > -1 && model.beforeDomain.LEVEL == '8' && model.beforeDomain.COMM_TYPE == ''}">class="nav_active"</c:if> >
                                             		<a href="${pageContext.request.contextPath}/admin/member/list.do?LEVEL=8&TYPE=2" >멘토</a>
+                                                    <a href="#" onclick="alert('데이터 복구중입니다.')" >멘토</a>
                                             	</li>
                                             	<li <c:if test="${fn:indexOf(requestURI, '/member/list.do') > -1 && model.beforeDomain.LEVEL == '11'}">class="nav_active"</c:if> >
                                             		<a href="${pageContext.request.contextPath}/admin/member/list.do?LEVEL=11&TYPE=1">멘티</a>
+                                                    <a href="#" onclick="alert('데이터 복구중입니다.')" >멘티</a>
                                             	</li>
                                             	<li <c:if test="${fn:indexOf(requestURI, '/member/list.do') > -1 && model.beforeDomain.COMM_TYPE == 'ok'}">class="nav_active"</c:if> >
                                             		<a href="${pageContext.request.contextPath}/admin/member/list.do?LEVEL=8&COMM_TYPE=ok&TYPE=2">강사</a>
+                                                    <a href="#" onclick="alert('데이터 복구중입니다.')">강사</a>
                                             	</li>
                                             	<li <c:if test="${fn:indexOf(requestURI, '/member/list.do') > -1 && model.beforeDomain.LEVEL == '10'}">class="nav_active"</c:if> >
                                             		<a href="${pageContext.request.contextPath}/admin/member/list.do?LEVEL=10">웹회원</a>
+                                                    <a href="#" onclick="alert('데이터 복구중입니다.')" >웹회원</a>
                                             	</li>
                                             </ul>
                                             </c:if>
                                         </li>
+                                        <!--
+                                        2022년도 고도화 당시 삭제된 링크들
+                                         
+                                        <li <c:if test="${fn:indexOf(requestURI, 'local_group') > -1}">class="nav_active"</c:if>>
+                                            <a href="${pageContext.request.contextPath}/admin/local_group_member/list.do">· 교사 지역별 그룹관리</a>
+                                        </li>
+                                        <li <c:if test="${fn:indexOf(requestURI, 'member/human') > -1}">class="nav_active"</c:if>>
+                                            <a href="${pageContext.request.contextPath}/admin/member/human/list.do">· 휴면회원 관리</a>
+                                        </li>
+                                        <li <c:if test="${fn:indexOf(requestURI, 'member/info_agreement') > -1}">class="nav_active"</c:if>>
+                                            <a href="${pageContext.request.contextPath}/admin/member/info_agreement/insert.do">· 개인정보동의서</a>
+                                        </li>
+                                         -->
                                     </ul>
                                 </li>
                                 <li <c:if test="${fn:indexOf(requestURI, 'program') > -1
@@ -114,6 +123,59 @@ String NowYear = String.valueOf(year);
                                                 <li><a href="#" onclick="alert('아직 준비중입니다.')">· KAIST 온라인 학습 지원</a></li>
                                                 <li><a href="#" onclick="alert('아직 준비중입니다.')">· 멘토링 페스티벌</a></li>
                                                 <li><a href="#" onclick="alert('아직 준비중입니다.')">· 추가 프로그램 모듈 관리</a></li>
+                                        <%-- 
+                                        2022년도 고도화 작업시 변경됨
+                                        <li class="mr-b-50">
+                                            <a href="#">· 학생프로그램</a>
+                                            <ul class="sub_menu_ob">
+                                                <!--
+                                                <li <c:if test="${fn:indexOf(requestURI, 'program/101/') > -1}">class="nav_active"</c:if>>
+                                                    <a href="${pageContext.request.contextPath}/admin/program/101/list.do">- 융합과학 프로젝트</a>
+                                                </li>
+                                                -->
+                                                <li <c:if test="${fn:indexOf(requestURI, 'program/105/') > -1}">class="nav_active"</c:if>>
+                                                    <a href="${pageContext.request.contextPath}/admin/program/105/list.do">- 발명 및 특허교육</a>
+                                                </li>
+                                                <li <c:if test="${fn:indexOf(requestURI, 'program/102/') > -1}">class="nav_active"</c:if>>
+                                                    <a href="${pageContext.request.contextPath}/admin/program/102/list.do">- 창의융합캠프</a>
+                                                </li>
+                                                <!--
+                                                <li <c:if test="${fn:indexOf(requestURI, 'program/103/') > -1}">class="nav_active"</c:if>>
+                                                    <a href="${pageContext.request.contextPath}/admin/program/103/list.do">- 멘토링데이</a>
+                                                </li>
+                                                -->
+                                                <li <c:if test="${fn:indexOf(requestURI, 'program/104/') > -1}">class="nav_active"</c:if>>
+                                                    <a href="${pageContext.request.contextPath}/admin/program/104/list.do">- 자율연구</a>
+                                                </li>
+                                                <li <c:if test="${fn:indexOf(requestURI, 'program/106/') > -1}">class="nav_active"</c:if>>
+                                                    <a href="${pageContext.request.contextPath}/admin/program/106/list.do">- 기타</a>
+                                                </li>
+                                                <li <c:if test="${fn:indexOf(requestURI, 'admin/program/communicator') > -1}">class="nav_active"</c:if>>
+                                                    <a href="${pageContext.request.contextPath}/admin/program/communicator/list.do">- 커뮤니케이터</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="${pageContext.request.contextPath}/admin/program/201/list.do">· 교사프로그램관리</a>
+                                            <ul class="sub_menu_ob">
+                                                <li <c:if test="${fn:indexOf(requestURI, 'program/201/') > -1}">class="nav_active"</c:if>>
+                                                    <a href="${pageContext.request.contextPath}/admin/program/201/list.do">- 교사연수</a>
+                                                </li>
+                                                <li <c:if test="${fn:indexOf(requestURI, 'program/202/') > -1}">class="nav_active"</c:if>>
+                                                    <a href="${pageContext.request.contextPath}/admin/program/202/list.do">- 중앙 컨설팅</a>
+                                                </li>
+                                                <li <c:if test="${fn:indexOf(requestURI, 'program/203/') > -1}">class="nav_active"</c:if>>
+                                                    <a href="${pageContext.request.contextPath}/admin/program/203/list.do">- 성과 발표회</a>
+                                                </li>
+                                                <li <c:if test="${fn:indexOf(requestURI, 'program/204/') > -1}">class="nav_active"</c:if>>
+                                                    <a href="${pageContext.request.contextPath}/admin/program/204/list.do">- 발대식</a>
+                                                </li>
+                                                <li <c:if test="${fn:indexOf(requestURI, 'activity_allowance') > -1}">class="nav_active"</c:if>>
+                                                    <a href="${pageContext.request.contextPath}/admin/activity_allowance/list.do">- 활동수당 신청관리</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                         --%>
                                     </ul>
                                 </li>
                                 <li <c:if test="${fn:indexOf(requestURI, 'admin/notices_data') > -1 
@@ -129,6 +191,12 @@ String NowYear = String.valueOf(year);
                                             <span></span>
                                             <span>게시판 관리</span>
                                         </div>
+                                        <!--
+                                        <li <c:if test="${fn:indexOf(requestURI, 'admin/notices_data/1/') > -1}">class="nav_active"</c:if>>
+                                            <a href="${pageContext.request.contextPath}/admin/notices_data/1/list.do">· 게시판 관리</a>
+                                        </li>
+                                        -->
+                                        
                                         <li <c:if test="${fn:indexOf(requestURI, 'admin/notices_data/1/') > -1}">class="nav_active"</c:if>>
                                         	<a href="${pageContext.request.contextPath}/admin/notices_data/1/list.do">· 전체 공지사항</a>
                                         	<ul class="sub_menu_ob">
@@ -167,7 +235,12 @@ String NowYear = String.valueOf(year);
                                         </li>
                                         <li <c:if test="${fn:indexOf(requestURI, 'admin/notices_data/11/') > -1}">class="nav_active"</c:if>>
                                             <a href="${pageContext.request.contextPath}/admin/notices_data/11/list.do">· 알림마당</a>
+                                        </li>                                        
+                                        <!--
+                                        <li <c:if test="${fn:indexOf(requestURI, 'admin/notices_data/4/') > -1}">class="nav_active"</c:if>>
+                                            <a href="${pageContext.request.contextPath}/admin/notices_data/4/list.do">· 또래멘토링</a>
                                         </li>
+                                        -->
                                         <li <c:if test="${fn:indexOf(requestURI, 'banner') > -1}">class="nav_active"</c:if>>
                                             <a href="${pageContext.request.contextPath}/admin/banner/list.do">· 배너관리</a>
                                         </li>
@@ -191,6 +264,25 @@ String NowYear = String.valueOf(year);
                                         </div>
                                         <li><a href="#" onclick="alert('아직 준비중입니다.')">· 참여자 정보 통계</a></li>
                                         <li><a href="#" onclick="alert('아직 준비중입니다.')">· 프로그램 관련 통계</a></li>
+                                        <!--
+                                        2022년도 고도화 시 수정 
+                                        <li>
+                                            <a href="${pageContext.request.contextPath}/admin/stats/student/list.do">· 회원통계관리</a>
+                                            <ul class="sub_menu_ob">
+                                                <li <c:if test="${fn:indexOf(requestURI, '/stats/student/list.do') > -1 || fn:indexOf(requestURI, '/stats/student/school_group.do') > -1 || fn:indexOf(requestURI, '/stats/student/schoolType.do') > -1 || fn:indexOf(requestURI, '/stats/student/sex.do') > -1}">class="nav_active"</c:if>>
+                                                    <a href="${pageContext.request.contextPath}/admin/stats/student/list.do">- 학생</a>
+                                                </li>
+                                                <li <c:if test="${fn:indexOf(requestURI, '/stats/teacher/list.do') > -1 || fn:indexOf(requestURI, '/stats/teacher/sex.do') > -1}">class="nav_active"</c:if>>
+                                                    <a href="${pageContext.request.contextPath}/admin/stats/teacher/list.do">- 교사</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li <c:if test="${fn:indexOf(requestURI, '/program/participation/list.do') > -1 || fn:indexOf(requestURI, '/sms_log/program/list.do') > -1}">class="nav_active"</c:if>>       <a href="${pageContext.request.contextPath}/admin/program/participation/list.do">· 프로그램 참여현황 관리</a>
+                                        </li>
+                                        <li <c:if test="${fn:indexOf(requestURI, 'survey/list.do') > -1}">class="nav_active"</c:if>>
+                                            <a href="${pageContext.request.contextPath}/admin/survey/list.do">· 설문조사관리</a>
+                                        </li>
+                                         -->
                                     </ul>
                                 </li>
                                 <li <c:if test="${fn:indexOf(requestURI, 'member_re') > -1
@@ -219,6 +311,20 @@ String NowYear = String.valueOf(year);
                                         		</c:forEach>
                                         	</ul>
                                         </li>
+                                        <!--
+                                        <li <c:if test="${fn:indexOf(requestURI, 'member_re/list') > -1}">class="nav_active"</c:if>>
+                                            <a href="${pageContext.request.contextPath}/admin/member_re/list.do">· 신입생 지원 리스트</a>
+                                        </li>
+                                        <li <c:if test="${fn:indexOf(requestURI, 'member_re/dcmnt') > -1}">class="nav_active"</c:if>>
+                                            <a href="${pageContext.request.contextPath}/admin/member_re/dcmnt.do">· 지원 자격 리스트</a>
+                                        </li>
+                                        <li <c:if test="${fn:indexOf(requestURI, 'member_re/member_re_to') > -1}">class="nav_active"</c:if>>
+                                            <a href="${pageContext.request.contextPath}/admin/member_re/member_re_to.do">· 신입생 지원 통계</a>
+                                        </li>
+                                        <li <c:if test="${fn:indexOf(requestURI, 'member_re/excel_upload') > -1}">class="nav_active"</c:if>>
+                                            <a href="${pageContext.request.contextPath}/admin/member_re/excel_upload.do">· 신입생 지원 업로드</a>
+                                        </li>
+                                         -->
                                     </ul>
                                 </li>
                                 <li <c:if test="${fn:indexOf(requestURI, 'portfolio') > -1
@@ -246,47 +352,6 @@ String NowYear = String.valueOf(year);
 												</li>
 											</c:forEach>
 										</ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li <c:if test="${fn:indexOf(requestURI, 'exam') > -1
-                                    || fn:indexOf(requestURI, 'question') > -1
-                                    || fn:indexOf(requestURI, 'select') > -1}">
-                                    class="adm_menu_active"
-                                    </c:if> >
-                                    <a href="${pageContext.request.contextPath}/admin/exam/list.do">
-                                        <i class="las la-bars"></i>
-                                    </a>
-                                    <ul class="sub_menu_con">
-                                        <div class="title notosans">
-                                            <span></span>
-                                            <span>설문 관리</span>
-                                        </div>
-                                        <li <c:if test="${fn:indexOf(requestURI, 'exam/list.do') > -1}">class="nav_active"</c:if>>
-                                            <a href="${pageContext.request.contextPath}/admin/exam/list.do">· 설문 폼 관리</a>
-                                        </li>
-                                        <li <c:if test="${fn:indexOf(requestURI, 'question/list.do') > -1}">class="nav_active"</c:if>>
-                                            <a href="${pageContext.request.contextPath}/admin/question/list.do">· 설문 문제 관리</a>
-                                        </li>
-                                        <li <c:if test="${fn:indexOf(requestURI, 'exam/test/insert.do') > -1}">class="nav_active"</c:if>>
-                                            <a href="${pageContext.request.contextPath}/admin/exam/test/insert.do">· 설문 생성 테스트</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li <c:if test="${fn:indexOf(requestURI, 'award') > -1
-                                    || fn:indexOf(requestURI, 'submission') > -1}">
-                                    class="adm_menu_active"
-                                    </c:if> >
-                                    <a href="${pageContext.request.contextPath}/admin/award/list.do">
-                                        <i class="las la-bars"></i>
-                                    </a>
-                                    <ul class="sub_menu_con">
-                                        <div class="title notosans">
-                                            <span></span>
-                                            <span>참여 게시판 관리</span>
-                                        </div>
-                                        <li <c:if test="${fn:indexOf(requestURI, 'award/list.do') > -1}">class="nav_active"</c:if>>
-                                            <a href="${pageContext.request.contextPath}/admin/award/list.do">· 참여 게시판 관리</a>
                                         </li>
                                     </ul>
                                 </li>

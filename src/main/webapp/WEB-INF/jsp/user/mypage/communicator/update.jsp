@@ -308,8 +308,8 @@
 				<div class="all_copy">
 					<span>주소 : 대전광역시 유성구 문지로 193 KAIST문지캠퍼스 카이스트
 						과학영재교육연구원(34051)</span><span class="gab">ㅣ</span> <span>TEL :
-						042-350-6227</span><span class="gab">ㅣ</span> <span>FAX :
-						042-350-6224</span><span class="gab">ㅣ</span> <span>E-MAIL :
+						042-350-6223</span><span class="gab">ㅣ</span> <span>FAX :
+						042-350-8660</span><span class="gab">ㅣ</span> <span>E-MAIL :
 						giftedup@kaist.ac.kr</span>
 				</div>
 				<div class="copy">
