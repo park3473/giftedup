@@ -717,77 +717,6 @@
 		}
 		
 	});
-	
-	
-	function TotalDocumentDown(){
-		
-		var UploadList = [];
-		<c:forEach var="item" items="${model.UploadFileList}" varStatus="status">
-		UploadList.push('${item}');
-		</c:forEach>
-		
-		var filesString = '';
-		
-		let promises = [];
-		
-		for(var i = 0; i < UploadList.length; i ++){
-			
-			var BIRTH = '${model.MentoView.BIRTH}';
-			var MEMBER = '${model.MentoView.NAME}';
-			var NAME = UploadList[i];
-			
-			console.log(NAME);
-			 promises.push(
-				$.ajax({
-					url : '/user/member_re/FileLinkCheck.do',
-					type : 'POST',
-					data : ({
-						NAME : NAME,
-						MEMBER_NAME : MEMBER,
-						BIRTH : BIRTH
-					}),
-					success : function(data , status , xhr){
-						
-						console.log(data);
-						
-						var URL = '/resources/upload/member_re/delete/' + BIRTH + MEMBER + '/'
-						
-						URL += data;
-						
-						if(filesString == ''){
-							filesString = filesString + URL;	
-						}else{
-							filesString = filesString + ',' + URL;	
-						}
-						
-					},
-					error : function(status , xhr){
-						
-					}
-					
-				})
-			)
-			
-			
-		}
-		
-		var BIRTH = '${model.MentoView.BIRTH}';
-		var MEMBER = '${model.MentoView.NAME}';
-		
-		Promise.all(promises).then(function() {
-			
-			console.log(filesString);
-			
-			BIRTH = BIRTH.replaceAll('.','');
-
-			window.location.href = '/fileAllDown.do?NAME='+BIRTH + MEMBER+'&filesString=' + encodeURIComponent(filesString);
-			
-	    }).catch(function(error) {
-	        console.error('오류 발생', error);
-	    });
-
-		
-	}
 
 	
 	
@@ -822,6 +751,76 @@ function DcmntFileDown(e){
 	})
 }
 
+function TotalDocumentDown(){
+	
+	var UploadList = [];
+	<c:forEach var="item" items="${model.UploadFileList}" varStatus="status">
+	UploadList.push('${item}');
+	</c:forEach>
+	
+	var filesString = '';
+	
+	let promises = [];
+	
+	for(var i = 0; i < UploadList.length; i ++){
+		
+		var BIRTH = '${model.MentoView.BIRTH}';
+		var MEMBER = '${model.MentoView.NAME}';
+		var NAME = UploadList[i];
+		
+		console.log(NAME);
+		 promises.push(
+			$.ajax({
+				url : '/user/member_re/FileLinkCheck.do',
+				type : 'POST',
+				data : ({
+					NAME : NAME,
+					MEMBER_NAME : MEMBER,
+					BIRTH : BIRTH
+				}),
+				success : function(data , status , xhr){
+					
+					console.log(data);
+					
+					var URL = '/resources/upload/member_re/delete/' + BIRTH + MEMBER + '/'
+					
+					URL += data;
+					
+					if(filesString == ''){
+						filesString = filesString + URL;	
+					}else{
+						filesString = filesString + ',' + URL;	
+					}
+					
+				},
+				error : function(status , xhr){
+					
+				}
+				
+			})
+		)
+		
+		
+	}
+	
+	var BIRTH = '${model.MentoView.BIRTH}';
+	var MEMBER = '${model.MentoView.NAME}';
+	
+	Promise.all(promises).then(function() {
+		
+		console.log(filesString);
+		
+		BIRTH = BIRTH.replaceAll('.','');
+
+		window.location.href = '/fileAllDown.do?NAME='+BIRTH + MEMBER+'&filesString=' + encodeURIComponent(filesString);
+		
+    }).catch(function(error) {
+        console.error('오류 발생', error);
+    });
+
+	
+}
+
 </script>
 </c:if>
 
@@ -852,6 +851,76 @@ function DcmntFileDown(e){
 		}
 		
 	})
+}
+
+function TotalDocumentDown(){
+	
+	var UploadList = [];
+	<c:forEach var="item" items="${model.UploadFileList}" varStatus="status">
+	UploadList.push('${item}');
+	</c:forEach>
+	
+	var filesString = '';
+	
+	let promises = [];
+	
+	for(var i = 0; i < UploadList.length; i ++){
+		
+		var BIRTH = '${model.View.BIRTH}';
+		var MEMBER = '${model.View.NAME}';
+		var NAME = UploadList[i];
+		
+		console.log(NAME);
+		 promises.push(
+			$.ajax({
+				url : '/user/member_re/FileLinkCheck.do',
+				type : 'POST',
+				data : ({
+					NAME : NAME,
+					MEMBER_NAME : MEMBER,
+					BIRTH : BIRTH
+				}),
+				success : function(data , status , xhr){
+					
+					console.log(data);
+					
+					var URL = '/resources/upload/member_re/delete/' + BIRTH + MEMBER + '/'
+					
+					URL += data;
+					
+					if(filesString == ''){
+						filesString = filesString + URL;	
+					}else{
+						filesString = filesString + ',' + URL;	
+					}
+					
+				},
+				error : function(status , xhr){
+					
+				}
+				
+			})
+		)
+		
+		
+	}
+	
+	var BIRTH = '${model.View.BIRTH}';
+	var MEMBER = '${model.View.NAME}';
+	
+	Promise.all(promises).then(function() {
+		
+		console.log(filesString);
+		
+		BIRTH = BIRTH.replaceAll('.','');
+
+		window.location.href = '/fileAllDown.do?NAME='+BIRTH + MEMBER+'&filesString=' + encodeURIComponent(filesString);
+		
+    }).catch(function(error) {
+        console.error('오류 발생', error);
+    });
+
+	
 }
 
 </script>

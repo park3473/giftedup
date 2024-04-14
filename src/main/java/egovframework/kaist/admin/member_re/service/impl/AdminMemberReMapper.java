@@ -99,5 +99,9 @@ public interface AdminMemberReMapper {
 
 	public int getMatchingMentoViewCnt(AdminMemberReVo vo2);
 
+	public List<?> getExcelList(AdminMemberReVo vo);
+
+	public int getALLFILECNT(AdminMemberReVo vo);
+
 
 }

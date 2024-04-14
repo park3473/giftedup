@@ -398,7 +398,43 @@ public class AdminMember_reServiceImpl implements AdminMemberReService {
 	}
 
 	
-	
+	@Override
+	public ModelMap getExcelListAll() {
+		
+		ModelMap model = new ModelMap();
+		
+		AdminMemberReVo Vo = new AdminMemberReVo();
+		//유형 1리스트
+		Vo.setTYPE("1");
+		System.out.println(Vo.getTYPE());
+		System.out.println("???");
+		List<?> Type1List = adminMember_reMapper.getExcelList(Vo);
+		//유형 2리스트
+		Vo.setTYPE("2");
+		List<?> Type2List = adminMember_reMapper.getExcelList(Vo);
+		//유형 3리스트
+		Vo.setTYPE("3");
+		List<?> Type3List = adminMember_reMapper.getExcelList(Vo);
+		//전체 리스트
+		Vo.setTYPE("ALL");
+		List<?> AllList = adminMember_reMapper.getListAll();
+		//파일 미완료 수
+		Vo.setFILE_TYPE("1");
+		int FILE1 = adminMember_reMapper.getALLFILECNT(Vo);
+		//파일 완료 수
+		Vo.setFILE_TYPE("2");
+		int FILE2 = adminMember_reMapper.getALLFILECNT(Vo);
+		
+		model.put("Type1List", Type1List);
+		model.put("Type2List", Type2List);
+		model.put("Type3List", Type3List);
+		model.put("AllList", AllList);
+		model.put("FILE1", FILE1);
+		model.put("FILE2", FILE2);
+		
+		return model;
+	}
 
+	
 
 }

@@ -123,7 +123,7 @@ public class UserMemberReController {
 			
 		}else if(UserMemberReVo.getTYPE().equals("3")) {
 			
-			model = userMemberService.getView(UserMemberReVo.getMEMBER_ID());
+			//model = userMemberService.getView(UserMemberReVo.getMEMBER_ID());
 			
 			model.put("TYPE", "3");
 		}
@@ -244,7 +244,18 @@ public class UserMemberReController {
 			PHONE = PHONE.replace("-", "");
 			PHONE = PHONE.replace(".", "");
 			
-			String SMSTEXT = "안녕하세요 영재키움입니다.\n"+ UserMemberReVo.getNAME()+"님의\n2024년도 영재키움 신입생 선발 지원하셨습니다.\n제출 서류를 확인하셔서 제출 부탁드립니다.";
+			String SMSTEXT = "";
+			
+			if(UserMemberReVo.getTYPE().equals("3")) {
+				
+				SMSTEXT = "안녕하세요 영재키움입니다.\n"+ UserMemberReVo.getNAME()+"님의\n2024년도 영재키움 신입생 선발 지원신청이 완료되었습니다.";
+				
+			}else {
+			
+				SMSTEXT = "안녕하세요 영재키움입니다.\n"+ UserMemberReVo.getNAME()+"님의\n2024년도 영재키움 신입생 선발 지원신청이 완료되었습니다.\n제출 서류를 꼭 확인하셔서 제출 부탁드립니다.";
+				
+			}
+			
 			
 			AdminSmsLogVo AdminSmsLogDomain = new AdminSmsLogVo();
 			AdminSmsLogDomain.setNAME(UserMemberReVo.getNAME());

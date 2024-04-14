@@ -938,6 +938,7 @@ public class SUtil {
 		case "서울":
 		case "강원":
 		case "강원도":
+		case "강원특별자치도":
 		case "제주":
 		case "제주도":
 		case "제주특별자치도":
@@ -960,6 +961,7 @@ public class SUtil {
 		case "전라남도":
 		case "전북":
 		case "전라북도":
+		case "전북특별자치도":
 			type = "대전";
 			break;
 		case "부산":

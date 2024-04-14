@@ -6,6 +6,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +26,7 @@ import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -660,24 +663,25 @@ public class AdminMemberReController {
 	//-------------------------------------------------------------------------------------------------------------------
 	@RequestMapping(value = "/admin/member_re/excelDown.do", method = RequestMethod.GET)
 	public void excelDown(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		ModelMap map = adminMember_reService.getListAll();
-		List<HashMap> list = (List<HashMap>) map.get("list");
-
+		
+		//엑셀에 필요한 전체 데이터 가져오기
+		ModelMap map = adminMember_reService.getExcelListAll();
+		
+		//각 유형 리스트
+		List<HashMap> Type1List = (List<HashMap>) map.get("Type1List");
+		List<HashMap> Type2List = (List<HashMap>) map.get("Type2List");
+		List<HashMap> Type3List = (List<HashMap>) map.get("Type3List");
+		
+		//전체 리스트
+		List<HashMap> AllList = (List<HashMap>) map.get("AllList");
+		
+		//파일 미완료/완료 수
+		int FILE1 = (int) map.get("FILE1");
+		int FILE2 = (int) map.get("FILE2");
+		
+		//시트 생성
 	    Workbook wb = new HSSFWorkbook();
-	    Sheet sheet = wb.createSheet("신입생_리스트");
-	    Row row = null;
-	    Cell cell = null;
-	    int rowNo = 0;
-	    
-	    int WidthCnt = 0;
-	    
-	    for(WidthCnt=0; WidthCnt < 25; WidthCnt++) {
-	    	sheet.setColumnWidth(WidthCnt, 7000);
-	    }
-	    /*
-	    sheet.setColumnWidth(18, 11000);
-	    sheet.setColumnWidth(25, 11000);
-	    */
+	    Sheet sheet1 = wb.createSheet("유형1");
 	    
 	    
 	    CellStyle headStyle = wb.createCellStyle();
@@ -687,10 +691,15 @@ public class AdminMemberReController {
 	    headStyle.setBorderLeft(BorderStyle.THIN);
 	    headStyle.setBorderRight(BorderStyle.THIN);
 	    
-	    headStyle.setFillForegroundColor(HSSFColorPredefined.YELLOW.getIndex());
+	    headStyle.setFillForegroundColor(HSSFColorPredefined.SKY_BLUE.getIndex());
 	    headStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 	    
 	    headStyle.setAlignment(HorizontalAlignment.CENTER);
+	    
+	    Font font = wb.createFont();
+        font.setBold(true);
+        font.setFontHeightInPoints((short) 12);
+        headStyle.setFont(font);
 	    
 	    CellStyle bodyStyle = wb.createCellStyle();
 	    bodyStyle.setBorderTop(BorderStyle.THIN);
@@ -698,300 +707,245 @@ public class AdminMemberReController {
 	    bodyStyle.setBorderLeft(BorderStyle.THIN);
 	    bodyStyle.setBorderRight(BorderStyle.THIN);
 	    
-	    int columnCnt = 0;
-	    row = sheet.createRow(rowNo++);
 	    
-	    cell = row.createCell(columnCnt);
-	    cell.setCellStyle(headStyle);
-	    cell.setCellValue("유형");
+        //////////////////////////////////////////////////////////////////////////////////- 1시트 시작
 	    
-	    cell = row.createCell(++columnCnt);
-	    cell.setCellStyle(headStyle);
-	    cell.setCellValue("매칭 번호(유형 1)");
-	    
-	    cell = row.createCell(++columnCnt);
-	    cell.setCellStyle(headStyle);
-	    cell.setCellValue("타입 (학생 or 교사)");
-	    
-	    cell = row.createCell(++columnCnt);
-	    cell.setCellStyle(headStyle);
-	    cell.setCellValue("이름");
-	    
-	    cell = row.createCell(++columnCnt);
-	    cell.setCellStyle(headStyle);
-	    cell.setCellValue("생년월일");
-	    
-	    cell = row.createCell(++columnCnt);
-	    cell.setCellStyle(headStyle);
-	    cell.setCellValue("성별");
+	    // 헤더 생성
+        String[] headers = {"학생 기존 아이디" ,
+        		"학생 지원분야" ,
+        		"학생 이름" ,
+        		"학생 생년월일" ,
+        		"학생 성별" ,
+        		"학생 전화번호" ,
+        		"학생 이메일" ,
+        		"학생 부모님전화번호" ,
+        		"학생 주소" ,
+        		"학생 상세주소" ,
+        		"학생 학교명" ,
+        		"학생 학년" ,
+        		"학생 반" ,
+        		"학생 지원자격",
+        		"학생 영재교육 경험여부",
+        		"학생 영재교육 참여기간",
+        		"교사 기존 아이디",
+        		"교사 전공",
+        		"교사 이름",
+        		"교사 생년월일",
+        		"교사 성별",
+        		"교사 전화번호",
+        		"교사 이메일",
+        		"교사 주소",
+        		"교사 상세주소",
+        		"교사 학교명",
+        		"교사 영재교육 연수 여부",
+        		"파일 제출 여부",
+        		};
+        Row headerRow = sheet1.createRow(0);
+        for (int i = 0; i < headers.length; i++) {
+            Cell cell = headerRow.createCell(i);
+            cell.setCellValue(headers[i]);
+            cell.setCellStyle(headStyle);
+        }
 
-	    cell = row.createCell(++columnCnt);
-	    cell.setCellStyle(headStyle);
-	    cell.setCellValue("핸드폰");
-	    
-	    cell = row.createCell(++columnCnt);
-	    cell.setCellStyle(headStyle);
-	    cell.setCellValue("이메일");
-	    
-	    cell = row.createCell(++columnCnt);
-	    cell.setCellStyle(headStyle);
-	    cell.setCellValue("부모님 전화번호");
+        // 데이터 채우기
+        int rowIndex = 1;
+        
+        for (HashMap<String, Object> list : Type1List) {
+        	Row row = sheet1.createRow(rowIndex++);
+        	
+        	row.createCell(0).setCellValue(String.valueOf(list.getOrDefault("MEMBER_ID", "")));
+        	row.createCell(1).setCellValue(String.valueOf(list.getOrDefault("TYPE_SUB", "")));
+        	row.createCell(2).setCellValue(String.valueOf(list.getOrDefault("NAME", "")));
+        	row.createCell(3).setCellValue(String.valueOf(list.getOrDefault("BIRTH", "")));
+        	row.createCell(4).setCellValue(String.valueOf(list.getOrDefault("SEX", "")));
+        	row.createCell(5).setCellValue(String.valueOf(list.getOrDefault("PHONE", "")));
+        	row.createCell(6).setCellValue(String.valueOf(list.getOrDefault("EMAIL", "")));
+        	row.createCell(7).setCellValue(String.valueOf(list.getOrDefault("PARENT_PHONE", "")));
+        	row.createCell(8).setCellValue(String.valueOf(list.getOrDefault("ADDRESS", "")));
+        	row.createCell(9).setCellValue(String.valueOf(list.getOrDefault("ADDRESS_DETAIL", "")));
+        	row.createCell(10).setCellValue(String.valueOf(list.getOrDefault("SCHOOL_NAME", "")));
+        	row.createCell(11).setCellValue(String.valueOf(list.getOrDefault("SCHOOL_YEAR", "")));
+        	row.createCell(12).setCellValue(String.valueOf(list.getOrDefault("SCHOOL_GROUP", "")));
+        	row.createCell(13).setCellValue(String.valueOf(list.getOrDefault("ELIGIBILITY", "")));
+        	row.createCell(14).setCellValue(String.valueOf(list.getOrDefault("EXP_DATA", "")));
+        	row.createCell(16).setCellValue(String.valueOf(list.getOrDefault("EXP_TYPE", "")));
+        	row.createCell(17).setCellValue(String.valueOf(list.getOrDefault("MENTOR_MEMBER_ID", "")));
+        	row.createCell(18).setCellValue(String.valueOf(list.getOrDefault("MENTOR_TYPE_SUB", "")));
+        	row.createCell(19).setCellValue(String.valueOf(list.getOrDefault("MENTOR_NAME", "")));
+        	row.createCell(20).setCellValue(String.valueOf(list.getOrDefault("MENTOR_BIRTH", "")));
+        	row.createCell(21).setCellValue(String.valueOf(list.getOrDefault("MENTOR_SEX", "")));
+        	row.createCell(22).setCellValue(String.valueOf(list.getOrDefault("MENTOR_PHONE", "")));
+        	row.createCell(23).setCellValue(String.valueOf(list.getOrDefault("MENTOR_EMAIL", "")));
+        	row.createCell(24).setCellValue(String.valueOf(list.getOrDefault("MENTOR_ADDRESS", "")));
+        	row.createCell(25).setCellValue(String.valueOf(list.getOrDefault("MENTOR_ADDRESS_DETAIL", "")));
+        	row.createCell(26).setCellValue(String.valueOf(list.getOrDefault("MENTOR_SCHOOL_NAME", "")));
+        	row.createCell(27).setCellValue(String.valueOf(list.getOrDefault("MENTOR_EXP_DATA", "")));
+        	switch (String.valueOf(list.getOrDefault("MENTOR_FILE_TYPE", ""))) {
+			case "1":
+				row.createCell(28).setCellValue("파일 미제출");
+				break;
+			case "2":
+				row.createCell(28).setCellValue("파일 제출 완료");
+				break;
+			}
+        	
+        }
+        
+        // 열 너비 자동 조정
+        for (int i = 0; i < headers.length; i++) {
+            sheet1.autoSizeColumn(i , true);
+            int width = sheet1.getColumnWidth(i);
+            sheet1.setColumnWidth(i, width + 1024);
+        }
+        
+        //////////////////////////////////////////////////////////////////////////////////- 1시트 종료
+        
+        //////////////////////////////////////////////////////////////////////////////////- 2시트 시작
+        
+        Sheet sheet2 = wb.createSheet("유형2");
+        
+        // 헤더 생성
+        String[] headers1 = {"기존 아이디" ,
+        		"지원분야" ,
+        		"이름" ,
+        		"생년월일" ,
+        		"성별" ,
+        		"전화번호" ,
+        		"이메일" ,
+        		"부모님전화번호" ,
+        		"주소" ,
+        		"상세주소" ,
+        		"학교명" ,
+        		"학년" ,
+        		"반" ,
+        		"지원자격",
+        		"영재교육 경험여부",
+        		"영재교육 참여기간",
+        		"파일 제출 여부",
+        		};
+        Row headerRow1 = sheet2.createRow(0);
+        for (int i = 0; i < headers1.length; i++) {
+            Cell cell = headerRow1.createCell(i);
+            cell.setCellValue(headers1[i]);
+            cell.setCellStyle(headStyle);
+        }
 
-	    cell = row.createCell(++columnCnt);
-	    cell.setCellStyle(headStyle);
-	    cell.setCellValue("지역");
-	    
-	    cell = row.createCell(++columnCnt);
-	    cell.setCellStyle(headStyle);
-	    cell.setCellValue("집주소(우편번호)");
-	    
-	    cell = row.createCell(++columnCnt);
-	    cell.setCellStyle(headStyle);
-	    cell.setCellValue("집주소 (전체주소)");
-
-	    cell = row.createCell(++columnCnt);
-	    cell.setCellStyle(headStyle);
-	    cell.setCellValue("학교 지역");
-
-	    cell = row.createCell(++columnCnt);
-	    cell.setCellStyle(headStyle);
-	    cell.setCellValue("학교 주소(전체)");
-	    
-	    cell = row.createCell(++columnCnt);
-	    cell.setCellStyle(headStyle);
-	    cell.setCellValue("학교 타입 (학생 = 초 , 중 , 고) | (교사 = 초등 , 중등)");
-
-	    cell = row.createCell(++columnCnt);
-	    cell.setCellStyle(headStyle);
-	    cell.setCellValue("학교 명");
-	    
-	    cell = row.createCell(++columnCnt);
-	    cell.setCellStyle(headStyle);
-	    cell.setCellValue("학년");
-	    
-	    cell = row.createCell(++columnCnt);
-	    cell.setCellStyle(headStyle);
-	    cell.setCellValue("반");
-	    
-	    cell = row.createCell(++columnCnt);
-	    cell.setCellStyle(headStyle);
-	    cell.setCellValue("지원 유형");
-	    
-	    cell = row.createCell(++columnCnt);
-	    cell.setCellStyle(headStyle);
-	    cell.setCellValue("지원 자격");
-	    
-	    cell = row.createCell(++columnCnt);
-	    cell.setCellStyle(headStyle);
-	    cell.setCellValue("학생(자기소개서) | 교사(지원동기)");
-	    
-	    cell = row.createCell(++columnCnt);
-	    cell.setCellStyle(headStyle);
-	    cell.setCellValue("영재교육 경험");
-	    
-	    cell = row.createCell(++columnCnt);
-	    cell.setCellStyle(headStyle);
-	    cell.setCellValue("영재교육 경험 기간");
-	    
-	    cell = row.createCell(++columnCnt);
-	    cell.setCellStyle(headStyle);
-	    cell.setCellValue("결과");
-	    
-	    cell = row.createCell(++columnCnt);
-	    cell.setCellStyle(headStyle);
-	    cell.setCellValue("서류 제출 여부");
-	    
-	    cell = row.createCell(++columnCnt);
-	    cell.setCellStyle(headStyle);
-	    cell.setCellValue("기존 아이디");
-	    
-	    
-	    cell = row.createCell(++columnCnt);
-	    cell.setCellStyle(headStyle);
-	    cell.setCellValue("기존 비밀번호(암호화)");
-	    
-	    
-	    for(int i = 0; i < list.size(); i++ )
-	    {
-	    	
-	    	System.out.println("----excel----"+i+"/"+list.size());
-	    	
-	    	HashMap tempMap = list.get(i);
-	    	columnCnt = 0;
-    	    row = sheet.createRow(rowNo++);
-
-    	    cell = row.createCell(columnCnt);
-    	    cell.setCellStyle(bodyStyle);
-    	    cell.setCellValue(tempMap.get("TYPE")+"");
-
-    	    cell = row.createCell(++columnCnt);
-    	    cell.setCellStyle(bodyStyle);
-    	    String matching = tempMap.get("MATCHING")+"";
-    	    if(matching.equals("null") || matching.equals("") || matching.equals(null)) {
-    	    	cell.setCellValue(" ");
-    	    }else {
-    	    	cell.setCellValue(tempMap.get("MATCHING")+"");
-    	    }
-    	    
-    	    cell = row.createCell(++columnCnt);
-    	    cell.setCellStyle(bodyStyle);
-    	    String level = tempMap.get("LEVEL")+"";
-    	    
-    	    if(level == null) {
-    	    	cell.setCellValue("");
-    	    }else if(level.equals("8")) {
-    	    	cell.setCellValue("교사");
-    	    }else if(level.equals("11")) {
-    	    	cell.setCellValue("학생");
-    	    }
-
-    	    cell = row.createCell(++columnCnt);
-    	    cell.setCellStyle(bodyStyle);
-    	    cell.setCellValue(tempMap.get("NAME")+"");
-
-    	    cell = row.createCell(++columnCnt);
-    	    cell.setCellStyle(bodyStyle);
-    	    cell.setCellValue(tempMap.get("BIRTH")+"");
-    	    
-    	    cell = row.createCell(++columnCnt);
-    	    cell.setCellStyle(bodyStyle);
-    	    cell.setCellValue(tempMap.get("SEX")+"");
-    	    
-    	    cell = row.createCell(++columnCnt);
-    	    cell.setCellStyle(bodyStyle);
-    	    cell.setCellValue(tempMap.get("PHONE")+"");
-    	    
-    	    cell = row.createCell(++columnCnt);
-    	    cell.setCellStyle(bodyStyle);
-    	    cell.setCellValue(tempMap.get("EMAIL")+"");
-    	    
-    	    cell = row.createCell(++columnCnt);
-    	    cell.setCellStyle(bodyStyle);
-    	    cell.setCellValue(tempMap.get("PARENT_PHONE")+"");
-    	    
-    	    cell = row.createCell(++columnCnt);
-    	    cell.setCellStyle(bodyStyle);
-    	    cell.setCellValue(tempMap.get("ZIPCODE")+"");
-    	    
-    	    cell = row.createCell(++columnCnt);
-    	    cell.setCellStyle(bodyStyle);
-    	    cell.setCellValue(tempMap.get("ADDRESS_LOCAL")+"");
-    	    
-    	    cell = row.createCell(++columnCnt);
-    	    cell.setCellStyle(bodyStyle);
-    	    cell.setCellValue(tempMap.get("ADDRESS")+"-"+tempMap.get("ADDRESS_DETAIL"));
-    	    
-    	    cell = row.createCell(++columnCnt);
-    	    cell.setCellStyle(bodyStyle);
-    	    cell.setCellValue(tempMap.get("SCHOOL_LOCATION")+"");
-    	    
-    	    cell = row.createCell(++columnCnt);
-    	    cell.setCellStyle(bodyStyle);
-    	    cell.setCellValue(tempMap.get("SCHOOL_ADDRESS")+"");
-    	    
-    	    cell = row.createCell(++columnCnt);
-    	    cell.setCellStyle(bodyStyle);
-    	    cell.setCellValue(tempMap.get("SCHOOL_TYPE")+"");
-    	    
-    	    cell = row.createCell(++columnCnt);
-    	    cell.setCellStyle(bodyStyle);
-    	    cell.setCellValue(tempMap.get("SCHOOL_NAME")+"");
-    	    
-    	    cell = row.createCell(++columnCnt);
-    	    cell.setCellStyle(bodyStyle);
-    	    
-    	    String SCHOOL_YEAR = tempMap.get("SCHOOL_YEAR")+"";
-    	    if(SCHOOL_YEAR == null)
-    	    {
-    	    	cell.setCellValue("");	
-    	    }else if(SCHOOL_YEAR.equals("4"))
-    	    {
-    	    	cell.setCellValue("초등학교4학년");
-    	    }else if(SCHOOL_YEAR.equals("5"))
-    	    {
-    	    	cell.setCellValue("초등학교5학년");
-    	    }else if(SCHOOL_YEAR.equals("6"))
-    	    {
-    	    	cell.setCellValue("초등학교6학년");
-    	    }else if(SCHOOL_YEAR.equals("7"))
-    	    {
-    	    	cell.setCellValue("중학교1학년");
-    	    }else if(SCHOOL_YEAR.equals("8"))
-    	    {
-    	    	cell.setCellValue("중학교2학년");
-    	    }else if(SCHOOL_YEAR.equals("9"))
-    	    {
-    	    	cell.setCellValue("중학교3학년");
-    	    }else if(SCHOOL_YEAR.equals("10"))
-    	    {
-    	    	cell.setCellValue("고등학교1학년");
-    	    }
-    	    
-    	    cell = row.createCell(++columnCnt);
-    	    cell.setCellStyle(bodyStyle);
-    	    cell.setCellValue(tempMap.get("SCHOOL_GROUP")+"");
-    	    
-    	    cell = row.createCell(++columnCnt);
-    	    cell.setCellStyle(bodyStyle);
-    	    cell.setCellValue(tempMap.get("TYPE_SUB")+"");
-    	    
-    	    cell = row.createCell(++columnCnt);
-    	    cell.setCellStyle(bodyStyle);
-    	    cell.setCellValue(tempMap.get("ELIGIBILITY")+"");
-    	    
-    	    cell = row.createCell(++columnCnt);
-    	    cell.setCellStyle(bodyStyle);
-    	    cell.setCellValue(tempMap.get("SELF_INTR")+"");
-    	    
-    	    cell = row.createCell(++columnCnt);
-    	    cell.setCellStyle(bodyStyle);
-    	    cell.setCellValue(tempMap.get("EXP_TYPE")+"");
-    	    
-    	    cell = row.createCell(++columnCnt);
-    	    cell.setCellStyle(bodyStyle);
-    	    String lc = tempMap.get("EXP_DATA")+"";
-    	   
-    	    cell = row.createCell(++columnCnt);
-    	    cell.setCellStyle(bodyStyle);
-    	    String rs = tempMap.get("RESULT")+"";
-    	    if(rs == null)
-    	    {
-    	    	cell.setCellValue("대기");	
-    	    }else if(rs.equals("check"))
-    	    {
-    	    	cell.setCellValue("대기");
-    	    }else if(rs.equals("pass"))
-    	    {
-    	    	cell.setCellValue("합격");
-    	    }
-    	    
-    	    cell = row.createCell(++columnCnt);
-    	    cell.setCellStyle(bodyStyle);
-    	    
-    	    String file = tempMap.get("FILE_TYPE")+"";
-    	    if(file == null) {
-    	    	
-    	    }else if(file.equals("1")) {
-    	    	cell.setCellValue("대기");
-    	    }else if(file.equals("2")) {
-    	    	cell.setCellValue("완료");
-    	    }
-    	    
-    	    cell = row.createCell(++columnCnt);
-    	    cell.setCellStyle(bodyStyle);
-    	    cell.setCellValue(tempMap.get("MEMBER_ID")+"");
-    	    
-    	    cell = row.createCell(++columnCnt);
-    	    cell.setCellStyle(bodyStyle);
-    	    cell.setCellValue(tempMap.get("PASSWORD")+"");
-    	    
-	    }
+        // 데이터 채우기
+        int rowIndex1 = 1;
+        
+        for (HashMap<String, Object> list : Type1List) {
+        	Row row = sheet2.createRow(rowIndex1++);
+        	
+        	row.createCell(0).setCellValue(String.valueOf(list.getOrDefault("MEMBER_ID", "")));
+        	row.createCell(1).setCellValue(String.valueOf(list.getOrDefault("TYPE_SUB", "")));
+        	row.createCell(2).setCellValue(String.valueOf(list.getOrDefault("NAME", "")));
+        	row.createCell(3).setCellValue(String.valueOf(list.getOrDefault("BIRTH", "")));
+        	row.createCell(4).setCellValue(String.valueOf(list.getOrDefault("SEX", "")));
+        	row.createCell(5).setCellValue(String.valueOf(list.getOrDefault("PHONE", "")));
+        	row.createCell(6).setCellValue(String.valueOf(list.getOrDefault("EMAIL", "")));
+        	row.createCell(7).setCellValue(String.valueOf(list.getOrDefault("PARENT_PHONE", "")));
+        	row.createCell(8).setCellValue(String.valueOf(list.getOrDefault("ADDRESS", "")));
+        	row.createCell(9).setCellValue(String.valueOf(list.getOrDefault("ADDRESS_DETAIL", "")));
+        	row.createCell(10).setCellValue(String.valueOf(list.getOrDefault("SCHOOL_NAME", "")));
+        	row.createCell(11).setCellValue(String.valueOf(list.getOrDefault("SCHOOL_YEAR", "")));
+        	row.createCell(12).setCellValue(String.valueOf(list.getOrDefault("SCHOOL_GROUP", "")));
+        	row.createCell(13).setCellValue(String.valueOf(list.getOrDefault("ELIGIBILITY", "")));
+        	row.createCell(14).setCellValue(String.valueOf(list.getOrDefault("EXP_DATA", "")));
+        	row.createCell(15).setCellValue(String.valueOf(list.getOrDefault("EXP_TYPE", "")));
+        	switch (String.valueOf(list.getOrDefault("FILE_TYPE", ""))) {
+			case "1":
+				row.createCell(16).setCellValue("파일 미제출");
+				break;
+			case "2":
+				row.createCell(16).setCellValue("파일 제출 완료");
+				break;
+			}
+        	
+        }
+        
+        // 열 너비 자동 조정
+        for (int i = 0; i < headers1.length; i++) {
+            sheet2.autoSizeColumn(i , true);
+            int width = sheet2.getColumnWidth(i);
+            sheet2.setColumnWidth(i, width + 1024);
+        }
+        
+        //////////////////////////////////////////////////////////////////////////////////- 2시트 종료
+        
+		//////////////////////////////////////////////////////////////////////////////////- 3시트 시작
+		        
+		Sheet sheet21 = wb.createSheet("유형2");
+		
+		// 헤더 생성
+		String[] headers11 = {
+				"기존 아이디",
+        		"전공",
+        		"이름",
+        		"생년월일",
+        		"성별",
+        		"전화번호",
+        		"이메일",
+        		"주소",
+        		"상세주소",
+        		"학교명",
+        		"영재교육 연수 여부",
+        		"파일 제출 여부",
+		};
+		Row headerRow11 = sheet21.createRow(0);
+		for (int i = 0; i < headers11.length; i++) {
+		Cell cell = headerRow11.createCell(i);
+		cell.setCellValue(headers11[i]);
+		cell.setCellStyle(headStyle);
+		}
+		
+		// 데이터 채우기
+		int rowIndex11 = 1;
+		
+		for (HashMap<String, Object> list : Type1List) {
+		Row row = sheet21.createRow(rowIndex11++);
+		
+			row.createCell(0).setCellValue(String.valueOf(list.getOrDefault("MEMBER_ID", "")));
+	    	row.createCell(1).setCellValue(String.valueOf(list.getOrDefault("TYPE_SUB", "")));
+	    	row.createCell(2).setCellValue(String.valueOf(list.getOrDefault("NAME", "")));
+	    	row.createCell(3).setCellValue(String.valueOf(list.getOrDefault("BIRTH", "")));
+	    	row.createCell(4).setCellValue(String.valueOf(list.getOrDefault("SEX", "")));
+	    	row.createCell(5).setCellValue(String.valueOf(list.getOrDefault("PHONE", "")));
+	    	row.createCell(6).setCellValue(String.valueOf(list.getOrDefault("EMAIL", "")));
+	    	row.createCell(7).setCellValue(String.valueOf(list.getOrDefault("ADDRESS", "")));
+	    	row.createCell(8).setCellValue(String.valueOf(list.getOrDefault("ADDRESS_DETAIL", "")));
+	    	row.createCell(9).setCellValue(String.valueOf(list.getOrDefault("SCHOOL_NAME", "")));
+	    	row.createCell(10).setCellValue(String.valueOf(list.getOrDefault("EXP_DATA", "")));
+	    	switch (String.valueOf(list.getOrDefault("FILE_TYPE", ""))) {
+			case "1":
+				row.createCell(11).setCellValue("파일 미제출");
+				break;
+			case "2":
+				row.createCell(11).setCellValue("파일 제출 완료");
+				break;
+			}
+    	
+		}
+		
+		// 열 너비 자동 조정
+		for (int i = 0; i < headers11.length; i++) {
+		sheet21.autoSizeColumn(i , true);
+		int width = sheet21.getColumnWidth(i);
+		sheet21.setColumnWidth(i, width + 1024);
+		}
+		
+		//////////////////////////////////////////////////////////////////////////////////- 3시트 종료
 	    	
 
 	    // 컨텐츠 타입과 파일명 지정
-
+	    // 현재 날짜 가져오기
+        LocalDate today = LocalDate.now();
+        // 날짜 형식 지정
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        // 형식화된 날짜 출력
+        String formattedDate = today.format(formatter);
 	    response.setContentType("ms-vnd/excel");
-	    String excel_name_is = "신입생_리스트";
+	    String excel_name_is = "_신청_리스트";
+	    excel_name_is = formattedDate + excel_name_is;
 	    excel_name_is = URLEncoder.encode(excel_name_is,"UTF-8");
 	    response.setHeader("Content-Disposition", "attachment;filename="+excel_name_is+".xls");
 

@@ -726,7 +726,7 @@ public class AdminExamController {
 
             // "선택지 갯수"와 "선택지 리스트"
             row.createCell(3).setCellValue(String.valueOf(question.getOrDefault("select_count", "")));
-         // 선택지 정보를 가져옵니다.
+            // 선택지 정보를 가져옵니다.
             String choicesStr = String.valueOf(question.getOrDefault("Choices", ""));
             // 선택지 정보를 '#' 기준으로 분리합니다.
             
