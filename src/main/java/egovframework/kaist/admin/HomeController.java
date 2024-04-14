@@ -5,6 +5,10 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLEncoder;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -273,5 +277,43 @@ public class HomeController {
 
 	    zos.close();
 	}
+	
+	@RequestMapping(value = {"admin/member_re/fileAllDown.do"}, method = RequestMethod.GET)
+	public void downloadAllFilesAsZip(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Path rootDirPath = Paths.get(request.getServletContext().getRealPath("/resources/upload/member_re/delete")); // 서버에 저장된 파일 경로
+        String zipFileName = "all_files.zip";
+
+        response.setContentType("application/octet-stream");
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + URLEncoder.encode(zipFileName, "UTF-8") + "\"");
+
+        try (ZipOutputStream zos = new ZipOutputStream(response.getOutputStream())) {
+            Files.walk(rootDirPath, 1) // 1 depth로 서브폴더만 탐색
+                .filter(Files::isDirectory)
+                .forEach(dir -> {
+                    try {
+                        Files.walk(dir)
+                            .filter(Files::isRegularFile)
+                            .forEach(file -> {
+                                String zipEntryName = rootDirPath.relativize(file).toString();
+                                try (FileInputStream fis = new FileInputStream(file.toFile())) {
+                                    zos.putNextEntry(new ZipEntry(zipEntryName));
+                                    byte[] buffer = new byte[1024];
+                                    int length;
+                                    while ((length = fis.read(buffer)) > 0) {
+                                        zos.write(buffer, 0, length);
+                                    }
+                                    zos.closeEntry();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            });
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+            zos.finish();
+        }
+    }
+
 	
 }

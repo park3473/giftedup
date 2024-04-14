@@ -434,6 +434,7 @@ public class AdminMemberReController {
 		
 	}
 	
+	
 	/*신입생 선발 설정 관련 종료*/
 	
 	
@@ -764,28 +765,41 @@ public class AdminMemberReController {
         	row.createCell(8).setCellValue(String.valueOf(list.getOrDefault("ADDRESS", "")));
         	row.createCell(9).setCellValue(String.valueOf(list.getOrDefault("ADDRESS_DETAIL", "")));
         	row.createCell(10).setCellValue(String.valueOf(list.getOrDefault("SCHOOL_NAME", "")));
-        	row.createCell(11).setCellValue(String.valueOf(list.getOrDefault("SCHOOL_YEAR", "")));
+        	String school_year = String.valueOf(list.getOrDefault("SCHOOL_YEAR", ""));
+        	int school_year_num = Integer.parseInt(school_year);        	
+        	if (school_year_num < 7) {
+        		school_year = String.valueOf(school_year_num);
+        		row.createCell(11).setCellValue("초등학교"+school_year+"학년");	
+			}else if(school_year_num < 10) {
+				school_year_num = school_year_num - 6;
+				school_year = String.valueOf(school_year_num);
+        		row.createCell(11).setCellValue("중학교"+school_year+"학년");
+			}else {
+				school_year_num = school_year_num - 9;
+				school_year = String.valueOf(school_year_num);
+        		row.createCell(11).setCellValue("고등학교"+school_year+"학년");
+			}
         	row.createCell(12).setCellValue(String.valueOf(list.getOrDefault("SCHOOL_GROUP", "")));
         	row.createCell(13).setCellValue(String.valueOf(list.getOrDefault("ELIGIBILITY", "")));
         	row.createCell(14).setCellValue(String.valueOf(list.getOrDefault("EXP_DATA", "")));
-        	row.createCell(16).setCellValue(String.valueOf(list.getOrDefault("EXP_TYPE", "")));
-        	row.createCell(17).setCellValue(String.valueOf(list.getOrDefault("MENTOR_MEMBER_ID", "")));
-        	row.createCell(18).setCellValue(String.valueOf(list.getOrDefault("MENTOR_TYPE_SUB", "")));
-        	row.createCell(19).setCellValue(String.valueOf(list.getOrDefault("MENTOR_NAME", "")));
-        	row.createCell(20).setCellValue(String.valueOf(list.getOrDefault("MENTOR_BIRTH", "")));
-        	row.createCell(21).setCellValue(String.valueOf(list.getOrDefault("MENTOR_SEX", "")));
-        	row.createCell(22).setCellValue(String.valueOf(list.getOrDefault("MENTOR_PHONE", "")));
-        	row.createCell(23).setCellValue(String.valueOf(list.getOrDefault("MENTOR_EMAIL", "")));
-        	row.createCell(24).setCellValue(String.valueOf(list.getOrDefault("MENTOR_ADDRESS", "")));
-        	row.createCell(25).setCellValue(String.valueOf(list.getOrDefault("MENTOR_ADDRESS_DETAIL", "")));
-        	row.createCell(26).setCellValue(String.valueOf(list.getOrDefault("MENTOR_SCHOOL_NAME", "")));
-        	row.createCell(27).setCellValue(String.valueOf(list.getOrDefault("MENTOR_EXP_DATA", "")));
+        	row.createCell(15).setCellValue(String.valueOf(list.getOrDefault("EXP_TYPE", "")));
+        	row.createCell(16).setCellValue(String.valueOf(list.getOrDefault("MENTOR_MEMBER_ID", "")));
+        	row.createCell(17).setCellValue(String.valueOf(list.getOrDefault("MENTOR_TYPE_SUB", "")));
+        	row.createCell(18).setCellValue(String.valueOf(list.getOrDefault("MENTOR_NAME", "")));
+        	row.createCell(19).setCellValue(String.valueOf(list.getOrDefault("MENTOR_BIRTH", "")));
+        	row.createCell(20).setCellValue(String.valueOf(list.getOrDefault("MENTOR_SEX", "")));
+        	row.createCell(21).setCellValue(String.valueOf(list.getOrDefault("MENTOR_PHONE", "")));
+        	row.createCell(22).setCellValue(String.valueOf(list.getOrDefault("MENTOR_EMAIL", "")));
+        	row.createCell(23).setCellValue(String.valueOf(list.getOrDefault("MENTOR_ADDRESS", "")));
+        	row.createCell(24).setCellValue(String.valueOf(list.getOrDefault("MENTOR_ADDRESS_DETAIL", "")));
+        	row.createCell(25).setCellValue(String.valueOf(list.getOrDefault("MENTOR_SCHOOL_NAME", "")));
+        	row.createCell(26).setCellValue(String.valueOf(list.getOrDefault("MENTOR_EXP_TYPE", "")));
         	switch (String.valueOf(list.getOrDefault("MENTOR_FILE_TYPE", ""))) {
 			case "1":
-				row.createCell(28).setCellValue("파일 미제출");
+				row.createCell(27).setCellValue("파일 미제출");
 				break;
 			case "2":
-				row.createCell(28).setCellValue("파일 제출 완료");
+				row.createCell(27).setCellValue("파일 제출 완료");
 				break;
 			}
         	
@@ -797,6 +811,8 @@ public class AdminMemberReController {
             int width = sheet1.getColumnWidth(i);
             sheet1.setColumnWidth(i, width + 1024);
         }
+        
+        System.out.println("1sheet end");
         
         //////////////////////////////////////////////////////////////////////////////////- 1시트 종료
         
@@ -833,7 +849,7 @@ public class AdminMemberReController {
         // 데이터 채우기
         int rowIndex1 = 1;
         
-        for (HashMap<String, Object> list : Type1List) {
+        for (HashMap<String, Object> list : Type2List) {
         	Row row = sheet2.createRow(rowIndex1++);
         	
         	row.createCell(0).setCellValue(String.valueOf(list.getOrDefault("MEMBER_ID", "")));
@@ -847,7 +863,20 @@ public class AdminMemberReController {
         	row.createCell(8).setCellValue(String.valueOf(list.getOrDefault("ADDRESS", "")));
         	row.createCell(9).setCellValue(String.valueOf(list.getOrDefault("ADDRESS_DETAIL", "")));
         	row.createCell(10).setCellValue(String.valueOf(list.getOrDefault("SCHOOL_NAME", "")));
-        	row.createCell(11).setCellValue(String.valueOf(list.getOrDefault("SCHOOL_YEAR", "")));
+        	String school_year = String.valueOf(list.getOrDefault("SCHOOL_YEAR", ""));
+        	int school_year_num = Integer.parseInt(school_year);        	
+        	if (school_year_num < 7) {
+        		school_year = String.valueOf(school_year_num);
+        		row.createCell(11).setCellValue("초등학교"+school_year+"학년");	
+			}else if(school_year_num < 10) {
+				school_year_num = school_year_num - 6;
+				school_year = String.valueOf(school_year_num);
+        		row.createCell(11).setCellValue("중학교"+school_year+"학년");
+			}else {
+				school_year_num = school_year_num - 9;
+				school_year = String.valueOf(school_year_num);
+        		row.createCell(11).setCellValue("고등학교"+school_year+"학년");
+			}
         	row.createCell(12).setCellValue(String.valueOf(list.getOrDefault("SCHOOL_GROUP", "")));
         	row.createCell(13).setCellValue(String.valueOf(list.getOrDefault("ELIGIBILITY", "")));
         	row.createCell(14).setCellValue(String.valueOf(list.getOrDefault("EXP_DATA", "")));
@@ -870,11 +899,13 @@ public class AdminMemberReController {
             sheet2.setColumnWidth(i, width + 1024);
         }
         
+        System.out.println("2sheet end");
+        
         //////////////////////////////////////////////////////////////////////////////////- 2시트 종료
         
 		//////////////////////////////////////////////////////////////////////////////////- 3시트 시작
 		        
-		Sheet sheet21 = wb.createSheet("유형2");
+		Sheet sheet21 = wb.createSheet("유형3");
 		
 		// 헤더 생성
 		String[] headers11 = {
@@ -888,8 +919,7 @@ public class AdminMemberReController {
         		"주소",
         		"상세주소",
         		"학교명",
-        		"영재교육 연수 여부",
-        		"파일 제출 여부",
+        		"영재교육 연수 여부"
 		};
 		Row headerRow11 = sheet21.createRow(0);
 		for (int i = 0; i < headers11.length; i++) {
@@ -901,7 +931,9 @@ public class AdminMemberReController {
 		// 데이터 채우기
 		int rowIndex11 = 1;
 		
-		for (HashMap<String, Object> list : Type1List) {
+		System.out.println("???test");
+		
+		for (HashMap<String, Object> list : Type3List) {
 		Row row = sheet21.createRow(rowIndex11++);
 		
 			row.createCell(0).setCellValue(String.valueOf(list.getOrDefault("MEMBER_ID", "")));
@@ -914,15 +946,7 @@ public class AdminMemberReController {
 	    	row.createCell(7).setCellValue(String.valueOf(list.getOrDefault("ADDRESS", "")));
 	    	row.createCell(8).setCellValue(String.valueOf(list.getOrDefault("ADDRESS_DETAIL", "")));
 	    	row.createCell(9).setCellValue(String.valueOf(list.getOrDefault("SCHOOL_NAME", "")));
-	    	row.createCell(10).setCellValue(String.valueOf(list.getOrDefault("EXP_DATA", "")));
-	    	switch (String.valueOf(list.getOrDefault("FILE_TYPE", ""))) {
-			case "1":
-				row.createCell(11).setCellValue("파일 미제출");
-				break;
-			case "2":
-				row.createCell(11).setCellValue("파일 제출 완료");
-				break;
-			}
+	    	row.createCell(10).setCellValue(String.valueOf(list.getOrDefault("EXP_TYPE", "")));
     	
 		}
 		
@@ -932,6 +956,8 @@ public class AdminMemberReController {
 		int width = sheet21.getColumnWidth(i);
 		sheet21.setColumnWidth(i, width + 1024);
 		}
+		
+		System.out.println("3sheet end");
 		
 		//////////////////////////////////////////////////////////////////////////////////- 3시트 종료
 	    	
