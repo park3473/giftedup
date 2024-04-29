@@ -295,8 +295,8 @@ public class SUtil {
 		return login;
 	}
 	public static String StringReplace(String str){       
-		final int CNT_SYS_DATE = 13;				// �뙆�씪紐� �븵�뿉 遺숈� �떆�뒪�뀥 �떆媛�
-		final int LMT_CNT_FN = 30 + CNT_SYS_DATE;	// DB�뿉 �뱾�뼱媛� �븳 媛쒖쓽 �뙆�씪紐� 理쒕�湲몄씠 
+		final int CNT_SYS_DATE = 13;				
+		final int LMT_CNT_FN = 30 + CNT_SYS_DATE;	
 		final int ERR_CNT_FN = 5;
 		int pos = str.lastIndexOf( "." );
 		String ext = str.substring( pos + 1 );
@@ -462,7 +462,6 @@ public class SUtil {
 		} catch (Exception e) {
 		
 			if(e.getMessage().indexOf("refused") != -1) {
-				System.out.println("????4444");
 				throw new Exception("FTP 서버 연결 실패");
 			}
 			throw e;
@@ -891,6 +890,7 @@ public class SUtil {
 			LOCAL.add("서울");
 			LOCAL.add("강원");
 			LOCAL.add("강원도");
+			LOCAL.add("강원특별자치도");
 			LOCAL.add("제주");
 			LOCAL.add("제주도");
 			LOCAL.add("제주특별자치도");
@@ -913,6 +913,7 @@ public class SUtil {
 			LOCAL.add("전라남도");
 			LOCAL.add("전북");
 			LOCAL.add("전라북도");
+			LOCAL.add("전북특별자치도");
 			break;
 		case "부산":
 			LOCAL.add("부산");

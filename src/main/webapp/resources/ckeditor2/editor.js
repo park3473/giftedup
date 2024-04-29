@@ -9,7 +9,7 @@ export default function makeEditor(target) {
             ]
         },
         alignment: {
-            options: [ 'left', 'right' ]
+            options: [ 'left', 'center' , 'right' , 'justify']
         },
         extraPlugins: [MyCustomUploadAdapterPlugin]
     })

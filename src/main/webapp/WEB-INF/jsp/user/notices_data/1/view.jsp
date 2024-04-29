@@ -140,7 +140,7 @@
                                             <c:if test="${'1' == ssion_level || model.pageDomain.MEMBER_ID == ssion_user_id}">
                                             <c:if test="${model.notices != '1' && model.notices != '2'}">
                                             	<a class="delete" href="javascript:deleteClick2()">삭제하기</a>
-                                            	<!--<a class="register" href="./update.do">수정하기</a>-->
+                                            	<a class="register" href="./update.do">수정하기</a>
                                             </c:if>
                                             </c:if>
                                             <a class="register" href="../../${notices}/list.do">목록보기</a>
