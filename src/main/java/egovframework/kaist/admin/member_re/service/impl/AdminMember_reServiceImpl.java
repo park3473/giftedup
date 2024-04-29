@@ -399,31 +399,31 @@ public class AdminMember_reServiceImpl implements AdminMemberReService {
 
 	
 	@Override
-	public ModelMap getExcelListAll() {
+	public ModelMap getExcelListAll(AdminMemberReVo AdminMemberReVo) {
 		
 		ModelMap model = new ModelMap();
 		
 		AdminMemberReVo Vo = new AdminMemberReVo();
 		//유형 1리스트
-		Vo.setTYPE("1");
+		AdminMemberReVo.setTYPE("1");
 		System.out.println(Vo.getTYPE());
 		System.out.println("???");
-		List<?> Type1List = adminMember_reMapper.getExcelList(Vo);
+		List<?> Type1List = adminMember_reMapper.getExcelList(AdminMemberReVo);
 		//유형 2리스트
-		Vo.setTYPE("2");
-		List<?> Type2List = adminMember_reMapper.getExcelList(Vo);
+		AdminMemberReVo.setTYPE("2");
+		List<?> Type2List = adminMember_reMapper.getExcelList(AdminMemberReVo);
 		//유형 3리스트
-		Vo.setTYPE("3");
-		List<?> Type3List = adminMember_reMapper.getExcelList(Vo);
+		AdminMemberReVo.setTYPE("3");
+		List<?> Type3List = adminMember_reMapper.getExcelList(AdminMemberReVo);
 		//전체 리스트
-		Vo.setTYPE("ALL");
+		AdminMemberReVo.setTYPE("ALL");
 		List<?> AllList = adminMember_reMapper.getListAll();
 		//파일 미완료 수
-		Vo.setFILE_TYPE("1");
-		int FILE1 = adminMember_reMapper.getALLFILECNT(Vo);
+		AdminMemberReVo.setFILE_TYPE("1");
+		int FILE1 = adminMember_reMapper.getALLFILECNT(AdminMemberReVo);
 		//파일 완료 수
-		Vo.setFILE_TYPE("2");
-		int FILE2 = adminMember_reMapper.getALLFILECNT(Vo);
+		AdminMemberReVo.setFILE_TYPE("2");
+		int FILE2 = adminMember_reMapper.getALLFILECNT(AdminMemberReVo);
 		
 		model.put("Type1List", Type1List);
 		model.put("Type2List", Type2List);

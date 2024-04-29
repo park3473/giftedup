@@ -76,7 +76,7 @@ public interface AdminMemberReService {
 
 	public AdminMemberReVo getMatchingMentoView(AdminMemberReVo vo2);
 
-	public ModelMap getExcelListAll();
+	public ModelMap getExcelListAll(AdminMemberReVo adminMemberReVo);
 
 
 

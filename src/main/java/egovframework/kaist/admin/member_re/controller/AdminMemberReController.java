@@ -663,10 +663,25 @@ public class AdminMemberReController {
 	//신입생 선발 접수자 관리 엑셀 다운
 	//-------------------------------------------------------------------------------------------------------------------
 	@RequestMapping(value = "/admin/member_re/excelDown.do", method = RequestMethod.GET)
-	public void excelDown(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public void excelDown(@ModelAttribute("AdminMemberReVo")AdminMemberReVo AdminMemberReVo,HttpServletRequest request, HttpServletResponse response) throws IOException {
+		
+		HttpSession session = request.getSession();
+			
+			if(session.getAttribute("ssion_local_type") != null && session.getAttribute("ssion_local_type") != "전체") {
+				
+				String LOCAL = (String) session.getAttribute("ssion_local_type");
+				System.out.println(LOCAL);
+				
+				List <String> LO_TYPE = SUtil.getLO_TYPE_LIST(LOCAL);
+				
+				AdminMemberReVo.setLO_LIST(LO_TYPE);
+				
+				AdminMemberReVo.setLO_TYPE("TRUE");
+			
+		}
 		
 		//엑셀에 필요한 전체 데이터 가져오기
-		ModelMap map = adminMember_reService.getExcelListAll();
+		ModelMap map = adminMember_reService.getExcelListAll(AdminMemberReVo);
 		
 		//각 유형 리스트
 		List<HashMap> Type1List = (List<HashMap>) map.get("Type1List");
@@ -713,6 +728,8 @@ public class AdminMemberReController {
 	    
 	    // 헤더 생성
         String[] headers = {"학생 기존 아이디" ,
+        		"합격 여부",
+        		"지역",
         		"학생 지원분야" ,
         		"학생 이름" ,
         		"학생 생년월일" ,
@@ -755,51 +772,61 @@ public class AdminMemberReController {
         	Row row = sheet1.createRow(rowIndex++);
         	
         	row.createCell(0).setCellValue(String.valueOf(list.getOrDefault("MEMBER_ID", "")));
-        	row.createCell(1).setCellValue(String.valueOf(list.getOrDefault("TYPE_SUB", "")));
-        	row.createCell(2).setCellValue(String.valueOf(list.getOrDefault("NAME", "")));
-        	row.createCell(3).setCellValue(String.valueOf(list.getOrDefault("BIRTH", "")));
-        	row.createCell(4).setCellValue(String.valueOf(list.getOrDefault("SEX", "")));
-        	row.createCell(5).setCellValue(String.valueOf(list.getOrDefault("PHONE", "")));
-        	row.createCell(6).setCellValue(String.valueOf(list.getOrDefault("EMAIL", "")));
-        	row.createCell(7).setCellValue(String.valueOf(list.getOrDefault("PARENT_PHONE", "")));
-        	row.createCell(8).setCellValue(String.valueOf(list.getOrDefault("ADDRESS", "")));
-        	row.createCell(9).setCellValue(String.valueOf(list.getOrDefault("ADDRESS_DETAIL", "")));
-        	row.createCell(10).setCellValue(String.valueOf(list.getOrDefault("SCHOOL_NAME", "")));
+        	String result = String.valueOf(list.getOrDefault("RESULT", ""));
+        	switch (result) {
+			case "check":
+				row.createCell(1).setCellValue("대기");
+				break;
+			case "pass":
+				row.createCell(1).setCellValue("합격");
+				break;
+			}
+        	row.createCell(2).setCellValue(String.valueOf(list.getOrDefault("ADDRESS_LOCAL", "")));
+        	row.createCell(3).setCellValue(String.valueOf(list.getOrDefault("TYPE_SUB", "")));
+        	row.createCell(4).setCellValue(String.valueOf(list.getOrDefault("NAME", "")));
+        	row.createCell(5).setCellValue(String.valueOf(list.getOrDefault("BIRTH", "")));
+        	row.createCell(6).setCellValue(String.valueOf(list.getOrDefault("SEX", "")));
+        	row.createCell(7).setCellValue(String.valueOf(list.getOrDefault("PHONE", "")));
+        	row.createCell(8).setCellValue(String.valueOf(list.getOrDefault("EMAIL", "")));
+        	row.createCell(9).setCellValue(String.valueOf(list.getOrDefault("PARENT_PHONE", "")));
+        	row.createCell(10).setCellValue(String.valueOf(list.getOrDefault("ADDRESS", "")));
+        	row.createCell(11).setCellValue(String.valueOf(list.getOrDefault("ADDRESS_DETAIL", "")));
+        	row.createCell(12).setCellValue(String.valueOf(list.getOrDefault("SCHOOL_NAME", "")));
         	String school_year = String.valueOf(list.getOrDefault("SCHOOL_YEAR", ""));
         	int school_year_num = Integer.parseInt(school_year);        	
         	if (school_year_num < 7) {
         		school_year = String.valueOf(school_year_num);
-        		row.createCell(11).setCellValue("초등학교"+school_year+"학년");	
+        		row.createCell(13).setCellValue("초등학교"+school_year+"학년");	
 			}else if(school_year_num < 10) {
 				school_year_num = school_year_num - 6;
 				school_year = String.valueOf(school_year_num);
-        		row.createCell(11).setCellValue("중학교"+school_year+"학년");
+        		row.createCell(13).setCellValue("중학교"+school_year+"학년");
 			}else {
 				school_year_num = school_year_num - 9;
 				school_year = String.valueOf(school_year_num);
-        		row.createCell(11).setCellValue("고등학교"+school_year+"학년");
+        		row.createCell(13).setCellValue("고등학교"+school_year+"학년");
 			}
-        	row.createCell(12).setCellValue(String.valueOf(list.getOrDefault("SCHOOL_GROUP", "")));
-        	row.createCell(13).setCellValue(String.valueOf(list.getOrDefault("ELIGIBILITY", "")));
-        	row.createCell(14).setCellValue(String.valueOf(list.getOrDefault("EXP_DATA", "")));
-        	row.createCell(15).setCellValue(String.valueOf(list.getOrDefault("EXP_TYPE", "")));
-        	row.createCell(16).setCellValue(String.valueOf(list.getOrDefault("MENTOR_MEMBER_ID", "")));
-        	row.createCell(17).setCellValue(String.valueOf(list.getOrDefault("MENTOR_TYPE_SUB", "")));
-        	row.createCell(18).setCellValue(String.valueOf(list.getOrDefault("MENTOR_NAME", "")));
-        	row.createCell(19).setCellValue(String.valueOf(list.getOrDefault("MENTOR_BIRTH", "")));
-        	row.createCell(20).setCellValue(String.valueOf(list.getOrDefault("MENTOR_SEX", "")));
-        	row.createCell(21).setCellValue(String.valueOf(list.getOrDefault("MENTOR_PHONE", "")));
-        	row.createCell(22).setCellValue(String.valueOf(list.getOrDefault("MENTOR_EMAIL", "")));
-        	row.createCell(23).setCellValue(String.valueOf(list.getOrDefault("MENTOR_ADDRESS", "")));
-        	row.createCell(24).setCellValue(String.valueOf(list.getOrDefault("MENTOR_ADDRESS_DETAIL", "")));
-        	row.createCell(25).setCellValue(String.valueOf(list.getOrDefault("MENTOR_SCHOOL_NAME", "")));
-        	row.createCell(26).setCellValue(String.valueOf(list.getOrDefault("MENTOR_EXP_TYPE", "")));
+        	row.createCell(14).setCellValue(String.valueOf(list.getOrDefault("SCHOOL_GROUP", "")));
+        	row.createCell(15).setCellValue(String.valueOf(list.getOrDefault("ELIGIBILITY", "")));
+        	row.createCell(16).setCellValue(String.valueOf(list.getOrDefault("EXP_DATA", "")));
+        	row.createCell(17).setCellValue(String.valueOf(list.getOrDefault("EXP_TYPE", "")));
+        	row.createCell(18).setCellValue(String.valueOf(list.getOrDefault("MENTOR_MEMBER_ID", "")));
+        	row.createCell(19).setCellValue(String.valueOf(list.getOrDefault("MENTOR_TYPE_SUB", "")));
+        	row.createCell(20).setCellValue(String.valueOf(list.getOrDefault("MENTOR_NAME", "")));
+        	row.createCell(21).setCellValue(String.valueOf(list.getOrDefault("MENTOR_BIRTH", "")));
+        	row.createCell(22).setCellValue(String.valueOf(list.getOrDefault("MENTOR_SEX", "")));
+        	row.createCell(23).setCellValue(String.valueOf(list.getOrDefault("MENTOR_PHONE", "")));
+        	row.createCell(24).setCellValue(String.valueOf(list.getOrDefault("MENTOR_EMAIL", "")));
+        	row.createCell(25).setCellValue(String.valueOf(list.getOrDefault("MENTOR_ADDRESS", "")));
+        	row.createCell(26).setCellValue(String.valueOf(list.getOrDefault("MENTOR_ADDRESS_DETAIL", "")));
+        	row.createCell(27).setCellValue(String.valueOf(list.getOrDefault("MENTOR_SCHOOL_NAME", "")));
+        	row.createCell(28).setCellValue(String.valueOf(list.getOrDefault("MENTOR_EXP_TYPE", "")));
         	switch (String.valueOf(list.getOrDefault("MENTOR_FILE_TYPE", ""))) {
 			case "1":
-				row.createCell(27).setCellValue("파일 미제출");
+				row.createCell(29).setCellValue("파일 미제출");
 				break;
 			case "2":
-				row.createCell(27).setCellValue("파일 제출 완료");
+				row.createCell(29).setCellValue("파일 제출 완료");
 				break;
 			}
         	
@@ -822,6 +849,8 @@ public class AdminMemberReController {
         
         // 헤더 생성
         String[] headers1 = {"기존 아이디" ,
+        		"합격 여부",
+        		"지역",
         		"지원분야" ,
         		"이름" ,
         		"생년월일" ,
@@ -853,40 +882,50 @@ public class AdminMemberReController {
         	Row row = sheet2.createRow(rowIndex1++);
         	
         	row.createCell(0).setCellValue(String.valueOf(list.getOrDefault("MEMBER_ID", "")));
-        	row.createCell(1).setCellValue(String.valueOf(list.getOrDefault("TYPE_SUB", "")));
-        	row.createCell(2).setCellValue(String.valueOf(list.getOrDefault("NAME", "")));
-        	row.createCell(3).setCellValue(String.valueOf(list.getOrDefault("BIRTH", "")));
-        	row.createCell(4).setCellValue(String.valueOf(list.getOrDefault("SEX", "")));
-        	row.createCell(5).setCellValue(String.valueOf(list.getOrDefault("PHONE", "")));
-        	row.createCell(6).setCellValue(String.valueOf(list.getOrDefault("EMAIL", "")));
-        	row.createCell(7).setCellValue(String.valueOf(list.getOrDefault("PARENT_PHONE", "")));
-        	row.createCell(8).setCellValue(String.valueOf(list.getOrDefault("ADDRESS", "")));
-        	row.createCell(9).setCellValue(String.valueOf(list.getOrDefault("ADDRESS_DETAIL", "")));
-        	row.createCell(10).setCellValue(String.valueOf(list.getOrDefault("SCHOOL_NAME", "")));
+        	String result = String.valueOf(list.getOrDefault("RESULT", ""));
+        	switch (result) {
+			case "check":
+				row.createCell(1).setCellValue("대기");
+				break;
+			case "pass":
+				row.createCell(1).setCellValue("합격");
+				break;
+			}
+        	row.createCell(2).setCellValue(String.valueOf(list.getOrDefault("ADDRESS_LOCAL", "")));
+        	row.createCell(3).setCellValue(String.valueOf(list.getOrDefault("TYPE_SUB", "")));
+        	row.createCell(4).setCellValue(String.valueOf(list.getOrDefault("NAME", "")));
+        	row.createCell(5).setCellValue(String.valueOf(list.getOrDefault("BIRTH", "")));
+        	row.createCell(6).setCellValue(String.valueOf(list.getOrDefault("SEX", "")));
+        	row.createCell(7).setCellValue(String.valueOf(list.getOrDefault("PHONE", "")));
+        	row.createCell(8).setCellValue(String.valueOf(list.getOrDefault("EMAIL", "")));
+        	row.createCell(9).setCellValue(String.valueOf(list.getOrDefault("PARENT_PHONE", "")));
+        	row.createCell(10).setCellValue(String.valueOf(list.getOrDefault("ADDRESS", "")));
+        	row.createCell(11).setCellValue(String.valueOf(list.getOrDefault("ADDRESS_DETAIL", "")));
+        	row.createCell(12).setCellValue(String.valueOf(list.getOrDefault("SCHOOL_NAME", "")));
         	String school_year = String.valueOf(list.getOrDefault("SCHOOL_YEAR", ""));
         	int school_year_num = Integer.parseInt(school_year);        	
         	if (school_year_num < 7) {
         		school_year = String.valueOf(school_year_num);
-        		row.createCell(11).setCellValue("초등학교"+school_year+"학년");	
+        		row.createCell(13).setCellValue("초등학교"+school_year+"학년");	
 			}else if(school_year_num < 10) {
 				school_year_num = school_year_num - 6;
 				school_year = String.valueOf(school_year_num);
-        		row.createCell(11).setCellValue("중학교"+school_year+"학년");
+        		row.createCell(13).setCellValue("중학교"+school_year+"학년");
 			}else {
 				school_year_num = school_year_num - 9;
 				school_year = String.valueOf(school_year_num);
-        		row.createCell(11).setCellValue("고등학교"+school_year+"학년");
+        		row.createCell(13).setCellValue("고등학교"+school_year+"학년");
 			}
-        	row.createCell(12).setCellValue(String.valueOf(list.getOrDefault("SCHOOL_GROUP", "")));
-        	row.createCell(13).setCellValue(String.valueOf(list.getOrDefault("ELIGIBILITY", "")));
-        	row.createCell(14).setCellValue(String.valueOf(list.getOrDefault("EXP_DATA", "")));
-        	row.createCell(15).setCellValue(String.valueOf(list.getOrDefault("EXP_TYPE", "")));
+        	row.createCell(14).setCellValue(String.valueOf(list.getOrDefault("SCHOOL_GROUP", "")));
+        	row.createCell(15).setCellValue(String.valueOf(list.getOrDefault("ELIGIBILITY", "")));
+        	row.createCell(16).setCellValue(String.valueOf(list.getOrDefault("EXP_DATA", "")));
+        	row.createCell(17).setCellValue(String.valueOf(list.getOrDefault("EXP_TYPE", "")));
         	switch (String.valueOf(list.getOrDefault("FILE_TYPE", ""))) {
 			case "1":
-				row.createCell(16).setCellValue("파일 미제출");
+				row.createCell(18).setCellValue("파일 미제출");
 				break;
 			case "2":
-				row.createCell(16).setCellValue("파일 제출 완료");
+				row.createCell(18).setCellValue("파일 제출 완료");
 				break;
 			}
         	
@@ -910,6 +949,8 @@ public class AdminMemberReController {
 		// 헤더 생성
 		String[] headers11 = {
 				"기존 아이디",
+				"합격 여부",
+				"지역",
         		"전공",
         		"이름",
         		"생년월일",
@@ -937,16 +978,26 @@ public class AdminMemberReController {
 		Row row = sheet21.createRow(rowIndex11++);
 		
 			row.createCell(0).setCellValue(String.valueOf(list.getOrDefault("MEMBER_ID", "")));
-	    	row.createCell(1).setCellValue(String.valueOf(list.getOrDefault("TYPE_SUB", "")));
-	    	row.createCell(2).setCellValue(String.valueOf(list.getOrDefault("NAME", "")));
-	    	row.createCell(3).setCellValue(String.valueOf(list.getOrDefault("BIRTH", "")));
-	    	row.createCell(4).setCellValue(String.valueOf(list.getOrDefault("SEX", "")));
-	    	row.createCell(5).setCellValue(String.valueOf(list.getOrDefault("PHONE", "")));
-	    	row.createCell(6).setCellValue(String.valueOf(list.getOrDefault("EMAIL", "")));
-	    	row.createCell(7).setCellValue(String.valueOf(list.getOrDefault("ADDRESS", "")));
-	    	row.createCell(8).setCellValue(String.valueOf(list.getOrDefault("ADDRESS_DETAIL", "")));
-	    	row.createCell(9).setCellValue(String.valueOf(list.getOrDefault("SCHOOL_NAME", "")));
-	    	row.createCell(10).setCellValue(String.valueOf(list.getOrDefault("EXP_TYPE", "")));
+			String result = String.valueOf(list.getOrDefault("RESULT", ""));
+        	switch (result) {
+			case "check":
+				row.createCell(1).setCellValue("대기");
+				break;
+			case "pass":
+				row.createCell(1).setCellValue("합격");
+				break;
+			}
+        	row.createCell(2).setCellValue(String.valueOf(list.getOrDefault("ADDRESS_LOCAL", "")));
+	    	row.createCell(3).setCellValue(String.valueOf(list.getOrDefault("TYPE_SUB", "")));
+	    	row.createCell(4).setCellValue(String.valueOf(list.getOrDefault("NAME", "")));
+	    	row.createCell(5).setCellValue(String.valueOf(list.getOrDefault("BIRTH", "")));
+	    	row.createCell(6).setCellValue(String.valueOf(list.getOrDefault("SEX", "")));
+	    	row.createCell(7).setCellValue(String.valueOf(list.getOrDefault("PHONE", "")));
+	    	row.createCell(8).setCellValue(String.valueOf(list.getOrDefault("EMAIL", "")));
+	    	row.createCell(9).setCellValue(String.valueOf(list.getOrDefault("ADDRESS", "")));
+	    	row.createCell(10).setCellValue(String.valueOf(list.getOrDefault("ADDRESS_DETAIL", "")));
+	    	row.createCell(11).setCellValue(String.valueOf(list.getOrDefault("SCHOOL_NAME", "")));
+	    	row.createCell(12).setCellValue(String.valueOf(list.getOrDefault("EXP_TYPE", "")));
     	
 		}
 		
