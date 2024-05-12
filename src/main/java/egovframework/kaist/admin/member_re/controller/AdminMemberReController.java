@@ -31,6 +31,7 @@ import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -663,22 +664,27 @@ public class AdminMemberReController {
 	//신입생 선발 접수자 관리 엑셀 다운
 	//-------------------------------------------------------------------------------------------------------------------
 	@RequestMapping(value = "/admin/member_re/excelDown.do", method = RequestMethod.GET)
-	public void excelDown(@ModelAttribute("AdminMemberReVo")AdminMemberReVo AdminMemberReVo,HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public void excelDown(@RequestParam("DownloadType") String DownloadType , @ModelAttribute("AdminMemberReVo")AdminMemberReVo AdminMemberReVo,HttpServletRequest request, HttpServletResponse response) throws IOException {
 		
-		HttpSession session = request.getSession();
-			
-			if(session.getAttribute("ssion_local_type") != null && session.getAttribute("ssion_local_type") != "전체") {
-				
-				String LOCAL = (String) session.getAttribute("ssion_local_type");
-				System.out.println(LOCAL);
-				
-				List <String> LO_TYPE = SUtil.getLO_TYPE_LIST(LOCAL);
-				
-				AdminMemberReVo.setLO_LIST(LO_TYPE);
-				
-				AdminMemberReVo.setLO_TYPE("TRUE");
+		if(!DownloadType.equals("all")) {
+		
+			HttpSession session = request.getSession();
+					
+					if(session.getAttribute("ssion_local_type") != null && session.getAttribute("ssion_local_type") != "전체") {
+						
+						String LOCAL = (String) session.getAttribute("ssion_local_type");
+						System.out.println(LOCAL);
+						
+						List <String> LO_TYPE = SUtil.getLO_TYPE_LIST(LOCAL);
+						
+						AdminMemberReVo.setLO_LIST(LO_TYPE);
+						
+						AdminMemberReVo.setLO_TYPE("TRUE");
+					
+				}
 			
 		}
+		
 		
 		//엑셀에 필요한 전체 데이터 가져오기
 		ModelMap map = adminMember_reService.getExcelListAll(AdminMemberReVo);
@@ -688,12 +694,7 @@ public class AdminMemberReController {
 		List<HashMap> Type2List = (List<HashMap>) map.get("Type2List");
 		List<HashMap> Type3List = (List<HashMap>) map.get("Type3List");
 		
-		//전체 리스트
-		List<HashMap> AllList = (List<HashMap>) map.get("AllList");
-		
-		//파일 미완료/완료 수
-		int FILE1 = (int) map.get("FILE1");
-		int FILE2 = (int) map.get("FILE2");
+		int[] dataList = (int[]) map.get("Data");;
 		
 		//시트 생성
 	    Workbook wb = new HSSFWorkbook();
@@ -972,8 +973,6 @@ public class AdminMemberReController {
 		// 데이터 채우기
 		int rowIndex11 = 1;
 		
-		System.out.println("???test");
-		
 		for (HashMap<String, Object> list : Type3List) {
 		Row row = sheet21.createRow(rowIndex11++);
 		
@@ -1011,8 +1010,59 @@ public class AdminMemberReController {
 		System.out.println("3sheet end");
 		
 		//////////////////////////////////////////////////////////////////////////////////- 3시트 종료
-	    	
-
+		
+		//////////////////////////////////////////////////////////////////////////////////- 4시트 시작
+		Sheet sheet4 = wb.createSheet("요약");
+				
+		// 헤더 생성
+		String[] headers4 = {
+						"참여 현황",
+						"파일 제출 완료 현황",
+						"기존 참여자 현황",
+		};
+		String[] categories = {
+				"유형1",
+				"유형2",
+				"유형3",
+		};
+		Row headerRow4 = sheet4.createRow(0);
+		int colIndex = 0;
+		for (int i = 0; i < headers4.length; i++) {
+		Cell cell = headerRow4.createCell(colIndex);
+		cell.setCellValue(headers4[i]);
+		cell.setCellStyle(headStyle);
+		sheet4.addMergedRegion(new CellRangeAddress(0, 0, colIndex, colIndex + 2)); // 3개 열 병합
+		colIndex += 3;
+		}
+		
+		// 유형 행 생성
+        Row typeRow = sheet4.createRow(1);
+        colIndex = 0;
+        for (int i = 0; i < headers4.length; i++) {
+            for (String category : categories) {
+                Cell cell = typeRow.createCell(colIndex++);
+                cell.setCellValue(category);
+                cell.setCellStyle(headStyle);
+            }
+        }
+		
+        // 데이터 채우기
+        Row dataRow = sheet4.createRow(2);
+        colIndex = 0;
+        for (int i = 0; i < dataList.length; i++) {
+            Cell cell = dataRow.createCell(colIndex++);
+            cell.setCellValue(dataList[i]);
+        }
+		
+		// 열 너비 자동 조정
+		for (int i = 0; i < headers4.length; i++) {
+			sheet4.autoSizeColumn(i , true);
+			int width = sheet4.getColumnWidth(i);
+			sheet4.setColumnWidth(i, width + 1024);
+		}
+		
+		//////////////////////////////////////////////////////////////////////////////////- 4시트 종료
+		
 	    // 컨텐츠 타입과 파일명 지정
 	    // 현재 날짜 가져오기
         LocalDate today = LocalDate.now();

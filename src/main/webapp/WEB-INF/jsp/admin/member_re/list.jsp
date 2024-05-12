@@ -105,7 +105,8 @@
                                                     <input style="width: 191px;" type="text" value="${model.beforeDomain.SEARCH_TEXT}" name="SEARCH_TEXT" id="SEARCH_TEXT" placeholder="검색할 내용을 입력해주세요.">
                                                     <button type="button" onClick="searchBtnClick()" value="검색">검색</button>
                                                     <a class="w_btn" href="./list.do">새로고침</a>
-                                                    <button type="button" onClick="allExcelDown()" value="엑셀다운로드">전체 엑셀 다운로드</button>
+                                                    <button type="button" onClick="allExcelDown('all')" value="엑셀다운로드">전체 엑셀 다운로드</button>
+                                                    <button type="button" onClick="allExcelDown('local')" value="엑셀다운로드">현재 엑셀 다운로드</button>
                                                     <button type="button" onClick="allFileDown()" value="파일다운로드">전체 파일 다운로드</button>
                                                 </div>
                                             </div>
@@ -522,9 +523,9 @@ function MemberReDelete(TYPE,DATA){
 		
 	}
     
-	function allExcelDown(){
+	function allExcelDown(DownloadType){
 		
-		window.location.href='/admin/member_re/excelDown.do';
+		window.location.href='/admin/member_re/excelDown.do?DownloadType='+DownloadType+'';
 		
 	}
 	

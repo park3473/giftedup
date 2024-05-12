@@ -390,6 +390,30 @@
 			    	#{local}
 			    </foreach>
 		    </if>
+		    <if test="SCHOOL_YEAR != ''">
+		    	AND MENTEE.SCHOOL_YEAR = #{SCHOOL_YEAR}
+		    </if>
+		    
+		    <if test="FILE_TYPE != ''">
+		    	AND MENTEE.FILE_TYPE = ${FILE_TYPE}
+		    </if> 
+		    
+		     <if test="SEARCH_TEXT != ''">
+			     <if test="SEARCH_TYPE == 'ALL'">
+			    	AND (
+			    		MENTEE.NAME LIKE '%${SEARCH_TEXT}%' 
+			    		OR  MENTEE.SEX LIKE '%${SEARCH_TEXT}%'
+			    		OR  MENTEE.SCHOOL_NAME LIKE '%${SEARCH_TEXT}%'
+			    		OR  MENTEE.SCHOOL_YEAR LIKE '%${SEARCH_TEXT}%'
+			    		OR  MENTEE.ELIGIBILITY LIKE '%${SEARCH_TEXT}%'
+			    		OR  MENTEE.PHONE LIKE '%${SEARCH_TEXT}%'
+			    		) 
+			    </if>
+			    <if test="SEARCH_TYPE != 'ALL'">
+		    		 AND MENTEE.${SEARCH_TYPE} LIKE '%${SEARCH_TEXT}%'
+		    	</if>
+		    	
+		    </if>
 			ORDER BY MENTEE.MATCHING , MENTEE.CREATE_TM DESC
 		</if>
 		<!-- 유형 2 리스트 -->
@@ -401,6 +425,30 @@
 			    <foreach collection="LO_LIST" item="local" open="(" close=")" separator=",">
 			    	#{local}
 			    </foreach>
+		    </if>
+		    <if test="SCHOOL_YEAR != ''">
+	    		AND SCHOOL_YEAR = #{SCHOOL_YEAR}
+		    </if>
+		    
+		    <if test="FILE_TYPE != ''">
+		    	AND FILE_TYPE = ${FILE_TYPE}
+		    </if> 
+		    
+		     <if test="SEARCH_TEXT != ''">
+			     <if test="SEARCH_TYPE == 'ALL'">
+			    	AND (
+			    		NAME LIKE '%${SEARCH_TEXT}%' 
+			    		OR  SEX LIKE '%${SEARCH_TEXT}%'
+			    		OR  SCHOOL_NAME LIKE '%${SEARCH_TEXT}%'
+			    		OR  SCHOOL_YEAR LIKE '%${SEARCH_TEXT}%'
+			    		OR  ELIGIBILITY LIKE '%${SEARCH_TEXT}%'
+			    		OR  PHONE LIKE '%${SEARCH_TEXT}%'
+			    		) 
+			    </if>
+			    <if test="SEARCH_TYPE != 'ALL'">
+		    		 AND ${SEARCH_TYPE} LIKE '%${SEARCH_TEXT}%'
+		    	</if>
+		    	
 		    </if>
 			ORDER BY CREATE_TM DESC
 		</if>
@@ -414,16 +462,85 @@
 			    	#{local}
 			    </foreach>
 		    </if>
+		    <if test="SCHOOL_YEAR != ''">
+		    	AND SCHOOL_YEAR = #{SCHOOL_YEAR}
+		    </if>
+		    
+		    <if test="FILE_TYPE != ''">
+		    	AND FILE_TYPE = ${FILE_TYPE}
+		    </if> 
+		    
+		     <if test="SEARCH_TEXT != ''">
+			     <if test="SEARCH_TYPE == 'ALL'">
+			    	AND (
+			    		NAME LIKE '%${SEARCH_TEXT}%' 
+			    		OR  SEX LIKE '%${SEARCH_TEXT}%'
+			    		OR  SCHOOL_NAME LIKE '%${SEARCH_TEXT}%'
+			    		OR  SCHOOL_YEAR LIKE '%${SEARCH_TEXT}%'
+			    		OR  ELIGIBILITY LIKE '%${SEARCH_TEXT}%'
+			    		OR  PHONE LIKE '%${SEARCH_TEXT}%'
+			    		) 
+			    </if>
+			    <if test="SEARCH_TYPE != 'ALL'">
+		    		 AND ${SEARCH_TYPE} LIKE '%${SEARCH_TEXT}%'
+		    	</if>
+		    </if>
 			ORDER BY CREATE_TM DESC
 		</if>
 	</select>
 	<select id="getALLFILECNT" parameterType="egovframework.kaist.admin.member_re.model.AdminMemberReVo" resultType="int">
-		SELECT 
-		    COUNT(DISTINCT CASE WHEN MATCHING IS NOT NULL THEN CONCAT(MATCHING, '_', TYPE) ELSE CONCAT(IDX, '_', TYPE) END)
-		FROM 
-		    TBL_MEMBER_RE
-		WHERE 
-		    FILE_TYPE = #{FILE_TYPE} AND (TYPE = '2' OR TYPE = '3' OR MATCHING IS NOT NULL);
+		SELECT COUNT(*) FROM TBL_MEMBER_RE WHERE FILE_TYPE = #{FILE_TYPE} AND TYPE = #{TYPE}
+		<if test="LO_TYPE == 'TRUE'">
+		    	AND ADDRESS_LOCAL IN 
+			    <foreach collection="LO_LIST" item="local" open="(" close=")" separator=",">
+			    	#{local}
+			    </foreach>
+		    </if>
+		    <if test="SCHOOL_YEAR != ''">
+		    	AND SCHOOL_YEAR = #{SCHOOL_YEAR}
+		    </if>
+		     <if test="SEARCH_TEXT != ''">
+			     <if test="SEARCH_TYPE == 'ALL'">
+			    	AND (
+			    		NAME LIKE '%${SEARCH_TEXT}%' 
+			    		OR  SEX LIKE '%${SEARCH_TEXT}%'
+			    		OR  SCHOOL_NAME LIKE '%${SEARCH_TEXT}%'
+			    		OR  SCHOOL_YEAR LIKE '%${SEARCH_TEXT}%'
+			    		OR  ELIGIBILITY LIKE '%${SEARCH_TEXT}%'
+			    		OR  PHONE LIKE '%${SEARCH_TEXT}%'
+			    		) 
+			    </if>
+			    <if test="SEARCH_TYPE != 'ALL'">
+		    		 AND ${SEARCH_TYPE} LIKE '%${SEARCH_TEXT}%'
+		    	</if>
+		    </if>
+	</select>
+	<select id="getListExistingCnt" parameterType="egovframework.kaist.admin.member_re.model.AdminMemberReVo" resultType="int">
+		SELECT COUNT(*) FROM TBL_MEMBER_RE WHERE MEMBER_ID != '' AND TYPE = #{TYPE}
+		<if test="LO_TYPE == 'TRUE'">
+		    	AND ADDRESS_LOCAL IN 
+			    <foreach collection="LO_LIST" item="local" open="(" close=")" separator=",">
+			    	#{local}
+			    </foreach>
+		    </if>
+		    <if test="SCHOOL_YEAR != ''">
+		    	AND SCHOOL_YEAR = #{SCHOOL_YEAR}
+		    </if>
+		     <if test="SEARCH_TEXT != ''">
+			     <if test="SEARCH_TYPE == 'ALL'">
+			    	AND (
+			    		NAME LIKE '%${SEARCH_TEXT}%' 
+			    		OR  SEX LIKE '%${SEARCH_TEXT}%'
+			    		OR  SCHOOL_NAME LIKE '%${SEARCH_TEXT}%'
+			    		OR  SCHOOL_YEAR LIKE '%${SEARCH_TEXT}%'
+			    		OR  ELIGIBILITY LIKE '%${SEARCH_TEXT}%'
+			    		OR  PHONE LIKE '%${SEARCH_TEXT}%'
+			    		) 
+			    </if>
+			    <if test="SEARCH_TYPE != 'ALL'">
+		    		 AND ${SEARCH_TYPE} LIKE '%${SEARCH_TEXT}%'
+		    	</if>
+		    </if>
 	</select>
 	
 </mapper>

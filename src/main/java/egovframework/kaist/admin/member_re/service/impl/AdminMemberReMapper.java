@@ -103,5 +103,7 @@ public interface AdminMemberReMapper {
 
 	public int getALLFILECNT(AdminMemberReVo vo);
 
+	public int getListExistingCnt(AdminMemberReVo adminMemberReVo);
+
 
 }

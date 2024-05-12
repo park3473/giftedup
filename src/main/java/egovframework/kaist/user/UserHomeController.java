@@ -83,7 +83,7 @@ public class UserHomeController {
 		
 		//홍보자료
 		userNoticesDataVo.setNOTICES_IDX("2");
-		userNoticesDataVo.setLIMIT(8);
+		userNoticesDataVo.setLIMIT(4);
 		ModelMap notices2 = userNoticesDataService.getList(userNoticesDataVo);
 		
 		//질문과 답
