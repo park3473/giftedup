@@ -23,8 +23,8 @@
 <body>
     <!--헤더-->
     <%@ include file="../include/header.jsp" %>
-    <script src="${pageContext.request.contextPath}/resources/sweetalert/sweetalert2.min.js"></script>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/sweetalert/sweetalert2.min.css"> 
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/sweetalert/sweetalert2.min.css">
     <!--헤더 end-->
 
     <!--본문-->
@@ -101,7 +101,7 @@
                                                     <input style="width: 191px;" type="text" value="${model.beforeDomain.SEARCH_TEXT}" name="SEARCH_TEXT" id="SEARCH_TEXT" placeholder="검색할 내용을 입력해주세요.">
                                                     <button type="button" onClick="searchBtnClick()" value="검색">검색</button>
                                                     <a class="w_btn" href="./list.do">새로고침</a>
-                                                    <button type="button" onclick="PassMemberReUploadProgram()">아이디 발급</button>
+                                                    <button type="button" onclick="PassMemberUploadProgram()">아이디 발급</button>
                                                 </div>
                                             </div>
                                         </form>
@@ -314,6 +314,26 @@
     </section>
     <!--본문 end-->
 
+
+	<div class="member_modal_wrap" id="memberReMoal">
+		<div class="member_modal_con member_input_wrap" style="width : 1050px">
+			<div class="modal_title">
+			<h2>합격자 리스트 <span>총인원 : </span><span id="UploadMemberCnt"></span></h2>
+			</div>
+			<div id="memberUploadTable" class="table_wrap" style="max-height:300px;overflow:scroll">
+				
+			</div>
+			<div class="member_btn adm_btn_wrap mr-0">
+				<ul id="step_button">
+					<li class="register modal_close"><a href="javascript:MemberModelFadeOut()">취소</a></li>
+					<li class="register modal_upload" id="excel_upload_step_1">
+						<a href="javascript:PassMemberInsert()">아이디 발급</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
     <!--푸터-->
     <footer>
         <%@ include file="../include/footer.jsp" %>
@@ -329,7 +349,7 @@
     <script src="${pageContext.request.contextPath}/resources/js/admin/admin.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/admin/jquery.datetimepicker.full.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/jquery.table2excel.js" type="text/javascript"></script>
-
+	
 </body>
 
 </html>
@@ -508,6 +528,203 @@ function pageChanged(page, endpage)
     		console.log('종료');
     	}
     	
+    }
+    
+    function MemberModelFadeOut(){
+    	
+    	$("#memberUploadTable").html('');
+    	$(".member_modal_wrap").fadeOut(300);
+    }
+    
+    function PassMemberUploadProgram() {
+        $.ajax({
+            url: "/admin/member_re/api/PassMemberListAll.do",
+            type: "POST",
+            dataType: "json",
+            success: function(data) {
+                if (data.length > 0) {
+                    let tableHtml = '<table id="memberUploadTable" style="width:100%"><thead><tr><th>기존 아이디</th><th>이름</th><th>생년월일</th><th>전화번호</th></tr></thead><tbody>';
+
+                    data.forEach(function(item) {
+                    	
+                    	var cleanName = item.NAME.replace(/[0-9]+$/, '');
+                    	var cleanType = '';
+                    	if(item.LEVEL == '11'){
+                    		cleanType = '1';
+                    	}else if(item.LEVEL == '8'){
+                    		cleanType = '2';
+                    	}
+                        tableHtml += '<tr>' +
+                                        '<td class="member_id">' + item.MEMBER_ID + '</td>' +
+                                        '<td class="name">' + cleanName + '</td>' +
+                                        '<td class="birth">' + item.BIRTH + '</td>' +
+                                        '<td class="phone">' + item.PHONE + '</td>' +
+                                        '<input type="hidden" name="IDX" value="' + item.IDX + '">' +
+                                        '<input type="hidden" name="MEMBER_ID" value="' + item.MEMBER_ID + '">' +
+                                        '<input type="hidden" name="PASSWORD" value="' + item.PASSWORD + '">' +
+                                        '<input type="hidden" name="TYPE" value="' + cleanType + '">' +
+                                        '<input type="hidden" name="TYPE_SUB" value="' + item.TYPE_SUB + '">' +
+                                        '<input type="hidden" name="LEVEL" value="' + item.LEVEL + '">' +
+                                        '<input type="hidden" name="NAME" value="' + cleanName + '">' +
+                                        '<input type="hidden" name="BIRTH" value="' + item.BIRTH + '">' +
+                                        '<input type="hidden" name="SEX" value="' + item.SEX + '">' +
+                                        '<input type="hidden" name="PHONE" value="' + item.PHONE + '">' +
+                                        '<input type="hidden" name="EMAIL" value="' + item.EMAIL + '">' +
+                                        '<input type="hidden" name="PARENT_PHONE" value="' + item.PARENT_PHONE + '">' +
+                                        '<input type="hidden" name="ZIPCODE" value="' + item.ZIPCODE + '">' +
+                                        '<input type="hidden" name="ADDRESS" value="' + item.ADDRESS + '">' +
+                                        '<input type="hidden" name="ADDRESS_DETAIL" value="' + item.ADDRESS_DETAIL + '">' +
+                                        '<input type="hidden" name="ADDRESS_LOCAL" value="' + item.ADDRESS_LOCAL + '">' +
+                                        '<input type="hidden" name="SCHOOL_ADDRESS" value="' + item.SCHOOL_ADDRESS + '">' +
+                                        '<input type="hidden" name="SCHOOL_LOCATION" value="' + item.SCHOOL_LOCATION + '">' +
+                                        '<input type="hidden" name="SCHOOL_TYPE" value="' + item.SCHOOL_TYPE + '">' +
+                                        '<input type="hidden" name="SCHOOL_NAME" value="' + item.SCHOOL_NAME + '">' +
+                                        '<input type="hidden" name="SCHOOL_YEAR" value="' + item.SCHOOL_YEAR + '">' +
+                                        '<input type="hidden" name="SCHOOL_GROUP" value="' + item.SCHOOL_GROUP + '">' +
+                                        '<input type="hidden" name="ELIGIBILITY" value="' + item.ELIGIBILITY + '">' +
+                                        '<input type="hidden" name="RESULT" value="' + item.RESULT + '">' +
+                                        '<input type="hidden" name="MATCHING" value="' + item.MATCHING + '">' +
+                                      '</tr>';
+                    });
+                    
+                    tableHtml += '</tbody></table>';
+                    $("#memberUploadTable").html(tableHtml);
+                    $("#UploadMemberCnt").html(data.length);
+                    $(".member_modal_wrap").fadeIn(300);
+                } else {
+                    Swal.fire("알림", "합격자 리스트가 없습니다.", "info");
+                }
+            },
+            error: function() {
+                Swal.fire("오류", "합격자 리스트를 가져오는 데 실패했습니다.", "error");
+            }
+        });
+    }
+    
+    
+    function PassMemberInsert() {
+        var rows = $("#memberUploadTable tbody tr").toArray();
+        var total = rows.length;
+        var progress = 0;
+
+        Swal.fire({
+            title: "아이디 발급 중",
+            html: '<div id="progress">0 / ' + total + '</div>',
+            allowOutsideClick: false,
+            willOpen: () => {
+                Swal.showLoading();
+                processRows(rows, total, progress);
+            }
+        });
+    }
+
+    function processRows(rows, total, progress) {
+        var rowIndex = 0;
+
+        function processNextRow() {
+            if (rowIndex < total) {
+                var row = $(rows[rowIndex]);
+                var memberData = {
+                    IDX: row.find('input[name="IDX"]').val(),
+                    MEMBER_ID: row.find('input[name="MEMBER_ID"]').val(),
+                    PASSWORD: row.find('input[name="PASSWORD"]').val(),
+                    TYPE: row.find('input[name="TYPE"]').val(),
+                    TYPE_SUB: row.find('input[name="TYPE_SUB"]').val(),
+                    LEVEL: row.find('input[name="LEVEL"]').val(),
+                    NAME: row.find('input[name="NAME"]').val(),
+                    BIRTH: row.find('input[name="BIRTH"]').val(),
+                    SEX: row.find('input[name="SEX"]').val(),
+                    PHONE: row.find('input[name="PHONE"]').val(),
+                    EMAIL: row.find('input[name="EMAIL"]').val(),
+                    PARENT_PHONE: row.find('input[name="PARENT_PHONE"]').val(),
+                    ZIPCODE: row.find('input[name="ZIPCODE"]').val(),
+                    ADDRESS: row.find('input[name="ADDRESS"]').val(),
+                    ADDRESS_DETAIL: row.find('input[name="ADDRESS_DETAIL"]').val(),
+                    ADDRESS_LOCAL: row.find('input[name="ADDRESS_LOCAL"]').val(),
+                    SCHOOL_ADDRESS: row.find('input[name="SCHOOL_ADDRESS"]').val(),
+                    SCHOOL_LOCATION: row.find('input[name="SCHOOL_LOCATION"]').val(),
+                    SCHOOL_TYPE: row.find('input[name="SCHOOL_TYPE"]').val(),
+                    SCHOOL_NAME: row.find('input[name="SCHOOL_NAME"]').val(),
+                    SCHOOL_YEAR: row.find('input[name="SCHOOL_YEAR"]').val(),
+                    SCHOOL_GROUP: row.find('input[name="SCHOOL_GROUP"]').val(),
+                    ELIGIBILITY: row.find('input[name="ELIGIBILITY"]').val(),
+                    SELF_INTR: row.find('input[name="SELF_INTR"]').val(),
+                    RESULT: row.find('input[name="RESULT"]').val(),
+                    COMMENT: row.find('input[name="COMMENT"]').val(),
+                    MATCHING: row.find('input[name="MATCHING"]').val(),
+                    CREATE_TM: row.find('input[name="CREATE_TM"]').val(),
+                    UPDATE_TM: row.find('input[name="UPDATE_TM"]').val(),
+                    EXP_DATA: row.find('input[name="EXP_DATA"]').val(),
+                    EXP_TYPE: row.find('input[name="EXP_TYPE"]').val(),
+                    FILE_TYPE: row.find('input[name="FILE_TYPE"]').val()
+                };
+
+                $.ajax({
+                    url: "/admin/member_re/api/PassMemberInsert.do",
+                    type: "POST",
+                    data: memberData,
+                    dataType: "json",
+                    success: function(response) {
+                        if (response) {
+                            progress++;
+                            $("#progress").text(progress + ' / ' + total);
+                        }
+                        rowIndex++;
+                        processNextRow();
+                    },
+                    error: function() {
+                        rowIndex++;
+                        processNextRow();
+                    }
+                });
+            } else {
+            	Swal.fire({
+                    title: "완료",
+                    text: "아이디 발급 및 문자 발송이 완료되었습니다. 매칭 작업을 실행하시겠습니까?",
+                    icon: "success",
+                    showCancelButton: true,
+                    confirmButtonText: "예",
+                    cancelButtonText: "아니오"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        executeMatching();
+                    }else{
+                    	MemberModelFadeOut();
+                    }
+                });
+            }
+        }
+
+        processNextRow();
+    }
+    
+    function executeMatching() {
+        Swal.fire({
+            title: "매칭 작업 실행 중",
+            html: "잠시만 기다려주세요...",
+            allowOutsideClick: false,
+            willOpen: () => {
+                Swal.showLoading();
+                $.ajax({
+                    url: "/admin/member_re/api/PassMemberMatching.do",
+                    type: "POST",
+                    dataType: "json",
+                    success: function(response) {
+                        if (response) {
+                            Swal.fire("완료", "매칭 작업이 완료되었습니다.", "success");
+                            MemberModelFadeOut();
+                        } else {
+                            Swal.fire("오류", "매칭 작업 중 오류가 발생했습니다.", "error");
+                            MemberModelFadeOut();
+                        }
+                    },
+                    error: function() {
+                        Swal.fire("오류", "매칭 작업 중 오류가 발생했습니다.", "error");
+                        MemberModelFadeOut();
+                    }
+                });
+            }
+        });
     }
     
 </script>

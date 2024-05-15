@@ -78,6 +78,12 @@ public interface AdminMemberReService {
 
 	public ModelMap getExcelListAll(AdminMemberReVo adminMemberReVo);
 
+	public void setMemberMemberId(AdminMemberReVo adminMemberReVo, String string);
+
+	public ModelMap getPassListType1(AdminMemberReVo adminMemberReVo);
+
+	public void setMemberReMatching(AdminMatchingVo matching);
+
 
 
 

@@ -501,12 +501,141 @@ public class AdminMemberReController {
 		
 		ObjectMapper mapper = new ObjectMapper();
 		
-		result = mapper.writeValueAsString(result);
-		
-		return result;
+		try {
+	        int currentYear = LocalDate.now().getYear(); // 현재 년도
+
+	        // AdminMemberReVo에서 필요한 정보를 추출
+	        String memberId = AdminMemberReVo.getMEMBER_ID();
+	        String birthdate = AdminMemberReVo.getBIRTH();
+	        String level = AdminMemberReVo.getLEVEL();
+	        String name = AdminMemberReVo.getNAME();
+	        String idx = AdminMemberReVo.getIDX();
+
+	        // 아이디 발급 로직
+	        if (memberId == null || memberId.isEmpty()) {
+	            memberId = generateMemberId(currentYear, idx, level);
+	        	AdminMemberReVo.setMEMBER_ID(memberId);
+
+	            // 비밀번호 생성 로직
+	            String processedBirth = birthdate.replace(".", "");
+	            String password = SUtil.getSHA256(processedBirth.substring(2));
+	            AdminMemberReVo.setPASSWORD(password);
+	            
+	            System.out.println("New MEMBER_ID assigned: " + memberId);
+	            //신입생 선발 테이블 회원 업데이트
+	            adminMember_reService.setMemberReNewMemberId(AdminMemberReVo);
+	            
+	            //회원 테이블에 아이디 등록 및 24년도 회원 추가
+	            adminMember_reService.setMemberMemberId(AdminMemberReVo , "NEW");
+	            
+	        } else {
+	        	//아이디가 존재하는 유저
+	        	adminMember_reService.setMemberReNewMemberId(AdminMemberReVo);
+	        	
+	            System.out.println("Existing user ID: " + memberId);
+	            //회원 테이블에 년도 추가
+	            adminMember_reService.setMemberMemberId(AdminMemberReVo , "OLD");
+	            
+	        }
+	        
+	        String SMSTEXT = "";
+	        
+	        SMSTEXT = "안녕하세요 영재키움입니다.\n"+ AdminMemberReVo.getNAME()+"님의\n2024년도 영재키움 신입생 선발에 합격 축하드립니다.\n"+AdminMemberReVo.getNAME()+"님의 계정정보는 다음과 같습니다.\n아아디 : "+AdminMemberReVo.getMEMBER_ID()+"\n비밀번호는 생년월일 6자리입니다.감사합니다.";
+	        
+	        //아이디 발급 이후 문자 처리
+	        System.out.println("SMSTEXT : " + SMSTEXT);
+			System.out.println("NAME : " + AdminMemberReVo.getNAME());
+			System.out.println("PHONE : " + AdminMemberReVo.getPHONE());
+			
+			String PHONE = AdminMemberReVo.getPHONE();
+			PHONE = PHONE.replace("-", "");
+			PHONE = PHONE.replace(".", "");
+			
+			AdminSmsLogVo AdminSmsLogDomain = new AdminSmsLogVo();
+			AdminSmsLogDomain.setPHONE(PHONE);
+			AdminSmsLogDomain.setNAME(AdminMemberReVo.getNAME());
+			AdminSmsLogDomain.setMESSAGE(SMSTEXT);
+			AdminSmsLogDomain.setSMS_TYPE("L");
+			
+			adminSmsLogService.setInsert(AdminSmsLogDomain);
+			
+			adminSmsLogService.smsSend(AdminSmsLogDomain);
+
+	        result = mapper.writeValueAsString(true);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        result = mapper.writeValueAsString(false);
+	    }
+
+	    return result;
 		
 	}
 	
+	private String generateMemberId(int currentYear, String idx, String level) {
+	    String memberId = currentYear + ""; // 년도로 시작
+	    String idxFormatted = String.format("%03d", Integer.parseInt(idx)); // IDX 세 자리 포맷
+
+	    if (level.equals("8")) {
+	        memberId += "2" + idxFormatted; // 레벨 8인 경우
+	    } else if (level.equals("11")) {
+	        memberId += "1" + idxFormatted; // 레벨 11인 경우
+	    } else {
+	        throw new IllegalArgumentException("Invalid level: " + level);
+	    }
+
+	    return memberId;
+	}
+	
+	@RequestMapping(value="/admin/member_re/api/PassMemberMatching.do" , method = RequestMethod.POST , produces = "application/json; charset=utf8")
+	@ResponseBody
+	public String PassMemberMatching(@ModelAttribute("AdminMemberReVo")AdminMemberReVo AdminMemberReVo , HttpServletRequest request , HttpServletResponse response) throws JsonProcessingException {
+		
+		String result = "false";
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		AdminMemberReVo.setRESULT("final");
+		
+		ModelMap map = adminMember_reService.getPassListType1(AdminMemberReVo);
+		
+		//각 유형 리스트
+		List<HashMap> Type1List = (List<HashMap>) map.get("list");
+		
+		for (HashMap<String, Object> list : Type1List) {
+			
+			AdminMatchingVo matching = new AdminMatchingVo();
+
+			//학생 아이디
+			String MEMBER_ID = String.valueOf(list.getOrDefault("MEMBER_ID", ""));
+			matching.setMEMBER_ID(MEMBER_ID);
+			//교사 아이디
+			String Professor_ID = String.valueOf(list.getOrDefault("MENTOR_MEMBER_ID", ""));
+			matching.setPROFESSOR_MEMBER_ID(Professor_ID);
+			//학년
+			String SCHOOL_YEAR = String.valueOf(list.getOrDefault("SCHOOL_YEAR", ""));
+			matching.setSUPPORT_GROUP(SCHOOL_YEAR);
+			//년도
+			matching.setYEAR("2024");
+			//학교명
+			String SCHOOL_NAME = String.valueOf(list.getOrDefault("SCHOOL_NAME", ""));
+			matching.setSCHOOL_NAME(SCHOOL_NAME);
+			
+			//반
+			String SCHOOL_GROUP = String.valueOf(list.getOrDefault("SCHOOL_GROUP", ""));
+			matching.setSCHOOL_GROUP(SCHOOL_GROUP);
+			
+			//저장된 매칭 데이터 보내기
+			adminMember_reService.setMemberReMatching(matching);
+			
+		}
+		
+		result = "true";
+				
+		result = mapper.writeValueAsString(result);
+				
+		return result;
+		
+	}
 	
 	
 	//신입생 선발 선정 모듈

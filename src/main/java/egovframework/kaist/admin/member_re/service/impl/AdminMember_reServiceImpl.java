@@ -441,6 +441,42 @@ public class AdminMember_reServiceImpl implements AdminMemberReService {
 		return model;
 	}
 
+	@Override
+	public void setMemberMemberId(AdminMemberReVo adminMemberReVo, String type) {
+		
+		switch (type) {
+		case "NEW":
+			//신규 사용자 전용 업데이트
+			adminMember_reMapper.setMemberNewMemberId(adminMemberReVo);
+			break;
+		case "OLD":
+			//기존 사용자 전용 업데이트
+			adminMember_reMapper.setMemberOldMemberId(adminMemberReVo);
+			break;
+		}
+		
+	}
+
+	@Override
+	public ModelMap getPassListType1(AdminMemberReVo AdminMemberReVo) {
+
+		ModelMap model = new ModelMap();
+		
+		AdminMemberReVo.setTYPE("1");
+		List<?> list = adminMember_reMapper.getExcelList(AdminMemberReVo);
+		
+		model.put("list", list);
+		
+		return model;
+	}
+
+	@Override
+	public void setMemberReMatching(AdminMatchingVo matching) {
+		
+		adminMember_reMapper.setMatching(matching);
+		
+	}
+
 	
 
 }

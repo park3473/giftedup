@@ -30,6 +30,7 @@ public class AdminMemberReVo extends SearchVo {
 	String SCHOOL_NAME = ""; 
 	String SCHOOL_YEAR = "";
 	String SCHOOL_GROUP = "";
+	String SCHOOL_ADDRESS = "";
 
 	String ELIGIBILITY = "";
 	String SUPPORT_AREA = "";
@@ -310,6 +311,12 @@ public class AdminMemberReVo extends SearchVo {
 	}
 	public void setCOMMENT(String cOMMENT) {
 		COMMENT = cOMMENT;
+	}
+	public String getSCHOOL_ADDRESS() {
+		return SCHOOL_ADDRESS;
+	}
+	public void setSCHOOL_ADDRESS(String sCHOOL_ADDRESS) {
+		SCHOOL_ADDRESS = sCHOOL_ADDRESS;
 	}
 	
 	

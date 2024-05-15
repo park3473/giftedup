@@ -105,5 +105,9 @@ public interface AdminMemberReMapper {
 
 	public int getListExistingCnt(AdminMemberReVo adminMemberReVo);
 
+	public void setMemberNewMemberId(AdminMemberReVo adminMemberReVo);
+
+	public void setMemberOldMemberId(AdminMemberReVo adminMemberReVo);
+
 
 }

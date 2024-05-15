@@ -37,7 +37,15 @@
 	</select>
 	
 	<select id="getListPass" resultType="hashMap" >
-		SELECT * FROM TBL_MEMBER_RE  WHERE result = "pass" order by CREATE_TM desc
+		SELECT t1.IDX, MEMBER_ID, PASSWORD, TYPE, TYPE_SUB, LEVEL, NAME, BIRTH, SEX, PHONE, EMAIL, PARENT_PHONE, ZIPCODE, ADDRESS, ADDRESS_DETAIL, ADDRESS_LOCAL, SCHOOL_ADDRESS, SCHOOL_LOCATION, SCHOOL_TYPE, SCHOOL_NAME, SCHOOL_YEAR, SCHOOL_GROUP, ELIGIBILITY, RESULT , MATCHING
+		FROM TBL_MEMBER_RE t1
+		JOIN (
+		    SELECT MIN(IDX) as IDX
+		    FROM TBL_MEMBER_RE
+		    WHERE RESULT = 'pass'
+		    GROUP BY BIRTH, PHONE, SEX, EMAIL
+		) t2 ON t1.IDX = t2.IDX
+		WHERE t1.RESULT = 'pass';
 	</select>
 	
 	<select id="getList" resultType="hashMap" parameterType="egovframework.kaist.admin.member_re.model.AdminMemberReVo">
@@ -52,11 +60,11 @@
 <!-- 		SELECT * -->
 <!-- 		FROM TBL_MEMBER_RE JOIN TBL_DCMNT ON TBL_MEMBER_RE.IDX = TBL_DCMNT.MEMBER_IDX  -->
 <!-- 		WHERE 1=1 -->
-		<if test="RESULT != ''">
-	    	AND RESULT = #{RESULT}
-	    </if>
 	    <if test="RESULT == ''">
 	    	AND RESULT = 'check'
+	    </if>
+	    <if test="RESULT == 'pass'">
+	    	AND (RESULT = 'pass' OR RESULT = 'final') 
 	    </if>
 	    
 	    <if test="ADDRESS_LOCAL != ''">
@@ -126,8 +134,8 @@
 		<if test="SEARCH_TEXT == ''">
 		AND !(TYPE = 1 AND LEVEL = 8)
 		</if>
-		<if test="RESULT != ''">
-	    	AND RESULT = #{RESULT}
+		<if test="RESULT == 'pass'">
+	    	AND (RESULT = 'pass' OR RESULT = 'final') 
 	    </if>
 	    <if test="RESULT == ''">
 	    	AND RESULT = 'check'
@@ -320,7 +328,7 @@
 	<!-- 신입생 선발 모듈 - 신규 회원 아이디 발급 -->
 	<update id="setMemberReNewMemberId" parameterType="egovframework.kaist.admin.member_re.model.AdminMemberReVo">
 		UPDATE TBL_MEMBER_RE
-		SET MEMBER_ID = #{MEMBER_ID} , PASSWORD = #{PASSWORD}
+		SET MEMBER_ID = #{MEMBER_ID} , PASSWORD = #{PASSWORD} , RESULT = 'final'
 		WHERE IDX = #{IDX}
 	</update>
 	
@@ -413,6 +421,9 @@
 		    		 AND MENTEE.${SEARCH_TYPE} LIKE '%${SEARCH_TEXT}%'
 		    	</if>
 		    	
+		    </if>
+		    <if test="RESULT != ''">
+		    	AND MENTEE.RESULT = #{RESULT}
 		    </if>
 			ORDER BY MENTEE.MATCHING , MENTEE.CREATE_TM DESC
 		</if>
@@ -542,5 +553,124 @@
 		    	</if>
 		    </if>
 	</select>
+	
+	<insert id="setMemberNewMemberId" parameterType="egovframework.kaist.admin.member_re.model.AdminMemberReVo">
+		INSERT INTO /*AdminMemberMapper*/ TBL_MEMBER (
+			MEMBER_ID,
+			PASSWORD,
+			NAME,
+			PHONE,
+			EMAIL,
+			LEVEL,
+			JOIN_TM,
+			CREATE_TM,
+			TYPE,
+			TYPE_SUB,
+			NAME_ENG,
+			NAME_HANJA,
+			IMAGE,
+			ADDRESS_LOCAL,
+			SCHOOL_NAME,
+			SCHOOL_TYPE,
+			SCHOOL_YEAR,
+			SCHOOL_GROUP,
+			BIRTH,
+			SEX,
+			SCHOOL_ZIPCODE,
+			SCHOOL_ADDRESS,
+			SCHOOL_ADDRESS_DETAIL,
+			SUPPORT_AREA,
+			ZIPCODE,
+			ADDRESS,
+			ADDRESS_DETAIL,
+			PARENTS_NAME,
+			PARENTS_RELATION,
+			PARENTS_PHONE,
+			PARENTS_PHONE2,
+			INFO_AGREEMENT,
+			DORMANCY_TM,
+			LOGIN_TM,
+			UPDATE_TM,
+			STATUS,
+			SCHOOL_NUMBER,
+			SCHOOL_JIGGEUB,
+			TEL,
+			AREA_NUMBER,
+			SCHOOL_MAJOR,
+			ELIGIBILITY,
+			EXP,
+			EXP_TYPE,
+			EXP_DATA
+			
+		) VALUES (
+			#{MEMBER_ID},
+			#{PASSWORD},
+			#{NAME},
+			#{PHONE},
+			#{EMAIL},
+			#{LEVEL},
+			now(),
+			now(),
+			#{TYPE},
+			'',
+			'',
+			'',
+			'',
+			#{ADDRESS_LOCAL},
+			#{SCHOOL_NAME},
+			#{SCHOOL_TYPE},
+			#{SCHOOL_YEAR},
+			#{SCHOOL_GROUP},
+			#{BIRTH},
+			#{SEX},
+			'',
+			#{SCHOOL_ADDRESS},
+			'',
+			'',
+			#{ZIPCODE},
+			#{ADDRESS},
+			#{ADDRESS_DETAIL},
+			#{TYPE_SUB},
+			'',
+			#{PARENT_PHONE},
+			'',
+			'1',
+			null,
+			null,
+			now(),
+			'',
+			'',
+			'',
+		
+			'',
+			'',
+			'',
+			#{ELIGIBILITY},
+			'',
+			'',
+			'24'
+		) 
+	</insert>
+	
+	<update id="setMemberOldMemberId" parameterType="egovframework.kaist.admin.member_re.model.AdminMemberReVo">
+		UPDATE TBL_MEMBER SET
+		BIRTH = #{BIRTH},
+		SCHOOL_MAJOR = #{TYPE_SUB},
+		PHONE = #{PHONE},
+		EMAIL = #{EMAIL},
+		<if test="PARENT_PHONE != ''">
+		PARENT_PHONE = #{PARENT_PHONE},
+		</if>
+		ZIPCODE = #{ZIPCODE},
+		ADDRESS = #{ADDRESS},
+		ADDRESS_DETAIL = #{ADDRESS_DETAIL},
+		ADDRESS_LOCAL = #{ADDRESS_LOCAL},
+		SCHOOL_YEAR = #{SCHOOL_YEAR},
+		SCHOOL_GROUP = #{SCHOOL_GROUP},
+		ELIGIBILITY = #{ELIGIBILITY},
+		EXP_DATA = CONCAT(EXP_DATA, ',24')
+		WHERE MEMBER_ID = #{MEMBER_ID}
+		
+	</update>
 	
 </mapper>
