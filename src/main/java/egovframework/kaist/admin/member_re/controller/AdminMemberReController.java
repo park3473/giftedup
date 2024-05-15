@@ -473,6 +473,42 @@ public class AdminMemberReController {
 		
 	}
 	
+	@RequestMapping(value="/admin/member_re/api/PassMemberListAll.do" , method = RequestMethod.POST , produces = "application/json; charset=utf8")
+	@ResponseBody
+	public String PassMemberListAll(@ModelAttribute("AdminMemberReVo")AdminMemberReVo AdminMemberReVo , HttpServletRequest request , HttpServletResponse response) throws JsonProcessingException{
+		
+		
+		List<?> list = adminMember_reService.getAllListPass();
+		
+		if(list.size() <= 0) {
+			ObjectMapper mapper = new ObjectMapper();
+			String jsonStr = mapper.writeValueAsString(list);
+			return jsonStr;
+		}else{
+			ObjectMapper mapper = new ObjectMapper();
+			String jsonStr = mapper.writeValueAsString(list);
+			return jsonStr;
+		}
+		
+	}
+	
+	@RequestMapping(value="/admin/member_re/api/PassMemberInsert.do" , method = RequestMethod.POST , produces = "application/json; charset=utf8")
+	@ResponseBody
+	public String PassMemberInsert(@ModelAttribute("AdminMemberReVo")AdminMemberReVo AdminMemberReVo , HttpServletRequest request , HttpServletResponse response) throws JsonProcessingException {
+		
+		
+		String result = "false";
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		result = mapper.writeValueAsString(result);
+		
+		return result;
+		
+	}
+	
+	
+	
 	//신입생 선발 선정 모듈
 	//-------------------------------------------------------------------------------------------------------------------
 	@RequestMapping(value = "/admin/member_re/PassMemberReUploadProgram.do" , method = RequestMethod.GET)
@@ -512,7 +548,6 @@ public class AdminMemberReController {
 				BIRTHCHANGE = BIRTHCHANGE.substring(2,BIRTHCHANGE.length());
 				
 				String PASSWORD = SUtil.getSHA256(BIRTHCHANGE);
-				
 				
 				if(map.get("LEVEL").equals("8")) {
 					
@@ -569,7 +604,6 @@ public class AdminMemberReController {
 				String NAME = (String) map.get("NAME");
 				
 				String Last_Name = NAME.substring(NAME.length() - 1);
-				
 				
 				if(Last_Name.matches("[+-]?\\d*(\\.\\d+)?")) {
 					
