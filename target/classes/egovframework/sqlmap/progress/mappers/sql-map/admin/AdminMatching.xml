@@ -11,96 +11,106 @@
 
 	
 	<select id="getList" resultType="hashMap" parameterType="egovframework.kaist.admin.matching.model.AdminMatchingVo">
-		SELECT * FROM (
-			SELECT /*AdminMatchingMapper*/ *
-				, (SELECT SCHOOL_NUMBER FROM TBL_MEMBER WHERE MEMBER_ID = TBL_MATCHING.MEMBER_ID) AS SCHOOL_NUMBER
-				, (SELECT NAME FROM TBL_MEMBER WHERE MEMBER_ID = TBL_MATCHING.MEMBER_ID) AS NAME
-				, (SELECT PHONE FROM TBL_MEMBER WHERE MEMBER_ID = TBL_MATCHING.MEMBER_ID) AS PHONE
-				,  (SELECT NAME FROM TBL_MEMBER WHERE MEMBER_ID = TBL_MATCHING.PROFESSOR_MEMBER_ID) AS PROFESSOR_MEMBER_NAME
-			FROM TBL_MATCHING
-		) AS A
-		
-		
+		SELECT 
+			student.MEMBER_ID AS StudentID,
+			student.ADDRESS_LOCAL AS Student_ADDRESS_LOCAL,
+		   	student.NAME AS StudentName, 
+		   	student.BIRTH AS StudentBIRTH,
+			student.SEX AS StudentSEX,
+			student.SCHOOL_NAME AS StudentSCHOOL_NAME,
+			student.SCHOOL_YEAR AS StudentSCHOOL_YEAR,
+			student.SUPPORT_AREA AS StudentSUPPORT_AREA,
+			student.PHONE AS StudentPHONE,
+			student.PARENTS_PHONE AS StudentPARENTS_PHONE,
+			student.ELIGIBILITY AS StudentELIGIBILITY,
+			student.ADDRESS AS StudentADDRESS,
+			student.ADDRESS_DETAIL AS StudentADDRESS_DETAIL,
+		   	teacher.MEMBER_ID AS TeacherID, 
+		   	teacher.NAME AS TeacherName, 
+		   	teacher.ADDRESS_LOCAL AS TeacherADDRESS_LOCAL,
+		   	teacher.SCHOOL_NAME AS TeacherSCHOOL_NAME,
+		   	teacher.SEX AS TeacherSEX,
+		   	teacher.PHONE AS TeacherPHONE,
+		   	teacher.EMAIL AS TeacherEMAIL
+		FROM 
+		    TBL_MATCHING AS matching 
+		INNER JOIN 
+		    TBL_MEMBER AS student ON matching.MEMBER_ID = student.MEMBER_ID 
+		LEFT JOIN 
+		    TBL_MEMBER AS teacher ON matching.PROFESSOR_MEMBER_ID = teacher.MEMBER_ID
 		WHERE 1=1 
-		AND YEAR = #{YEAR}
+		AND matching.YEAR = #{YEAR}
 		<if test="PROFESSOR_MEMBER_ID != ''">
-	    	AND PROFESSOR_MEMBER_ID = #{PROFESSOR_MEMBER_ID}
-	    </if>
-	   	<if test="YEAR != ''">
-	    	AND YEAR = #{YEAR}
+	    	AND matching.PROFESSOR_MEMBER_ID = #{PROFESSOR_MEMBER_ID}
 	    </if>
 	   	<if test="SUPPORT_GROUP != ''">
-	    	AND SUPPORT_GROUP = #{SUPPORT_GROUP}
-	    </if>	    
-	   	<if test="ENROLLMENT_STATUS != ''">
-	    	AND ENROLLMENT_STATUS = #{ENROLLMENT_STATUS}
-	    </if>	    
-	    
+	    	AND matching.SUPPORT_GROUP = #{SUPPORT_GROUP}
+	    </if>
+	    <if test="LO_TYPE == 'TRUE'">
+	    	AND student.ADDRESS_LOCAL IN 
+		    <foreach collection="LO_LIST" item="bno" open="(" close=")" separator=",">
+		    	#{bno}
+		    </foreach>
+	    </if>
 	     <if test="SEARCH_TEXT != ''">
 		     <if test="SEARCH_TYPE == 'ALL'">
 		    	AND (
 		    		NAME LIKE '%${SEARCH_TEXT}%' 
-		    		OR  A.MEMBER_ID LIKE '%${SEARCH_TEXT}%'
-		    		OR  A.SCHOOL_NAME LIKE '%${SEARCH_TEXT}%'
-		    		OR  A.PROFESSOR_MEMBER_ID LIKE '%${SEARCH_TEXT}%'
-		    		OR  A.PROFESSOR_MEMBER_NAME LIKE '%${SEARCH_TEXT}%'
+		    		OR  matching.MEMBER_ID LIKE '%${SEARCH_TEXT}%'
+		    		OR  matching.SCHOOL_NAME LIKE '%${SEARCH_TEXT}%'
+		    		OR  matching.PROFESSOR_MEMBER_ID LIKE '%${SEARCH_TEXT}%'
+		    		OR  matching.PROFESSOR_MEMBER_NAME LIKE '%${SEARCH_TEXT}%'
 		    		
 		    		
 		    		) 
 		    </if>
 		    <if test="SEARCH_TYPE != 'ALL'">
-	    		 AND ${SEARCH_TYPE} LIKE '%${SEARCH_TEXT}%'
+	    		 AND matching.${SEARCH_TYPE} LIKE '%${SEARCH_TEXT}%'
 	    	</if>
 	    </if>
-
-		order by UPDATE_TM desc
-		
-		LIMIT ${LIMIT} OFFSET ${OFFSET}
+		ORDER BY student.NAME , matching.UPDATE_TM
 	</select>
 		
 	<select id="getListCnt" resultType="int" parameterType="egovframework.kaist.admin.matching.model.AdminMatchingVo">
-		SELECT count(*) FROM (SELECT 
-			*
-				, (SELECT NAME FROM TBL_MEMBER WHERE MEMBER_ID = TBL_MATCHING.MEMBER_ID) AS NAME
-				, (SELECT PHONE FROM TBL_MEMBER WHERE MEMBER_ID = TBL_MATCHING.MEMBER_ID) AS PHONE
-				
-				,  (SELECT NAME FROM TBL_MEMBER WHERE MEMBER_ID = TBL_MATCHING.PROFESSOR_MEMBER_ID) AS PROFESSOR_MEMBER_NAME
-		
-			FROM TBL_MATCHING
-		) AS A
-		
-		WHERE 1=1 
-		AND YEAR = #{YEAR}
+		SELECT
+			COUNT(*)
+		FROM 
+		    TBL_MATCHING AS matching 
+		INNER JOIN 
+		    TBL_MEMBER AS student ON matching.MEMBER_ID = student.MEMBER_ID 
+		LEFT JOIN 
+		    TBL_MEMBER AS teacher ON matching.PROFESSOR_MEMBER_ID = teacher.MEMBER_ID
+		WHERE 1=1
+		AND matching.YEAR = #{YEAR}
 		<if test="PROFESSOR_MEMBER_ID != ''">
-	    	AND PROFESSOR_MEMBER_ID = #{PROFESSOR_MEMBER_ID}
-	    </if>
-	   	<if test="YEAR != ''">
-	    	AND YEAR = #{YEAR}
+	    	AND matching.PROFESSOR_MEMBER_ID = #{PROFESSOR_MEMBER_ID}
 	    </if>
 	   	<if test="SUPPORT_GROUP != ''">
-	    	AND SUPPORT_GROUP = #{SUPPORT_GROUP}
-	    </if>	    
-	   	<if test="SUPPORT_GROUP != ''">
-	    	AND ENROLLMENT_STATUS = #{ENROLLMENT_STATUS}
-	    </if>	    
-	    
+	    	AND matching.SUPPORT_GROUP = #{SUPPORT_GROUP}
+	    </if>
+	    <if test="LO_TYPE == 'TRUE'">
+	    	AND student.ADDRESS_LOCAL IN 
+		    <foreach collection="LO_LIST" item="bno" open="(" close=")" separator=",">
+		    	#{bno}
+		    </foreach>
+	    </if>
 	     <if test="SEARCH_TEXT != ''">
 		     <if test="SEARCH_TYPE == 'ALL'">
 		    	AND (
 		    		NAME LIKE '%${SEARCH_TEXT}%' 
-		    		OR  A.MEMBER_ID LIKE '%${SEARCH_TEXT}%'
-		    		OR  A.SCHOOL_NAME LIKE '%${SEARCH_TEXT}%'
-		    		OR  A.NAME LIKE '%${SEARCH_TEXT}%'
-		    		OR  A.PROFESSOR_MEMBER_ID LIKE '%${SEARCH_TEXT}%'
-
+		    		OR  matching.MEMBER_ID LIKE '%${SEARCH_TEXT}%'
+		    		OR  matching.SCHOOL_NAME LIKE '%${SEARCH_TEXT}%'
+		    		OR  matching.PROFESSOR_MEMBER_ID LIKE '%${SEARCH_TEXT}%'
+		    		OR  matching.PROFESSOR_MEMBER_NAME LIKE '%${SEARCH_TEXT}%'
+		    		
+		    		
 		    		) 
 		    </if>
 		    <if test="SEARCH_TYPE != 'ALL'">
-	    		 AND ${SEARCH_TYPE} LIKE '%${SEARCH_TEXT}%'
+	    		 AND matching.${SEARCH_TYPE} LIKE '%${SEARCH_TEXT}%'
 	    	</if>
-	    	
 	    </if>
-
+		ORDER BY student.NAME , matching.UPDATE_TM
 	</select>
 	
 	<select id="getListGroupByYear" resultType="hashMap" >

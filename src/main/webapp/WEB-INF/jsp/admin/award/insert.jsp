@@ -101,7 +101,6 @@
                     </div>
                 </section>
                 <!--본문 내용 end-->
-                
             </div>
         </div>
     </div>
@@ -127,14 +126,8 @@ window.ckeditorInstance;
 		let editorInstance1;
         editor("#editor").then(editor => {
 			window.ckeditorInstance = editor;
-			console.log(editor);
-			console.log(editor.plugins._availablePlugins);
-			// editor.plugins._availablePlugins가 Map 객체라고 가정했을 때,
-// 모든 키(플러그인 이름)를 배열로 변환하고 콘솔에 출력
-console.log(Array.from(editor.plugins._availablePlugins.keys()));
-
-
-
+        	// some code..
+            // then 이후에 받은 editor를 다른 변수로 받아주시는 편이 좋습니다!
         })
     })
 </script>

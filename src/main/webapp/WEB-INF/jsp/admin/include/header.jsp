@@ -30,7 +30,8 @@ String NowYear = String.valueOf(year);
                                     class="adm_menu_active"
                                     </c:if>>
                                     <a href="${pageContext.request.contextPath}/admin/member/list.do">
-                                        <img src="${pageContext.request.contextPath}/resources/img/admin/member_icon.png" alt="회원관리" />
+                                        <!--<img src="${pageContext.request.contextPath}/resources/img/admin/member_icon.png" alt="회원관리" />-->
+										<i class="las la-graduation-cap"></i>
                                     </a>
                                     <ul class="sub_menu_con">
                                         <div class="title notosans">
@@ -48,7 +49,7 @@ String NowYear = String.valueOf(year);
                                         </li>
                                         <li <c:if test="${fn:indexOf(requestURI, '/member/matching') > -1}">class="nav_active"</c:if>>
                                             <a href="${pageContext.request.contextPath}/admin/matching/list.do?YEAR=<%=NowYear%>">· 멘티 - 멘토 매칭관리</a>
-                                            <ul class="sub_menu_ob">
+                                            <ul class="sub_menu_ob" data-sysYear="${sysYear }">
 											<c:forEach var="i" begin="2020" end="${sysYear }">
 												<%String CheckYear = request.getParameter("YEAR"); pageContext.setAttribute("CheckYear",CheckYear);%>
 												<li <c:if test="${fn:indexOf(CheckYear, i) > -1}">class="nav_active"</c:if>>
@@ -57,7 +58,9 @@ String NowYear = String.valueOf(year);
 											</c:forEach>
 										</ul>
                                         </li>
-                                        
+                                        <li <c:if test="${fn:indexOf(requestURI, '/member/test/list') > -1}">class="nav_active"</c:if>>
+                                        	<a href="${pageContext.request.contextPath}/admin/member/test/list.do?YEAR=<%=NowYear%>" >· 신규 회원 관리</a>
+                                        </li>
                                         <li <c:if test="${fn:indexOf(requestURI, '/member/list') > -1}">class="nav_active"
                                             </c:if>>
                                             <a href="${pageContext.request.contextPath}/admin/member/list.do">· 회원그룹관리</a>
@@ -65,23 +68,18 @@ String NowYear = String.valueOf(year);
                                             <ul class="sub_menu_ob">
                                             	<li <c:if test="${fn:indexOf(requestURI, '/member/list.do') > -1 && model.beforeDomain.LEVEL == ''}">class="nav_active"</c:if> >
                                             		<a href="${pageContext.request.contextPath}/admin/member/list.do" >통합</a>
-                                                    <a href="#" onclick="alert('데이터 복구중입니다.')" >통합</a>
                                             	</li>
                                             	<li <c:if test="${fn:indexOf(requestURI, '/member/list.do') > -1 && model.beforeDomain.LEVEL == '8' && model.beforeDomain.COMM_TYPE == ''}">class="nav_active"</c:if> >
                                             		<a href="${pageContext.request.contextPath}/admin/member/list.do?LEVEL=8&TYPE=2" >멘토</a>
-                                                    <a href="#" onclick="alert('데이터 복구중입니다.')" >멘토</a>
                                             	</li>
                                             	<li <c:if test="${fn:indexOf(requestURI, '/member/list.do') > -1 && model.beforeDomain.LEVEL == '11'}">class="nav_active"</c:if> >
                                             		<a href="${pageContext.request.contextPath}/admin/member/list.do?LEVEL=11&TYPE=1">멘티</a>
-                                                    <a href="#" onclick="alert('데이터 복구중입니다.')" >멘티</a>
                                             	</li>
                                             	<li <c:if test="${fn:indexOf(requestURI, '/member/list.do') > -1 && model.beforeDomain.COMM_TYPE == 'ok'}">class="nav_active"</c:if> >
                                             		<a href="${pageContext.request.contextPath}/admin/member/list.do?LEVEL=8&COMM_TYPE=ok&TYPE=2">강사</a>
-                                                    <a href="#" onclick="alert('데이터 복구중입니다.')">강사</a>
                                             	</li>
                                             	<li <c:if test="${fn:indexOf(requestURI, '/member/list.do') > -1 && model.beforeDomain.LEVEL == '10'}">class="nav_active"</c:if> >
                                             		<a href="${pageContext.request.contextPath}/admin/member/list.do?LEVEL=10">웹회원</a>
-                                                    <a href="#" onclick="alert('데이터 복구중입니다.')" >웹회원</a>
                                             	</li>
                                             </ul>
                                             </c:if>
@@ -109,7 +107,8 @@ String NowYear = String.valueOf(year);
                                     class="adm_menu_active"
                                     </c:if>>
                                     <a href="${pageContext.request.contextPath}/admin/program/105/list.do">
-                                        <img src="${pageContext.request.contextPath}/resources/img/admin/program_icon.png" alt="프로그램관리" />
+                                        <!--<img src="${pageContext.request.contextPath}/resources/img/admin/program_icon.png" alt="프로그램관리" />-->
+										<i class="las la-chalkboard-teacher"></i>
                                     </a>
                                     <ul class="sub_menu_con">
                                         <div class="title notosans">
@@ -184,7 +183,8 @@ String NowYear = String.valueOf(year);
                                     class="adm_menu_active"
                                     </c:if>>
                                     <a href="${pageContext.request.contextPath}/admin/notices_data/1/list.do">
-                                        <img src="${pageContext.request.contextPath}/resources/img/admin/board_icon.png" alt="게시판관리" />
+                                        <!--<img src="${pageContext.request.contextPath}/resources/img/admin/board_icon.png" alt="게시판관리" />-->
+										<i class="las la-comment"></i>
                                     </a>
                                     <ul class="sub_menu_con">
                                         <div class="title notosans">
@@ -255,7 +255,8 @@ String NowYear = String.valueOf(year);
                                     class="adm_menu_active"
                                     </c:if>>
                                     <a href="${pageContext.request.contextPath}/admin/stats/student/list.do">
-                                        <img src="${pageContext.request.contextPath}/resources/img/admin/stats_icon.png" alt="통계관리" />
+                                        <!--<img src="${pageContext.request.contextPath}/resources/img/admin/stats_icon.png" alt="통계관리" />-->
+										<i class="las la-chart-bar"></i>
                                     </a>
                                     <ul class="sub_menu_con">
                                         <div class="title notosans">
@@ -290,7 +291,8 @@ String NowYear = String.valueOf(year);
                                     class="adm_menu_active"
                                     </c:if>>
                                     <a href="${pageContext.request.contextPath}/admin/member_re/list.do">
-                                        <img src="${pageContext.request.contextPath}/resources/img/admin/freshman_icon.png" alt="신입생관리" />
+                                        <!--<img src="${pageContext.request.contextPath}/resources/img/admin/freshman_icon.png" alt="신입생관리" />-->
+										<i class="las la-user-friends"></i>
                                     </a>
                                     <ul class="sub_menu_con">
                                         <div class="title notosans">
@@ -332,7 +334,8 @@ String NowYear = String.valueOf(year);
                                     class="adm_menu_active"
                                     </c:if> >
                                     <a href="${pageContext.request.contextPath}/admin/portfolio/stat.do">
-                                        <img src="${pageContext.request.contextPath}/resources/img/admin/portfolio_icon.png" alt="포트폴리오" />
+                                        <!--<img src="${pageContext.request.contextPath}/resources/img/admin/portfolio_icon.png" alt="포트폴리오" />-->
+										<i class="las la-chart-pie"></i>
                                     </a>
                                     <ul class="sub_menu_con">
                                         <div class="title notosans">

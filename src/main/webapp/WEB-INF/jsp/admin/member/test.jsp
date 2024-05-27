@@ -10,7 +10,49 @@
     <%@ include file="../include/head.jsp" %>
     <script src="${pageContext.request.contextPath}/resources/sweetalert/sweetalert2.min.js"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/sweetalert/sweetalert2.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/tabulator-tables/dist/css/tabulator.min.css" rel="stylesheet"> 
+    <link href="https://cdn.jsdelivr.net/npm/tabulator-tables/dist/css/tabulator.min.css" rel="stylesheet">
+    <style>
+        /* 테이블 스타일 */
+        .tabulator .tabulator-header {
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .tabulator .tabulator-header .tabulator-col {
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .tabulator .tabulator-row {
+            background-color: #ffffff;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .tabulator .tabulator-row:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        .tabulator .tabulator-cell {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .tabulator .tabulator-row:hover {
+            background-color: #e9ecef;
+        }
+
+        .tabulator .tabulator-selected {
+            background-color: #d1e7dd;
+            color: #495057;
+        }
+        .tabulator-footer-contents button{
+        	color : black !important;
+        	opacity: 1 !important;
+        }
+        .tabulator .tabulator-footer .tabulator-paginator{
+        	text-align : center !important;
+        }
+    </style>
 </head>
 
 <body>

@@ -51,7 +51,7 @@
 
 
 
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3211.7076090942833!2d127.39651041556478!3d36.39207169826551!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x356549e5fde31e29%3A0x65bf2de7ed4fe983!2z64yA7KCE6rSR7Jet7IucIOycoOyEseq1rCDrrLjsp4DroZwgMTkz!5e0!3m2!1sko!2skr!4v1655687353426!5m2!1sko!2skr" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3211.7076090942833!2d127.39651041556478!3d36.39207169826551!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x356549e5fde31e29%3A0x65bf2de7ed4fe983!2z64yA7KCE6rSR7Jet7IucIOycoOyEseq1rCDrrLjsp4DroZwgMTkz!5e0!3m2!1sko!2skr!4v1655687353426!5m2!1sko!2skr" width="100%" height="450" style="border:0;border-radius:15px;padding-bottom:20px" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 
 
 
@@ -86,8 +86,10 @@
 		            <span><a href="">이메일무단수집거부</a></span>
 		        </div>
 		        <div class="all_copy">
-					<p><span>TEL : </span>서울・강원・제주권역 (서울대학교) : 02-880-4477~8, 경기・인천권역 (인천대학교) : 032-835-4915, 충청・호남권역 (대전대학교) : 042-226-0701(혹은 0705), 경상권역 (부산대학교) : 051-510-1840~2</p>
-		            
+		            <span>주소 : 대전광역시 유성구 문지로 193 KAIST문지캠퍼스 카이스트 과학영재교육연구원(34051)</span><span class="gab">ㅣ</span>
+		            <span>TEL : 042-350-6223</span><span class="gab">ㅣ</span>
+		            <span>FAX : 042-350-8660</span><span class="gab">ㅣ</span>
+		            <span>E-MAIL : giftedup@kaist.ac.kr</span>
 		        </div>
 		        <div class="copy">
 		            <span>Copyright © 2020 영재키움 프로젝트 All Rights Reserved</span>

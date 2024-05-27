@@ -4,8 +4,8 @@
  * 레이아웃_공통(pc)
 ---------------------------------------------------------- */
 html, body {height:100%;padding:0;margin:0}
-body {font-size:1em;font-family:'Malgun Gothic', dotum, sans-serif;background:#fff;color:#555;line-height:27px;letter-spacing:-0.5px;overflow-x:hidden}
-h1, h2, h3, h4, h5, h6 {font-size:1em;font-family:'Malgun Gothic', dotum, sans-serif}
+body {font-size:1em;/*font-family:'Malgun Gothic', dotum, sans-serif;*/font-family:'Noto Sans KR',sans-serif;background:#fff;color:#555;line-height:27px;letter-spacing:-0.5px;overflow-x:hidden}
+h1, h2, h3, h4, h5, h6 {font-size:1em;/*font-family:'Malgun Gothic', dotum, sans-serif*/font-family:'Noto Sans KR',sans-serif;}
 ul, dl,dt,dd {margin:0;padding:0;list-style:none}
 legend {position:absolute;margin:0;padding:0;font-size:0;line-height:0;text-indent:-9999em;overflow:hidden}
 a {color:#555}
@@ -27,8 +27,8 @@ border:1px #dedede solid !important;
 
 /* 페이징 */
 .page_list {padding-top:30px}
-.page_list .page-item.active .page-link {background:#17375e;border-color:#17375e}
-.page_list .page-link {color:#000;background:#fff;border: 1px solid #dedede}
+.page_list .page-item.active .page-link {background:#17375e;border-color:#17375e;padding: .5rem 1.125rem}
+.page_list .page-link {color:#000;background:#fff;margin:0 2px;border:1px #dedede solid;padding: .5rem 1.125rem}}
 
 /* 폰트칼라 */
 .green_01{color:rgba(0,245,255,.5)}
@@ -113,8 +113,9 @@ border:1px #dedede solid !important;
 .right .table td, .table th {padding:1rem}
 
 /* 홍보자료 */
-.right .slide_01 img{border-radius:5px 5px 0 0}
-.right .slide_01 .cont{padding:15px;color:#bbb;border:1px #dedede solid;border-top:none;border-radius:0 0 5px 5px}
+.right .slide_01 .item{border:1px #dedede solid;border-radius:5px}
+.right .slide_01 img{max-width:100%;padding:10px}
+.right .slide_01 .cont{padding:15px;color:#bbb}
 .right .slide_01 .tit{font-weight:bold;color:#000;padding-bottom:5px}
 
 /* 동영상 */
@@ -140,11 +141,11 @@ border:1px #dedede solid !important;
 .kaist .flexbox{display:flex;flex-wrap:wrap;gap:1em;padding-top:15px}
 .kaist .item{flex-basis:150px;flex-grow:1;border:none;padding:20px}
 .kaist .item_02{flex-basis:100px;flex-grow:1;border:none;padding:10px}
-.kaist .item_03{flex-basis:400px;flex-grow:1;border:none;padding:10px}
-.kaist .box_01{background:rgba(255,255,255,.8);border-radius:5px;font-size:16px}
+.kaist .item_03{flex-basis:400px;flex-grow:1;border:none;padding:30px}
+.kaist .box_01{background:rgba(255,255,255,.8);border-radius:5px;font-size:16px;font-weight:500}
 .kaist .box_01 img{padding-bottom:10px}
-.kaist .box_02{background:#0068b6;border-radius:5px;font-size:16px;color:#fff}
-.kaist .box_03{background:#a8ceec;border-radius:5px;font-size:16px;color:#fff}
+.kaist .box_02{background:#0068b6;border-radius:5px;font-size:16px;color:#fff;font-weight:500}
+.kaist .box_03{background:#a8ceec;border-radius:5px;font-size:16px;color:#fff;font-weight:500}
 .kaist .box_04{background:rgba(0,89,156,.05);border-radius:5px;padding:30px;color:rgba(0,0,0,.5)}
 .kaist .box_05{background:rgba(0,89,156,.1);border-radius:5px;padding:30px;color:rgba(0,0,0,.5)}
 .kaist .box_06{background:rgba(255,150,0,.1);border-radius:5px;padding:30px;color:rgba(0,0,0,.5)}
@@ -172,7 +173,7 @@ border:1px #dedede solid !important;
 
 /* 좌우처리 */
 .garo_li {display:grid;align-items:flex-start;grid-template-columns:auto auto;grid-template-areas:"le ri"}
-.garo_li .le{background:rgba(0,146,170,.3);padding:15px;border-radius:5px;text-align:center;margin:7px 0;color:#fff;font-weight:bold}
+.garo_li .le{background:rgba(0,146,170,.3);padding:20px;border-radius:5px;text-align:center;margin:7px 0;color:#fff;font-weight:bold}
 .garo_li .ri{padding-left:20px;margin-bottom:10px}
 .garo_li .box_01{background:rgba(0,89,156,.3);}
 
@@ -188,7 +189,7 @@ border:1px #dedede solid !important;
 .col_sm_3 .col-sm-3 img{opacity:.3}
 .col_sm_3 .col-sm-3:first-child{border-left:none;padding-left:0}
 .col_sm_3 .col-sm-3:last-child{padding-right:0}
-.col_sm_3 .tit{border-bottom:1px #ededed solid;padding:15px 0;margin-bottom:15px;color:#00599c;letter-spacing:-1.5px}
+.col_sm_3 .tit{border-bottom:1px #ededed solid;padding:0 0 15px;margin-bottom:15px;color:#00599c;letter-spacing:-1.5px}
 .col_sm_3 .sul{text-align:left}
 .all_blit{background:url('/resources/img/2022/dot_01.jpg') no-repeat left 12px;padding-left:8px;padding-bottom:5px}
 
@@ -198,6 +199,18 @@ border:1px #dedede solid !important;
 /* ----------------------------------------------------------
  * 레이아웃_공통(mo)
 ---------------------------------------------------------- */
+
+
+
+@media only screen and (min-width:1921px) {
+
+
+.content .cont_left {padding-top:130px}
+.content .cont_right {background-size:cover;padding: 50px 150px;}
+.content .cont_right .slide{height:350px}
+}
+
+
 
 @media only screen and (max-width:1024px) {
 body {font-size:14px}
@@ -263,7 +276,7 @@ body {font-size:14px}
 .content .count .blink{display:none}
 
 /* ---------- * 컨텐츠오른쪽 ---------- */
-.content .cont_right {padding:35px}
+.content .cont_right {padding:25px}
 
 /* ---------- * 오른쪽 ---------- */
 /* 팝업메뉴 */

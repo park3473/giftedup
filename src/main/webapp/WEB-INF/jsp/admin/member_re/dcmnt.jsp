@@ -22,13 +22,13 @@
                 <div class="adm_sc_size">
 
                     <!--본문 내용-->
-                    <section class="adm_sc_txt">
+                    <section class="adm_sc_txt" >
                       <form action="./update.do" method="post" name="updateform" id="updateform" enctype="multipart/form-data">
                         <input type="hidden"  name="csrf" value="${CSRF_TOKEN}" /> <!-- Spring security 사용하기 때문에 csrf 토큰 필요!! -->
                         <input type="hidden"  name="IDX" value="${model.pageDomain.IDX}" />
-                        	<div class="member_re_01_wrap">
+                        	<div class="member_re_01_wrap" style="padding:30px">
                                 <form>
-                                    <div class="form_01">
+                                    <div class="form_01" style="text-align:center;border:1px #dedede solid;padding:10px">
                                         <div class="page_seach">   
                                             <select ID="DCMNT_TYPE" class="select_size" NAME="SEARCH_TYPE">
                                                 <c:forEach var="item" items="${model.types }" varStatus="var">
@@ -60,10 +60,10 @@
 	                          		<tbody>
 	                                   <c:forEach var="item" items="${model.list}" varStatus="var">
 		                                    <tr>
-		                                    	<td>
+		                                    	<td style="text-align:left">
 		                                    		${item.DCMNT_TYPE}
 		                                    	</td>
-		                                    	<td>
+		                                    	<td style="text-align:left">
 		                                    		${item.DCMNT_NAME}
 		                                    	</td>
 		                                    	<td>

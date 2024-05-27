@@ -121,7 +121,7 @@
                                                 <input type="text" value="${model.beforeDomain.SEARCH_TEXT}" name="SEARCH_TEXT" id="SEARCH_TEXT"  />
                                                 <label class="blind" for="SEARCH_TEXT">검색창</label>
                                                 <button type="button" name="seach" value="검색" onClick="searchBtnClick()">검색</button>
-                                                <button type="button" style="background-color:#fff2c4" name="seach" value="새로고침" onClick="location.href='./list.do'">새로고침</button>
+                                                <button type="button" style="background-color:#0092aa;margin-left:10px" name="seach" value="새로고침" onClick="location.href='./list.do'">새로고침</button>
                                             </form>
                                         </div>
                                     </div>
@@ -280,8 +280,11 @@
 						class="gab">ㅣ</span> <span><a href="">이메일무단수집거부</a></span>
 				</div>
 				<div class="all_copy">
-					<p><span>TEL : </span>서울・강원・제주권역 (서울대학교) : 02-880-4477~8, 경기・인천권역 (인천대학교) : 032-835-4915, 충청・호남권역 (대전대학교) : 042-226-0701(혹은 0705), 경상권역 (부산대학교) : 051-510-1840~2</p>
-					
+					<span>주소 : 대전광역시 유성구 문지로 193 KAIST문지캠퍼스 카이스트
+						과학영재교육연구원(34051)</span><span class="gab">ㅣ</span> <span>TEL :
+						042-350-6227</span><span class="gab">ㅣ</span> <span>FAX :
+						042-350-6224</span><span class="gab">ㅣ</span> <span>E-MAIL :
+						giftedup@kaist.ac.kr</span>
 				</div>
 				<div class="copy">
 					<span>Copyright © 2020 영재키움 프로젝트 All Rights Reserved</span>

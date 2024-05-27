@@ -86,7 +86,7 @@
 
 													<div class="form_con password_find_wrap">
 														<div class="form_size" style="width: 100%;">
-															<p>※ 비밀번호 잊어버릴시 휴대전화 인증으로<br> 로그인해주시기 바랍니다.</p>
+															<p>※ 비밀번호 잊어버릴시 휴대전화 인증으로 로그인해주시기 바랍니다.</p>
 															<p>※ 인증 후 비밀번호 수정은 마이페이지에서 가능합니다.</p>
 														</div>
 														<div class="form_btn form_btn_m">
@@ -185,8 +185,11 @@
 						class="gab">ㅣ</span> <span><a href="">이메일무단수집거부</a></span>
 				</div>
 				<div class="all_copy">
-					<p><span>TEL : </span>서울・강원・제주권역 (서울대학교) : 02-880-4477~8, 경기・인천권역 (인천대학교) : 032-835-4915, 충청・호남권역 (대전대학교) : 042-226-0701(혹은 0705), 경상권역 (부산대학교) : 051-510-1840~2</p>
-					
+					<span>주소 : 대전광역시 유성구 문지로 193 KAIST문지캠퍼스 카이스트
+						과학영재교육연구원(34051)</span><span class="gab">ㅣ</span> <span>TEL :
+						042-350-6227</span><span class="gab">ㅣ</span> <span>FAX :
+						042-350-6224</span><span class="gab">ㅣ</span> <span>E-MAIL :
+						giftedup@kaist.ac.kr</span>
 				</div>
 				<div class="copy">
 					<span>Copyright © 2020 영재키움 프로젝트 All Rights Reserved</span>

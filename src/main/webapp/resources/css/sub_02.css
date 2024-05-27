@@ -318,7 +318,7 @@
 /*테이블*/
 #new_sub_con .sub_page .txt {
     width: 100%;
-    border: 1px solid #dedede;
+    border-bottom: 1px solid #dedede;
     margin-bottom: 25px;
     table-layout: auto;
     position: relative;
@@ -334,29 +334,35 @@
 
 #new_sub_con .sub_page .txt th {
     text-align: center !important;
-    background-color: #e6ecf8;
+    background-color: #f4f4f4;
     border-right: 1px solid #dedede;
-    padding: 13px 0;
+    padding: 7px 0;
     color: #243558;
     font-size: 1rem;
     font-weight: 400;
     border-bottom: 1px solid #dedede;
+	border-top: 1px solid #ccc;
 }
 
 #new_sub_con .sub_page .txt td {
     text-align: center;
-    padding: 15px 10px;
+    padding: 5px;
+	border-top: 1px solid #dedede;
     border-right: 1px solid #dedede;
     border-bottom: 1px solid #dedede;
     color: #5c5c5c;
-    font-weight: 300;
     word-break: break-all;
-    font-size: 0.95rem;
-    line-height: 20px;
+    font-size: 0.95rem_;
+    line-height: 28px;
 }
 
+#new_sub_con .sub_page .txt td:last-child {
+    border-right: 0px solid #dedede;
+}
+
+
 #new_sub_con .sub_page .txt td .file_btn_con {
-    margin-bottom: .5rem;
+    margin-bottom: .2rem;
 }
 
 #new_sub_con .sub_page .txt td .file_btn_con:last-of-type {
@@ -432,10 +438,13 @@
 }
 
 #new_sub_con .sub_page .txt td .pro_file_btn {
-    padding: 5px 10px;
+    height:30px;
+	padding:0 20px;
     background-color: rgb(240, 240, 240);
     color: #555;
     display: inline-block;
+	font-size:.75rem;
+	border-radius:15px;
 }
 
 #new_sub_con .sub_page .txt td > span {
@@ -449,7 +458,7 @@
 
 #new_sub_con .sub_page .txt td > .notice {
     display: block;
-    padding: 7px 10px;
+    padding: 3px 10px;
     background-color: #009dc4;
     color: #fff;
     border-radius: .3rem;
@@ -497,7 +506,7 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-    padding: 25px 20px;
+    padding: 0px 20px;
 }
 
 #new_sub_con .sub_page .txt .pic {
@@ -517,13 +526,13 @@
 }
 
 .info_wrap > .title {
-    padding: 15px 25px;
-    background-color: #d9dfec;
+    padding:0 0 20px 0;
+    background-color: #d9dfec_;
 }
 
 .info_wrap > .title > h2 {
     color: #009dc4;
-    font-size: 1rem;
+    font-size: 1.25rem;
     font-weight: 500;
     margin-bottom: 0;
 }
@@ -1269,9 +1278,9 @@
 .member_seach_form {
     width: 100%;
     display: table;
-    border: 1px solid #dedede;
+    border: 0px solid #dedede;
     background-color: #fff;
-    padding: 25px;
+    padding: 25px_;
     margin-bottom: 30px;
 }
 

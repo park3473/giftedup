@@ -1,10 +1,12 @@
 ﻿package egovframework.kaist.admin.matching.controller;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,7 +75,23 @@ public class AdminMatchingController {
 		adminMatchingVo.setOFFSET(pagelimit);
 		
 	
-    			
+		//지역별 관리자 확인 1.session에 지역확인 2.sutil 에 저장된 배열 받기(지역관리)
+		HttpSession session = request.getSession();
+				
+		if(session.getAttribute("ssion_local_type") != null && session.getAttribute("ssion_local_type") != "전체") {
+					
+			System.out.println(session.getAttribute("ssion_local_type"));
+					
+			String LOCAL = (String) session.getAttribute("ssion_local_type");
+			System.out.println(LOCAL);
+					
+			List <String> LO_TYPE = SUtil.getLO_TYPE_LIST(LOCAL);
+					
+			adminMatchingVo.setLO_LIST(LO_TYPE);
+					
+			adminMatchingVo.setLO_TYPE("TRUE");
+					
+		}		
 		
 		model = adminMatchingService.getList(adminMatchingVo);
 		

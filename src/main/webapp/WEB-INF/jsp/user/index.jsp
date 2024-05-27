@@ -22,14 +22,15 @@
 
 <style>
 .tabs .tab-contents ul li{
-  /* white-space: nowrap; */
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   display: block;
+  line-height:34px;
 }
     
 .tabs {
-  max-width: 640px;
+  /*max-width: 640px;*/
   margin: 0 auto;
 }
 
@@ -44,15 +45,31 @@
 
 #tab-button li {
   display: table-cell;
-  width: 20%;
+  width: 20%;border-left:1px rgba(0,89,156,.8) solid;font-weight:500
 }
+
+#tab-button li i{
+padding-left:5px
+}
+
+
+
+
+#tab-button li:first-child {
+border-left:none
+}
+
+
+#tab-button li:hover {
+border-left:1px rgba(255,255,555,.5) solid
+}
+
 #tab-button li a {
   display: block;
   padding: .5em;
-  background: #eee;
-  border: 1px solid #ddd;
+  background: #00599c;
   text-align: center;
-  color: #000;
+  color: #fff;
   text-decoration: none;
 }
 #tab-button li:not(:first-child) a {
@@ -60,13 +77,13 @@
 }
 #tab-button li a:hover,
 #tab-button .is-active a {
-  border-bottom-color: transparent;
-  background: #fff;
+  background:rgba(255,255,255,0.8);
+  color:#000;
 }
 .tab-contents {
   padding: .5em 2em 1em;
-  border: 1px solid #ddd;
-  background-color: rgba(233,233,233,0.7);
+  border: 0px solid #ddd;
+  background-color: rgba(255,255,255,0.8);
   border-radius: 0 0 5px 5px;
 }
 
@@ -92,11 +109,19 @@ border-radius: 0 5px 0 0;
 @media screen and (max-width:992px) {
 .tab-contents {
   margin-top: 0;
+  padding:15px;
 }
 
 .tab-select-outer {
   margin-top: 20px;
 }
+
+
+.tabs .tab-contents ul li{
+width:280px;
+line-height:20px;
+}
+
 }
 
 @media screen and (min-width: 640px) {
@@ -110,7 +135,6 @@ border-radius: 0 5px 0 0;
   }
   .tab-contents {
     position: relative;
-    top: -1px;
     margin-top: 0;
   }
 }
@@ -179,7 +203,7 @@ border-radius: 0 5px 0 0;
 	                    </ol>
 	                    <div class="carousel-inner">
 	                        <div class="carousel-item active">
-	                            <img style="cursor: pointer;" src="${pageContext.request.contextPath}/resources/img/sin_2024.png" onclick="location.href='/user/member_re/intro.do'" alt="">
+	                            <img src="${pageContext.request.contextPath}/resources/img/sin_2024.png" alt="">
 	                        </div>
 	                    </div>
 	                    <a class="carousel-control-prev" href="#carousel11_indicator" role="button" data-slide="prev"><i class="la la-angle-left" aria-hidden="true"></i></a>
@@ -188,12 +212,12 @@ border-radius: 0 5px 0 0;
 	            </div>
 	            <!-- 슬라이드끝 -->
 	            <!-- 탭 -->
-	            <div class="tabs border_5">
+	            <div class="tabs border_5_">
 	                <div class="tab-button-outer font_noto f_wet_03">
 	                    <ul id="tab-button">
-	                        <li><a href="#tab01">공지사항 <i onclick="location.href='${pageContext.request.contextPath}/user/notices_data/1/list.do'" class="fas fa-plus-circle" style="color: #5d7694;"></i> </a></li>
-	                        <li><a href="#tab02">알림마당 <i onclick="location.href='${pageContext.request.contextPath}/user/notices_data/11/list.do'" class="fas fa-plus-circle" style="color: #5d7694;"></i> </a></li>
-	                        <li><a href="#tab03">자료실 <i onclick="location.href='${pageContext.request.contextPath}/user/notices_data/3/list.do'" class="fas fa-plus-circle" style="color: #5d7694;"></i> </a></li>
+	                        <li><a href="#tab01">공지사항<i onclick="location.href='${pageContext.request.contextPath}/user/notices_data/1/list.do'" class="las la-arrow-right"></i></a></li>
+	                        <li><a href="#tab02">알림마당<i onclick="location.href='${pageContext.request.contextPath}/user/notices_data/11/list.do'" class="las la-arrow-right"></i></a></li>
+	                        <li><a href="#tab03">자료실<i onclick="location.href='${pageContext.request.contextPath}/user/notices_data/3/list.do'" class="las la-arrow-right"></i></a></li>
 	                    </ul>
 	                </div>
 	                <div class="tab-select-outer font_noto">
@@ -207,7 +231,7 @@ border-radius: 0 5px 0 0;
 	                    <ul>
 	                    	<c:forEach var="item" items="${model.NOTICES1.list }" varStatus="status">
 	                        	<li>
-	                        		<a href="${pageContext.request.contextPath}/user/notices_data/1/${item.IDX}/view.do">${item.TITLE}</a>
+	                        		‐ <a href="${pageContext.request.contextPath}/user/notices_data/1/${item.IDX}/view.do">${item.TITLE}</a>
                                </li>
 	                        </c:forEach>
 	                    </ul>
@@ -216,7 +240,7 @@ border-radius: 0 5px 0 0;
 	                    <ul>
 	                    	<c:forEach var="item" items="${model.NOTICES11.list }" varStatus="status">
 	                        	<li>
-	                        		<a href="${pageContext.request.contextPath}/user/notices_data/1/${item.IDX}/view.do">${item.TITLE}</a>
+	                        		‐ <a href="${pageContext.request.contextPath}/user/notices_data/1/${item.IDX}/view.do">${item.TITLE}</a>
                                </li>
 	                        </c:forEach>
 	                    </ul>
@@ -225,7 +249,7 @@ border-radius: 0 5px 0 0;
 	                    <ul>
 	                    	<c:forEach var="item" items="${model.NOTICES3.list }" varStatus="status">
 	                        	<li>
-	                        		<a href="${pageContext.request.contextPath}/user/notices_data/1/${item.IDX}/view.do">${item.TITLE}</a>
+	                        		‐ <a href="${pageContext.request.contextPath}/user/notices_data/1/${item.IDX}/view.do">${item.TITLE}</a>
                                </li>
 	                        </c:forEach>
 	                    </ul>
@@ -301,10 +325,10 @@ border-radius: 0 5px 0 0;
 		            <span><a href="">이메일무단수집거부</a></span>
 		        </div>
 		        <div class="all_copy">
-		            <!-- <span>주소 : 대전광역시 유성구 문지로 193 KAIST문지캠퍼스 카이스트 과학영재교육연구원(34051)</span><span class="gab">ㅣ</span> -->
-		            <p><span>TEL : </span>서울・강원・제주권역 (서울대학교) : 02-880-4477~8, 경기・인천권역 (인천대학교) : 032-835-4915, 충청・호남권역 (대전대학교) : 042-226-0701(혹은 0705), 경상권역 (부산대학교) : 051-510-1840~2</p>
-		            <!-- <span>FAX : 042-350-8660</span><span class="gab">ㅣ</span> -->
-		            <!-- <span>E-MAIL : giftedup@kaist.ac.kr</span> -->
+		            <span>주소 : 대전광역시 유성구 문지로 193 KAIST문지캠퍼스 카이스트 과학영재교육연구원(34051)</span><span class="gab">ㅣ</span>
+		            <span>TEL : 042-350-6223</span><span class="gab">ㅣ</span>
+		            <span>FAX : 042-350-8660</span><span class="gab">ㅣ</span>
+		            <span>E-MAIL : giftedup@kaist.ac.kr</span>
 		        </div>
 		        <div class="copy">
 		            <span>Copyright © 2020 영재키움 프로젝트 All Rights Reserved</span>

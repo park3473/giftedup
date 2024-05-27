@@ -1,5 +1,8 @@
 ﻿package egovframework.kaist.admin.matching.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import egovframework.kaist.admin.SearchVo;
 
 public class AdminMatchingVo extends SearchVo {
@@ -33,6 +36,11 @@ public class AdminMatchingVo extends SearchVo {
 	
 	String UP = "";
 	String DOWN = "";
+	
+	List<String> LO_LIST = new ArrayList();
+	
+	String LO_TYPE = "";
+	
 	public String getSCHOOL_NUMBER() {
 		return SCHOOL_NUMBER;
 	}
@@ -180,6 +188,18 @@ public class AdminMatchingVo extends SearchVo {
 	}
 	public void setEXP_DATA(String eXP_DATA) {
 		EXP_DATA = eXP_DATA;
+	}
+	public List<String> getLO_LIST() {
+		return LO_LIST;
+	}
+	public void setLO_LIST(List<String> lO_LIST) {
+		LO_LIST = lO_LIST;
+	}
+	public String getLO_TYPE() {
+		return LO_TYPE;
+	}
+	public void setLO_TYPE(String lO_TYPE) {
+		LO_TYPE = lO_TYPE;
 	}
 
 	

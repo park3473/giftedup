@@ -9,14 +9,52 @@
 </head>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<!-- ckeditor필요한 부분 -->
-<script src="${pageContext.request.contextPath}/resources/ckeditor2/ckeditor.js"></script>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/ckeditor2/ckeditor.css">
-<script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
-<style>
-.ck-button{margin-left: 0px !important}
-</style>
+<script src="//cdn.ckeditor.com/4.6.2/full/ckeditor.js"></script>
+<script language="JavaScript">
+    // ckeditor setting
+    var ckeditor_config = {
+        allowedContent : true,
+        resize_enabled : false, // 에디터 크기를 조절하지 않음
+        enterMode : CKEDITOR.ENTER_BR, // 엔터키를 <br> 로 적용함.
+        shiftEnterMode : CKEDITOR.ENTER_P, // 쉬프트 +  엔터를 <p> 로 적용함.
+        toolbarCanCollapse : true,
+        removePlugins : "elementspath", // DOM 출력하지 않음                        
+        filebrowserUploadUrl : '${pageContext.request.contextPath}/ckeditor/file_upload.do', // 파일 업로드를 처리 할 경로 설정.
+        height : '500px',
+        // 에디터에 사용할 기능들 정의
+        toolbar : [
+            [  'Source','NewPage', 'Preview' ],
+            [ 'Cut', 'Copy', 'Paste', 'PasteText', '-', 'Undo', 'Redo' ],
+            [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript' ],
+            ['NumberedList','BulletedList','-','Outdent','Indent','Blockquote'],
+            [ 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ], '/',
+            ['Image','Link','Table','HorizontalRule','Smiley','SpecialChar','PageBreak'],
+            ['Styles','Format','Font','FontSize'],['TextColor','BGColor'],['Maximize', 'ShowBlocks','-'],
+            [ 'About' ] ]
+    };
+
+    var editor = null;
+
+    jQuery(function() {
+        // ckeditor 적용
+        editor = CKEDITOR.replace("CONTENT", ckeditor_config);
+    });
+
+    CKEDITOR.on('dialogDefinition', function( ev ){
+        var dialogName = ev.data.name;
+        var dialogDefinition = ev.data.definition;
+
+        switch (dialogName) {
+            case 'image': //Image Properties dialog
+                //dialogDefinition.removeContents('info');
+                dialogDefinition.removeContents('Link');
+                dialogDefinition.removeContents('advanced');
+                break;
+        }
+    });
+    //CKEDITOR.config.contentsCss = '${pageContext.request.contextPath}/resources/css/startupTemplate.css';
+
+</script>
 <body>
     
 	<a href="#" class="openMenu pos_a"><i class="las la-bars"></i></a>
@@ -60,7 +98,6 @@
                                         <input type="hidden"  name="MEMBER_ID" value="${ssion_user_id }" />
                                         <input type="hidden" name="FILES" value="${model.pageDomain.FILES }"/>
                                         <div>
-                                        	<!-- 
                                             <div class="personal_wrap">
                                                 <div class="title">
                                                     <h2>개인정보 수집·활용 동의 및 필수항목의 고지</h2>
@@ -115,7 +152,7 @@
                                                     </div>
                                                 </ul>
                                             </div>
-											-->
+
                                             <div class="member_input_wrap">
                                                 <ul class="member_input">
                                                     <c:if test="${model.NOTICES.pageDomain.SECRET == 1}">
@@ -129,6 +166,10 @@
                                                         <span class="list_t">제목</span>
                                                         <input class="input_title" type="text" name="TITLE" id="TITLE" value="${model.pageDomain.TITLE}">
                                                     </li>
+	                                                <li>
+		                                                <span class="list_t">사진선택</span>
+		                                                <input type="hidden" id="IMAGE" name="IMAGE" value="${model.pageDomain.IMAGE }">
+		                                            </li>
                                                 <li>
                                                 <c:forEach var="item" items="${model.fileLIst}" varStatus="status">
                                                 <c:if test="${item != '' && item != null}">
@@ -153,7 +194,7 @@
 	                                            </c:forEach>
 	                                            </c:if>
                                                     <li class="pd-15">
-                                                        <textarea class="ta" name="CONTENT" id="editor">${model.pageDomain.CONTENT}</textarea>
+                                                        <textarea name="CONTENT" id="CONTENT">${model.pageDomain.CONTENT}</textarea>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -193,7 +234,11 @@
 						class="gab">ㅣ</span> <span><a href="">이메일무단수집거부</a></span>
 				</div>
 				<div class="all_copy">
-					<p><span>TEL : </span>서울・강원・제주권역 (서울대학교) : 02-880-4477~8, 경기・인천권역 (인천대학교) : 032-835-4915, 충청・호남권역 (대전대학교) : 042-226-0701(혹은 0705), 경상권역 (부산대학교) : 051-510-1840~2</p>
+					<span>주소 : 대전광역시 유성구 문지로 193 KAIST문지캠퍼스 카이스트
+						과학영재교육연구원(34051)</span><span class="gab">ㅣ</span> <span>TEL :
+						042-350-6227</span><span class="gab">ㅣ</span> <span>FAX :
+						042-350-6224</span><span class="gab">ㅣ</span> <span>E-MAIL :
+						giftedup@kaist.ac.kr</span>
 				</div>
 				<div class="copy">
 					<span>Copyright © 2020 영재키움 프로젝트 All Rights Reserved</span>
@@ -204,18 +249,7 @@
 		</div>
 		</body>
 		</html>
-<script type="module" >
-import editor from '/resources/ckeditor2/editor.js'
 
-window.ckeditorInstance;
-
-    $(document).ready(function () {
-		let editorInstance1;
-        editor("#editor").then(editor => {
-			window.ckeditorInstance = editor;
-        })
-    })
-</script>
 <script type="text/javascript">
 
     $(function () {
@@ -275,13 +309,13 @@ window.ckeditorInstance;
             return;
         }
         
-        /* 
+        
         var radiochk = $(":input:radio[name=agree]:checked").val();
         
         if(radiochk != 'Y'){
             alert('개인정보 수집·활용 동의 항목에 동의 해주세요.');
             return;
-        } */
+        }
         
         
         $('#updateform').submit();

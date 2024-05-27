@@ -6,9 +6,6 @@ $(document).ready(function () {
             backgroundColor: "transparent"
         });
         $(this).find(".sub_menu_con").show();
-        $(this).css({
-            backgroundColor: "#fff"
-        });
     });
 
     

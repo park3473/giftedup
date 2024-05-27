@@ -45,7 +45,8 @@
                                         </form>
                                     </div>
                                     <div class="stats_main_left_cart">
-                                        <div id="piechart" style="width: 100%; height: 500px;"></div>
+                                        <div id="piechart" style="width: 100%; height:500px;box-shadow: 0 0 10px #dedede;
+    border-radius:15px;padding:30px;background:#fff;margin-bottom:30px"></div>
                                     </div>
                                 </div>
                                 <div class="stats_main_right">

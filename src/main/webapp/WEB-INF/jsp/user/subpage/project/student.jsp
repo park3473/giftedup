@@ -30,7 +30,7 @@ thead {background-color:#89b5d4; color:white;}
 .col_sm_3 .tit {border-bottom: 1px #cccccc solid;}
 .row_1 {margin-right: 0px; margin-left: 0px;}
 .kaist .item_03, .kaist .item_05 {flex-basis: 360px;}
-.kaist .item_03 {padding:20px; color: rgba(0,0,0,.5);}
+.kaist .item_03 {padding:30px; color: rgba(0,0,0,.5);}
 
 </style>
 <body>
@@ -134,14 +134,14 @@ thead {background-color:#89b5d4; color:white;}
                 <div class="font_noto all_tit_22"><span class="cont_blit_01"></span>개인별 포트폴리오 관리</div>
                 <div class="b_pad_15">참여 학생들이 직접 교육프로그램 참여 이력 및 소감 작성, 담당 멘토교사가 내용 확인 및 피드백을 통해 체계적인 기록관리</div>
                 <div class="row_1 row col_sm_3 txt-brk text-center">
-                <div class="col-md col-12 aos-init aos-animate pt-3" style="background-color:rgba(0,89,156,.05); border-radius:10px;" data-aos="fade-up" data-aos-delay="300">
+                <div class="col-md col-12 aos-init aos-animate pt-3" style="background-color:rgba(0,89,156,.05); border-radius:10px;padding:30px" data-aos="fade-up" data-aos-delay="300">
                 <img src="${pageContext.request.contextPath}/resources/img/2022/ic_ico_05.png">
                 <div class="tit all_tit_20 font_noto">[학생-멘토교사]<br>멘토링 활동</div>
                 <div class="sul">
                     <div class="all_blit">멘토링 활동 프로그램 참여</div>
                 </div>
                 </div>
-                <div class="div_2 col-md col-12 aos-init aos-animate pt-3 pb-3" style="background-color:rgba(0,89,156,.1); border-radius:10px;" data-aos="fade-up" data-aos-delay="300">
+                <div class="div_2 col-md col-12 aos-init aos-animate pt-3 pb-3" style="background-color:rgba(0,89,156,.1); border-radius:10px;padding:30px" data-aos="fade-up" data-aos-delay="300">
                 <img src="${pageContext.request.contextPath}/resources/img/2022/ic_ico_06.png">
                 <div class="tit all_tit_20 font_noto">[학생]<br>포트폴리오 작성</div>
                 <div class="sul">
@@ -150,7 +150,7 @@ thead {background-color:#89b5d4; color:white;}
                     <div class="all_blit">모든 활동에 대해 작성</div>
                 </div>
                 </div>
-                <div class="col-md col-12 aos-init aos-animate pt-3" style="background-color:rgba(0,89,156,.05); border-radius:10px;" data-aos="fade-up" data-aos-delay="300">
+                <div class="col-md col-12 aos-init aos-animate pt-3" style="background-color:rgba(0,89,156,.05); border-radius:10px;padding:30px" data-aos="fade-up" data-aos-delay="300">
                 <img src="${pageContext.request.contextPath}/resources/img/2022/ic_ico_07.png">
                 <div class="tit all_tit_20 font_noto">[교사]<br>포트폴리오 확인</div>
                 <div class="sul">
@@ -194,7 +194,7 @@ thead {background-color:#89b5d4; color:white;}
         <div class="col-sm-12">
             <div class="font_noto all_tit_22"><span class="cont_blit_01"></span>과학고 영재학교 방문 프로그램</div>
             <div class="row_1 row col_sm_3 txt-brk text-center">
-            <div class="col-md col-12 aos-init aos-animate pt-3" style="background-color:rgba(0,89,156,.05); border-radius:10px;" data-aos="fade-up" data-aos-delay="300">
+            <div class="col-md col-12 aos-init aos-animate pt-3" style="background-color:rgba(0,89,156,.05); border-radius:10px;padding-top:30px" data-aos="fade-up" data-aos-delay="300">
             <div class="tit all_tit_20 font_noto" style="border-bottom:none;">과학고, 영재학교, 마이스터고, 대학 방문 진로탐색</div>
             </div>
             </div>
@@ -206,7 +206,7 @@ thead {background-color:#89b5d4; color:white;}
         <div class="col-sm-12">
             <div class="font_noto all_tit_22"><span class="cont_blit_01"></span>창의융합 캠프</div>
             <div class="row_1 row col_sm_3 txt-brk text-center">
-            <div class="col-md col-12 aos-init aos-animate pt-3" style="background-color:rgba(0,89,156,.05); border-radius:10px;" data-aos="fade-up" data-aos-delay="300">
+            <div class="col-md col-12 aos-init aos-animate pt-3" style="background-color:rgba(0,89,156,.05); border-radius:10px;padding-top:30px" data-aos="fade-up" data-aos-delay="300">
             <div class="b_pad_15 mb-2">진로 설계 및 창의적 문제해결력 향상을 위한 캠프, (초등) 온라인 캠프, (중ㆍ고등) 집합 캠프
             <br><span class="blue_01 font-bold font-14">※ 캠프 프로그램을 모두 참여한 경우에만 시수 인정</span>
             </div>
@@ -222,7 +222,7 @@ thead {background-color:#89b5d4; color:white;}
             <div class="col-sm-12">
                 <div class="font_noto all_tit_22"><span class="cont_blit_01"></span>온라인 학습멘토링</div>
                 <div class="row_1 row col_sm_3 txt-brk text-center">
-                <div class="col-md col-12 aos-init aos-animate pt-3" style="background-color:rgba(0,89,156,.05); border-radius:10px;" data-aos="fade-up" data-aos-delay="300">
+                <div class="col-md col-12 aos-init aos-animate pt-3" style="background-color:rgba(0,89,156,.05); border-radius:10px;padding-top:30px" data-aos="fade-up" data-aos-delay="300">
                 <div class="tit all_tit_20 font_noto">KAIST 온라인 학습 지원</div>
                 <div class="sul mb-3">
                     <div class="all_blit">KAIST 대학생의 온라인 학습 지원, 수학, 과학 수업을 격주로 3시간씩 진행, 독서프로그램</div>
@@ -323,8 +323,10 @@ thead {background-color:#89b5d4; color:white;}
 		            <span><a href="">이메일무단수집거부</a></span>
 		        </div>
 		        <div class="all_copy">
-					<p><span>TEL : </span>서울・강원・제주권역 (서울대학교) : 02-880-4477~8, 경기・인천권역 (인천대학교) : 032-835-4915, 충청・호남권역 (대전대학교) : 042-226-0701(혹은 0705), 경상권역 (부산대학교) : 051-510-1840~2</p>
-		            
+		            <span>주소 : 대전광역시 유성구 문지로 193 KAIST문지캠퍼스 카이스트 과학영재교육연구원(34051)</span><span class="gab">ㅣ</span>
+		            <span>TEL : 042-350-6223</span><span class="gab">ㅣ</span>
+		            <span>FAX : 042-350-8660</span><span class="gab">ㅣ</span>
+		            <span>E-MAIL : giftedup@kaist.ac.kr</span>
 		        </div>
 		        <div class="copy">
 		            <span>Copyright © 2020 영재키움 프로젝트 All Rights Reserved</span>

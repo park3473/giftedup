@@ -8,14 +8,14 @@
     <c:if test="${model.itempagestart-model.itemCount > 0}">
     <li id="prev_a" class="page-item">
         <a href="javascript:pageChanged(${model.page-1}, ${model.itempageend});" class="page-link">
-        	◁
+        	<i class="las la-angle-left"></i>
         </a>
     </li>
     </c:if>
     <c:if test="${model.itempagestart-model.itemCount <= 0}">
     <li id="prev_a" class="page-item">
         <a href="javascript:pageChanged(${model.page-1}, ${model.itempageend});" class="page-link">
-            ◁
+            <i class="las la-angle-left"></i>
         </a>
     </li>
     </c:if>
@@ -24,7 +24,7 @@
     <c:if test="${model.page <= 0}">
     <li id="prev_a" class="page-item">
         <a href="#" class="page-link">
-            ◁
+            <i class="las la-angle-left"></i>
         </a>
     </li>
     </c:if>
@@ -63,14 +63,14 @@
     <c:if test="${model.itemCount < model.itemtotalcount/(model.page+1)}">
     <li id="next_a" class="page-item">
         <a href="javascript:pageChanged(${model.page+1}, ${model.itemtotalpage});" class="page-link">
-            ▷
+            <i class="las la-angle-right"></i>
         </a>
     </li>
     </c:if>
     <c:if test="${model.itemCount >= model.itemtotalcount/(model.page+1)}">
     <li id="next_a" class="page-item">
         <a href="#" class="page-link">
-            ▷
+            <i class="las la-angle-right"></i>
         </a>
     </li>
     </c:if>

@@ -245,15 +245,10 @@
                                             
 	                                         <li class="pd-lr-10">
 	                                         	<span class="list_t">멘토교사 지원동기<br>(<span id="self_length">0</span>)</span>
-	                                         		<textarea type="text" maxlength="1000" name="SELF_INTR" id="SELF_INTR" class="SELF_INTR mr-2 textarea_size" readonly="readonly" placeholder="아래의 내용이 포함 되어야 합니다.&#13;&#10;1. 지원 동기 : 영재키움 프로젝트 참여한 이유와 동기, 다짐과 각오 등&#13;&#10;2. 태도와 경험: 지원분야(수과학, 영어, 인문사회, 발명 등)에 대한 경험과 어려움을 극복한 사례 등&#13;&#10;3. 성취: 지원 분야 또는 이외의 분야에서 어려움을 이기고 성공한 경험과 사례 등">${model.view.SELF_INTR }</textarea>
+	                                         		<textarea type="text" maxlength="1000" name="SELF_INTR" id="SELF_INTR" class="SELF_INTR mr-2 textarea_size" placeholder="아래의 내용이 포함 되어야 합니다.&#13;&#10;1. 지원 동기 : 영재키움 프로젝트 참여한 이유와 동기, 다짐과 각오 등&#13;&#10;2. 태도와 경험: 지원분야(수과학, 영어, 인문사회, 발명 등)에 대한 경험과 어려움을 극복한 사례 등&#13;&#10;3. 성취: 지원 분야 또는 이외의 분야에서 어려움을 이기고 성공한 경험과 사례 등">${model.view.SELF_INTR }</textarea>
 	                                         </li>
 	                                         </c:if>
-	                                         <c:if test="${model.view.COMMENT != '' }">
-											<li class="pd-lr-10">
-	                                         	<span class="list_t">관리자 코멘트</span>
-	                                         		<textarea type="text" name="COMMENT" id="COMMENT" class="COMMENT mr-2 textarea_size" >${model.view.COMMENT }</textarea>
-	                                         </li>									          
-	                                         </c:if>                              
+											                                        
                                         </ul>
                                     </div>
                                     </form>
@@ -367,14 +362,8 @@
 	                                         </li>
 	                                         <li class="pd-lr-10">
 	                                         	<span class="list_t">멘토교사 지원동기<br>(<span id="self_length">0</span>)</span>
-	                                         		<textarea type="text" maxlength="1000" name="SELF_INTR" id="SELF_INTR" class="SELF_INTR mr-2 textarea_size" readonly="readonly" placeholder="아래의 내용이 포함 되어야 합니다.&#13;&#10;1. 지원 동기 : 영재키움 프로젝트 참여한 이유와 동기, 다짐과 각오 등&#13;&#10;2. 태도와 경험: 지원분야(수과학, 영어, 인문사회, 발명 등)에 대한 경험과 어려움을 극복한 사례 등&#13;&#10;3. 성취: 지원 분야 또는 이외의 분야에서 어려움을 이기고 성공한 경험과 사례 등">${model.mento_view.SELF_INTR }</textarea>
+	                                         		<textarea type="text" maxlength="1000" name="SELF_INTR" id="SELF_INTR" class="SELF_INTR mr-2 textarea_size" placeholder="아래의 내용이 포함 되어야 합니다.&#13;&#10;1. 지원 동기 : 영재키움 프로젝트 참여한 이유와 동기, 다짐과 각오 등&#13;&#10;2. 태도와 경험: 지원분야(수과학, 영어, 인문사회, 발명 등)에 대한 경험과 어려움을 극복한 사례 등&#13;&#10;3. 성취: 지원 분야 또는 이외의 분야에서 어려움을 이기고 성공한 경험과 사례 등">${model.mento_view.SELF_INTR }</textarea>
 	                                         </li>
-	                                         <c:if test="${model.mento_view.COMMENT != '' }">
-	                                         <li class="pd-lr-10">
-	                                         	<span class="list_t">멘토교사 - 관리자 코멘트</span>
-	                                         		<textarea type="text" name="COMMENT" id="COMMENT" class="COMMENT mr-2 textarea_size">${model.mento_view.COMMENT }</textarea>
-	                                         </li>	
-	                                         </c:if>
 											                                        
                                         </ul>
                                     </div>
@@ -522,14 +511,9 @@
 	                                         
 	                                         <li class="pd-lr-10">
 	                                         	<span class="list_t">자기소개서<br>(<span id="self_length">0</span>)</span>
-	                                         		<textarea type="text" maxlength="1000" name="SELF_INTR" id="SELF_INTR" class="SELF_INTR mr-2 textarea_size" readonly="readonly" placeholder="아래의 내용이 포함 되어야 합니다.&#13;&#10;1. 지원 동기 : 영재키움 프로젝트 참여한 이유와 동기, 다짐과 각오 등&#13;&#10;2. 태도와 경험: 지원분야(수과학, 영어, 인문사회, 발명 등)에 대한 경험과 어려움을 극복한 사례 등&#13;&#10;3. 성취: 지원 분야 또는 이외의 분야에서 어려움을 이기고 성공한 경험과 사례 등">${model.student_view.SELF_INTR }</textarea>
+	                                         		<textarea type="text" maxlength="1000" name="SELF_INTR" id="SELF_INTR" class="SELF_INTR mr-2 textarea_size" placeholder="아래의 내용이 포함 되어야 합니다.&#13;&#10;1. 지원 동기 : 영재키움 프로젝트 참여한 이유와 동기, 다짐과 각오 등&#13;&#10;2. 태도와 경험: 지원분야(수과학, 영어, 인문사회, 발명 등)에 대한 경험과 어려움을 극복한 사례 등&#13;&#10;3. 성취: 지원 분야 또는 이외의 분야에서 어려움을 이기고 성공한 경험과 사례 등">${model.student_view.SELF_INTR }</textarea>
 	                                         </li>
-	                                         <c:if test="${model.student_view.COMMENT != '' }">
-	                                         <li class="pd-lr-10">
-	                                         	<span class="list_t">학생 - 관리자 코멘트</span>
-	                                         		<textarea type="text" name="COMMENT" id="COMMENT" class="COMMENT mr-2 textarea_size">${model.student_view.COMMENT }</textarea>
-	                                         </li>	
-											</c:if>
+											                                        
                                         </ul>
                                     </div>
                                     <div class="board_btn_wrap">
@@ -569,7 +553,11 @@
 						class="gab">ㅣ</span> <span><a href="">이메일무단수집거부</a></span>
 				</div>
 				<div class="all_copy">
-					<p><span>TEL : </span>서울・강원・제주권역 (서울대학교) : 02-880-4477~8, 경기・인천권역 (인천대학교) : 032-835-4915, 충청・호남권역 (대전대학교) : 042-226-0701(혹은 0705), 경상권역 (부산대학교) : 051-510-1840~2</p>
+					<span>주소 : 대전광역시 유성구 문지로 193 KAIST문지캠퍼스 카이스트
+						과학영재교육연구원(34051)</span><span class="gab">ㅣ</span> <span>TEL :
+						042-350-6227</span><span class="gab">ㅣ</span> <span>FAX :
+						042-350-6224</span><span class="gab">ㅣ</span> <span>E-MAIL :
+						giftedup@kaist.ac.kr</span>
 				</div>
 				<div class="copy">
 					<span>Copyright © 2020 영재키움 프로젝트 All Rights Reserved</span>

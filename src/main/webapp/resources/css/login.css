@@ -201,6 +201,7 @@
     color: #fff;
     font-size: 0.95rem;
     font-weight: 400;
+	border-radius:5px;
 }
 
 #new_sub_con .login_form .password_find_wrap .form_size > p {
@@ -218,11 +219,15 @@
     border: 0;
     background-color: #e1ce80;
     color: #fff;
-    font-size: 0.95rem;
+    font-size: 0.75rem;
     font-weight: 400;
+	border-radius:5px;
+	margin-top:10px
 }
 
-#new_sub_con .phone_login_wrap {}
+#new_sub_con .phone_login_wrap {
+margin-top:-27px
+}
 
 #new_sub_con .phone_login_wrap > p {
     font-size: 0.95rem;
@@ -236,6 +241,7 @@
     border: 1px solid #dedede;
     padding: 46px 44px;
     overflow: hidden;
+	height:303px
 }
 
 #new_sub_con .login_btn #number_btn {

@@ -40,7 +40,7 @@
                             </div>
                             <form action="list.do?" method="get">
                                 <div class="member_re_seach_form">
-                                    <div class="member_re_01_wrap">
+                                    <div style="text-align:center;border:1px #dedede solid;padding:10px">
                                         <form>
                                             <div class="form_01">
                                                 <div class="page_seach">
@@ -105,9 +105,6 @@
                                                     <input style="width: 191px;" type="text" value="${model.beforeDomain.SEARCH_TEXT}" name="SEARCH_TEXT" id="SEARCH_TEXT" placeholder="검색할 내용을 입력해주세요.">
                                                     <button type="button" onClick="searchBtnClick()" value="검색">검색</button>
                                                     <a class="w_btn" href="./list.do">새로고침</a>
-                                                    <button type="button" onClick="allExcelDown('all')" value="엑셀다운로드">전체 엑셀 다운로드</button>
-                                                    <button type="button" onClick="allExcelDown('local')" value="엑셀다운로드">현재 엑셀 다운로드</button>
-                                                    <button type="button" onClick="allFileDown()" value="파일다운로드">전체 파일 다운로드</button>
                                                 </div>
                                             </div>
                                         </form>
@@ -123,7 +120,7 @@
                                                 <th class="check"><input type="checkbox" class="" name="chk_calc_all" id="chk_calc_all" value=""></th>
                                                 <th class="number" data-col="IDX">순번</th>
                                                 <th class="type" data-col="type">유형</th>
-                                                <th class="name" style="width : 5%;">성명</th>
+                                                <th class="name">성명</th>
                                                 <th class="sex">성별<button id="upbtn" class="updwbtn" value="SEX">▲</button><button id="dwbtn" class="updwbtn" value="SEX" >▼</button></th>
                                                 <th class="address_local">지역<button id="upbtn" class="updwbtn" value="ADDRESS_LOCAL">▲</button><button id="dwbtn" class="updwbtn" value="ADDRESS_LOCAL" >▼</button></th>
                                                 <th class="birth">생년월일<button id="upbtn" class="updwbtn" value="BIRTH">▲</button><button id="dwbtn" class="updwbtn" value="BIRTH" >▼</button></th>
@@ -134,7 +131,7 @@
                                                 <th class="eligibility">지원자격</th>
                                                 <th class="support_area">신청 날짜</th>
                                                 <th class="result">서류</th>
-                                                <th class="sms">문자 발송</th>
+                                                <th class="delete">삭제</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -207,6 +204,14 @@
                                                 	<c:if test="${item.FILE_TYPE == '2' }">
                                                 		완료
                                                 	</c:if>
+                                                </td>
+                                                <td class="td_09">
+                                                    <c:if test="${item.TYPE == '1'}">
+                                                        <button type="button" onclick="MemberReDelete('${item.TYPE}','${item.MATCHING}')">삭제</button>
+                                                    </c:if>
+                                                    <c:if test="${item.TYPE == '2' || item.TYPE == '3'}">
+                                                        <button type="button" onclick="MemberReDelete('${item.TYPE}','${item.IDX}')">삭제</button>
+                                                    </c:if>
                                                 </td>
                                             </tr>
                                             </c:forEach>
@@ -500,41 +505,7 @@ function MemberReDelete(TYPE,DATA){
 		}
 		
 	}
-	
-	
-	
-	function SmsTest(){
-		
-		$.ajax({
-			url : '/admin/member_re/SmsSend.do',
-			type : 'POST',
-			data : ({
-				NAME : '박경호',
-				PHONE : '010-3473-3452',
-				SMSTEXT : ''
-			}),
-			success : function(data){
-				console.log(data);
-			},
-			error : function(xhr , error , status){
-				console.log('error');
-			}
-		})
-		
-	}
     
-	function allExcelDown(DownloadType){
-		
-		window.location.href='/admin/member_re/excelDown.do?DownloadType='+DownloadType+'';
-		
-	}
-	
-	function allFileDown(){
-		
-		window.location.href='/admin/member_re/fileAllDown.do';
-		
-	}
-	
 </script>
 
 
