@@ -65,5 +65,7 @@ public interface AdminMemberMapper {
 
 	public List<?> getGroupMemberList(AdminMemberVo adminMemberVo);
 
+	public List<?> getAllList(AdminMemberVo adminMemberVo);
+
 	
 }

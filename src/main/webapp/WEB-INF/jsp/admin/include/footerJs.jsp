@@ -47,6 +47,9 @@ function smssend(type)
 		return;
 	}
 	
+	alert('테스트 서버 문자 서비스 이용X');
+	
+	/*
 	deleteArrIdx = "";
 	$("input[name=chk_calc]").each(function() {
 			

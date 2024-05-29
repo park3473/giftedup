@@ -89,6 +89,7 @@ public class AdminExamController {
 		
 	}
 	
+	/*
 	@RequestMapping(value="/admin/exam/insert.do" , method = RequestMethod.GET)
 	public ModelAndView AdminExamInsertGet(@ModelAttribute("AdminExamVo")AdminExamVo AdminExamVo , HttpServletRequest request , HttpServletResponse response) {
 		
@@ -108,6 +109,7 @@ public class AdminExamController {
 		SUtil.AlertAndPageMove(response, "해당 설문이 등록되었습니다.", "/admin/exam/list.do");
 	
 	}
+	*/
 	
 	@RequestMapping(value="/admin/exam/update.do" , method = RequestMethod.GET)
 	public ModelAndView AdminExamUpdateGet(@ModelAttribute("AdminExamVo")AdminExamVo AdminExamVo , HttpServletRequest request , HttpServletResponse response) {
@@ -559,14 +561,14 @@ public class AdminExamController {
 	 * 2024 신규 수정 페이지
 	 * */
 	
-	@RequestMapping(value="/admin/exam/test/insert.do" , method = RequestMethod.GET)
+	@RequestMapping(value="/admin/exam/insert.do" , method = RequestMethod.GET)
 	public String AdminExamInsertGet2(HttpServletRequest request , HttpServletResponse response) {
 		
-		return "/admin/exam/test";
+		return "/admin/exam/insert";
 		
 	}
 	
-	@RequestMapping(value="/admin/exam/test/insert.do" , method = RequestMethod.POST , produces = "application/json; charset=utf8")
+	@RequestMapping(value="/admin/exam/insert.do" , method = RequestMethod.POST , produces = "application/json; charset=utf8")
 	@ResponseBody
 	public String AdminExamInsertPost2(@RequestParam("surveyData") String surveyDataStr ,HttpServletRequest request , HttpServletResponse response) {
 		

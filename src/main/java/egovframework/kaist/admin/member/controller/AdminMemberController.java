@@ -228,66 +228,62 @@ public class AdminMemberController {
 	}
 
 	/*회원 그룹 관리 - 모든 회원*/
-	@RequestMapping(value = "/admin/member/list.do", method = RequestMethod.GET)
-	public ModelAndView list(@ModelAttribute("AdminMemberVo") AdminMemberVo adminMemberVo,
-			HttpServletRequest request, HttpServletResponse response) {
-		
-		String PAGE = request.getParameter("PAGE") != null ? request
-				.getParameter("PAGE") : "0";
-		String ITEM_COUNT = request.getParameter("ITEM_COUNT") != null ? request
-				.getParameter("ITEM_COUNT") : "10";
-			
-		if(PAGE == null)
-		{
-			PAGE = "0";
-		}
-		if(ITEM_COUNT == null)
-		{
-			ITEM_COUNT = "10";
-		}
-		
-
-		adminMemberVo.setPAGE(Integer.parseInt(PAGE));
-		adminMemberVo.setITEM_COUNT(Integer.parseInt(ITEM_COUNT));
-		
-		
-		ModelMap model = new ModelMap();
-	
-		int pagelimit = adminMemberVo.getPAGE() * adminMemberVo.getITEM_COUNT();
-		
-		adminMemberVo.setLIMIT(Integer.parseInt(ITEM_COUNT));
-		adminMemberVo.setOFFSET(pagelimit);
-		
-		
-		//지역별 관리자 확인 1.session에 지역확인 2.sutil 에 저장된 배열 받기(지역관리)
-		HttpSession session = request.getSession();
-		
-		if(session.getAttribute("ssion_local_type") != null && session.getAttribute("ssion_local_type") != "전체") {
-			
-			System.out.println(session.getAttribute("ssion_local_type"));
-			
-			String LOCAL = (String) session.getAttribute("ssion_local_type");
-			System.out.println(LOCAL);
-			
-			List <String> LO_TYPE = SUtil.getLO_TYPE_LIST(LOCAL);
-			
-			adminMemberVo.setLO_LIST(LO_TYPE);
-			
-			adminMemberVo.setLO_TYPE("TRUE");
-			
-		}
-		
-		model = adminMemberService.getList(adminMemberVo);
-		
-		model.put("SEARCH_TYPE", adminMemberVo.getSEARCH_TYPE());
-		model.put("SEARCH_TEXT", adminMemberVo.getSEARCH_TEXT());
-		
-		model.put("beforeDomain", adminMemberVo);
-		
-		//model.put("ADVISER", adminMemberService.getAdviserALL());
-		
-		return new ModelAndView("admin/member/list", "model", model);
-	}
+	/*
+	 * @RequestMapping(value = "/admin/member/list.do", method = RequestMethod.GET)
+	 * public ModelAndView list(@ModelAttribute("AdminMemberVo") AdminMemberVo
+	 * adminMemberVo, HttpServletRequest request, HttpServletResponse response) {
+	 * 
+	 * String PAGE = request.getParameter("PAGE") != null ? request
+	 * .getParameter("PAGE") : "0"; String ITEM_COUNT =
+	 * request.getParameter("ITEM_COUNT") != null ? request
+	 * .getParameter("ITEM_COUNT") : "10";
+	 * 
+	 * if(PAGE == null) { PAGE = "0"; } if(ITEM_COUNT == null) { ITEM_COUNT = "10";
+	 * }
+	 * 
+	 * 
+	 * adminMemberVo.setPAGE(Integer.parseInt(PAGE));
+	 * adminMemberVo.setITEM_COUNT(Integer.parseInt(ITEM_COUNT));
+	 * 
+	 * 
+	 * ModelMap model = new ModelMap();
+	 * 
+	 * int pagelimit = adminMemberVo.getPAGE() * adminMemberVo.getITEM_COUNT();
+	 * 
+	 * adminMemberVo.setLIMIT(Integer.parseInt(ITEM_COUNT));
+	 * adminMemberVo.setOFFSET(pagelimit);
+	 * 
+	 * 
+	 * //지역별 관리자 확인 1.session에 지역확인 2.sutil 에 저장된 배열 받기(지역관리) HttpSession session =
+	 * request.getSession();
+	 * 
+	 * if(session.getAttribute("ssion_local_type") != null &&
+	 * session.getAttribute("ssion_local_type") != "전체") {
+	 * 
+	 * System.out.println(session.getAttribute("ssion_local_type"));
+	 * 
+	 * String LOCAL = (String) session.getAttribute("ssion_local_type");
+	 * System.out.println(LOCAL);
+	 * 
+	 * List <String> LO_TYPE = SUtil.getLO_TYPE_LIST(LOCAL);
+	 * 
+	 * adminMemberVo.setLO_LIST(LO_TYPE);
+	 * 
+	 * adminMemberVo.setLO_TYPE("TRUE");
+	 * 
+	 * }
+	 * 
+	 * model = adminMemberService.getList(adminMemberVo);
+	 * 
+	 * model.put("SEARCH_TYPE", adminMemberVo.getSEARCH_TYPE());
+	 * model.put("SEARCH_TEXT", adminMemberVo.getSEARCH_TEXT());
+	 * 
+	 * model.put("beforeDomain", adminMemberVo);
+	 * 
+	 * //model.put("ADVISER", adminMemberService.getAdviserALL());
+	 * 
+	 * return new ModelAndView("admin/member/list", "model", model); }
+	 */
 
 	
 	/*학생부 관리 - 모든 학생*/
@@ -1972,8 +1968,8 @@ public class AdminMemberController {
 	
 	// TODO : 테스트 용도
 	/*회원 그룹 관리 - 모든 회원*/
-	@RequestMapping(value = "/admin/member/test/list.do", method = RequestMethod.GET)
-	public ModelAndView listTest(@ModelAttribute("AdminMemberVo") AdminMemberVo adminMemberVo,
+	@RequestMapping(value = "/admin/member/list.do", method = RequestMethod.GET)
+	public ModelAndView list(@ModelAttribute("AdminMemberVo") AdminMemberVo adminMemberVo,
 			HttpServletRequest request, HttpServletResponse response) {
 
 		//지역별 관리자 확인 1.session에 지역확인 2.sutil 에 저장된 배열 받기(지역관리)
@@ -1998,7 +1994,7 @@ public class AdminMemberController {
 		
 		model = adminMemberService.getListAll(adminMemberVo);
 		
-		return new ModelAndView("admin/member/test", "model", model);
+		return new ModelAndView("admin/member/list", "model", model);
 	}
 	
 	@RequestMapping(value="/admin/member/test/update.do" , method = RequestMethod.POST)
@@ -2009,8 +2005,8 @@ public class AdminMemberController {
 		
 	}
 	
-	@RequestMapping(value = "/admin/member/test/excelDown.do", method = RequestMethod.GET)
-	public void excelDown2(@ModelAttribute("AdminMemberVo") AdminMemberVo adminMemberVo, HttpServletRequest request, HttpServletResponse response)
+	@RequestMapping(value = "/admin/member/excelDown.do", method = RequestMethod.GET)
+	public void MemberExcelDown(@ModelAttribute("AdminMemberVo") AdminMemberVo adminMemberVo, HttpServletRequest request, HttpServletResponse response)
 	{
 		
 	    // 워크북 생성
