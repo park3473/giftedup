@@ -131,8 +131,7 @@ public class AdminMatchingController {
 	
 	
 	@RequestMapping(value = "/admin/matching/{matchingid}/insertAjax.do", method = RequestMethod.GET)
-	public ModelAndView insertAjax(@PathVariable("matchingid") String matchingid,
-			HttpServletRequest request, HttpServletResponse response) 
+	public ModelAndView insertAjax(@PathVariable("matchingid") String matchingid, HttpServletRequest request, HttpServletResponse response) 
 	{
 		String LOCATION = request.getParameter("LOCATION") != null ? request
 				.getParameter("LOCATION") : "";
@@ -206,12 +205,7 @@ public class AdminMatchingController {
 		//adminMemberService.getList(adminMemberVo2);
 		model.put("MEMBER2", adminMemberService.getMatchingList(adminMemberVo2));
 
-		
-		
-		
 		//model.put("SCHOOLNAME", adminMemberService.getListGroupBySchoolName());
-		;
-		
 		
 		Random random = new Random();
 		
@@ -225,9 +219,7 @@ public class AdminMatchingController {
 	}
 
 	@RequestMapping(value = "/admin/matching/insert.do", method = RequestMethod.POST)
-	public void insertPost(@ModelAttribute("AdminMatchingVo") AdminMatchingVo adminMatchingVo,
-			HttpServletRequest  request, 
-			HttpServletResponse response) {
+	public void insertPost(@ModelAttribute("AdminMatchingVo") AdminMatchingVo adminMatchingVo, HttpServletRequest  request, HttpServletResponse response) {
 		
 		
 		ModelMap model = new ModelMap();
