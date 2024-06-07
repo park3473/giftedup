@@ -175,7 +175,7 @@ public class AdminMatchingController {
 		return new ModelAndView("admin/matching/insertAjax", "model", model);
 	}
 	
-	
+	 
 	@RequestMapping(value = "/admin/matching/insert.do", method = RequestMethod.GET)
 	public ModelAndView insertGet(HttpServletRequest request, HttpServletResponse response) 
 	{
