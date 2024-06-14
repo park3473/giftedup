@@ -57,14 +57,11 @@ public class AdminMatchingController {
 	private static final Logger Logger = LoggerFactory.getLogger(AdminMatchingController.class);
 
 	@RequestMapping(value = "/admin/matching/list.do", method = RequestMethod.GET)
-	public ModelAndView list(@ModelAttribute("AdminMatchingVo") AdminMatchingVo adminMatchingVo,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView list(@ModelAttribute("AdminMatchingVo") AdminMatchingVo adminMatchingVo, HttpServletRequest request, HttpServletResponse response) {
 
-		String PAGE = request.getParameter("PAGE") != null ? request
-				.getParameter("PAGE") : "0";
+		String PAGE = request.getParameter("PAGE") != null ? request.getParameter("PAGE") : "0";
 				
-		String ITEM_COUNT = request.getParameter("ITEM_COUNT") != null ? request
-				.getParameter("ITEM_COUNT") : "10";
+		String ITEM_COUNT = request.getParameter("ITEM_COUNT") != null ? request.getParameter("ITEM_COUNT") : "10";
 			
 		if(PAGE == null)
 		{
@@ -74,11 +71,9 @@ public class AdminMatchingController {
 		{
 			ITEM_COUNT = "10";
 		}
-		
 
 		adminMatchingVo.setPAGE(Integer.parseInt(PAGE));
 		adminMatchingVo.setITEM_COUNT(Integer.parseInt(ITEM_COUNT));
-		
 		
 		ModelMap model = new ModelMap();
 	
@@ -86,7 +81,6 @@ public class AdminMatchingController {
 		
 		adminMatchingVo.setLIMIT(Integer.parseInt(ITEM_COUNT));
 		adminMatchingVo.setOFFSET(pagelimit);
-		
 	
 		//지역별 관리자 확인 1.session에 지역확인 2.sutil 에 저장된 배열 받기(지역관리)
 		HttpSession session = request.getSession();
@@ -111,8 +105,6 @@ public class AdminMatchingController {
 		model.put("SEARCH_TYPE", adminMatchingVo.getSEARCH_TYPE());
 		model.put("SEARCH_TEXT", adminMatchingVo.getSEARCH_TEXT());
 		
-		
-		
 		model.put("beforeDomain", adminMatchingVo);
 
 		model.put("YEARLIST", adminMatchingService.getListGroupByYear());
@@ -133,11 +125,9 @@ public class AdminMatchingController {
 	@RequestMapping(value = "/admin/matching/{matchingid}/insertAjax.do", method = RequestMethod.GET)
 	public ModelAndView insertAjax(@PathVariable("matchingid") String matchingid, HttpServletRequest request, HttpServletResponse response) 
 	{
-		String LOCATION = request.getParameter("LOCATION") != null ? request
-				.getParameter("LOCATION") : "";
+		String LOCATION = request.getParameter("LOCATION") != null ? request.getParameter("LOCATION") : "";
 		
-		String YEAR = request.getParameter("YEAR") != null ? request
-				.getParameter("YEAR") : "";
+		String YEAR = request.getParameter("YEAR") != null ? request.getParameter("YEAR") : "";
 		
 		ModelMap model = new ModelMap();
 		
@@ -180,8 +170,7 @@ public class AdminMatchingController {
 	public ModelAndView insertGet(HttpServletRequest request, HttpServletResponse response) 
 	{
 
-		String YEAR = request.getParameter("YEAR") != null ? request
-				.getParameter("YEAR") : "";
+		String YEAR = request.getParameter("YEAR") != null ? request.getParameter("YEAR") : "";
 		
 		System.out.println(YEAR);
 		
@@ -189,14 +178,11 @@ public class AdminMatchingController {
 		
 		ModelMap model = new ModelMap();
 		
-		
 		AdminMemberVo adminMemberVo = new AdminMemberVo();
 		adminMemberVo.setTYPE("1");
 		adminMemberVo.setLIMIT(999999);
 		//adminMemberService.getList(adminMemberVo);
-		
 	
-		
 		AdminMemberVo adminMemberVo2 = new AdminMemberVo();
 		adminMemberVo2.setTYPE("2");
 		adminMemberVo2.setLIMIT(999999);
@@ -213,7 +199,6 @@ public class AdminMatchingController {
         hak += random.nextInt(1000); 
         
         model.put("HAKBUN", hak);
-		
 		
 		return new ModelAndView("admin/matching/insert", "model", model);
 	}
@@ -255,8 +240,7 @@ public class AdminMatchingController {
 	public ModelAndView updateGet(@PathVariable("matchingid") String matchingid, HttpServletRequest request,
 			HttpServletResponse response) {
 
-		String YEAR = request.getParameter("YEAR") != null ? request
-				.getParameter("YEAR") : "";
+		String YEAR = request.getParameter("YEAR") != null ? request.getParameter("YEAR") : "";
 		
 		System.out.println(YEAR);
 		
@@ -269,7 +253,6 @@ public class AdminMatchingController {
 		model = adminMatchingService.getView(vo);
 		
 		//model.put("SCHOOLNAME", adminMemberService.getListGroupBySchoolName());
-
 		
 		YEAR = YEAR.substring(2,4);
 		
@@ -279,8 +262,6 @@ public class AdminMatchingController {
 		//adminMemberService.getList(adminMemberVo);
 		//model.put("MEMBER", adminMemberService.getList(adminMemberVo));
 
-		
-		
 		AdminMemberVo adminMemberVo2 = new AdminMemberVo();
 		adminMemberVo2.setTYPE("2");
 		adminMemberVo2.setLIMIT(999999);
