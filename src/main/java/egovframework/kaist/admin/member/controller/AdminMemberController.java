@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 
@@ -1988,6 +1989,18 @@ public class AdminMemberController {
 			
 			adminMemberVo.setLO_TYPE("TRUE");
 			
+		}
+		
+		if(adminMemberVo.getEXP_DATA().equals("")) {
+		
+			// 올해의 연도 가져오기
+	        int currentYear = LocalDate.now().getYear();
+	        
+	        // 뒷 두자리 연도 가져오기
+	        String yearLastTwoDigits = String.valueOf(currentYear).substring(2);
+		
+	        adminMemberVo.setEXP_DATA(yearLastTwoDigits);
+	        
 		}
 		
 		ModelMap model = new ModelMap();

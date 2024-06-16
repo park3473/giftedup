@@ -21,8 +21,50 @@
 	text-align: center;
 		
 	}
+	
 </style>
+<style>
+        /* 테이블 스타일 */
+        .tabulator .tabulator-header {
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+        }
 
+        .tabulator .tabulator-header .tabulator-col {
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .tabulator .tabulator-row {
+            background-color: #ffffff;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .tabulator .tabulator-row:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        .tabulator .tabulator-cell {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .tabulator .tabulator-row:hover {
+            background-color: #e9ecef;
+        }
+
+        .tabulator .tabulator-selected {
+            background-color: #d1e7dd;
+            color: #495057;
+        }
+        .tabulator-footer-contents button{
+        	color : black !important;
+        	opacity: 1 !important;
+        }
+        .tabulator .tabulator-footer .tabulator-paginator{
+        	text-align : center !important;
+        }
+    </style>
 <body>
     <!--헤더-->
     <%@ include file="../include/header.jsp" %>
@@ -41,26 +83,36 @@
                                 <span></span>
                                 <span>설문조사 관리</span>
                             </div>
-                            
+                            <div class="member_seach_form">
+                                <div class="member_01_wrap" style="margin-bottom:0px">
+                                    <form>
+                                        <div class="form_01">
+                                            <div class="page_seach">
+                                            	<label for="ITEM_COUNT" style="margin-right: 10px;">페이지 수</label>
+                                            	<input style="width: 44px; margin-right: 10px" type="number" value="20" id="ITEM_COUNT" name="ITEM_COUNT" onchange="changeITEMCOUNT()">
+                                            	<label for="start_tm" style="margin-right: 10px;">시작일시</label>
+                                            	<input type="date" name="start_tm" id="start_tm" onchange="searchTable()" >
+                                            	<label for="end_tm" style="margin-right: 10px;">종료일시</label>
+                                            	<input type="date" name="end_tm" id="end_tm" onchange="searchTable()" >
+                                                <input style="width: 191px;" type="text" value="" name="search-field" id="search-field" placeholder="검색내용을 입력해주세요.">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                             <div class="page_seach">
                                 <div class="adm_btn_wrap stats_btn_area">
                                     <ul>
 	                                    <li class="delete">
-	                                        <a href="#" onclick="respondentsExcelDown()">설문조사 생성</a>
+	                                        <a href="/admin/exam/insert.do" >설문조사 생성</a>
 	                                    </li>
 	                                    <!-- 임시 -->
 	                                    <li class="delete">
 	                                        <a href="#" id="download-xlsx" onclick="respondentsExcelDown()">엑셀 다운로드</a>
 	                                    </li>
-	                                    <!-- 
-	                                    <li class="delete">
-	                                        <a href="#" id="download-pdf" onclick="respondentsExcelDown()">PDF 다운로드</a>
-	                                    </li>
-	                                    -->
 	                                </ul>
                                 </div>
                             </div>
-                            <input type="text" id="search-field" placeholder="Search data...">
                             <div class="table_wrap">
                             	<div id="member-table"></div>
                             </div>
@@ -101,7 +153,7 @@ var table = new Tabulator("#member-table", {
     height: "auto",
     layout: "fitColumns",
     pagination: "local", // 페이지네이션 사용 설정
-    paginationSize: 10, // 페이지 당 행의 수
+    paginationSize: 20, // 페이지 당 행의 수
     columns: [
         {title: "번호", field: "IDX", visible: false },
         {title: "No", field: "INDEX", hozAlign:"center" , minWidth : 80},
@@ -140,6 +192,7 @@ function Exam(INDEX , IDX , NAME , START_TM , END_TM ) {
     this.END_TM = END_TM;
 }
 //=====================================================================================================
+	
 var exam = [];
 // 가정: model.list는 위 SQL 쿼리에 의해 반환된 결과물의 리스트입니다.
 <c:forEach var="item" items="${model.list}" varStatus="status">
@@ -151,17 +204,18 @@ var exam = [];
     		``
     	</c:if>
     	<c:if test="${item.START_TM != ''}">
-    		`${fn:substring(item.START_TM,0,11)}`
+    		`${fn:substring(item.START_TM,0,10)}`
     	</c:if>
     	,
     	<c:if test="${item.END_TM == ''}">
     		``
     	</c:if>
     	<c:if test="${item.END_TM != ''}">
-    		`${fn:substring(item.END_TM,0,11)}`
+    		`${fn:substring(item.END_TM,0,10)}`
     	</c:if>,
     ));
 </c:forEach>
+
 //=====================================================================================================
 	
 document.addEventListener("DOMContentLoaded", function() {  
@@ -246,6 +300,8 @@ function status(idx , category){
 }
 document.getElementById("download-xlsx").addEventListener("click", function(){
     var data = table.getData();
+    
+    
     var ws = XLSX.utils.json_to_sheet(data);
     ws['!cols'] = [
         {wch:20}, // 첫 번째 열의 너비를 20 문자 폭으로 설정
@@ -258,6 +314,27 @@ document.getElementById("download-xlsx").addEventListener("click", function(){
     XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
     XLSX.writeFile(wb, "TableData.xlsx");
 });
+
+function changeITEMCOUNT(){
+	var newSize = parseInt(document.getElementById("ITEM_COUNT").value);
+    table.setPageSize(newSize);
+}
+
+//검색 함수
+function searchTable() {
+    var startTm = document.getElementById("start_tm").value;
+    var endTm = document.getElementById("end_tm").value;
+    table.setFilter(customFilter2, {startTm: startTm, endTm: endTm});
+}
+
+//사용자 정의 필터
+function customFilter2(data, filterParams) {
+    var startTmMatch = !filterParams.startTm || data.START_TM === filterParams.startTm;
+    var endTmMatch = !filterParams.endTm || data.END_TM === filterParams.endTm;
+
+    return startTmMatch && endTmMatch;
+}
+
 //trigger download of data.xlsx file
 /*
 document.getElementById("download-xlsx").addEventListener("click", function(){

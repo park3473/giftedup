@@ -9,6 +9,7 @@ int year = cal.get(cal.YEAR);
 
 String NowYear = String.valueOf(year);
 %>
+<%request.getParameter("LEVEL"); pageContext.setAttribute("HeaderCheckLevel",request.getParameter("LEVEL")); %>
 <!DOCTYPE html>
 <meta charset="UTF-8">
     <header id="adm_hd">
@@ -38,51 +39,59 @@ String NowYear = String.valueOf(year);
                                             <span></span>
                                             <span>학사관리</span>
                                         </div>
-                                        <li <c:if test="${fn:indexOf(requestURI, '/member/allstudentlist') > -1}">class="nav_active"</c:if>>
-                                        	<a href="${pageContext.request.contextPath}/admin/member/allstudentlist.do" >· 학적부 관리</a>
+                                        
+                                        <li <c:if test="${fn:indexOf(requestURI, '/member/list') > -1 && HeaderCheckLevel == '11'}">class="nav_active"
+                                            </c:if>>
+                                            <a href="${pageContext.request.contextPath}/admin/member/list.do?LEVEL=11">· 학생관리</a>
+                                            <ul class="sub_menu_ob">
+                                            <c:forEach var="i" begin="2022" end="<%=year %>">
+                                        		<%String CheckYear = request.getParameter("EXP_DATA"); pageContext.setAttribute("CheckYear",CheckYear);%>
+                                        		
+                                        		<li <c:if test="${CheckYear == i.toString().substring(2) && HeaderCheckLevel == '11'}">class="nav_active"</c:if> >
+                                        			<a href="${pageContext.request.contextPath }/admin/member/list.do?LEVEL=11&EXP_DATA=${i.toString().substring(2)}" >- ${i }년도</a>
+                                        		</li>
+                                        	</c:forEach>
+                                        	</ul>
                                         </li>
-                                        <li <c:if test="${fn:indexOf(requestURI, '/member/studentrecord') > -1}">class="nav_active"</c:if>>
-                                        	<a href="${pageContext.request.contextPath}/admin/member/studentrecordlist.do?YEAR=<%=NowYear%>" >· 학생부 관리</a>
+                                        <li <c:if test="${fn:indexOf(requestURI, '/member/list') > -1 && HeaderCheckLevel == '8'}">class="nav_active"
+                                            </c:if>>
+                                            <a href="${pageContext.request.contextPath}/admin/member/list.do?LEVEL=8">· 멘토관리</a>
+                                            <ul class="sub_menu_ob">
+                                            <c:forEach var="i" begin="2022" end="<%=year %>">
+                                        		<%String CheckYear = request.getParameter("EXP_DATA"); pageContext.setAttribute("CheckYear",CheckYear);%>
+                                        		<li <c:if test="${CheckYear == i.toString().substring(2) && HeaderCheckLevel == '8'}">class="nav_active"</c:if> >
+                                        			<a href="${pageContext.request.contextPath }/admin/member/list.do?LEVEL=8&EXP_DATA=${i.toString().substring(2)}" >- ${i }년도</a>
+                                        		</li>
+                                        	</c:forEach>
+                                        	</ul>
                                         </li>
-                                        <li <c:if test="${fn:indexOf(requestURI, '/member/mentolist') > -1}">class="nav_active"</c:if>>
-                                        	<a href="${pageContext.request.contextPath}/admin/member/mentolist.do?YEAR=<%=NowYear%>" >· 멘토 관리</a>
-                                        </li>
-                                        <li <c:if test="${fn:indexOf(requestURI, '/member/matching') > -1}">class="nav_active"</c:if>>
+                                        <li <c:if test="${fn:indexOf(requestURI, '/matching') > -1}">class="nav_active"</c:if>>
                                             <a href="${pageContext.request.contextPath}/admin/matching/list.do?YEAR=<%=NowYear%>">· 멘티 - 멘토 매칭관리</a>
                                             <ul class="sub_menu_ob" data-sysYear="${sysYear }">
-											<c:forEach var="i" begin="2020" end="${sysYear }">
+											<c:forEach var="i" begin="2022" end="<%=year %>">
 												<%String CheckYear = request.getParameter("YEAR"); pageContext.setAttribute("CheckYear",CheckYear);%>
-												<li <c:if test="${fn:indexOf(CheckYear, i) > -1}">class="nav_active"</c:if>>
-													<a class="<%=request.getParameter("YEAR") %>" id="${fn:indexOf(CheckYear, i) > -1}" year="${i }"href="${pageContext.request.contextPath }/admin/matching/list.do?YEAR=${i}">· ${i}년 매칭관리</a>
+												<li <c:if test="${CheckYear == i && fn:indexOf(requestURI, '/matching') > -1}">class="nav_active"</c:if>>
+													<a class="<%=request.getParameter("YEAR") %>" id="${fn:indexOf(requestURI, '/matching') > -1}" year="${i }"href="${pageContext.request.contextPath }/admin/matching/list.do?YEAR=${i}">· ${i}년도</a>
 												</li>
 											</c:forEach>
 										</ul>
                                         </li>
+                                        <!-- 
                                         <li <c:if test="${fn:indexOf(requestURI, '/member/test/list') > -1}">class="nav_active"</c:if>>
                                         	<a href="${pageContext.request.contextPath}/admin/member/test/list.do?YEAR=<%=NowYear%>" >· 신규 회원 관리</a>
                                         </li>
-                                        <li <c:if test="${fn:indexOf(requestURI, '/member/list') > -1}">class="nav_active"
+                                        -->
+                                        <li <c:if test="${fn:indexOf(requestURI, '/member/list') > -1 && HeaderCheckLevel == null}">class="nav_active"
                                             </c:if>>
-                                            <a href="${pageContext.request.contextPath}/admin/member/list.do">· 회원그룹관리</a>
-                                            <c:if test="${fn:indexOf(requestURI, '/member/list') > -1 }" >
+                                            <a href="${pageContext.request.contextPath}/admin/member/list.do">· 통합회원관리</a>
                                             <ul class="sub_menu_ob">
-                                            	<li <c:if test="${fn:indexOf(requestURI, '/member/list.do') > -1 && model.beforeDomain.LEVEL == ''}">class="nav_active"</c:if> >
-                                            		<a href="${pageContext.request.contextPath}/admin/member/list.do" >통합</a>
-                                            	</li>
-                                            	<li <c:if test="${fn:indexOf(requestURI, '/member/list.do') > -1 && model.beforeDomain.LEVEL == '8' && model.beforeDomain.COMM_TYPE == ''}">class="nav_active"</c:if> >
-                                            		<a href="${pageContext.request.contextPath}/admin/member/list.do?LEVEL=8&TYPE=2" >멘토</a>
-                                            	</li>
-                                            	<li <c:if test="${fn:indexOf(requestURI, '/member/list.do') > -1 && model.beforeDomain.LEVEL == '11'}">class="nav_active"</c:if> >
-                                            		<a href="${pageContext.request.contextPath}/admin/member/list.do?LEVEL=11&TYPE=1">멘티</a>
-                                            	</li>
-                                            	<li <c:if test="${fn:indexOf(requestURI, '/member/list.do') > -1 && model.beforeDomain.COMM_TYPE == 'ok'}">class="nav_active"</c:if> >
-                                            		<a href="${pageContext.request.contextPath}/admin/member/list.do?LEVEL=8&COMM_TYPE=ok&TYPE=2">강사</a>
-                                            	</li>
-                                            	<li <c:if test="${fn:indexOf(requestURI, '/member/list.do') > -1 && model.beforeDomain.LEVEL == '10'}">class="nav_active"</c:if> >
-                                            		<a href="${pageContext.request.contextPath}/admin/member/list.do?LEVEL=10">웹회원</a>
-                                            	</li>
-                                            </ul>
-                                            </c:if>
+                                            <c:forEach var="i" begin="2022" end="<%=year %>">
+                                        		<%String CheckYear = request.getParameter("EXP_DATA"); pageContext.setAttribute("CheckYear",CheckYear);%>
+                                        		<li <c:if test="${CheckYear == i.toString().substring(2) && HeaderCheckLevel == null}">class="nav_active"</c:if> >
+                                        			<a id="${CheckYear == i.toString().substring(2) && HeaderCheckLevel == null}" href="${pageContext.request.contextPath }/admin/member/list.do?EXP_DATA=${i.toString().substring(2)}" >- ${i }년도</a>
+                                        		</li>
+                                        	</c:forEach>
+                                        	</ul>
                                         </li>
                                         <!--
                                         2022년도 고도화 당시 삭제된 링크들
@@ -355,6 +364,24 @@ String NowYear = String.valueOf(year);
 												</li>
 											</c:forEach>
 										</ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li <c:if test="${fn:indexOf(requestURI, 'exam') > -1
+                                    }">
+                                    class="adm_menu_active"
+                                    </c:if>>
+                                    <a href="${pageContext.request.contextPath}/admin/exam/list.do">
+                                        <!--<img src="${pageContext.request.contextPath}/resources/img/admin/program_icon.png" alt="프로그램관리" />-->
+										<i class="las la-chalkboard-teacher"></i>
+                                    </a>
+                                    <ul class="sub_menu_con">
+                                        <div class="title notosans">
+                                            <span></span>
+                                            <span>설문 관리</span>
+                                        </div>
+                                        <li <c:if test="${fn:indexOf(requestURI, 'admin/exam') > -1}">class="nav_active"</c:if>>
+                                          	<a href="${pageContext.request.contextPath}/admin/exam/list.do">· 설문조사</a>
                                         </li>
                                     </ul>
                                 </li>

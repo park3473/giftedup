@@ -165,6 +165,10 @@
 </body>
 
 <script>
+
+	var isRestoringValue = false;
+
+
 	var table = new Tabulator("#member-table", {
 	    height: "auto",
 	    layout: "fitColumns",
@@ -226,20 +230,34 @@
 	document.addEventListener("DOMContentLoaded", function() {
 		
 		table.on("cellEdited", function(cell) {
+			
+			if (isRestoringValue) return;
+			
 		    var data = cell.getRow().getData(); // 편집된 행의 데이터를 가져옵니다.
 		    var fieldName = cell.getField(); // 편집된 셀의 필드명
 		    var value = cell.getValue(); // 편집된 셀의 값
 		    var idx; // 수정된 IDX를 저장할 변수
+		    var oldValue = cell.getOldValue();
 
 		    idx = data.MEMBER_ID;
 
 		    // 필드명을 서버에 전송할 형식으로 변경
 		    var serverFieldName = fieldName;
 
-		    console.log("수정된 idx: " + idx + ", 필드: " + serverFieldName + ", 값: " + value);
+		    console.log("수정된 idx: " + idx + ", 필드: " + serverFieldName + ", 값: " + value + ", 원래값=" + oldValue);
 
+		    var result = confirm('수정할 아이디 : ' + idx + '\n' + '수정될 필드명 : ' + fieldName + '\n' + '수정될 값 : ' + value + '\n을 수정하시겠습니까?');
+	    	
+		    if (!result) {
+                // 아니오를 클릭했을 때, 원래 값으로 되돌림
+                isRestoringValue = true; // 복원 중임을 표시
+                cell.setValue(oldValue, true); // 원래 값으로 되돌림
+                isRestoringValue = false; // 복원 완료 표시
+                return;
+            }
+		    
 		    // AJAX 호출 예제
-		    updateAjax(idx, serverFieldName, value);
+		    updateAjax(idx, serverFieldName, value , oldValue);
 		});  
 		// 초기 데이터 설정
 	    table.setData(member);
@@ -259,13 +277,7 @@
         alert("상세 정보 보기: " + member_id);
     };
     
-    function updateAjax(idx, fieldName, value) {
-    	
-    	var result = confirm('수정할 아이디 : ' + idx + '\n' + '수정될 필드명 : ' + fieldName + '\n' + '수정될 값 : ' + value + '\n을 수정하시겠습니까?');
-    	
-    	if(!result){
-    		return;
-    	}
+    function updateAjax(idx, fieldName, value , original) {
     	
         // AJAX 요청 구현
         console.log("AJAX 요청: IDX=" + idx + ", 필드=" + fieldName + ", 값=" + value);

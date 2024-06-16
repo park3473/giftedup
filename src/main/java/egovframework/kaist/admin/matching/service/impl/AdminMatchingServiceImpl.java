@@ -178,5 +178,21 @@ public class AdminMatchingServiceImpl implements AdminMatchingService {
 		return model;
 	}
 
+	@Override
+	public List<?> getMatchingMemberSearchList(AdminMemberVo adminMemberVo) {
+		
+		List<?> list = adminMatchingMapper.getMatchingMemberList(adminMemberVo);
+		
+		return list;
+	}
+
+	@Override
+	public List<?> getListOneMemberId(AdminMatchingVo adminMatchingVo) {
+		
+		List<?> list = adminMatchingMapper.getListOneMemberId(adminMatchingVo);
+		
+		return list;
+	}
+
 		
 }

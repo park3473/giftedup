@@ -1,5 +1,7 @@
 ﻿package egovframework.kaist.admin.matching.service;
 
+import java.util.List;
+
 import org.springframework.ui.ModelMap;
 
 import egovframework.kaist.admin.matching.model.AdminMatchingVo;
@@ -34,5 +36,9 @@ public interface AdminMatchingService {
 	public ModelMap getOneList(AdminMatchingVo vo);
 
 	public ModelMap getView(AdminMatchingVo vo);
+
+	public List<?> getMatchingMemberSearchList(AdminMemberVo adminMemberVo);
+
+	public List<?> getListOneMemberId(AdminMatchingVo adminMatchingVo);
 
 }

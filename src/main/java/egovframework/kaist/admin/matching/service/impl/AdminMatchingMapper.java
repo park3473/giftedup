@@ -38,5 +38,9 @@ public interface AdminMatchingMapper {
 
 	public AdminMatchingVo getViewCheck(AdminMatchingVo vo2);
 
+	public List<?> getMatchingMemberList(AdminMemberVo adminMemberVo);
+
+	public List<?> getListOneMemberId(AdminMatchingVo adminMatchingVo);
+
 	
 }

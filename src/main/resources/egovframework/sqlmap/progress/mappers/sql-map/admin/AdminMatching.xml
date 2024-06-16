@@ -210,5 +210,59 @@
 		SELECT /*AdminMatchingMapper*/ *,
 		(SELECT NAME FROM TBL_MEMBER WHERE MEMBER_ID = TBL_MATCHING.MEMBER_ID) AS NAME FROM TBL_MATCHING where MEMBER_ID = #{MEMBER_ID} and YEAR = #{YEAR}
 	</select>
+	
+	<select id="getMatchingMemberList" resultType="hashMap" parameterType="egovframework.kaist.admin.member.model.AdminMemberVo">
+		/*이름은 MEMO 로 대체*/
+		SELECT MEMBER_ID , NAME , SCHOOL_NAME , SCHOOL_YEAR
+		FROM TBL_MEMBER
+		WHERE 1=1
+		<if test="LEVEL != ''">
+			AND LEVEL = #{LEVEL}
+		</if>
+		<if test="EXP_DATA != ''">
+	    	AND EXP_DATA LIKE '%${EXP_DATA}%'
+	    </if>
+	    <if test="LO_TYPE == 'TRUE'">
+	    	AND ADDRESS_LOCAL IN 
+		    <foreach collection="LO_LIST" item="local" open="(" close=")" separator=",">
+		    	#{local}
+		    </foreach>
+	    </if> 
+	</select>
+	
+	<select id="getListOneMemberId" resultType="hashMap" parameterType="egovframework.kaist.admin.matching.model.AdminMatchingVo">
+		/*아이디 , 년도로 검색해서 가져오는 매칭리스트*/
+		SELECT 
+			student.MEMBER_ID AS StudentID,
+			student.ADDRESS_LOCAL AS Student_ADDRESS_LOCAL,
+		   	student.NAME AS StudentName, 
+		   	student.BIRTH AS StudentBIRTH,
+			student.SEX AS StudentSEX,
+			student.SCHOOL_NAME AS StudentSCHOOL_NAME,
+			student.SCHOOL_YEAR AS StudentSCHOOL_YEAR,
+			student.SUPPORT_AREA AS StudentSUPPORT_AREA,
+			student.PHONE AS StudentPHONE,
+			student.PARENTS_PHONE AS StudentPARENTS_PHONE,
+			student.ELIGIBILITY AS StudentELIGIBILITY,
+			student.ADDRESS AS StudentADDRESS,
+			student.ADDRESS_DETAIL AS StudentADDRESS_DETAIL,
+		   	teacher.MEMBER_ID AS TeacherID, 
+		   	teacher.NAME AS TeacherName, 
+		   	teacher.ADDRESS_LOCAL AS Teacher_ADDRESS_LOCAL,
+		   	teacher.SCHOOL_NAME AS Teacher_SCHOOL_NAME,
+		   	teacher.SEX AS Teacher_SEX,
+		   	teacher.PHONE AS Teacher_PHONE,
+		   	teacher.EMAIL AS Teacher_EMAIL
+		FROM 
+		    TBL_MATCHING AS matching 
+		INNER JOIN 
+		    TBL_MEMBER AS student ON matching.MEMBER_ID = student.MEMBER_ID 
+		LEFT JOIN 
+		    TBL_MEMBER AS teacher ON matching.PROFESSOR_MEMBER_ID = teacher.MEMBER_ID
+		WHERE 1=1 
+		AND matching.YEAR = #{YEAR}
+	   	AND matching.MEMBER_ID = #{MEMBER_ID}
+	   	ORDER BY matching.CREATE_TM DESC LIMIT 1
+	</select>
     
 </mapper>

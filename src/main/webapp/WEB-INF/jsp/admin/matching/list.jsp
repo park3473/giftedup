@@ -11,8 +11,8 @@
 
 <head>
     <%@ include file="../include/head.jsp" %>
-    <script src="${pageContext.request.contextPath}/resources/sweetalert/sweetalert2.min.js"></script>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/sweetalert/sweetalert2.min.css">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/sweetalert/sweetalert2.min.css">
     <link href="https://cdn.jsdelivr.net/npm/tabulator-tables/dist/css/tabulator.min.css" rel="stylesheet">
     <style>
         /* 테이블 스타일 */
@@ -74,7 +74,7 @@
                         <div class="sc_con">
                             <div class="title">
                                 <span></span>
-                                <span>${model.before.YEAR }매칭 관리</span>
+                                <span>${model.beforeDomain.YEAR }년도 매칭 관리</span>
                             </div>
                             
                             <div class="member_seach_form">
@@ -124,15 +124,6 @@
                                         </div>
                                     </form>
                                 </div>
-                                <!-- 문자 발송  -->
-                                    <div class="member_03_wrap">
-                                        <form>
-                                            <span>문자메세지 (<span style="vertical-align: baseline;" id="sms_text_size">0</span> / 2000byte)</span>
-                                            <input style="width: 397px;" type="text" value="" id="sms_text" name="MESSAGE">
-                                            <button type="button" onClick="javascript:smssend('member')" value="문자발송">문자발송</button>
-                                        </form>
-                                    </div>
-                                    <!-- 문자 종료  -->
                             </div>
                             <div class="table_wrap">
                             	<div id="member-table"></div>
@@ -142,10 +133,11 @@
                             <div class="adm_btn_wrap">
                                 <ul>
                                     <li class="register">
-                                        <a href="${pageContext.request.contextPath}/admin/matching/insert.do">등록하기</a>
+                                    	<a href="#" onclick="MatchingInsertModal();">등록하기</a>
+                                        <!-- <a href="${pageContext.request.contextPath}/admin/matching/insert.do">등록하기</a> -->
                                     </li>
                                     <li class="register">
-                                        <a href="${pageContext.request.contextPath}/admin/matching/excelDown.do">엑셀출력하기</a>
+                                        <a href="${pageContext.request.contextPath}/admin/matching/excelDown.do?YEAR=${model.beforeDomain.YEAR }">엑셀출력하기</a>
                                     </li>
                                 </ul>
                             </div>
@@ -158,6 +150,49 @@
         </div>
     </section>
     <!--본문 end-->
+
+	<div class="member_modal_wrap" id="memberReMoal">
+		<div class="member_modal_con member_input_wrap" style="width : 1050px">
+			<div class="modal_title">
+			<h2>매칭 등록</h2>
+			</div>
+			<div id="matchingInsertTable" class="table_wrap" style="max-height:300px;overflow:scroll">
+				<table>
+					<thead>
+					<tr>
+						<td>학생 명</td>
+						<td>교사 명</td>
+						<td>학교 명</td>
+					</tr>
+					</thead>
+					<tbody id="matchingInsertTableTbody">
+						<tr>
+							<td id="studentName"></td>
+							<td id="MentoName"></td>
+							<td id="SchoolName"></td>
+							<input type="hidden" value="" id="studentId">
+							<input type="hidden" value="" id="MentoId">
+							<input type="hidden" value="" id="SchoolYear">
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="member_btn adm_btn_wrap mr-0">
+				<ul id="step_button">
+					<li class="register modal_close"><a href="javascript:MemberModelFadeOut()">취소</a></li>
+					<li class="register modal_upload" id="matching_upload_step_1">
+						<a href="javascript:MatchingSearch('11')">학생 찾기</a>
+					</li>
+					<li class="register modal_upload" id="matching_upload_step_1">
+						<a href="javascript:MatchingSearch('8')">교사 찾기</a>
+					</li>
+					<li class="register modal_upload" id="matching_upload_step_1">
+						<a href="javascript:MatchingInsert()">매칭등록</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
 
     <!--푸터-->
     <footer>
@@ -184,7 +219,6 @@
 	    paginationSize: `50`, // 페이지 당 행의 수
 	    columns: [
 	        {title: "학생 기본 아이디", field: "StudentIDX", visible: false , frozen:true},
-	        {title: "호" , field : "StudentNUM" , frozen : true , minWidth : 50},
 	        {title: "학생 구분" , field : "StudentCATE" , frozen : true , minWidth : 100},
 	        {title: "학생 지역", field: "Student_ADDRESS_LOCAL" ,  minWidth : 100 , frozen:true ,  editor: "list", editorParams: {values: ["강원" , "경기" , "경남" , "경북" , "광주" , "대구" , "대전" , "부산" , "서울" , "세종" , "울산" , "인천" , "전남" , "전북" , "제주" , "충남" , "충북"]}},
 	        {title: "학생 아이디", field: "StudentID",  minWidth : 150 , frozen:true},
@@ -250,8 +284,8 @@
 		    member.push(new Member(
 		    	`${status.index + 1}`,
 		    	<c:choose>
-		    		<c:when test="${fn:indexOf(item.StudentID, '2023') > -1}">`신규`</c:when>
-		    		<c:when test="${fn:indexOf(item.StudentID, '2023') == -1}">`기존`</c:when>
+		    		<c:when test="${fn:indexOf(item.StudentID, '${model.beforeDomain.YEAR }') > -1}">`기존`</c:when>
+		    		<c:when test="${fn:indexOf(item.StudentID, '${model.beforeDomain.YEAR }') == -1}">`신규`</c:when>
 		    	</c:choose>
 		    	,
 		        `${item.StudentID}`,
@@ -448,7 +482,7 @@
         table.setPageSize(newSize);
     }
     
- // 검색 함수
+ 	// 검색 함수
     function searchTable() {
         var schoolYear = document.getElementById("SCHOOL_YEAR").value;
         var addressLocal = document.getElementById("ADDRESS_LOCAL").value;
@@ -464,6 +498,234 @@
         var cateMatch = !filterParams.cate || data.StudentCATE === filterParams.cate;
 
         return schoolYearMatch && addressLocalMatch && cateMatch;
+    }
+    
+    function MatchingInsertModal(){
+    	
+    	$('#memberReMoal').fadeIn(300);
+    	
+    }
+    
+    function MemberModelFadeOut(){
+    	
+    	document.getElementById('studentName').textContent = '';
+        document.getElementById('SchoolName').textContent = '';
+        document.getElementById('studentId').textContent = '';
+        document.getElementById('SchoolYear').textContent = '';
+        document.getElementById('MentoName').textContent = '';
+        document.getElementById('MentoId').textContent = '';
+    	$('#memberReMoal').fadeOut(300);
+    	
+    }
+    
+    function MatchingSearch(SearchLevel){
+    	
+    	var EXP_DATA = '${model.beforeDomain.YEAR }';
+    	
+    	EXP_DATA = EXP_DATA.substring(EXP_DATA,2);
+    	
+    	$.ajax({
+    		url : '/admin/matching/memberSearch.do',
+    		type : 'POST',
+    		data : ({
+    			LEVEL : SearchLevel,
+    			EXP_DATA : EXP_DATA
+    		}),
+    		success : function(data , status , success){
+    			console.log(data);
+    			showSearchResults(data, SearchLevel);
+    		},
+    		error : function(xhr , error){
+    			console.log('error');
+    		}
+    		
+    	})
+    	
+    }
+    
+    function showSearchResults(data, SearchLevel) {
+        var columns = [
+            {title: "멤버 아이디", field: "MEMBER_ID"},
+            {title: "이름", field: "NAME"},
+            {title: "학교명", field: "SCHOOL_NAME"},
+            {
+                title: "선택",
+                field: "actions",
+                formatter: function(cell) {
+                    var rowData = cell.getRow().getData();
+                    var rowDataString = JSON.stringify(rowData).replace(/"/g, '&quot;');
+                    return '<button onclick="selectMember(' + rowDataString + ', \'' + SearchLevel + '\')">선택</button>';
+                }
+            }
+        ];
+
+        Swal.fire({
+            title: '검색 결과',
+            html: `
+                <input type="text" id="search-field2" class="swal2-input" placeholder="검색">
+                <div id="matching-table" style="margin-top: 20px;"></div>
+            `,
+            width: 800,
+            showCancelButton: true,
+            confirmButtonText: '확인',
+            cancelButtonText: '취소',
+            didOpen: () => {
+                var table = new Tabulator("#matching-table", {
+                    data: data,
+                    layout: "fitColumns",
+                    pagination: "local", // 페이지네이션 사용 설정
+            	    paginationSize: `10`, // 페이지 당 행의 수
+                    columns: columns
+                });
+
+                document.getElementById("search-field2").addEventListener("keyup", function() {
+                    var searchValue = this.value.toLowerCase();
+                    table.setFilter(customFilter);
+
+                    function customFilter(data) {
+                        return (data.MEMBER_ID && data.MEMBER_ID.toString().toLowerCase().includes(searchValue)) ||
+                               (data.NAME && data.NAME.toString().toLowerCase().includes(searchValue)) ||
+                               (data.SCHOOL_NAME && data.SCHOOL_NAME.toString().toLowerCase().includes(searchValue)) ||
+                               (data.SCHOOL_YEAR && data.SCHOOL_YEAR.toString().toLowerCase().includes(searchValue));
+                    }
+                });
+            }
+        });
+    }
+
+    function selectMember(data, SearchLevel) {
+        if (SearchLevel === '11') {
+            document.getElementById('studentName').textContent = data.NAME;
+            document.getElementById('SchoolName').textContent = data.SCHOOL_NAME;
+            document.getElementById('studentId').textContent = data.MEMBER_ID;
+            document.getElementById('SchoolYear').textContent = data.SCHOOL_YEAR;
+        } else if (SearchLevel === '8') {
+            document.getElementById('MentoName').textContent = data.NAME;
+            document.getElementById('MentoId').textContent = data.MEMBER_ID;
+        }
+        Swal.close();
+    }
+    
+    function MatchingInsert(){
+    	
+    	if(document.getElementById('studentName').textContent == '' ||
+        document.getElementById('SchoolName').textContent == '' || 
+        document.getElementById('studentId').textContent == '' ||
+        document.getElementById('SchoolYear').textContent == '' ||
+        document.getElementById('MentoName').textContent == '' ||
+        document.getElementById('MentoId').textContent == ''){
+    		alert('해당 학생 , 교사 데이터를 입력후 등록해주세요.');
+    		return;
+    	}
+    	
+    	var result = confirm('해당 매칭등록을 진행하시겠습니까?');
+    	
+    	if(!result){
+    		return;
+    	}
+    	
+    	var MAT_YEAR = '${model.beforeDomain.YEAR }';
+    	
+    	$.ajax({
+    		url : '/admin/matching/InsertAjax.do',
+    		type : 'POST',
+    		data : ({
+                SCHOOL_NAME : document.getElementById('SchoolName').textContent,
+                MEMBER_ID : document.getElementById('studentId').textContent,
+                SUPPORT_GROUP : document.getElementById('SchoolYear').textContent,
+                PROFESSOR_MEMBER_ID : document.getElementById('MentoId').textContent,
+                YEAR : MAT_YEAR
+    		}),
+    		success : function(result , status , success){
+    			console.log('matching success');
+    			console.log(result);
+    			alert('해당 매칭이 등록되었습니다.');
+    			 // Ensure result is an array
+    	        if (!Array.isArray(result)) {
+    	            result = [result];
+    	        }
+
+    	        result.forEach(function(item) {
+    	            // Ensure all necessary fields are present
+    	            var newItem = {
+    	                StudentADDRESS: item.StudentADDRESS || '',
+    	                StudentADDRESS_DETAIL: item.StudentADDRESS_DETAIL || '',
+    	                StudentBIRTH: item.StudentBIRTH || '',
+    	                StudentCATE: item.StudentCATE || '',
+    	                StudentELIGIBILITY: item.StudentELIGIBILITY || '',
+    	                StudentID: item.StudentID || '',
+    	                StudentIDX: item.StudentIDX || '',
+    	                StudentNUM: item.StudentNUM || '',
+    	                StudentName: item.StudentName || '',
+    	                StudentPARENTS_PHONE: item.StudentPARENTS_PHONE || '',
+    	                StudentPHONE: item.StudentPHONE || '',
+    	                StudentSCHOOL_NAME: item.StudentSCHOOL_NAME || '',
+    	                StudentSCHOOL_YEAR: item.StudentSCHOOL_YEAR || '',
+    	                StudentSEX: item.StudentSEX || '',
+    	                StudentSUPPORT_AREA: item.StudentSUPPORT_AREA || '',
+    	                Student_ADDRESS_LOCAL: item.Student_ADDRESS_LOCAL || '',
+    	                Teacher_ADDRESS_LOCAL: item.TeacherADDRESS_LOCAL || '',
+    	                Teacher_EMAIL: item.TeacherEMAIL || '',
+    	                TeacherID: item.TeacherID || '',
+    	                TeacherName: item.TeacherName || '',
+    	                Teacher_PHONE: item.TeacherPHONE || '',
+    	                Teacher_SCHOOL_NAME: item.TeacherSCHOOL_NAME || '',
+    	                Teacher_SEX: item.TeacherSEX || '',
+    	                actions: item.actions || ''
+    	            };
+    	            
+    	         	// Set StudentCATE based on StudentID and currentYear
+    	           	if (item.StudentID.startsWith('${model.beforeDomain.YEAR }')) {
+		                newItem.StudentCATE = '신규';
+		            } else {
+		                newItem.StudentCATE = '기존';
+		            }
+    	            // Set StudentSCHOOL_YEAR label
+    	            switch (item.StudentSCHOOL_YEAR) {
+    	                case '4':
+    	                    newItem.StudentSCHOOL_YEAR = '초등학교4학년';
+    	                    break;
+    	                case '5':
+    	                    newItem.StudentSCHOOL_YEAR = '초등학교5학년';
+    	                    break;
+    	                case '6':
+    	                    newItem.StudentSCHOOL_YEAR = '초등학교6학년';
+    	                    break;
+    	                case '7':
+    	                    newItem.StudentSCHOOL_YEAR = '중학교1학년';
+    	                    break;
+    	                case '8':
+    	                    newItem.StudentSCHOOL_YEAR = '중학교2학년';
+    	                    break;
+    	                case '9':
+    	                    newItem.StudentSCHOOL_YEAR = '중학교3학년';
+    	                    break;
+    	                case '10':
+    	                    newItem.StudentSCHOOL_YEAR = '고등학교1학년';
+    	                    break;
+    	                case '11':
+    	                    newItem.StudentSCHOOL_YEAR = '고등학교2학년';
+    	                    break;
+    	                case '12':
+    	                    newItem.StudentSCHOOL_YEAR = '고등학교3학년';
+    	                    break;
+    	                default:
+    	                    newItem.StudentSCHOOL_YEAR = item.StudentSCHOOL_YEAR;
+    	                    break;
+    	            }
+    	         	
+    	         	
+    	            table.addRow(newItem);
+    	        });
+    	        
+    	        MemberModelFadeOut();
+    	        
+    		},
+    		error : function(xhr , error){
+    			console.log('matching error');
+    		}
+    	})
+    	
     }
     
 </script>

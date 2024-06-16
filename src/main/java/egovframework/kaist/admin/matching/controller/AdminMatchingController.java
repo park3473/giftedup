@@ -30,9 +30,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.system.util.SUtil;
 
 import egovframework.kaist.admin.matching.model.AdminMatchingVo;
@@ -307,8 +310,7 @@ public class AdminMatchingController {
 	public String deletePost(@PathVariable("matchingid") String matchingid, @ModelAttribute("AdminMatchingVo") AdminMatchingVo adminMatchingVo, HttpServletRequest request,
 			HttpServletResponse response) {
 
-		String YEAR = request.getParameter("YEAR") != null ? request
-				.getParameter("YEAR") : "";
+		String YEAR = request.getParameter("YEAR") != null ? request.getParameter("YEAR") : "";
 		
 		ModelMap model = new ModelMap();
 
@@ -374,6 +376,36 @@ public class AdminMatchingController {
 			e.printStackTrace();
 		}	
 	}
+	
+	/*신규 매칭 회원 찾기*/
+	@RequestMapping(value="/admin/matching/memberSearch.do" , method = RequestMethod.POST ,produces = "application/json; charset=utf8")
+	@ResponseBody
+	public String MatchingMemberSearchList(@ModelAttribute("AdminMemberVo")AdminMemberVo AdminMemberVo ,HttpServletRequest request , HttpServletResponse response) throws JsonProcessingException {
+		
+		List<?> list = adminMatchingService.getMatchingMemberSearchList(AdminMemberVo);
+		
+		System.out.println("final---------");
+		
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonStr = mapper.writeValueAsString(list);
+		return jsonStr;
+		
+	}
+	
+	@RequestMapping(value="/admin/matching/InsertAjax.do" , method = RequestMethod.POST ,produces = "application/json; charset=utf8")
+	@ResponseBody
+	public String MatchingInsertAjax(@ModelAttribute("AdminMatchingVo")AdminMatchingVo AdminMatchingVo ,HttpServletRequest request , HttpServletResponse response) throws JsonProcessingException {
+		
+		adminMatchingService.setInsert(AdminMatchingVo);
+		
+		List<?> list = adminMatchingService.getListOneMemberId(AdminMatchingVo);
+		
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonStr = mapper.writeValueAsString(list);
+		return jsonStr;
+		
+	}
+	
 	
 	@RequestMapping(value = "/admin/matching/excelDown.do", method = RequestMethod.GET)
 	public void MatchingExcelDown(@ModelAttribute("AdminMatchingVo") AdminMatchingVo adminMatchingVo, HttpServletRequest request, HttpServletResponse response)
